@@ -1,0 +1,12 @@
+[package]
+name = "ed-parse-log-files"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0.217", features = ["derive"] }
+serde_json = { version = "1.0.138" }
+rayon = { version = "1.10.0" }
+thiserror = { version = "2.0.11" }
+chrono = { version = "0.4.39" }
+numfmt = { version = "1.1.1" }

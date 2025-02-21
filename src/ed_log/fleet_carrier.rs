@@ -1,0 +1,257 @@
+use serde::{Deserialize, Serialize};
+
+use crate::ed_log::{
+    common_types::{Allegiance, BodyType, FactionName, PowerplayState, StationInformation},
+    location::{Conflict, Faction, ThargoidWar},
+};
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierFinance {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    carrier_balance: u64,
+    reserve_balance: u64,
+    available_balance: u64,
+    reserve_percent: u8,
+    #[serde(rename = "TaxRate_pioneersupplies")]
+    tax_rate_pioneersupplies: Option<u8>,
+    #[serde(rename = "TaxRate_rearm")]
+    tax_rate_rearm: Option<u8>,
+    #[serde(rename = "TaxRate_refuel")]
+    tax_rate_refuel: Option<u8>,
+    #[serde(rename = "TaxRate_repair")]
+    tax_rate_repair: Option<u8>,
+    #[serde(rename = "TaxRate_shipyard")]
+    tax_rate_shipyard: Option<u8>,
+    #[serde(rename = "TaxRate_outfitting")]
+    tax_rate_outfitting: Option<u8>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierTradeOrder {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    black_market: bool,
+    commodity: String,
+    #[serde(rename = "Commodity_Localised")]
+    commodity_localised: Option<String>,
+    cancel_trade: Option<bool>,
+    sale_order: Option<u32>,
+    price: Option<u64>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierBankTransfer {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    deposit: u64,
+    player_balance: u64,
+    carrier_balance: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierJumpRequest {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    system_name: String,
+    body: Option<String>,
+    system_address: u64,
+    #[serde(rename = "BodyID")]
+    body_id: u64,
+    departure_time: String,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierJump {
+    docked: bool,
+    on_foot: Option<bool>,
+    #[serde(flatten)]
+    station_information: Option<StationInformation>,
+    taxi: Option<bool>,
+    multicrew: Option<bool>,
+    // TODO: location has overlapping fields
+    star_system: String,
+    system_address: u64,
+    star_pos: [f64; 3],
+    system_allegiance: Allegiance,
+    system_economy: String,
+    #[serde(rename = "SystemEconomy_Localised")]
+    system_economy_localised: String,
+    system_second_economy: String,
+    #[serde(rename = "SystemSecondEconomy_Localised")]
+    system_second_economy_localised: String,
+    system_government: String,
+    #[serde(rename = "SystemGovernment_Localised")]
+    system_government_localised: String,
+    system_security: String,
+    #[serde(rename = "SystemSecurity_Localised")]
+    system_security_localised: String,
+    population: u64,
+    body: String,
+    #[serde(rename = "BodyID")]
+    body_id: u64,
+    body_type: BodyType,
+    powers: Option<Vec<String>>,
+    powerplay_state: Option<PowerplayState>,
+    thargoid_war: Option<ThargoidWar>,
+    factions: Option<Vec<Faction>>,
+    system_faction: Option<FactionName>,
+    conflicts: Option<Vec<Conflict>>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierJumpCancelled {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierDepositFuel {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    amount: u64,
+    total: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum CrewRole {
+    Repair,
+    VoucherRedemption,
+    Exploration,
+    Rearm,
+    Refuel,
+    Outfitting,
+    VistaGenomics,
+    Shipyard,
+    Bartender,
+    PioneerSupplies,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum CrewServiceOperation {
+    Activate,
+    Pause,
+    Resume,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierCrewServices {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    crew_role: CrewRole,
+    operation: CrewServiceOperation,
+    crew_name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierBuy {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    bought_at_market: u64,
+    location: String,
+    system_address: u64,
+    price: u64,
+    variant: String,
+    callsign: String,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierNameChange {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    name: String,
+    callsign: String,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub enum ShipPack {}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub enum ModulePack {}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct CrewMember {
+    crew_role: String,
+    activated: bool,
+    activated_props: Option<ActivatedProps>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct ActivatedProps {
+    enabled: bool,
+    crew_name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Finance {
+    carrier_balance: u64,
+    reserve_balance: u64,
+    available_balance: i64,
+    #[serde(rename = "TaxRate_rearm")]
+    tax_rate_rearm: Option<u64>,
+    #[serde(rename = "TaxRate_refuel")]
+    tax_rate_refuel: Option<u64>,
+    #[serde(rename = "TaxRate_repair")]
+    tax_rate_repair: Option<u64>,
+    #[serde(rename = "TaxRate_shipyard")]
+    tax_rate_shipyard: Option<u64>,
+    #[serde(rename = "TaxRate_outfitting")]
+    tax_rate_outfitting: Option<u64>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct SpaceUsage {
+    total_capacity: u64,
+    crew: u64,
+    cargo: u64,
+    cargo_space_reserved: u64,
+    ship_packs: u64,
+    module_packs: u64,
+    free_space: u64,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EDLogCarrierStats {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    callsign: String,
+    name: String,
+    docking_access: String,
+    allow_notorious: bool,
+    fuel_level: u64,
+    jump_range_curr: f64,
+    jump_range_max: f64,
+    pending_decommission: bool,
+    space_usage: SpaceUsage,
+    finance: Finance,
+    crew: Vec<CrewMember>,
+    ship_packs: Vec<ShipPack>,
+    module_packs: Vec<ModulePack>,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct EDLogFCMaterials {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    carrier_name: String,
+    #[serde(rename = "CarrierID")]
+    carrier_id: String,
+}
