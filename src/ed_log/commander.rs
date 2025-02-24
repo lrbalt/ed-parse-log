@@ -159,6 +159,18 @@ pub struct EDLogCrimeVictim {
 }
 
 #[derive(Serialize, Deserialize)]
+pub enum CrewMemberRole {
+    Helm,
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct CrewMember {
+    name: String,
+    role: CrewMemberRole,
+}
+
+#[derive(Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEmbarkOrDisembark {
     station_name: String,
@@ -174,6 +186,7 @@ pub struct EDLogEmbarkOrDisembark {
     srv: bool,
     taxi: bool,
     multicrew: bool,
+    crew: Option<Vec<CrewMember>>,
     #[serde(rename = "ID")]
     id: Option<u64>,
     star_system: String,

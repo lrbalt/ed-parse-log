@@ -99,6 +99,7 @@ pub enum MarketItemType {
     KonggaAle,
     SoontillRelics,
     VegaSlimWeed,
+    EraninPearlWhisky,
 
     OccupiedCryoPod,
 

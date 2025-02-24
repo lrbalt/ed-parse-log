@@ -52,6 +52,7 @@ pub enum CrimeType {
     DumpingDangerous,
     RecklessWeaponsDischarge,
     DockingMajorTresspass,
+    Interdiction,
     #[serde(rename = "onFoot_damagingDefences")]
     OnFootDamagingDefences,
     #[serde(rename = "onFoot_detectionOfWeapon")]
