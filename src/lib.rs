@@ -1,4 +1,4 @@
-use crate::ed_log::{
+use crate::{
     commander::{
         EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward,
         EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends,
@@ -62,7 +62,8 @@ use crate::ed_log::{
         EDLogSynthesis, EDLogUnderAttack,
     },
     shipyard::{
-        EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardRedeem, EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredShips
+        EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardRedeem,
+        EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredShips,
     },
     statistics::EDLogStatistics,
     suits::{

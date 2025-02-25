@@ -1,9 +1,8 @@
-use serde::{Deserialize, Serialize};
-
-use crate::ed_log::{
+use crate::{
     common_types::{Allegiance, BodyType, FactionName, PowerplayState, StationInformation},
     location::{Conflict, Faction, ThargoidWar},
 };
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]

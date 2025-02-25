@@ -1,6 +1,5 @@
+use crate::common_types::StarSystemData;
 use serde::{Deserialize, Serialize};
-
-use crate::ed_log::common_types::StarSystemData;
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]

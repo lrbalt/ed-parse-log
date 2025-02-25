@@ -1,7 +1,13 @@
 [package]
 name = "ed-parse-log-files"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+authors = ["Reinier Balt <lrbalt@gmail.com>"]
+description = "A library to read log files from Elite Dangerous"
+license = "MIT"
+keywords = ["space-sim", "elite dangerous"]
+categories = ["game-development"]
+publish = false
 
 [dependencies]
 serde = { version = "1.0.217", features = ["derive"] }

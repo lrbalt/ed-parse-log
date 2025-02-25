@@ -1,16 +1,14 @@
-use crate::ed_log::EDLogLine;
 use chrono::Local;
+use ed_parse_log_files::EDLogLine;
 use numfmt::{Formatter, Precision, Scales};
 use rayon::prelude::*;
 use std::{
     ffi::OsStr,
-    fs::{read_dir, File},
+    fs::{File, read_dir},
     io::{BufRead, BufReader},
     sync::Mutex,
 };
 use thiserror::Error;
-
-mod ed_log;
 
 #[derive(Error, Debug)]
 enum MyError {
@@ -149,7 +147,7 @@ fn start() -> Result<(), std::io::Error> {
     let lps = total as f64 / delta.num_milliseconds() as f64 * 1000.0;
     let bps = bytes_to_read as f64 / delta.num_milliseconds() as f64 * 1000.0;
     println!(
-        "Perfomance: {} and {}",
+        "Performance: {} and {}",
         lps_formatter.fmt2(lps).to_string(),
         bps_formatter.fmt2(bps),
     );

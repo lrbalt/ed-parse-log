@@ -1,6 +1,5 @@
+use crate::common_types::{CrimeType, StationType};
 use serde::{Deserialize, Serialize};
-
-use crate::ed_log::common_types::{CrimeType, StationType};
 
 #[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]

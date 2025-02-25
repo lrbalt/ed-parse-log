@@ -1,6 +1,4 @@
-use crate::ed_log::common_types::{
-    Allegiance, BodyInformation, BodyType, StarClass, StationInformation,
-};
+use crate::common_types::{Allegiance, BodyInformation, BodyType, StarClass, StationInformation};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]

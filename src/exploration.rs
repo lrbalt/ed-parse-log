@@ -1,9 +1,9 @@
-use crate::ed_log::{
+use crate::{
+    StarClass, Unknown,
     common_types::{
         CodexBodyInformation, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
         ShipScanType, SignalType,
     },
-    StarClass, Unknown,
 };
 use serde::{Deserialize, Serialize};
 

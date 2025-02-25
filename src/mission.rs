@@ -59,7 +59,7 @@ pub enum PassengerType {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PassengerMissionInformation {
     passenger_count: u64,
-    #[serde(rename="PassengerVIPs")]
+    #[serde(rename = "PassengerVIPs")]
     passenger_vips: bool,
     passenger_wanted: bool,
     passenger_type: PassengerType,

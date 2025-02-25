@@ -1,4 +1,4 @@
-use crate::ed_log::common_types::{
+use crate::common_types::{
     Allegiance, BodyType, FactionName, FactionState, PowerplayState, StationInformation,
 };
 use serde::{Deserialize, Serialize};

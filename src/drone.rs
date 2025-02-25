@@ -1,4 +1,4 @@
-use crate::ed_log::common_types::DroneType;
+use crate::common_types::DroneType;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]

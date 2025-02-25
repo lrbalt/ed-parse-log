@@ -1,4 +1,4 @@
-use crate::ed_log::common_types::EngineerModification;
+use crate::common_types::EngineerModification;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]

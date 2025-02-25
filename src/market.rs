@@ -1,4 +1,4 @@
-use crate::ed_log::common_types::{CarrierDockingAccess, StationType};
+use crate::common_types::{CarrierDockingAccess, StationType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -237,7 +237,7 @@ pub struct EDLogMarket {
 pub struct EDLogCargoDepot {
     #[serde(rename = "MissionID")]
     mission_id: u64,
-    update_type: String,  // TODO: enum
+    update_type: String, // TODO: enum
     cargo_type: String,  // TODO: enum
     #[serde(rename = "CargoType_Localised")]
     cargo_type_localised: Option<String>,
