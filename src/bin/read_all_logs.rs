@@ -1,5 +1,5 @@
 use chrono::Local;
-use ed_parse_log_files::EDLogLine;
+use ed_parse_log_files::log_line::EDLogLine;
 use numfmt::{Formatter, Precision, Scales};
 use rayon::prelude::*;
 use std::{
@@ -103,13 +103,13 @@ fn start() -> Result<(), std::io::Error> {
                 }
             };
             let reader = BufReader::new(file);
+            let empty = "".to_string();
 
             reader
                 .lines()
                 .enumerate()
                 .par_bridge()
                 .for_each(|(linenumber, line)| {
-                    let empty = "".to_string();
                     let orig_line = line.as_ref().unwrap_or(&empty).clone();
                     let ed_line: Result<EDLogLine, MyError> = line
                         .map_err(|e| e.into())

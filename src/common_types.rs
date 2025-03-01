@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
+pub enum Unknown {}
+
+#[derive(Serialize, Deserialize)]
 pub enum FactionState {
     None,
     Expansion,
@@ -354,6 +357,7 @@ pub enum StationService {
     ModulePacks,
     OnDockMission,
     CarrierVendor,
+    RegisteringColonisation,
 }
 
 #[derive(Serialize, Deserialize)]
