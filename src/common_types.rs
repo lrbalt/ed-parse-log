@@ -358,6 +358,8 @@ pub enum StationService {
     OnDockMission,
     CarrierVendor,
     RegisteringColonisation,
+    ColonisationContribution,
+    Refinery,
 }
 
 #[derive(Serialize, Deserialize)]

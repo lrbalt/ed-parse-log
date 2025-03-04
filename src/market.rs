@@ -101,6 +101,10 @@ pub enum MarketItemType {
     SemiConductors,
     Polymers,
     InsulatingMembrane,
+    CMMComposite,
+    MedicalDiagnosticEquipment,
+    HydrogenFuel,
+    CeramicComposites,
 
     KamitraCigars,
     FujinTea,

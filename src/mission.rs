@@ -6,6 +6,8 @@ pub struct Mission {
     #[serde(rename = "MissionID")]
     mission_id: u64,
     name: String,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<String>,
     passenger_mission: bool,
     expires: u64,
 }

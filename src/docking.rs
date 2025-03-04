@@ -84,6 +84,7 @@ pub enum DockingDeniedReason {
 pub enum StationState {
     UnderAttack,
     Damaged,
+    Construction,
 }
 
 #[derive(Serialize, Deserialize)]
