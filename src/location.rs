@@ -3,13 +3,13 @@ use crate::common_types::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Powers {
     #[serde(flatten)]
     powers: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Faction {
     name: String,
@@ -26,32 +26,32 @@ pub struct Faction {
     pending_states: Option<Vec<FactionPendingState>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Trend {
     trend: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionRecoveringState {
     state: FactionState,
     trend: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionActiveState {
     state: FactionState,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionPendingState {
     state: FactionState,
     trend: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum WarType {
     Election,
@@ -59,7 +59,7 @@ pub enum WarType {
     CivilWar,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum ConflictStatus {
     #[serde(rename = "")]
@@ -68,7 +68,7 @@ pub enum ConflictStatus {
     Pending,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ConflictFaction {
     name: String,
@@ -76,7 +76,7 @@ pub struct ConflictFaction {
     won_days: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Conflict {
     war_type: WarType,
@@ -85,7 +85,7 @@ pub struct Conflict {
     faction2: ConflictFaction,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ThargoidWarState {
     Unknown,
     #[serde(rename = "")]
@@ -102,7 +102,7 @@ pub enum ThargoidWarState {
     Probing,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ThargoidWar {
     current_state: ThargoidWarState,
@@ -114,7 +114,7 @@ pub struct ThargoidWar {
     estimated_remaining_time: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLocation {
     docked: bool,

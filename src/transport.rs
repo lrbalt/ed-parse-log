@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBookTaxi {
     cost: u64,
@@ -8,7 +8,7 @@ pub struct EDLogBookTaxi {
     destination_location: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDropshipDeploy {
     star_system: String,
@@ -20,7 +20,7 @@ pub struct EDLogDropshipDeploy {
     on_planet: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBookDropship {
     retreat: bool,
@@ -29,7 +29,7 @@ pub struct EDLogBookDropship {
     destination_location: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCancelDropship {
     refund: u64,

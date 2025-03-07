@@ -1,7 +1,7 @@
 use crate::common_types::{CrimeType, StationType};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogCommander {
     #[serde(rename = "FID")]
@@ -10,7 +10,7 @@ pub struct EDLogCommander {
     name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogNewCommander {
     #[serde(rename = "FID")]
@@ -21,21 +21,142 @@ pub struct EDLogNewCommander {
     package: String,
 }
 
-#[derive(Serialize, Deserialize)]
+pub const COMBAT_RANK: [&str; 14] = [
+    "Harmless",
+    "Mostly Harmless",
+    "Novice",
+    "Competent",
+    "Expert",
+    "Master",
+    "Dangerous",
+    "Deadly",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
+pub const TRADE_RANK: [&str; 14] = [
+    "Penniless",
+    "Mostly Penniless",
+    "Peddler",
+    "Dealer",
+    "Merchant",
+    "Broker",
+    "Entrepreneur",
+    "Tycoon",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
+pub const EXPLORE_RANK: [&str; 14] = [
+    "Aimless",
+    "Mostly Aimless",
+    "Scout",
+    "Surveyor",
+    "Trailblazer",
+    "Pathfinder",
+    "Ranger",
+    "Pioneer",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
+pub const SOLDIER_RANK: [&str; 14] = [
+    "Defenceless",
+    "Mostly Defenceless",
+    "Rookie",
+    "Soldier",
+    "Gunslinger",
+    "Warrior",
+    "Gladiator",
+    "Deadeye",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
+pub const EXOBIOLOGIST_RANK: [&str; 14] = [
+    "Directionless",
+    "Mostly Directionless",
+    "Compiler",
+    "Collector",
+    "Cataloguer",
+    "Taxonomist",
+    "Ecologist",
+    "Geneticist",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
+pub const EMPIRE_RANK: [&str; 15] = [
+    "None",
+    "Outsider",
+    "Serf",
+    "Master",
+    "Squire",
+    "Knight",
+    "Lord",
+    "Baron",
+    "Viscount",
+    "Count",
+    "Earl",
+    "Marquis",
+    "Duke",
+    "Prince",
+    "King"
+];
+
+pub const FEDERATION_RANK: [&str; 15] = [
+    "None",
+    "Recruit",
+    "Cadet",
+    "Midshipman",
+    "Petty Officer",
+    "Chief Petty Officer",
+    "Warrant Officer",
+    "Ensign",
+    "Lieutenant",
+    "Leutenant Commander",
+    "Post Commander",
+    "Post Capatain",
+    "Rear Admiral",
+    "Vice Admiral",
+    "Admiral"
+];
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRank {
-    combat: u64,
-    trade: u64,
-    explore: u64,
-    soldier: Option<u64>,
-    exobiologist: Option<u64>,
-    empire: u64,
-    federation: u64,
+    pub combat: u64,
+    pub trade: u64,
+    pub explore: u64,
+    pub soldier: Option<u64>,
+    pub exobiologist: Option<u64>,
+    pub empire: u64,
+    pub federation: u64,
     #[serde(rename = "CQC")]
-    cqc: u64,
+    pub cqc: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPromotion {
     combat: Option<u8>,
@@ -48,32 +169,32 @@ pub struct EDLogPromotion {
     cqc: Option<u8>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogReputation {
-    federation: Option<f64>,
-    empire: Option<f64>,
-    independent: Option<f64>,
-    alliance: Option<f64>,
+    pub federation: Option<f64>,
+    pub empire: Option<f64>,
+    pub independent: Option<f64>,
+    pub alliance: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplay {
-    power: String,
-    rank: u64,
-    merits: u64,
-    votes: Option<u64>,
-    time_pledged: u64,
+    pub power: String,
+    pub rank: u64,
+    pub merits: u64,
+    pub votes: Option<u64>,
+    pub time_pledged: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayJoin {
     power: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayCollect {
     power: String,
@@ -84,7 +205,7 @@ pub struct EDLogPowerplayCollect {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayDeliver {
     power: String,
@@ -95,14 +216,14 @@ pub struct EDLogPowerplayDeliver {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayFastTrack {
     power: String,
     cost: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Killer {
     name: String,
@@ -110,7 +231,7 @@ pub struct Killer {
     rank: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDied {
     killers: Option<Vec<Killer>>,
@@ -121,7 +242,7 @@ pub struct EDLogDied {
     killer_rank: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogResurrect {
     option: String,
@@ -129,14 +250,14 @@ pub struct EDLogResurrect {
     bankrupt: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplaySalary {
     power: String,
     amount: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCommitCrime {
     crime_type: CrimeType,
@@ -148,7 +269,7 @@ pub struct EDLogCommitCrime {
     fine: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCrimeVictim {
     offender: String,
@@ -157,19 +278,19 @@ pub struct EDLogCrimeVictim {
     fine: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CrewMemberRole {
     Helm,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CrewMember {
     name: String,
     role: CrewMemberRole,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEmbarkOrDisembark {
     station_name: String,
@@ -178,7 +299,7 @@ pub struct StationEmbarkOrDisembark {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEmbarkOrDisembark {
     #[serde(rename = "SRV")]
@@ -199,7 +320,7 @@ pub struct EDLogEmbarkOrDisembark {
     station: Option<StationEmbarkOrDisembark>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FriendStatus {
     Online,
     Offline,
@@ -208,21 +329,21 @@ pub enum FriendStatus {
     Lost,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFriends {
     status: FriendStatus,
     name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogHoloscreenHacked {
     power_before: Option<String>,
     power_after: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCommunityGoalReward {
     #[serde(rename = "CGID")]
@@ -234,7 +355,7 @@ pub struct EDLogCommunityGoalReward {
     reward: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCommunityGoalJoin {
     #[serde(rename = "CGID")]
@@ -245,25 +366,25 @@ pub struct EDLogCommunityGoalJoin {
     system: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogInvitedToSquadron {
     squadron_name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum VehicleType {
     Fighter,
     Mothership,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogVehicleSwitch {
     to: VehicleType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEndCrewSession {
     on_crime: bool,

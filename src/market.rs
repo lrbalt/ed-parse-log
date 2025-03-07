@@ -1,7 +1,7 @@
 use crate::common_types::{CarrierDockingAccess, StationType};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum MarketItemType {
     Silver,
@@ -141,7 +141,7 @@ pub enum MarketItemType {
     MetaAlloys,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarketBuy {
     #[serde(rename = "MarketID")]
@@ -155,7 +155,7 @@ pub struct EDLogMarketBuy {
     total_cost: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarketSell {
     #[serde(rename = "MarketID")]
@@ -173,7 +173,7 @@ pub struct EDLogMarketSell {
     black_market: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum MicroResourceType {
     Data,
     Item,
@@ -181,7 +181,7 @@ pub enum MicroResourceType {
     Consumable,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MicroResource {
     name: String,
@@ -191,7 +191,7 @@ pub struct MicroResource {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyMicroResources {
     #[serde(flatten)]
@@ -201,7 +201,7 @@ pub struct EDLogBuyMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTradeMicroResources {
     offered: Vec<MicroResource>,
@@ -215,7 +215,7 @@ pub struct EDLogTradeMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellMicroResources {
     total_count: u64,
@@ -225,7 +225,7 @@ pub struct EDLogSellMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDeliverPowerMicroResources {
     total_count: u64,
@@ -234,7 +234,7 @@ pub struct EDLogDeliverPowerMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarket {
     #[serde(rename = "MarketID")]
@@ -245,7 +245,7 @@ pub struct EDLogMarket {
     star_system: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCargoDepot {
     #[serde(rename = "MissionID")]

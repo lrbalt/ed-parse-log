@@ -1,14 +1,14 @@
 use crate::common_types::ModuleEngineeringModifiers;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum EngineerProgress {
     Invited,
     Unlocked,
     Known,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Engineer {
     engineer: Option<String>,
@@ -19,7 +19,7 @@ pub struct Engineer {
     rank: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerProgress {
     #[serde(flatten)]
@@ -27,7 +27,7 @@ pub struct EDLogEngineerProgress {
     engineers: Option<Vec<Engineer>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EngineerCraftIngredient {
     name: String,
@@ -36,7 +36,7 @@ pub struct EngineerCraftIngredient {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ExperimentalEffect {
     apply_experimental_effect: String,
@@ -45,7 +45,7 @@ pub struct ExperimentalEffect {
     experimental_effect_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerCraft {
     slot: String,
@@ -64,7 +64,7 @@ pub struct EDLogEngineerCraft {
     modifiers: Vec<ModuleEngineeringModifiers>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerContribution {
     engineer: String,

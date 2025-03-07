@@ -1,7 +1,7 @@
 use crate::common_types::StarSystemData;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Ship {
     #[serde(rename = "ShipID")]
@@ -17,7 +17,7 @@ pub struct Ship {
     hot: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSwap {
     ship_type: String,
@@ -32,7 +32,7 @@ pub struct EDLogShipyardSwap {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardTransfer {
     ship_type: String,
@@ -50,7 +50,7 @@ pub struct EDLogShipyardTransfer {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardNew {
     ship_type: String, // TODO: ShipType
@@ -60,7 +60,7 @@ pub struct EDLogShipyardNew {
     new_ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyard {
     #[serde(rename = "MarketID")]
@@ -69,7 +69,7 @@ pub struct EDLogShipyard {
     star_system: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardBuy {
     ship_type: String, // TODO: ShipType
@@ -83,7 +83,7 @@ pub struct EDLogShipyardBuy {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSell {
     ship_type: String,
@@ -94,7 +94,7 @@ pub struct EDLogShipyardSell {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardRedeem {
     ship_type: String, // TODO ShipType
@@ -104,7 +104,7 @@ pub struct EDLogShipyardRedeem {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipRedeemed {
     ship_type: String, // TODO ShipType
@@ -112,7 +112,7 @@ pub struct EDLogShipRedeemed {
     new_ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStoredShips {
     station_name: String,

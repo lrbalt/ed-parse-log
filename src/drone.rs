@@ -1,14 +1,14 @@
 use crate::common_types::DroneType;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogLaunchDrone {
     #[serde(rename = "Type")]
     drone_type: DroneType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRepairDrone {
     hull_repaired: Option<f64>,
@@ -16,7 +16,7 @@ pub struct EDLogRepairDrone {
     cockpit_repaired: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellDrones {
     #[serde(rename = "Type")]
@@ -26,7 +26,7 @@ pub struct EDLogSellDrones {
     total_sale: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyDrones {
     #[serde(rename = "Type")]

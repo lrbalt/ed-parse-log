@@ -4,14 +4,14 @@ use crate::common_types::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct DiscoveredSystem {
     system_name: String,
     num_bodies: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SpawningInfo {
     spawning_state: String,
@@ -26,7 +26,7 @@ pub struct SpawningInfo {
     time_remaining: f32,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSSignalDiscovered {
     system_address: u64,
@@ -43,14 +43,14 @@ pub struct EDLogFSSSignalDiscovered {
     is_station: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct AtmosphereComposition {
     name: String,
     percent: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyParent {
     ring: Option<u64>,
@@ -59,14 +59,14 @@ pub struct BodyParent {
     planet: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MaterialOnBody {
     name: String,
     percent: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyComposition {
     ice: f64,
@@ -74,7 +74,7 @@ pub struct BodyComposition {
     metal: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ScannedStarDetails {
     star_type: Option<StarClass>,
@@ -87,13 +87,13 @@ pub struct ScannedStarDetails {
     luminosity: LuminosityType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum RingClass {
     #[serde(rename = "eRingClass_Rocky")]
     Rocky,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Ring {
     name: String,
@@ -104,7 +104,7 @@ pub struct Ring {
     outer_rad: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ScannedBodyDetails {
     tidal_lock: bool,
@@ -125,7 +125,7 @@ pub struct ScannedBodyDetails {
     rings: Option<Vec<Ring>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ScannedCommonDetails {
     semi_major_axis: f64,
@@ -139,7 +139,7 @@ pub struct ScannedCommonDetails {
     axial_tilt: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ReserveLevel {
     #[serde(rename = "MajorResources")]
     Major,
@@ -153,7 +153,7 @@ pub enum ReserveLevel {
     Depleted,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScan {
     scan_type: ScanType,
@@ -176,20 +176,20 @@ pub struct EDLogScan {
     was_mapped: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScanned {
     scan_type: ShipScanType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDiscoveryScan {
     system_address: u64,
     bodies: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDatalinkScan {
     message: String,
@@ -197,14 +197,14 @@ pub struct EDLogDatalinkScan {
     message_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNavBeaconScan {
     system_address: u64,
     num_bodies: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScanOrganic {
     scan_type: ScanType,
@@ -221,7 +221,7 @@ pub struct EDLogScanOrganic {
     body: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCodexEntry {
     #[serde(rename = "EntryID")]
@@ -246,7 +246,7 @@ pub struct EDLogCodexEntry {
     voucher_amount: Option<u32>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ProspectedMaterial {
     name: String,
@@ -255,7 +255,7 @@ pub struct ProspectedMaterial {
     proportion: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogProspectedAsteroid {
     materials: Vec<ProspectedMaterial>,
@@ -266,7 +266,7 @@ pub struct EDLogProspectedAsteroid {
     remaining: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMiningRefined {
     #[serde(rename = "Type")]
@@ -275,7 +275,7 @@ pub struct EDLogMiningRefined {
     material_type_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterialDiscovered {
     category: MaterialCategory,
@@ -285,7 +285,7 @@ pub struct EDLogMaterialDiscovered {
     discovery_number: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDataScanned {
     #[serde(rename = "Type")]
@@ -294,14 +294,14 @@ pub struct EDLogDataScanned {
     data_type_localised: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyExplorationData {
     system: String,
     cost: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellExplorationData {
     systems: Vec<String>,
@@ -311,7 +311,7 @@ pub struct EDLogSellExplorationData {
     total_earnings: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SoldBioData {
     genus: String,
@@ -327,7 +327,7 @@ pub struct SoldBioData {
     bonus: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellOrganicData {
     #[serde(rename = "MarketID")]
@@ -335,7 +335,7 @@ pub struct EDLogSellOrganicData {
     bio_data: Vec<SoldBioData>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSDiscoveryScan {
     progress: f64,
@@ -345,7 +345,7 @@ pub struct EDLogFSSDiscoveryScan {
     system_address: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStationBernalSphere {
     system_address: u64,
@@ -354,7 +354,7 @@ pub struct EDLogStationBernalSphere {
     is_station: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSAAScanComplete {
     body_name: String,
@@ -365,7 +365,7 @@ pub struct EDLogSAAScanComplete {
     efficiency_target: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScanBaryCentre {
     star_system: String,
@@ -381,7 +381,7 @@ pub struct EDLogScanBaryCentre {
     mean_anomaly: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSAllBodiesFound {
     system_name: String,
@@ -389,7 +389,7 @@ pub struct EDLogFSSAllBodiesFound {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodySignal {
     #[serde(rename = "Type")]
@@ -399,7 +399,7 @@ pub struct BodySignal {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSBodySignals {
     body_name: String,
@@ -409,7 +409,7 @@ pub struct EDLogFSSBodySignals {
     signals: Vec<BodySignal>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SAAGenus {
     genus: String,
@@ -417,7 +417,7 @@ pub struct SAAGenus {
     genus_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSAASignalsFound {
     body_name: String,
@@ -428,7 +428,7 @@ pub struct EDLogSAASignalsFound {
     genuses: Option<Vec<SAAGenus>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMultiSellExplorationData {
     discovered: Vec<DiscoveredSystem>,

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Mission {
     #[serde(rename = "MissionID")]
@@ -12,7 +12,7 @@ pub struct Mission {
     expires: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissions {
     active: Vec<Mission>,
@@ -20,7 +20,7 @@ pub struct EDLogMissions {
     complete: Vec<Mission>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MissionTarget {
     target_type: String,
@@ -33,7 +33,7 @@ pub struct MissionTarget {
     kill_count: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MissionDestination {
     destination_system: String,
@@ -43,7 +43,7 @@ pub struct MissionDestination {
     destination_settlement: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CommodityMission {
     commodity: String,
@@ -52,12 +52,12 @@ pub struct CommodityMission {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum PassengerType {
     Refugee,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PassengerMissionInformation {
     passenger_count: u64,
@@ -67,7 +67,7 @@ pub struct PassengerMissionInformation {
     passenger_type: PassengerType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissionAccepted {
     faction: String,
@@ -91,7 +91,7 @@ pub struct EDLogMissionAccepted {
     mission_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CommodityReward {
     name: String,
@@ -100,7 +100,7 @@ pub struct CommodityReward {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MaterialReward {
     name: String,
@@ -112,7 +112,7 @@ pub struct MaterialReward {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Effect {
     effect: String,
@@ -121,7 +121,7 @@ pub struct Effect {
     trend: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Influence {
     system_address: u64,
@@ -129,7 +129,7 @@ pub struct Influence {
     influence: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionEffect {
     faction: String,
@@ -139,7 +139,7 @@ pub struct FactionEffect {
     reputation: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissionCompleted {
     faction: String,
@@ -163,7 +163,7 @@ pub struct EDLogMissionCompleted {
     faction_effects: Vec<FactionEffect>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissionFailed {
     name: String,
@@ -172,7 +172,7 @@ pub struct EDLogMissionFailed {
     mission_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissionAbandoned {
     name: String,
@@ -181,7 +181,7 @@ pub struct EDLogMissionAbandoned {
     mission_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMissionRedirected {
     #[serde(rename = "MissionID")]
@@ -196,7 +196,7 @@ pub struct EDLogMissionRedirected {
     old_destination_system: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSearchAndRescue {
     #[serde(rename = "MarketID")]
@@ -208,14 +208,14 @@ pub struct EDLogSearchAndRescue {
     reward: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BountyReward {
     faction: String,
     reward: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BountyPilot {
     pilot_name: String,
@@ -223,7 +223,7 @@ pub struct BountyPilot {
     pilot_name_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBounty {
     rewards: Option<Vec<BountyReward>>,
@@ -240,7 +240,7 @@ pub struct EDLogBounty {
     shared_with_others: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum VoucherType {
     #[serde(rename = "CombatBond")]
@@ -251,14 +251,14 @@ pub enum VoucherType {
     Scannable,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct VoucherFaction {
     faction: String,
     amount: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRedeemVoucher {
     #[serde(rename = "Type")]
@@ -269,7 +269,7 @@ pub struct EDLogRedeemVoucher {
     broker_percentage: Option<f32>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDatalinkVoucher {
     reward: u64,
@@ -277,7 +277,7 @@ pub struct EDLogDatalinkVoucher {
     payee_faction: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFactionKillBond {
     reward: u64,

@@ -1,14 +1,14 @@
 use crate::common_types::ModuleEngineeringModifiers;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FuelCapacity {
     main: f64,
     reserve: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModuleEngineering {
     engineer: Option<String>,
@@ -25,7 +25,7 @@ pub struct ModuleEngineering {
     modifiers: Vec<ModuleEngineeringModifiers>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Module {
     slot: String,
@@ -39,7 +39,7 @@ pub struct Module {
     engineering: Option<ModuleEngineering>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogLoadout {
     ship: String,

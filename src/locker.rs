@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct ShipLockerItem {
     name: String,
@@ -13,7 +13,7 @@ pub struct ShipLockerItem {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct LockerContent {
     items: Vec<ShipLockerItem>,
@@ -22,7 +22,7 @@ pub struct LockerContent {
     data: Vec<ShipLockerItem>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogShipLocker {
     #[serde(flatten)]

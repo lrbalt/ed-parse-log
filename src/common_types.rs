@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Unknown {}
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FactionState {
     None,
     Expansion,
@@ -29,7 +29,7 @@ pub enum FactionState {
     Lockdown,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum BodyType {
     Star,
     Station,
@@ -40,7 +40,7 @@ pub enum BodyType {
     Null,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub enum CrimeType {
     CollidedAtSpeedInNoFireZone,
@@ -84,14 +84,14 @@ pub enum CrimeType {
     CollidedAtSpeedInNoFireZoneHulldamage,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum CarrierDockingAccess {
     All,
     Friends,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub enum StarClass {
     A,
@@ -121,7 +121,7 @@ pub enum StarClass {
     Y,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum LuminosityType {
     Va,
     V,
@@ -133,19 +133,19 @@ pub enum LuminosityType {
     Seven,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum SignalType {
     StationBernalSphere,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum MaterialCategory {
     Manufactured,
     Encoded,
     Raw,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum TraderType {
     Manufactured,
@@ -153,7 +153,7 @@ pub enum TraderType {
     Raw,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ScanType {
     AutoScan,
     Detailed,
@@ -164,7 +164,7 @@ pub enum ScanType {
     NavBeaconDetail,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum SAASignalType {
     #[serde(rename = "tritium")]
     Tritium,
@@ -172,7 +172,7 @@ pub enum SAASignalType {
     Opal,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FSSSignalType {
     Generic,
     ResourceExtraction,
@@ -194,7 +194,7 @@ pub enum FSSSignalType {
     Uss,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum StationType {
     #[serde(rename = "")]
     None,
@@ -212,13 +212,13 @@ pub enum StationType {
     AsteroidBase,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ShipScanType {
     Crime,
     Cargo,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Allegiance {
     #[serde(rename = "")]
     None,
@@ -231,7 +231,7 @@ pub enum Allegiance {
     Alliance,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum DroneType {
     Drones,
     Collection,
@@ -242,7 +242,7 @@ pub enum DroneType {
     Research,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum PowerplayState {
     Unoccupied,
     Exploited,
@@ -253,7 +253,7 @@ pub enum PowerplayState {
     Stronghold,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StarSystemData {
     star_system: String,
@@ -263,14 +263,14 @@ pub struct StarSystemData {
     transfer_time: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationFaction {
     name: String,
     faction_state: Option<FactionState>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyInformation {
     star_system: String,
@@ -280,7 +280,7 @@ pub struct BodyInformation {
     body_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CodexBodyInformation {
     system: String,
@@ -295,7 +295,7 @@ pub struct CodexBodyInformation {
     longitude: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationInformation {
     station_name: String,
@@ -314,7 +314,7 @@ pub struct StationInformation {
     station_economies: Vec<StationEconomy>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum StationService {
     Dock,
@@ -362,7 +362,7 @@ pub enum StationService {
     Refinery,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEconomy {
     name: String,
@@ -371,14 +371,14 @@ pub struct StationEconomy {
     proportion: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionName {
     name: String,
     faction_state: Option<FactionState>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EngineerModification {
     engineer_modifications: String,
@@ -386,7 +386,7 @@ pub struct EngineerModification {
     quality: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModifierValue {
     value: f64,
@@ -394,7 +394,7 @@ pub struct ModifierValue {
     less_is_good: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModifierDescription {
     value_str: String,
@@ -402,7 +402,7 @@ pub struct ModifierDescription {
     value_str_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "Label")]
 pub enum ModuleEngineeringModifiers {
     DamagePerSecond(ModifierValue),
@@ -465,13 +465,13 @@ pub enum ModuleEngineeringModifiers {
     BurstSize(ModifierValue),
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogName {
     name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum PilotRank {
     #[serde(rename = "Mostly Harmless")]
     MostlyHarmless,
@@ -485,7 +485,7 @@ pub enum PilotRank {
     Elite,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum TechBrokerType {
     Sirius,

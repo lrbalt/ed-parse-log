@@ -1,7 +1,7 @@
 use crate::common_types::BodyType;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseDestinationDrop {
     #[serde(rename = "Type")]
@@ -13,7 +13,7 @@ pub struct EDLogSupercruiseDestinationDrop {
     market_id: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogSupercruiseExit {
     taxi: Option<bool>,
@@ -26,7 +26,7 @@ pub struct EDLogSupercruiseExit {
     body_type: BodyType,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogSupercruiseEntry {
     taxi: Option<bool>,

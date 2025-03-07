@@ -11,8 +11,9 @@ publish = false
 
 [dependencies]
 serde = { version = "1.0.217", features = ["derive"] }
-serde_json = { version = "1.0.138" }
+serde_json = { version = "1.0.140" }
 rayon = { version = "1.10.0" }
-thiserror = { version = "2.0.11" }
-chrono = { version = "0.4.39" }
+thiserror = { version = "2.0.12" }
+chrono = { version = "0.4.39", features=["serde"] }
 numfmt = { version = "1.1.1" }
+prettytable-rs = { version = "0.10.0", default-features = false }

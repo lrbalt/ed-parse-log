@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -79,20 +80,20 @@ use crate::{
     wing::EDLogWingJoin,
 };
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct GameModeGroup {
     group: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "game_mode")]
 pub enum GameMode {
     Group(GameModeGroup),
     Solo,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LoadGameShip {
     ship: String,
@@ -108,7 +109,7 @@ pub struct LoadGameShip {
     game_mode: GameMode,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
@@ -128,13 +129,13 @@ pub struct EDLogLoadGame {
     build: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMusic {
     music_track: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogReceivedText {
     from: String,
@@ -146,7 +147,7 @@ pub struct EDLogReceivedText {
     channel: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSendText {
     to: String,
@@ -154,7 +155,7 @@ pub struct EDLogSendText {
     sent: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogFileHeader {
     part: u64,
@@ -165,7 +166,7 @@ pub struct EDLogFileHeader {
     build: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogUSSDrop {
     #[serde(rename = "USSType")]
@@ -176,7 +177,7 @@ pub struct EDLogUSSDrop {
     uss_threat: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCollectItems {
     name: String,
@@ -190,7 +191,7 @@ pub struct EDLogCollectItems {
     stolen: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogCollectCargo {
     #[serde(rename = "Type")]
@@ -203,7 +204,7 @@ pub struct EDLogCollectCargo {
     mission_id: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CargoTransfer {
     #[serde(rename = "Type")]
@@ -214,13 +215,13 @@ pub struct CargoTransfer {
     direction: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCargoTransfer {
     transfers: Vec<CargoTransfer>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScreenshot {
     filename: String,
@@ -230,7 +231,7 @@ pub struct EDLogScreenshot {
     body: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "event", deny_unknown_fields)]
 #[allow(clippy::large_enum_variant)]
 pub enum EDLogEvent {
@@ -486,9 +487,19 @@ pub enum EDLogEvent {
     CargoTransfer(EDLogCargoTransfer),
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogLine {
-    timestamp: String,
+    timestamp: DateTime<Utc>,
     #[serde(flatten)]
     event: EDLogEvent,
+}
+
+impl EDLogLine {
+    pub fn event(&self) -> &EDLogEvent {
+        &self.event
+    }
+
+    pub fn timestamp(&self) -> &DateTime<Utc> {
+        &self.timestamp
+    }
 }

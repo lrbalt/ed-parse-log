@@ -1,14 +1,14 @@
 use crate::common_types::{Allegiance, BodyInformation, BodyType, StarClass, StationInformation};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogFuelScoop {
     scooped: f64,
     total: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLiftoff {
     player_controlled: bool,
@@ -25,7 +25,7 @@ pub struct EDLogLiftoff {
     nearest_destination_localised: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogApproachSettlement {
     name: String,
@@ -39,7 +39,7 @@ pub struct EDLogApproachSettlement {
     longitude: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogFSDTarget {
     name: String,
@@ -48,7 +48,7 @@ pub struct EDLogFSDTarget {
     remaining_jumps_in_route: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 // todo: refactor with location->edloglocation
 pub struct EDLogFSDJump {
@@ -78,7 +78,7 @@ pub struct EDLogFSDJump {
     fuel_level: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockSRV {
     #[serde(rename = "SRVType")]
@@ -89,7 +89,7 @@ pub struct EDLogDockSRV {
     id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLaunchSRV {
     #[serde(rename = "SRVType")]
@@ -102,7 +102,7 @@ pub struct EDLogLaunchSRV {
     player_controlled: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSRVDestroyed {
     #[serde(rename = "ID")]
@@ -113,7 +113,7 @@ pub struct EDLogSRVDestroyed {
     srv_type_localised: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTouchdown {
     player_controlled: bool,
@@ -130,13 +130,13 @@ pub struct EDLogTouchdown {
     nearest_destination_localised: Option<String>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum JumpType {
     Hyperspace,
     Supercruise,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct JumpToStarsystem {
     star_system: String,
@@ -144,7 +144,7 @@ pub struct JumpToStarsystem {
     star_class: StarClass,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStartJump {
     jump_type: JumpType,

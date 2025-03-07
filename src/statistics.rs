@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StatisticsBankAccountOnFoot {
     #[serde(rename = "Spent_On_Suits")]
     spent_on_suits: u64,
@@ -18,7 +18,7 @@ pub struct StatisticsBankAccountOnFoot {
     premium_stock_bought: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsBankAccount {
     #[serde(rename = "Current_Wealth")]
     current_wealth: u64,
@@ -42,7 +42,7 @@ pub struct EDLogStatisticsBankAccount {
     onfoot_statistics: Option<StatisticsBankAccountOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StatisticsCombatOnFoot {
     #[serde(rename = "OnFoot_Combat_Bonds")]
     onfoot_combat_bonds: u64,
@@ -84,7 +84,7 @@ pub struct StatisticsCombatOnFoot {
     onfoot_scavs_killed: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     bounties_claimed: u64,
@@ -106,7 +106,7 @@ pub struct EDLogStatisticsCombat {
     onfoot_combat_statistics: Option<StatisticsCombatOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsCrimeOnFoot {
     #[serde(rename = "Malware_Uploaded")]
@@ -145,7 +145,7 @@ pub struct StatisticsCrimeOnFoot {
     profiles_cloned: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatisticsCrime {
     notoriety: u64,
@@ -162,7 +162,7 @@ pub struct EDLogStatisticsCrime {
     statistics_on_foot: Option<StatisticsCrimeOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsSmuggling {
     #[serde(rename = "Black_Markets_Traded_With")]
     black_markets_traded_with: u64,
@@ -176,7 +176,7 @@ pub struct EDLogStatisticsSmuggling {
     highest_single_transaction: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StatisticsTradingOnFoot {
     #[serde(rename = "Data_Sold")]
     data_sold: u64,
@@ -186,7 +186,7 @@ pub struct StatisticsTradingOnFoot {
     assets_sold: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsTrading {
     #[serde(rename = "Markets_Traded_With")]
     markets_traded_with: u64,
@@ -202,7 +202,7 @@ pub struct EDLogStatisticsTrading {
     trading_onfoot_statistics: Option<StatisticsTradingOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsMining {
     #[serde(rename = "Mining_Profits")]
     mining_profits: u64,
@@ -212,7 +212,7 @@ pub struct EDLogStatisticsMining {
     materials_collected: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StatisticsExplorationOnFoot {
     #[serde(rename = "OnFoot_Distance_Travelled")]
     on_foot_distance_travelled: u64,
@@ -230,7 +230,7 @@ pub struct StatisticsExplorationOnFoot {
     settlements_visited: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsExploration {
     #[serde(rename = "Systems_Visited")]
     systems_visited: u64,
@@ -256,7 +256,7 @@ pub struct EDLogStatisticsExploration {
     statistics_exploration_onfoot: Option<StatisticsExplorationOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsPassengers {
     #[serde(rename = "Passengers_Missions_Accepted")]
     passengers_missions_accepted: Option<u64>,
@@ -270,7 +270,7 @@ pub struct EDLogStatisticsPassengers {
     passengers_missions_ejected: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StatisticsSeachAndRescueOnFoot {
     #[serde(rename = "Salvage_Legal_POI")]
     salvage_legal_poi: u64,
@@ -290,7 +290,7 @@ pub struct StatisticsSeachAndRescueOnFoot {
     settlements_state_reboot: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticSearchAndRescue {
     #[serde(rename = "SearchRescue_Traded")]
     search_rescue_traded: u64,
@@ -302,7 +302,7 @@ pub struct EDLogStatisticSearchAndRescue {
     statistics_search_and_rescue_onfoot: Option<StatisticsSeachAndRescueOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsTgEncounters {
     #[serde(rename = "TG_ENCOUNTER_KILLED")]
     tg_encounter_killed: Option<u64>,
@@ -316,7 +316,7 @@ pub struct EDLogStatisticsTgEncounters {
     tg_encounter_total_last_ship: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsCraftingOnFoot {
     #[serde(rename = "Suit_Mods_Applied")]
@@ -337,7 +337,7 @@ pub struct StatisticsCraftingOnFoot {
     weapon_mods_applied_full: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
@@ -358,7 +358,7 @@ pub struct EDLogStatisticsCrafting {
     statistics_crafting_onfoot: Option<StatisticsCraftingOnFoot>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages")]
     npc_crew_total_wages: Option<u64>,
@@ -370,7 +370,7 @@ pub struct EDLogStatisticsCrew {
     npc_crew_died: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogStatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]
     multicrew_time_total: u64,
@@ -384,7 +384,7 @@ pub struct EDLogStatisticsMulticrew {
     multicrew_fines_total: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct StatisticsMaterialTraderStatsDetail {
     #[serde(rename = "Encoded_Materials_Traded")]
@@ -407,7 +407,7 @@ pub struct StatisticsMaterialTraderStatsDetail {
     assets_traded_out: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatisticsMaterialTraderStats {
     #[serde(rename = "Trades_Completed")]
@@ -417,7 +417,7 @@ pub struct EDLogStatisticsMaterialTraderStats {
     detailed_traded_statistics: Option<StatisticsMaterialTraderStatsDetail>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatisticsFleetcarrier {
     #[serde(rename = "FLEETCARRIER_EXPORT_TOTAL")]
@@ -458,7 +458,7 @@ pub struct EDLogStatisticsFleetcarrier {
     fleetcarrier_vouchers_profit: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatisticsExobiology {
     #[serde(rename = "Organic_Genus_Encountered")]
@@ -485,7 +485,7 @@ pub struct EDLogStatisticsExobiology {
     organic_species: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogStatistics {
     #[serde(rename = "Bank_Account")]

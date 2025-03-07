@@ -4,7 +4,7 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierFinance {
     #[serde(rename = "CarrierID")]
@@ -27,7 +27,7 @@ pub struct EDLogCarrierFinance {
     tax_rate_outfitting: Option<u8>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierTradeOrder {
     #[serde(rename = "CarrierID")]
@@ -41,7 +41,7 @@ pub struct EDLogCarrierTradeOrder {
     price: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierBankTransfer {
     #[serde(rename = "CarrierID")]
@@ -51,7 +51,7 @@ pub struct EDLogCarrierBankTransfer {
     carrier_balance: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierJumpRequest {
     #[serde(rename = "CarrierID")]
@@ -64,7 +64,7 @@ pub struct EDLogCarrierJumpRequest {
     departure_time: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierJump {
     docked: bool,
@@ -103,14 +103,14 @@ pub struct EDLogCarrierJump {
     conflicts: Option<Vec<Conflict>>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierJumpCancelled {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierDepositFuel {
     #[serde(rename = "CarrierID")]
@@ -119,7 +119,7 @@ pub struct EDLogCarrierDepositFuel {
     total: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CrewRole {
     Repair,
     VoucherRedemption,
@@ -133,14 +133,14 @@ pub enum CrewRole {
     PioneerSupplies,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CrewServiceOperation {
     Activate,
     Pause,
     Resume,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierCrewServices {
     #[serde(rename = "CarrierID")]
@@ -150,7 +150,7 @@ pub struct EDLogCarrierCrewServices {
     crew_name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierBuy {
     #[serde(rename = "CarrierID")]
@@ -163,7 +163,7 @@ pub struct EDLogCarrierBuy {
     callsign: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierNameChange {
     #[serde(rename = "CarrierID")]
@@ -172,15 +172,15 @@ pub struct EDLogCarrierNameChange {
     callsign: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub enum ShipPack {}
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub enum ModulePack {}
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct CrewMember {
     crew_role: String,
@@ -188,14 +188,14 @@ pub struct CrewMember {
     activated_props: Option<ActivatedProps>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct ActivatedProps {
     enabled: bool,
     crew_name: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct Finance {
     carrier_balance: u64,
@@ -213,7 +213,7 @@ pub struct Finance {
     tax_rate_outfitting: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct SpaceUsage {
     total_capacity: u64,
@@ -225,7 +225,7 @@ pub struct SpaceUsage {
     free_space: u64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogCarrierStats {
     #[serde(rename = "CarrierID")]
@@ -245,7 +245,7 @@ pub struct EDLogCarrierStats {
     module_packs: Vec<ModulePack>,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogFCMaterials {
     #[serde(rename = "MarketID")]

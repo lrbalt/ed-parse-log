@@ -3,10 +3,7 @@ use ed_parse_log_files::log_line::EDLogLine;
 use numfmt::{Formatter, Precision, Scales};
 use rayon::prelude::*;
 use std::{
-    ffi::OsStr,
-    fs::{File, read_dir},
-    io::{BufRead, BufReader},
-    sync::Mutex,
+    env, ffi::OsStr, fs::{read_dir, File}, io::{BufRead, BufReader}, process::exit, sync::Mutex
 };
 use thiserror::Error;
 
@@ -47,7 +44,12 @@ fn start() -> Result<(), std::io::Error> {
         .scales(Scales::new(1000, vec!["ms", "s"]).unwrap())
         .comma(true);
 
-    let path = "/Users/lrbalt/OneDrive/ed db";
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 2 {
+        println!("Usage: {} /path/to/log/files", env!("CARGO_PKG_NAME"));
+        exit(-1);
+    }
+    let path = &args[1];
 
     let errors = Mutex::new(Vec::new());
     let db: Mutex<Vec<EDLogLine>> = Mutex::new(Vec::new());
