@@ -105,6 +105,12 @@ pub enum MarketItemType {
     MedicalDiagnosticEquipment,
     HydrogenFuel,
     CeramicComposites,
+    SurvivalEquipment,
+    BuildingFabricators,
+    EvacuationShelter,
+    EmergencyPowercells,
+    SurfaceStabilisers,
+    StructuralRegulators,
 
     KamitraCigars,
     FujinTea,

@@ -210,6 +210,7 @@ pub enum StationType {
     SurfaceStation,
     OnFootSettlement,
     AsteroidBase,
+    PlanetaryConstructionDepot,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
