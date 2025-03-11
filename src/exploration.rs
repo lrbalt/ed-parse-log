@@ -390,10 +390,42 @@ pub struct EDLogFSSAllBodiesFound {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum BodySignalType {
+    #[serde(rename = "$SAA_SignalType_Biological;")]
+    Biological,
+    #[serde(rename = "$SAA_SignalType_Geological;")]
+    Geological,
+    #[serde(rename = "$SAA_SignalType_Guardian;")]
+    Guardian,
+    #[serde(rename = "$SAA_SignalType_Human;")]
+    Human,
+    #[serde(rename = "$SAA_SignalType_Other;")]
+    Other,
+    #[serde(rename = "$SAA_SignalType_Thargoid;")]
+    Thargoid,
+
+    Alexandrite,
+    Benitoite,
+    Bromellite,
+    Grandidierite,
+    LowTemperatureDiamond,
+    Monazite,
+    Musgravite,
+    Opal,
+    Painite,
+    Platinum,
+    Rhodplumsite,
+    Serendibite,
+    #[serde(alias = "tritium")]
+    Tritium,
+
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodySignal {
     #[serde(rename = "Type")]
-    body_signal_type: String,
+    body_signal_type: BodySignalType,
     #[serde(rename = "Type_Localised")]
     body_signal_type_localised: Option<String>,
     count: u64,

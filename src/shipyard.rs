@@ -1,4 +1,4 @@
-use crate::common_types::StarSystemData;
+use crate::{common_types::StarSystemData, ship::ShipType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 pub struct Ship {
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    ship_type: String,
+    ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
     name: Option<String>,
@@ -20,12 +20,12 @@ pub struct Ship {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSwap {
-    ship_type: String,
+    ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    store_old_ship: String,
+    store_old_ship: ShipType,
     #[serde(rename = "StoreShipID")]
     store_ship_id: u64,
     #[serde(rename = "MarketID")]

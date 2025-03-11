@@ -63,10 +63,98 @@ pub struct TargetedSubsystem {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "lowercase")]
+pub enum ShipType {
+    #[serde(alias = "Adder")]
+    Adder,
+    #[serde(alias = "Asp")]
+    Asp,
+    #[serde(rename = "asp_scout")]
+    AspScout,
+    #[serde(alias = "Anaconda")]
+    Anaconda,
+    BelugaLiner,
+    #[serde(alias = "CobraMkIII")]
+    CobraMkIII,
+    CobraMkIV,
+    CobraMkV,
+    #[serde(alias = "Cutter")]
+    Cutter,
+    DiamondBack,
+    DiamondBackXL,
+    #[serde(rename = "diamondback_taxi")]
+    DiamondBackTaxi,
+    Dolphin,
+    Eagle,
+    #[serde(rename = "empire_courier")]
+    EmpireCourier,
+    #[serde(rename = "empire_eagle", alias = "Empire_Eagle")]
+    EmpireEagle,
+    #[serde(rename = "empire_fighter")]
+    Empirefighter,
+    #[serde(rename = "empire_trader", alias = "Empire_Trader")]
+    EmpireTrader,
+    #[serde(rename = "federation_corvette", alias = "Federation_Corvette")]
+    FederationCorvette,
+    #[serde(rename = "federation_dropship")]
+    FederationDropship,
+    #[serde(rename = "federation_dropship_mkii")]
+    FederationDropshipMkII,
+    #[serde(rename = "federation_fighter")]
+    FederationFighter,
+    #[serde(rename = "federation_gunship")]
+    FederationGunship,
+    #[serde(alias = "FerDeLance")]
+    FerDeLance,
+    #[serde(rename = "gdn_hybrid_fighter_v1")]
+    GuardianHybridFighterV1,
+    Hauler,
+    #[serde(rename = "independent_fighter")]
+    IndependantFighter,
+    #[serde(rename = "independant_trader")]
+    IndependentTrader,
+    #[serde(rename = "krait_light")]
+    KraitLight,
+    #[serde(rename = "krait_mkii", alias = "Krait_MkII")]
+    KraitMkII,
+    Mamba,
+    #[serde(alias = "Mandalay")]
+    Mandalay,
+    Orca,
+    #[serde(alias = "Python")]
+    Python,
+    #[serde(rename = "python_nx", alias = "Python_NX")]
+    PythonNX,
+    #[serde(alias = "SideWinder")]
+    Sidewinder,
+    Type6,
+    Type7,
+    #[serde(alias = "Type8")]
+    Type8,
+    #[serde(alias = "Type9")]
+    Type9,
+    #[serde(rename = "type9_military", alias = "Type9_Military")]
+    Type9Military,
+    #[serde(alias = "TypeX")]
+    TypeX,
+    #[serde(rename = "typex_2")]
+    TypeX2,
+    #[serde(rename = "typex_3")]
+    TypeX3,
+    Viper,
+    #[serde(rename = "viper_mkiv")]
+    ViperMkIV,
+    #[serde(rename = "viper_taxi")]
+    ViperTaxi,
+    #[serde(alias = "Vulture")]
+    Vulture,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipTargeted {
     target_locked: bool,
-    ship: Option<String>,
+    ship: Option<ShipType>,
     #[serde(rename = "Ship_Localised")]
     ship_localised: Option<String>,
     scan_stage: Option<u64>,

@@ -62,7 +62,7 @@ use crate::{
         EDLogEscapeInterdiction, EDLogFighterDestroyed, EDLogFighterRebuilt, EDLogHullDamage,
         EDLogInterdicted, EDLogInterdiction, EDLogLaunchFighter, EDLogRebootRepair,
         EDLogReservoirReplenished, EDLogSetUserShipName, EDLogShieldState, EDLogShipTargeted,
-        EDLogSynthesis, EDLogUnderAttack,
+        EDLogSynthesis, EDLogUnderAttack, ShipType,
     },
     shipyard::{
         EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardRedeem,
@@ -96,7 +96,7 @@ pub enum GameMode {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LoadGameShip {
-    ship: String,
+    ship: ShipType,
     #[serde(rename = "Ship_Localised")]
     ship_localised: String,
     #[serde(rename = "ShipID")]

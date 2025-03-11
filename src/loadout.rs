@@ -1,4 +1,4 @@
-use crate::common_types::ModuleEngineeringModifiers;
+use crate::{common_types::ModuleEngineeringModifiers, ship::ShipType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -42,7 +42,7 @@ pub struct Module {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogLoadout {
-    ship: String,
+    ship: ShipType,
     #[serde(rename = "ShipID")]
     ship_id: u64,
     ship_name: String,
