@@ -2,7 +2,7 @@ use chrono::{DateTime, Duration, Utc};
 use ed_parse_log_files::{
     commander::{
         COMBAT_RANK, EDLogPowerplay, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK,
-        EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK,
+        EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK, power_play_rank_range,
     },
     log_line::{EDLogEvent, EDLogLine},
 };
@@ -144,6 +144,16 @@ pub struct PowerPlayProgress {
     time_pledged: u64,
 }
 
+impl PowerPlayProgress {
+    /// show progress towards next level
+    pub fn progress(&self) -> f64 {
+        let (start, end) = power_play_rank_range(self.rank);
+        let delta = end - start;
+        let current = self.merits - start;
+        (current as f64 / delta as f64) * 100.0
+    }
+}
+
 impl From<&EDLogPowerplay> for PowerPlayProgress {
     fn from(value: &EDLogPowerplay) -> Self {
         PowerPlayProgress {
@@ -195,9 +205,11 @@ impl Display for PowerPlay {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "Power: {}\nRank: {}\nMerits: {}\nTime Pledged: {}",
+            "Power: {}\nRank: {}\nRank progress: {:.1}% ({})\nMerits: {}\nTime Pledged: {}",
             progression_string_str(&self.start.power, &self.end.power),
             progression_string_num(self.start.rank, self.end.rank),
+            self.end.progress(),
+            power_play_rank_range(self.end.rank).1,
             progression_string_num(self.start.merits, self.end.merits),
             progression_string_num(self.start.time_pledged, self.end.time_pledged),
         )

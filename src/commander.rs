@@ -178,6 +178,25 @@ pub struct EDLogReputation {
     pub alliance: Option<f64>,
 }
 
+pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
+    match rank {
+        0 => (0,0),
+        1 => (0,2000),
+        2 => (2000, 5000),
+        3 => (5000, 9000),
+        4 => (9000, 15000),
+        _ => (15000+(rank-5)*8000, 23000+(rank-5)*8000),
+    }
+}
+
+#[test]
+fn test_power_plat_rank_range() {
+    assert_eq!((15000, 23000), power_play_rank_range(5));
+    assert_eq!((55000, 63000), power_play_rank_range(10));
+    assert_eq!((375000, 383000), power_play_rank_range(50));
+    assert_eq!((775000, 783000), power_play_rank_range(100));
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplay {
