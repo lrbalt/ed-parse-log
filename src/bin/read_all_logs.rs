@@ -62,12 +62,12 @@ fn start() -> Result<(), std::io::Error> {
         .collect::<Result<Vec<_>, _>>()?;
 
     let log_files: Vec<_> = files
-        .iter()
+        .par_iter()
         .filter(|f| f.extension() == Some(OsStr::new("log")))
         .collect();
 
     let bytes_to_read: u64 = log_files
-        .iter()
+        .par_iter()
         .map(|f| {
             File::open(f)
                 .and_then(|f| f.metadata())

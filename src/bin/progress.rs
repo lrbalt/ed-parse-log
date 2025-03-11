@@ -455,7 +455,7 @@ pub fn read_logs() -> Result<Mutex<Vec<EDLogLine>>, MyError> {
 fn filter_progress(db: Mutex<Vec<EDLogLine>>) -> Result<Vec<EDLogLine>, MyError> {
     let lines = db.lock().unwrap();
     let progress = lines
-        .iter()
+        .par_iter()
         .filter(|line| {
             matches!(
                 line.event(),
@@ -502,7 +502,7 @@ pub fn get_data_in_period(
 
 fn show_progress(mut progress_items: Vec<EDLogLine>) {
     println!("Sorting");
-    progress_items.sort_by(|a, b| a.timestamp().partial_cmp(b.timestamp()).unwrap());
+    progress_items.par_sort_by(|a, b| a.timestamp().partial_cmp(b.timestamp()).unwrap());
 
     let today = Utc::now();
     let columns = [
@@ -536,8 +536,8 @@ fn show_progress(mut progress_items: Vec<EDLogLine>) {
             .unwrap_or_else(|| "n/a".into());
 
         rows[0].add_cell(cell!(title));
-        rows[1].add_cell(cell!(progress));
         rows[2].add_cell(cell!(rank));
+        rows[1].add_cell(cell!(progress));
         rows[4].add_cell(cell!(reputation));
         rows[3].add_cell(cell!(power_play));
     }
