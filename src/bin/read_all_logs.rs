@@ -3,7 +3,12 @@ use ed_parse_log_files::log_line::EDLogLine;
 use numfmt::{Formatter, Precision, Scales};
 use rayon::prelude::*;
 use std::{
-    env, ffi::OsStr, fs::{read_dir, File}, io::{BufRead, BufReader}, process::exit, sync::Mutex
+    env,
+    ffi::OsStr,
+    fs::{File, read_dir},
+    io::{BufRead, BufReader},
+    process::exit,
+    sync::Mutex,
 };
 use thiserror::Error;
 

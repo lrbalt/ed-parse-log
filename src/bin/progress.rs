@@ -4,6 +4,7 @@ use ed_parse_log_files::{
         COMBAT_RANK, EDLogPowerplay, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK,
         EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK, power_play_rank_range,
     },
+    common_types::Credits,
     log_line::{EDLogEvent, EDLogLine},
 };
 use prettytable::{Table, cell, row};
@@ -53,6 +54,19 @@ fn progression_string_num(a: u64, b: u64) -> String {
     }
 }
 
+fn progression_string_credits(a: Credits, b: Credits) -> String {
+    if a == b {
+        a.to_human_readable_string().to_string()
+    } else {
+        format!(
+            "{} → {} ({})",
+            a.to_human_readable_string(),
+            b.to_human_readable_string(),
+            (b - a).to_human_readable_string()
+        )
+    }
+}
+
 fn progression_string_f64(a: f64, b: f64) -> String {
     if a == b {
         format!("{:.1}%", a)
@@ -68,6 +82,104 @@ fn progression_string_perc(a: u64, b: u64) -> String {
         format!("{}% → {}%", a, b)
     }
 }
+
+pub struct CreditProgress {
+    start: Credits,
+    end: Credits,
+}
+
+pub struct CreditsProgress {
+    wealth: Option<CreditProgress>,
+    credits: Option<CreditProgress>,
+    fleet_carrier: Option<CreditProgress>,
+}
+
+impl CreditsProgress {
+    pub fn new(data: &[EDLogLine]) -> Option<CreditsProgress> {
+        let mut reps = data
+            .iter()
+            .filter(|line| matches!(line.event(), EDLogEvent::Statistics(_)));
+        let first = reps.next();
+        let last = reps.last();
+
+        let wealth = first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::Statistics(first), EDLogEvent::Statistics(last)) => {
+                    Some(CreditProgress {
+                        start: first.bank_account.current_wealth,
+                        end: last.bank_account.current_wealth,
+                    })
+                }
+                _ => None,
+            }
+        });
+
+        let mut reps = data
+            .iter()
+            .filter(|line| matches!(line.event(), EDLogEvent::CarrierStats(_)));
+        let first = reps.next();
+        let last = reps.last();
+
+        let fleet_carrier = first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::CarrierStats(first), EDLogEvent::CarrierStats(last)) => {
+                    Some(CreditProgress {
+                        start: first.finance.carrier_balance,
+                        end: last.finance.carrier_balance,
+                    })
+                }
+                _ => None,
+            }
+        });
+
+        let mut reps = data
+            .iter()
+            .filter(|line| matches!(line.event(), EDLogEvent::LoadGame(_)));
+        let first = reps.next();
+        let last = reps.last();
+
+        let credits = first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::LoadGame(first), EDLogEvent::LoadGame(last)) => Some(CreditProgress {
+                    start: first.credits,
+                    end: last.credits,
+                }),
+                _ => None,
+            }
+        });
+
+        Some(CreditsProgress {
+            wealth,
+            credits,
+            fleet_carrier,
+        })
+    }
+}
+
+impl Display for CreditsProgress {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "Wealth: {}\nCredits: {}\nFleet Carrier: {}",
+            self.wealth
+                .as_ref()
+                .map(|w| progression_string_credits(w.start, w.end))
+                .unwrap_or_else(|| "n/a".to_string()),
+            self.credits
+                .as_ref()
+                .map(|w| progression_string_credits(w.start, w.end))
+                .unwrap_or_else(|| "n/a".to_string()),
+            self.fleet_carrier
+                .as_ref()
+                .map(|w| progression_string_credits(w.start, w.end))
+                .unwrap_or_else(|| "n/a".to_string()),
+        )
+    }
+}
+
 #[derive(Debug)]
 pub struct Reputation {
     federation: f64,
@@ -475,6 +587,10 @@ fn filter_progress(db: Mutex<Vec<EDLogLine>>) -> Result<Vec<EDLogLine>, MyError>
                     | EDLogEvent::Rank(_)
                     | EDLogEvent::Reputation(_)
                     | EDLogEvent::Powerplay(_)
+                    | EDLogEvent::Statistics(_)
+                    | EDLogEvent::CarrierFinance(_)
+                    | EDLogEvent::CarrierStats(_)
+                    | EDLogEvent::LoadGame(_)
             )
         })
         .cloned()
@@ -525,6 +641,7 @@ fn show_progress(mut progress_items: Vec<EDLogLine>) {
     ];
     let mut rows = [
         row![""],
+        row!["Credits"],
         row!["Rank"],
         row!["Rank\nProgress"],
         row!["Reputation"],
@@ -534,6 +651,9 @@ fn show_progress(mut progress_items: Vec<EDLogLine>) {
     let mut table = Table::new();
     for (title, end_date) in columns.iter() {
         let data = get_data_in_period(*end_date, today, &progress_items);
+        let credits = CreditsProgress::new(data)
+            .map(|p| p.to_string())
+            .unwrap_or_else(|| "n/a".into());
         let progress = RankProgressionChange::new(data)
             .map(|p| p.to_string())
             .unwrap_or_else(|| "n/a".into());
@@ -548,10 +668,11 @@ fn show_progress(mut progress_items: Vec<EDLogLine>) {
             .unwrap_or_else(|| "n/a".into());
 
         rows[0].add_cell(cell!(title));
+        rows[1].add_cell(cell!(credits));
         rows[2].add_cell(cell!(rank));
-        rows[1].add_cell(cell!(progress));
+        rows[3].add_cell(cell!(progress));
         rows[4].add_cell(cell!(reputation));
-        rows[3].add_cell(cell!(power_play));
+        rows[5].add_cell(cell!(power_play));
     }
     for row in rows {
         table.add_row(row);

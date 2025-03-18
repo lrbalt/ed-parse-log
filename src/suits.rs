@@ -1,7 +1,22 @@
+use crate::common_types::OnFootItem;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum UnknownItem {}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCollectItems {
+    name: OnFootItem,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<String>,
+    #[serde(rename = "Type")]
+    item_type: BackpackItemType,
+    #[serde(rename = "OwnerID")]
+    owner_id: u64,
+    count: u64,
+    stolen: bool,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum BackpackItemType {
@@ -14,7 +29,7 @@ pub enum BackpackItemType {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BackpackItem {
-    name: String,
+    name: OnFootItem,
     #[serde(rename = "Name_Localised")]
     name_localised: Option<String>,
     #[serde(rename = "OwnerID")]
@@ -36,7 +51,7 @@ pub struct EDLogBackpackChange {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogUseConsumable {
-    name: String,
+    name: OnFootItem,
     #[serde(rename = "Name_Localised")]
     name_localised: String,
     #[serde(rename = "Type")]

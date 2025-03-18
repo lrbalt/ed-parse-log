@@ -418,7 +418,6 @@ pub enum BodySignalType {
     Serendibite,
     #[serde(alias = "tritium")]
     Tritium,
-
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

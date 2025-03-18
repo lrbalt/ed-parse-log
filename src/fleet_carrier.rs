@@ -1,5 +1,5 @@
 use crate::{
-    common_types::{Allegiance, BodyType, FactionName, PowerplayState, StationInformation},
+    common_types::{Allegiance, BodyType, Credits, FactionName, PowerplayState, StationInformation},
     location::{Conflict, Faction, ThargoidWar},
 };
 use serde::{Deserialize, Serialize};
@@ -198,19 +198,19 @@ pub struct ActivatedProps {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct Finance {
-    carrier_balance: u64,
-    reserve_balance: u64,
-    available_balance: i64,
+    pub carrier_balance: Credits,
+    pub reserve_balance: Credits,
+    pub available_balance: Credits,
     #[serde(rename = "TaxRate_rearm")]
-    tax_rate_rearm: Option<u64>,
+    pub tax_rate_rearm: Option<u64>,
     #[serde(rename = "TaxRate_refuel")]
-    tax_rate_refuel: Option<u64>,
+    pub tax_rate_refuel: Option<u64>,
     #[serde(rename = "TaxRate_repair")]
-    tax_rate_repair: Option<u64>,
+    pub tax_rate_repair: Option<u64>,
     #[serde(rename = "TaxRate_shipyard")]
-    tax_rate_shipyard: Option<u64>,
+    pub tax_rate_shipyard: Option<u64>,
     #[serde(rename = "TaxRate_outfitting")]
-    tax_rate_outfitting: Option<u64>,
+    pub tax_rate_outfitting: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -229,20 +229,20 @@ pub struct SpaceUsage {
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogCarrierStats {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    callsign: String,
-    name: String,
-    docking_access: String,
-    allow_notorious: bool,
-    fuel_level: u64,
-    jump_range_curr: f64,
-    jump_range_max: f64,
-    pending_decommission: bool,
-    space_usage: SpaceUsage,
-    finance: Finance,
-    crew: Vec<CrewMember>,
-    ship_packs: Vec<ShipPack>,
-    module_packs: Vec<ModulePack>,
+    pub carrier_id: u64,
+    pub callsign: String,
+    pub name: String,
+    pub docking_access: String,
+    pub allow_notorious: bool,
+    pub fuel_level: u64,
+    pub jump_range_curr: f64,
+    pub jump_range_max: f64,
+    pub pending_decommission: bool,
+    pub space_usage: SpaceUsage,
+    pub finance: Finance,
+    pub crew: Vec<CrewMember>,
+    pub ship_packs: Vec<ShipPack>,
+    pub module_packs: Vec<ModulePack>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

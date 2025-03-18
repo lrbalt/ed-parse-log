@@ -35,7 +35,7 @@ pub struct EDLogShipyardSwap {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardTransfer {
-    ship_type: String,
+    ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
     #[serde(rename = "ShipID")]
@@ -53,7 +53,7 @@ pub struct EDLogShipyardTransfer {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardNew {
-    ship_type: String, // TODO: ShipType
+    ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
     #[serde(rename = "NewShipID")]
@@ -72,7 +72,7 @@ pub struct EDLogShipyard {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardBuy {
-    ship_type: String, // TODO: ShipType
+    ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
     ship_price: u64,
@@ -86,7 +86,7 @@ pub struct EDLogShipyardBuy {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSell {
-    ship_type: String,
+    ship_type: ShipType,
     #[serde(rename = "SellShipID")]
     sell_ship_id: u64,
     ship_price: u64,
@@ -97,7 +97,7 @@ pub struct EDLogShipyardSell {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardRedeem {
-    ship_type: String, // TODO ShipType
+    ship_type: ShipType,
     #[serde(rename = "BundleID")]
     bundle_id: u64,
     #[serde(rename = "MarketID")]
@@ -107,7 +107,7 @@ pub struct EDLogShipyardRedeem {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipRedeemed {
-    ship_type: String, // TODO ShipType
+    ship_type: ShipType,
     #[serde(rename = "NewShipID")]
     new_ship_id: u64,
 }

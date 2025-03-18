@@ -10,7 +10,7 @@ use crate::{
         EDLogPowerplaySalary, EDLogPromotion, EDLogRank, EDLogReputation, EDLogResurrect,
         EDLogVehicleSwitch,
     },
-    common_types::{BodyInformation, EDLogName},
+    common_types::{BodyInformation, Credits, EDLogName},
     community_goal::EDLogCommunityGoal,
     docking::{
         EDLogBuyAmmo, EDLogDocked, EDLogDockingCancelled, EDLogDockingDenied, EDLogDockingGranted,
@@ -70,7 +70,7 @@ use crate::{
     },
     statistics::EDLogStatistics,
     suits::{
-        BackpackItemType, EDLogBackpack, EDLogBackpackChange, EDLogBuySuit, EDLogBuyWeapon,
+        EDLogBackpack, EDLogBackpackChange, EDLogBuySuit, EDLogBuyWeapon, EDLogCollectItems,
         EDLogCreateSuitLoadout, EDLogDeleteSuitLoadout, EDLogDropItems, EDLogLoadoutEquipModule,
         EDLogRenameSuitLoadout, EDLogSellSuit, EDLogSellWeapon, EDLogSuitLoadout, EDLogUpgradeSuit,
         EDLogUpgradeWeapon, EDLogUseConsumable,
@@ -113,20 +113,20 @@ pub struct LoadGameShip {
 #[serde(rename_all = "PascalCase")]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
-    fid: String,
-    commander: String,
-    horizons: bool,
-    odyssey: Option<bool>,
+    pub fid: String,
+    pub commander: String,
+    pub horizons: bool,
+    pub odyssey: Option<bool>,
     #[serde(flatten)]
-    ship: Option<LoadGameShip>,
-    credits: u64,
-    loan: u64,
+    pub ship: Option<LoadGameShip>,
+    pub credits: Credits,
+    pub loan: Credits,
     #[serde(rename = "language")]
-    language: Option<String>,
+    pub language: Option<String>,
     #[serde(rename = "gameversion")]
-    gameversion: Option<String>,
+    pub gameversion: Option<String>,
     #[serde(rename = "build")]
-    build: Option<String>,
+    pub build: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -167,28 +167,54 @@ pub struct EDLogFileHeader {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum USSType {
+    #[serde(rename = "$USS_Type_VeryValuableSalvage;")]
+    VeryValueableSalvage,
+    #[serde(rename = "$USS_Type_ValuableSalvage;")]
+    ValueableSalvage,
+    #[serde(rename = "$USS_Type_Salvage;")]
+    Salvage,
+    #[serde(rename = "$USS_Type_MissionTarget;")]
+    MissionTarget,
+    #[serde(rename = "$USS_Type_TradingBeacon;")]
+    TradingBaecon,
+    #[serde(rename = "$USS_Type_Ceremonial;")]
+    Ceremonial,
+    #[serde(rename = "$USS_Type_WeaponsFire;")]
+    WeaponsFire,
+    #[serde(rename = "$USS_Type_Aftermath;")]
+    Aftermath,
+    #[serde(rename = "$USS_Type_Refugee;")]
+    Refugee,
+    #[serde(rename = "$USS_Type_DistressSignal;")]
+    DistressSignal,
+    #[serde(rename = "$USS_Type_Convoy;")]
+    Convoy,
+    #[serde(rename = "$USS_Type_PowerConvoy;")]
+    PowerplayConvoy,
+    #[serde(rename = "$USS_Type_PowerplayConvoyDistressSignal;")]
+    PowerplayConvoyDistressSignal,
+    #[serde(rename = "$USS_Type_PowerEmissions;")]
+    PowerEmissions,
+    #[serde(rename = "$USS_Type_PowerWeaponsFire;")]
+    PowerWeaponsFire,
+    #[serde(rename = "$USS_Type_NonHuman;")]
+    NonHuman,
+    #[serde(rename = "$USS_Type_AXShips;")]
+    AXShips,
+    #[serde(rename = "$USS_Type_AXWeaponsFire;")]
+    AXWaeponsFire,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogUSSDrop {
     #[serde(rename = "USSType")]
-    uss_type: String,
+    uss_type: USSType,
     #[serde(rename = "USSType_Localised")]
     uss_type_localised: String,
     #[serde(rename = "USSThreat")]
     uss_threat: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCollectItems {
-    name: String,
-    #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
-    #[serde(rename = "Type")]
-    item_type: BackpackItemType,
-    #[serde(rename = "OwnerID")]
-    owner_id: u64,
-    count: u64,
-    stolen: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

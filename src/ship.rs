@@ -1,10 +1,10 @@
-use crate::common_types::PilotRank;
+use crate::{common_types::PilotRank, market::MarketItemType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Inventory {
-    name: String,
+    name: MarketItemType,
     #[serde(rename = "Name_Localised")]
     name_localised: Option<String>,
     count: u64,

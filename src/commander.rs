@@ -107,21 +107,8 @@ pub const EXOBIOLOGIST_RANK: [&str; 14] = [
 ];
 
 pub const EMPIRE_RANK: [&str; 15] = [
-    "None",
-    "Outsider",
-    "Serf",
-    "Master",
-    "Squire",
-    "Knight",
-    "Lord",
-    "Baron",
-    "Viscount",
-    "Count",
-    "Earl",
-    "Marquis",
-    "Duke",
-    "Prince",
-    "King"
+    "None", "Outsider", "Serf", "Master", "Squire", "Knight", "Lord", "Baron", "Viscount", "Count",
+    "Earl", "Marquis", "Duke", "Prince", "King",
 ];
 
 pub const FEDERATION_RANK: [&str; 15] = [
@@ -139,7 +126,7 @@ pub const FEDERATION_RANK: [&str; 15] = [
     "Post Capatain",
     "Rear Admiral",
     "Vice Admiral",
-    "Admiral"
+    "Admiral",
 ];
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -180,12 +167,12 @@ pub struct EDLogReputation {
 
 pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
     match rank {
-        0 => (0,0),
-        1 => (0,2000),
+        0 => (0, 0),
+        1 => (0, 2000),
         2 => (2000, 5000),
         3 => (5000, 9000),
         4 => (9000, 15000),
-        _ => (15000+(rank-5)*8000, 23000+(rank-5)*8000),
+        _ => (15000 + (rank - 5) * 8000, 23000 + (rank - 5) * 8000),
     }
 }
 
