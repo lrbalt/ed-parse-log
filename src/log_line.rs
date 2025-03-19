@@ -529,3 +529,15 @@ impl EDLogLine {
         &self.timestamp
     }
 }
+
+#[test]
+fn test_fileheader() {
+    let json = r#"{ "timestamp":"2025-03-10T18:19:38Z", "event":"Fileheader", "part":1, "language":"English/UK", "Odyssey":true, "gameversion":"4.1.0.100", "build":"r311607/r0 " }"#;
+    let line: EDLogLine = serde_json::from_str(json).expect("Should parse");
+    
+    assert!(matches!(line.event(), EDLogEvent::FileHeader(_)));
+    if let EDLogEvent::FileHeader(header) = line.event() {
+        assert!(header.odyssey);
+        assert_eq!(header.gameversion, "4.1.0.100");
+    }
+}

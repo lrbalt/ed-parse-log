@@ -395,3 +395,24 @@ pub struct EDLogVehicleSwitch {
 pub struct EDLogEndCrewSession {
     on_crime: bool,
 }
+
+#[test]
+fn test_powerplay() {
+    use crate::log_line::{EDLogEvent, EDLogLine};
+
+    let json10 = r#"{ "timestamp":"2024-09-16T14:34:52Z", "event":"Powerplay", "Power":"Aisling Duval", "Rank":10, "Merits":0, "Votes":0, "TimePledged":21406314 }"#;
+    let json20 = r#"{ "timestamp":"2025-03-10T18:21:04Z", "event":"Powerplay", "Power":"Jerome Archer", "Rank":89, "Merits":687268, "TimePledged":4578634 }"#;
+    let line10: EDLogLine = serde_json::from_str(json10).expect("Should parse");
+    let line20: EDLogLine = serde_json::from_str(json20).expect("Should parse");
+    
+    assert!(matches!(line10.event(), EDLogEvent::Powerplay(_)));
+    assert!(matches!(line20.event(), EDLogEvent::Powerplay(_)));
+    if let EDLogEvent::Powerplay(pp) = line10.event() {
+        assert_eq!(10, pp.rank);
+        assert_eq!(Some(0), pp.votes);
+    }
+    if let EDLogEvent::Powerplay(pp) = line20.event() {
+        assert_eq!(89, pp.rank);
+        assert_eq!(None, pp.votes, "PP2.0 dropped votes");
+    }
+}
