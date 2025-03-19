@@ -8,23 +8,23 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierFinance {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    carrier_balance: u64,
-    reserve_balance: u64,
-    available_balance: u64,
-    reserve_percent: u8,
+    pub carrier_id: u64,
+    pub carrier_balance: Credits,
+    pub reserve_balance: Credits,
+    pub available_balance: Credits,
+    pub reserve_percent: u8,
     #[serde(rename = "TaxRate_pioneersupplies")]
-    tax_rate_pioneersupplies: Option<u8>,
+    pub tax_rate_pioneersupplies: Option<u8>,
     #[serde(rename = "TaxRate_rearm")]
-    tax_rate_rearm: Option<u8>,
+    pub tax_rate_rearm: Option<u8>,
     #[serde(rename = "TaxRate_refuel")]
-    tax_rate_refuel: Option<u8>,
+    pub tax_rate_refuel: Option<u8>,
     #[serde(rename = "TaxRate_repair")]
-    tax_rate_repair: Option<u8>,
+    pub tax_rate_repair: Option<u8>,
     #[serde(rename = "TaxRate_shipyard")]
-    tax_rate_shipyard: Option<u8>,
+    pub tax_rate_shipyard: Option<u8>,
     #[serde(rename = "TaxRate_outfitting")]
-    tax_rate_outfitting: Option<u8>,
+    pub tax_rate_outfitting: Option<u8>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

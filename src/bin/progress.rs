@@ -115,9 +115,12 @@ impl CreditsProgress {
             }
         });
 
-        let mut reps = data
-            .iter()
-            .filter(|line| matches!(line.event(), EDLogEvent::CarrierStats(_)));
+        let mut reps = data.iter().filter(|line| {
+            matches!(
+                line.event(),
+                EDLogEvent::CarrierStats(_) | EDLogEvent::CarrierFinance(_)
+            )
+        });
         let first = reps.next();
         let last = reps.last();
 
@@ -128,6 +131,24 @@ impl CreditsProgress {
                     Some(CreditProgress {
                         start: first.finance.carrier_balance,
                         end: last.finance.carrier_balance,
+                    })
+                }
+                (EDLogEvent::CarrierFinance(first), EDLogEvent::CarrierFinance(last)) => {
+                    Some(CreditProgress {
+                        start: first.carrier_balance,
+                        end: last.carrier_balance,
+                    })
+                }
+                (EDLogEvent::CarrierFinance(first), EDLogEvent::CarrierStats(last)) => {
+                    Some(CreditProgress {
+                        start: first.carrier_balance,
+                        end: last.finance.carrier_balance,
+                    })
+                }
+                (EDLogEvent::CarrierStats(first), EDLogEvent::CarrierFinance(last)) => {
+                    Some(CreditProgress {
+                        start: first.finance.carrier_balance,
+                        end: last.carrier_balance,
                     })
                 }
                 _ => None,
@@ -213,24 +234,17 @@ impl ReputationProgress {
         let first = reps.next();
         let last = reps.last();
 
-        let first = match first?.event() {
-            EDLogEvent::Reputation(rep) => rep,
-            _ => return None,
-        };
-
-        let last = if last.is_none() {
-            // delta will be zero when using progress_first twice
-            first
-        } else {
-            match last?.event() {
-                EDLogEvent::Reputation(rep) => rep,
-                _ => return None,
+        first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::Reputation(first), EDLogEvent::Reputation(last)) => {
+                    Some(ReputationProgress {
+                        start: first.into(),
+                        end: last.into(),
+                    })
+                }
+                _ => None,
             }
-        };
-
-        Some(ReputationProgress {
-            start: first.into(),
-            end: last.into(),
         })
     }
 }
@@ -291,24 +305,17 @@ impl PowerPlay {
         let first = reps.next();
         let last = reps.last();
 
-        let first = match first?.event() {
-            EDLogEvent::Powerplay(rank) => rank,
-            _ => return None,
-        };
-
-        let last = if last.is_none() {
-            // delta will be zero when using progress_first twice
-            first
-        } else {
-            match last?.event() {
-                EDLogEvent::Powerplay(pp) => pp,
-                _ => return None,
+        first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::Powerplay(first), EDLogEvent::Powerplay(last)) => {
+                    Some(PowerPlay {
+                        start: first.into(),
+                        end: last.into(),
+                    })
+                }
+                _ => None,
             }
-        };
-
-        Some(PowerPlay {
-            start: first.into(),
-            end: last.into(),
         })
     }
 }
@@ -369,24 +376,17 @@ impl RankProgress {
         let first = reps.next();
         let last = reps.last();
 
-        let first = match first?.event() {
-            EDLogEvent::Rank(rank) => rank,
-            _ => return None,
-        };
-
-        let last = if last.is_none() {
-            // delta will be zero when using progress_first twice
-            first
-        } else {
-            match last?.event() {
-                EDLogEvent::Rank(rank) => rank,
-                _ => return None,
+        first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::Rank(first), EDLogEvent::Rank(last)) => {
+                    Some(RankProgress {
+                        start: first.into(),
+                        end: last.into(),
+                    })
+                }
+                _ => None,
             }
-        };
-
-        Some(RankProgress {
-            start: first.into(),
-            end: last.into(),
         })
     }
 }
@@ -455,24 +455,17 @@ impl RankProgressionChange {
         let first = reps.next();
         let last = reps.last();
 
-        let first = match first?.event() {
-            EDLogEvent::Progress(progress) => progress,
-            _ => return None,
-        };
-
-        let last = if last.is_none() {
-            // delta will be zero when using first twice
-            first
-        } else {
-            match last?.event() {
-                EDLogEvent::Progress(last) => last,
-                _ => return None,
+        first.and_then(|first| {
+            let last = last.unwrap_or(first);
+            match (first.event(), last.event()) {
+                (EDLogEvent::Progress(first), EDLogEvent::Progress(last)) => {
+                    Some(RankProgressionChange {
+                        start: first.into(),
+                        end: last.into(),
+                    })
+                }
+                _ => None,
             }
-        };
-
-        Some(RankProgressionChange {
-            start: first.into(),
-            end: last.into(),
         })
     }
 }
