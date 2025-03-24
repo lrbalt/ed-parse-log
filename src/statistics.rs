@@ -180,7 +180,7 @@ pub struct EDLogStatisticsSmuggling {
     #[serde(rename = "Resources_Smuggled")]
     resources_smuggled: u64,
     #[serde(rename = "Average_Profit")]
-    average_profit: f64,  // TODO: Credits<f64>
+    average_profit: f64, // TODO: Credits<f64>
     #[serde(rename = "Highest_Single_Transaction")]
     highest_single_transaction: Credits,
 }

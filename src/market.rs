@@ -131,6 +131,7 @@ pub enum MarketItemType {
     SoontillRelics,
     VegaSlimWeed,
     EraninPearlWhisky,
+    DamnaCarapaces,
 
     OccupiedCryoPod,
 

@@ -1,4 +1,4 @@
-use crate::common_types::{CrimeType, StationType};
+use crate::common_types::{CrimeType, Merits, StationType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -176,20 +176,12 @@ pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
     }
 }
 
-#[test]
-fn test_power_plat_rank_range() {
-    assert_eq!((15000, 23000), power_play_rank_range(5));
-    assert_eq!((55000, 63000), power_play_rank_range(10));
-    assert_eq!((375000, 383000), power_play_rank_range(50));
-    assert_eq!((775000, 783000), power_play_rank_range(100));
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplay {
     pub power: String,
     pub rank: u64,
-    pub merits: u64,
+    pub merits: Merits,
     pub votes: Option<u64>,
     pub time_pledged: u64,
 }
@@ -224,6 +216,14 @@ pub struct EDLogPowerplayDeliver {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayMerits {
+    power: String,
+    merits_gained: Merits,
+    total_merits: Merits,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayFastTrack {
     power: String,
     cost: u64,
@@ -254,6 +254,13 @@ pub struct EDLogResurrect {
     option: String,
     cost: u64,
     bankrupt: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayRank {
+    power: String,
+    rank: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -397,6 +404,14 @@ pub struct EDLogEndCrewSession {
 }
 
 #[test]
+fn test_power_plat_rank_range() {
+    assert_eq!((15000, 23000), power_play_rank_range(5));
+    assert_eq!((55000, 63000), power_play_rank_range(10));
+    assert_eq!((375000, 383000), power_play_rank_range(50));
+    assert_eq!((775000, 783000), power_play_rank_range(100));
+}
+
+#[test]
 fn test_powerplay() {
     use crate::log_line::{EDLogEvent, EDLogLine};
 
@@ -404,7 +419,7 @@ fn test_powerplay() {
     let json20 = r#"{ "timestamp":"2025-03-10T18:21:04Z", "event":"Powerplay", "Power":"Jerome Archer", "Rank":89, "Merits":687268, "TimePledged":4578634 }"#;
     let line10: EDLogLine = serde_json::from_str(json10).expect("Should parse");
     let line20: EDLogLine = serde_json::from_str(json20).expect("Should parse");
-    
+
     assert!(matches!(line10.event(), EDLogEvent::Powerplay(_)));
     assert!(matches!(line20.event(), EDLogEvent::Powerplay(_)));
     if let EDLogEvent::Powerplay(pp) = line10.event() {

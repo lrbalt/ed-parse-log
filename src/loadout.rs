@@ -40,7 +40,7 @@ pub struct Module {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLoadout {
     ship: ShipType,
     #[serde(rename = "ShipID")]

@@ -1,6 +1,6 @@
-use crate::{
-    common_types::{Allegiance, BodyType, Credits, FactionName, PowerplayState, StationInformation},
-    location::{Conflict, Faction, ThargoidWar},
+use crate::common_types::{
+    Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayState,
+    StationInformation, ThargoidWar,
 };
 use serde::{Deserialize, Serialize};
 
@@ -165,6 +165,17 @@ pub struct EDLogCarrierBuy {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierLocation {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    star_system: String,
+    system_address: u64,
+    #[serde(rename = "BodyID")]
+    body_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierNameChange {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
@@ -181,25 +192,28 @@ pub enum ShipPack {}
 pub enum ModulePack {}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CrewMember {
+    crew_name: Option<String>,
     crew_role: String,
     activated: bool,
+    enabled: Option<bool>,
     activated_props: Option<ActivatedProps>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ActivatedProps {
     enabled: bool,
     crew_name: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Finance {
     pub carrier_balance: Credits,
     pub reserve_balance: Credits,
+    pub reserve_percent: Option<f64>,
     pub available_balance: Credits,
     #[serde(rename = "TaxRate_rearm")]
     pub tax_rate_rearm: Option<u64>,
@@ -211,10 +225,12 @@ pub struct Finance {
     pub tax_rate_shipyard: Option<u64>,
     #[serde(rename = "TaxRate_outfitting")]
     pub tax_rate_outfitting: Option<u64>,
+    #[serde(rename = "TaxRate_pioneersupplies")]
+    pub tax_rate_pioneer_supplies: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SpaceUsage {
     total_capacity: u64,
     crew: u64,
@@ -226,7 +242,7 @@ pub struct SpaceUsage {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierStats {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
@@ -246,11 +262,144 @@ pub struct EDLogCarrierStats {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFCMaterials {
     #[serde(rename = "MarketID")]
     market_id: u64,
     carrier_name: String,
     #[serde(rename = "CarrierID")]
     carrier_id: String,
+}
+
+#[test]
+fn test_exploration() {
+    let json2 = r#"{
+    "timestamp": "2024-10-13T19:05:00Z",
+    "event": "CarrierStats",
+    "CarrierID": 1234567,
+    "Callsign": "MFC-MFC",
+    "Name": "My First Carrier",
+    "DockingAccess": "all",
+    "AllowNotorious": false,
+    "FuelLevel": 662,
+    "JumpRangeCurr": 500.000000,
+    "JumpRangeMax": 500.000000,
+    "PendingDecommission": false,
+    "SpaceUsage": {
+        "TotalCapacity": 25000,
+        "Crew": 6370,
+        "Cargo": 3160,
+        "CargoSpaceReserved": 0,
+        "ShipPacks": 0,
+        "ModulePacks": 0,
+        "FreeSpace": 15470
+    },
+    "Finance": {
+        "CarrierBalance": 803361,
+        "ReserveBalance": 322176,
+        "AvailableBalance": 481185,
+        "ReservePercent": 100,
+        "TaxRate_pioneersupplies": 0,
+        "TaxRate_rearm": 25,
+        "TaxRate_refuel": 25,
+        "TaxRate_repair": 25
+    },
+    "Crew": [
+        {
+            "CrewRole": "BlackMarket",
+            "Activated": false
+        },
+        {
+            "CrewRole": "Captain",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Kirk Strickland"
+        },
+        {
+            "CrewRole": "Refuel",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Akemi Cunningham"
+        },
+        {
+            "CrewRole": "Repair",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Guinevere Shepherd"
+        },
+        {
+            "CrewRole": "Rearm",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Marlee Bullock"
+        },
+        {
+            "CrewRole": "Commodities",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Owen Grimes"
+        },
+        {
+            "CrewRole": "VoucherRedemption",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Clementine Chandler"
+        },
+        {
+            "CrewRole": "Exploration",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Medha Frost"
+        },
+        {
+            "CrewRole": "Shipyard",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Chevelle Rivera"
+        },
+        {
+            "CrewRole": "Outfitting",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Drew Gill"
+        },
+        {
+            "CrewRole": "CarrierFuel",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Lauren Adkins"
+        },
+        {
+            "CrewRole": "VistaGenomics",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Ramiro Bentley"
+        },
+        {
+            "CrewRole": "PioneerSupplies",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Jenessa Alford"
+        },
+        {
+            "CrewRole": "Bartender",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Aleeah Bogdani"
+        }
+    ],
+    "ShipPacks": [],
+    "ModulePacks": []
+}"#;
+    let line2: crate::log_line::EDLogLine = serde_json::from_str(json2).expect("Should parse");
+
+    assert!(matches!(
+        line2.event(),
+        crate::log_line::EDLogEvent::CarrierStats(_)
+    ));
+    if let crate::log_line::EDLogEvent::CarrierStats(header) = line2.event() {
+        assert_eq!(&header.name, "My First Carrier");
+        assert_eq!(header.crew.len(), 14);
+        assert_eq!(header.finance.carrier_balance, Credits(803361));
+    }
 }

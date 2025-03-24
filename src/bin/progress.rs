@@ -4,7 +4,7 @@ use ed_parse_log_files::{
         COMBAT_RANK, EDLogPowerplay, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK,
         EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK, power_play_rank_range,
     },
-    common_types::Credits,
+    common_types::{Credits, Merits},
     log_line::{EDLogEvent, EDLogLine},
 };
 use prettytable::{Table, cell, row};
@@ -64,6 +64,14 @@ fn progression_string_credits(a: Credits, b: Credits) -> String {
             b.to_human_readable_string(),
             (b - a).to_human_readable_string()
         )
+    }
+}
+
+fn progression_string_merits(a: Merits, b: Merits) -> String {
+    if a == b {
+        a.value().to_string()
+    } else {
+        format!("{} → {} ({})", a, b, (b - a))
     }
 }
 
@@ -266,7 +274,7 @@ impl Display for ReputationProgress {
 pub struct PowerPlayProgress {
     power: String,
     rank: u64,
-    merits: u64,
+    merits: Merits,
     time_pledged: u64,
 }
 
@@ -275,7 +283,7 @@ impl PowerPlayProgress {
     pub fn progress(&self) -> f64 {
         let (start, end) = power_play_rank_range(self.rank);
         let delta = end - start;
-        let current = self.merits - start;
+        let current = self.merits.value() - start;
         (current as f64 / delta as f64) * 100.0
     }
 }
@@ -308,12 +316,10 @@ impl PowerPlay {
         first.and_then(|first| {
             let last = last.unwrap_or(first);
             match (first.event(), last.event()) {
-                (EDLogEvent::Powerplay(first), EDLogEvent::Powerplay(last)) => {
-                    Some(PowerPlay {
-                        start: first.into(),
-                        end: last.into(),
-                    })
-                }
+                (EDLogEvent::Powerplay(first), EDLogEvent::Powerplay(last)) => Some(PowerPlay {
+                    start: first.into(),
+                    end: last.into(),
+                }),
                 _ => None,
             }
         })
@@ -329,7 +335,7 @@ impl Display for PowerPlay {
             progression_string_num(self.start.rank, self.end.rank),
             self.end.progress(),
             power_play_rank_range(self.end.rank).1,
-            progression_string_num(self.start.merits, self.end.merits),
+            progression_string_merits(self.start.merits, self.end.merits),
             progression_string_num(self.start.time_pledged, self.end.time_pledged),
         )
     }
@@ -379,12 +385,10 @@ impl RankProgress {
         first.and_then(|first| {
             let last = last.unwrap_or(first);
             match (first.event(), last.event()) {
-                (EDLogEvent::Rank(first), EDLogEvent::Rank(last)) => {
-                    Some(RankProgress {
-                        start: first.into(),
-                        end: last.into(),
-                    })
-                }
+                (EDLogEvent::Rank(first), EDLogEvent::Rank(last)) => Some(RankProgress {
+                    start: first.into(),
+                    end: last.into(),
+                }),
                 _ => None,
             }
         })

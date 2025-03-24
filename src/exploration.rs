@@ -108,7 +108,7 @@ pub struct Ring {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ScannedBodyDetails {
     tidal_lock: bool,
-    terraform_state: String, //TODO: enum
+    terraform_state: String,
     planet_class: String,
     atmosphere: String,
     atmosphere_type: String,
@@ -466,4 +466,88 @@ pub struct EDLogMultiSellExplorationData {
     base_value: u64,
     bonus: u64,
     total_earnings: u64,
+}
+
+#[test]
+fn test_exploration() {
+    let json2 = r#"{
+    "timestamp": "2024-08-25T17:30:19Z",
+    "event": "Scan",
+    "ScanType": "Detailed",
+    "BodyName": "Dyava ABC 1",
+    "BodyID": 18,
+    "Parents": [
+        {
+            "Null": 1
+        },
+        {
+            "Null": 0
+        }
+    ],
+    "StarSystem": "Dyava",
+    "SystemAddress": 3107710833346,
+    "DistanceFromArrivalLS": 260.202177,
+    "TidalLock": true,
+    "TerraformState": "Terraforming",
+    "PlanetClass": "High metal content body",
+    "Atmosphere": "nitrogen atmosphere",
+    "AtmosphereType": "Nitrogen",
+    "AtmosphereComposition": [
+        {
+            "Name": "Nitrogen",
+            "Percent": 94.372269
+        },
+        {
+            "Name": "Oxygen",
+            "Percent": 5.087193
+        },
+        {
+            "Name": "CarbonDioxide",
+            "Percent": 0.521460
+        }
+    ],
+    "Volcanism": "",
+    "MassEM": 0.670844,
+    "Radius": 5387590.000000,
+    "SurfaceGravity": 9.211745,
+    "SurfaceTemperature": 273.893555,
+    "SurfacePressure": 137397.921875,
+    "Landable": false,
+    "Composition": {
+        "Ice": 0.000000,
+        "Rock": 0.666544,
+        "Metal": 0.333456
+    },
+    "SemiMajorAxis": 91770311594.009399,
+    "Eccentricity": 0.001335,
+    "OrbitalInclination": -0.137544,
+    "Periapsis": 28.357709,
+    "OrbitalPeriod": 14343910.813332,
+    "AscendingNode": -111.177103,
+    "MeanAnomaly": 129.366323,
+    "RotationPeriod": 14343960.161468,
+    "AxialTilt": 1.115560,
+    "WasDiscovered": false,
+    "WasMapped": true
+}"#;
+    let line2: crate::log_line::EDLogLine = serde_json::from_str(json2).expect("Should parse");
+
+    assert!(matches!(
+        line2.event(),
+        crate::log_line::EDLogEvent::Scan(_)
+    ));
+    if let crate::log_line::EDLogEvent::Scan(header) = line2.event() {
+        assert_eq!(&header.body_name, "Dyava ABC 1");
+        assert_eq!(
+            header
+                .body_details
+                .as_ref()
+                .unwrap()
+                .atmosphere_composition
+                .as_ref()
+                .unwrap()
+                .len(),
+            3
+        );
+    }
 }

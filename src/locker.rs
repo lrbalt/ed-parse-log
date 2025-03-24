@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ShipLockerItem {
     name: String,
     #[serde(rename = "Name_Localised")]
@@ -14,7 +14,7 @@ pub struct ShipLockerItem {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LockerContent {
     items: Vec<ShipLockerItem>,
     components: Vec<ShipLockerItem>,
@@ -23,7 +23,7 @@ pub struct LockerContent {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipLocker {
     #[serde(flatten)]
     content: Option<LockerContent>,

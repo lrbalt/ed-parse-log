@@ -1,9 +1,31 @@
+use serde::{Deserialize, Serialize};
 use std::{fmt::Display, ops::Sub};
 
-use serde::{Deserialize, Serialize};
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
+pub struct Merits(u64);
+
+impl Merits {
+    pub fn value(&self) -> u64 {
+        self.0
+    }
+}
+
+impl Sub for Merits {
+    type Output = Merits;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Merits(self.0 - rhs.0)
+    }
+}
+
+impl Display for Merits {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
-pub struct Credits(i64);
+pub struct Credits(pub i64);
 
 impl Display for Credits {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -470,6 +492,7 @@ pub enum StationType {
     OnFootSettlement,
     AsteroidBase,
     PlanetaryConstructionDepot,
+    DockablePlanetStation,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -515,19 +538,31 @@ pub enum PowerplayState {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct PowerplayConflictProgress {
+    power: String,
+    conflict_progress: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct Powers {
+    controlling_power: Option<String>,
+    powers: Vec<String>,
+    powerplay_state: PowerplayState,
+    powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
+    powerplay_state_control_progress: Option<f64>,
+    powerplay_state_reinforcement: Option<u64>,
+    powerplay_state_undermining: Option<u64>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StarSystemData {
     star_system: String,
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
     transfer_price: u64,
     transfer_time: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct StationFaction {
-    name: String,
-    faction_state: Option<FactionState>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -562,7 +597,7 @@ pub struct StationInformation {
     station_type: StationType,
     #[serde(rename = "MarketID")]
     market_id: u64,
-    station_faction: StationFaction,
+    station_faction: FactionName,
     station_government: String,
     #[serde(rename = "StationGovernment_Localised")]
     station_government_localised: String,
@@ -623,6 +658,69 @@ pub enum StationService {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "lowercase")]
+pub enum WarType {
+    Election,
+    War,
+    CivilWar,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "lowercase")]
+pub enum ConflictStatus {
+    #[serde(rename = "")]
+    None,
+    Active,
+    Pending,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct ConflictFaction {
+    name: String,
+    stake: String,
+    won_days: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct Conflict {
+    war_type: WarType,
+    status: ConflictStatus,
+    faction1: ConflictFaction,
+    faction2: ConflictFaction,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum ThargoidWarState {
+    Unknown,
+    #[serde(rename = "")]
+    None,
+    #[serde(rename = "Thargoid_Harvest")]
+    Harvest,
+    #[serde(rename = "Thargoid_Recovery")]
+    Recovery,
+    #[serde(rename = "Thargoid_Controlled")]
+    Controlled,
+    #[serde(rename = "Thargoid_Stronghold")]
+    Stronghold,
+    #[serde(rename = "Thargoid_Probing")]
+    Probing,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct ThargoidWar {
+    current_state: ThargoidWarState,
+    next_state_success: ThargoidWarState,
+    next_state_failure: ThargoidWarState,
+    success_state_reached: bool,
+    war_progress: f64,
+    remaining_ports: u64,
+    estimated_remaining_time: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEconomy {
     name: String,
@@ -636,6 +734,43 @@ pub struct StationEconomy {
 pub struct FactionName {
     name: String,
     faction_state: Option<FactionState>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FactionRecoveringState {
+    state: FactionState,
+    trend: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FactionActiveState {
+    state: FactionState,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FactionPendingState {
+    state: FactionState,
+    trend: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct Faction {
+    name: String,
+    faction_state: FactionState,
+    government: String,
+    influence: f64,
+    allegiance: String,
+    happiness: String,
+    #[serde(rename = "Happiness_Localised")]
+    happiness_localised: Option<String>,
+    my_reputation: f64,
+    recovering_states: Option<Vec<FactionRecoveringState>>,
+    active_states: Option<Vec<FactionActiveState>>,
+    pending_states: Option<Vec<FactionPendingState>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -753,4 +888,111 @@ pub enum TechBrokerType {
     Guardian,
     Human,
     Salvation,
+}
+
+#[test]
+fn test_faction() {
+    let json = r#"{ "Name":"People's Madjandji Resistance", "FactionState":"None", "Government":"Democracy", "Influence":0.063555,
+          "Allegiance":"Federation", "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":0.000000 }"#;
+    let line: Result<Faction, _> = serde_json::from_str(json);
+    assert!(line.is_ok());
+
+    let json = r#"{ "Name":"DaVinci Corp.", "FactionState":"Blight", "Government":"Corporate", "Influence":0.599801, "Allegiance":"Independent",
+    "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":61.321701, 
+    "ActiveStates":[ { "State":"Blight" } ] }"#;
+    let line: Result<Faction, _> = serde_json::from_str(json);
+    assert!(line.is_ok());
+
+    let json = r#"{ "Name":"Phoenix Flight Explorers Commune", "FactionState":"None", "Government":"Cooperative",
+    "Influence":0.266137, "Allegiance":"Independent", "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", 
+    "MyReputation":86.373100 } 
+    "#;
+    let line: Result<Faction, _> = serde_json::from_str(json);
+    assert!(line.is_ok());
+}
+
+#[test]
+fn test_power() {
+    let json = r#"{ 
+        "Powers":[ "Pranav Antal", "Jerome Archer" ], 
+        "PowerplayState":"Unoccupied", 
+        "PowerplayConflictProgress":[ 
+            { "Power":"Pranav Antal", "ConflictProgress":0.005875 }, 
+            { "Power":"Jerome Archer", "ConflictProgress":0.478375 } 
+        ] 
+    }"#;
+    let _line: Powers = serde_json::from_str(json).expect("should parse");
+
+    let json = r#"{ 
+        "ControllingPower": "Jerome Archer",
+        "Powers": ["Jerome Archer"],
+        "PowerplayState": "Exploited"
+    }"#;
+    let _line: Powers = serde_json::from_str(json).expect("should parse");
+
+    let json = r#"{ 
+        "ControllingPower": "Jerome Archer",
+        "Powers": ["Pranav Antal","Jerome Archer"],
+        "PowerplayState": "Fortified",
+        "PowerplayStateControlProgress": 0.337526,
+        "PowerplayStateReinforcement": 792,
+        "PowerplayStateUndermining": 0
+    }"#;
+    let _line: Powers = serde_json::from_str(json).expect("should parse");
+}
+
+#[test]
+fn test_station_info() {
+    let json = r#"{
+    "StationName": "Otiman Dock",
+    "StationType": "Bernal",
+    "MarketID": 3227675648,
+    "StationFaction": {
+        "Name": "Nagii Union",
+        "FactionState": "Expansion"
+    },
+    "StationGovernment": "$government_Communism;",
+    "StationGovernment_Localised": "Communist",
+    "StationServices": [
+        "dock",
+        "autodock",
+        "blackmarket",
+        "commodities",
+        "contacts",
+        "exploration",
+        "missions",
+        "outfitting",
+        "crewlounge",
+        "rearm",
+        "refuel",
+        "repair",
+        "shipyard",
+        "tuning",
+        "engineer",
+        "missionsgenerated",
+        "facilitator",
+        "flightcontroller",
+        "stationoperations",
+        "powerplay",
+        "searchrescue",
+        "stationMenu",
+        "shop",
+        "livery",
+        "socialspace",
+        "bartender",
+        "vistagenomics",
+        "pioneersupplies",
+        "apexinterstellar",
+        "frontlinesolutions"
+    ],
+    "StationEconomy": "$economy_Industrial;",
+    "StationEconomy_Localised": "Industrial",
+    "StationEconomies": [
+        {
+            "Name": "$economy_Industrial;",
+            "Name_Localised": "Industrial",
+            "Proportion": 1.000000
+        }
+    ]}"#;
+    let _line: StationInformation = serde_json::from_str(json).expect("should parse");
 }

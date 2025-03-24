@@ -14,7 +14,7 @@ pub struct EDLogSupercruiseDestinationDrop {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseExit {
     taxi: Option<bool>,
     multicrew: Option<bool>,
@@ -27,7 +27,7 @@ pub struct EDLogSupercruiseExit {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseEntry {
     taxi: Option<bool>,
     multicrew: Option<bool>,

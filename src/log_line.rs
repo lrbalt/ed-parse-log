@@ -3,12 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     commander::{
-        EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward,
-        EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends,
-        EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogNewCommander, EDLogPowerplay,
-        EDLogPowerplayCollect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin,
-        EDLogPowerplaySalary, EDLogPromotion, EDLogRank, EDLogReputation, EDLogResurrect,
-        EDLogVehicleSwitch,
+        EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward, EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends, EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogNewCommander, EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogRank, EDLogReputation, EDLogResurrect, EDLogVehicleSwitch
     },
     common_types::{BodyInformation, Credits, EDLogName},
     community_goal::EDLogCommunityGoal,
@@ -32,8 +27,8 @@ use crate::{
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCrewServices,
         EDLogCarrierDepositFuel, EDLogCarrierFinance, EDLogCarrierJump, EDLogCarrierJumpCancelled,
-        EDLogCarrierJumpRequest, EDLogCarrierNameChange, EDLogCarrierStats, EDLogCarrierTradeOrder,
-        EDLogFCMaterials,
+        EDLogCarrierJumpRequest, EDLogCarrierLocation, EDLogCarrierNameChange, EDLogCarrierStats,
+        EDLogCarrierTradeOrder, EDLogFCMaterials,
     },
     loadout::EDLogLoadout,
     location::EDLogLocation,
@@ -249,12 +244,23 @@ pub struct EDLogCargoTransfer {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct LocationOnBody {
+    latitude: f64,
+    longitude: f64,
+    heading: u64,
+    altitude: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScreenshot {
     filename: String,
     width: u64,
     height: u64,
     system: String,
     body: String,
+    #[serde(flatten)]
+    location_on_body: Option<LocationOnBody>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -281,9 +287,11 @@ pub enum EDLogEvent {
     PowerplayCollect(EDLogPowerplayCollect),
     PowerplayDeliver(EDLogPowerplayDeliver),
     PowerplayFastTrack(EDLogPowerplayFastTrack),
+    PowerplayMerits(EDLogPowerplayMerits),
+    PowerplaySalary(EDLogPowerplaySalary),
+    PowerplayRank(EDLogPowerplayRank),
     Died(EDLogDied),
     Resurrect(EDLogResurrect),
-    PowerplaySalary(EDLogPowerplaySalary),
     CommitCrime(EDLogCommitCrime),
     CrimeVictim(EDLogCrimeVictim),
     Embark(EDLogEmbarkOrDisembark),
@@ -400,6 +408,7 @@ pub enum EDLogEvent {
     CarrierCrewServices(EDLogCarrierCrewServices),
     CarrierBuy(EDLogCarrierBuy),
     CarrierNameChange(EDLogCarrierNameChange),
+    CarrierLocation(EDLogCarrierLocation),
     FCMaterials(EDLogFCMaterials),
 
     // Drone
@@ -534,7 +543,7 @@ impl EDLogLine {
 fn test_fileheader() {
     let json = r#"{ "timestamp":"2025-03-10T18:19:38Z", "event":"Fileheader", "part":1, "language":"English/UK", "Odyssey":true, "gameversion":"4.1.0.100", "build":"r311607/r0 " }"#;
     let line: EDLogLine = serde_json::from_str(json).expect("Should parse");
-    
+
     assert!(matches!(line.event(), EDLogEvent::FileHeader(_)));
     if let EDLogEvent::FileHeader(header) = line.event() {
         assert!(header.odyssey);

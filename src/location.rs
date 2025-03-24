@@ -1,128 +1,23 @@
 use crate::common_types::{
-    Allegiance, BodyType, FactionName, FactionState, PowerplayState, StationInformation,
+    Allegiance, BodyType, Conflict, Faction, FactionName, Powers, StationInformation, ThargoidWar,
 };
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct Powers {
-    #[serde(flatten)]
-    powers: Vec<String>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct Faction {
-    name: String,
-    faction_state: FactionState,
-    government: String,
-    influence: f64,
-    allegiance: String,
-    happiness: String,
-    #[serde(rename = "Happiness_Localised")]
-    happiness_localised: Option<String>,
-    my_reputation: f64,
-    recovering_states: Option<Vec<FactionRecoveringState>>,
-    active_states: Option<Vec<FactionActiveState>>,
-    pending_states: Option<Vec<FactionPendingState>>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct Trend {
     trend: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct FactionRecoveringState {
-    state: FactionState,
-    trend: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct FactionActiveState {
-    state: FactionState,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct FactionPendingState {
-    state: FactionState,
-    trend: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "lowercase")]
-pub enum WarType {
-    Election,
-    War,
-    CivilWar,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "lowercase")]
-pub enum ConflictStatus {
-    #[serde(rename = "")]
-    None,
-    Active,
-    Pending,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct ConflictFaction {
-    name: String,
-    stake: String,
-    won_days: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct Conflict {
-    war_type: WarType,
-    status: ConflictStatus,
-    faction1: ConflictFaction,
-    faction2: ConflictFaction,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub enum ThargoidWarState {
-    Unknown,
-    #[serde(rename = "")]
-    None,
-    #[serde(rename = "Thargoid_Harvest")]
-    Harvest,
-    #[serde(rename = "Thargoid_Recovery")]
-    Recovery,
-    #[serde(rename = "Thargoid_Controlled")]
-    Controlled,
-    #[serde(rename = "Thargoid_Stronghold")]
-    Stronghold,
-    #[serde(rename = "Thargoid_Probing")]
-    Probing,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct ThargoidWar {
-    current_state: ThargoidWarState,
-    next_state_success: ThargoidWarState,
-    next_state_failure: ThargoidWarState,
-    success_state_reached: bool,
-    war_progress: f64,
-    remaining_ports: u64,
-    estimated_remaining_time: Option<String>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLocation {
+    #[serde(rename = "DistFromStarLS")]
+    dist_from_star_ls: Option<f64>,
     docked: bool,
     on_foot: Option<bool>,
     latitude: Option<f64>,
     longitude: Option<f64>,
-    #[serde(rename = "DistFromStarLS")]
-    dist_from_star_ls: Option<f64>,
     #[serde(flatten)]
     station_info: Option<StationInformation>,
     taxi: Option<bool>,
@@ -150,11 +45,48 @@ pub struct EDLogLocation {
     #[serde(rename = "BodyID")]
     body_id: u64,
     body_type: BodyType,
-    controlling_power: Option<String>,
-    powers: Option<Vec<String>>,
-    powerplay_state: Option<PowerplayState>,
+    #[serde(flatten)]
+    powers: Option<Powers>,
     thargoid_war: Option<ThargoidWar>,
     factions: Option<Vec<Faction>>,
     system_faction: Option<FactionName>,
     conflicts: Option<Vec<Conflict>>,
+}
+
+#[test]
+fn test_location() {
+    let json = r#"{ "timestamp":"2025-03-20T19:54:09Z", "event":"Location", "DistFromStarLS":2700.571292, "Docked":false, 
+        "Taxi":false, "Multicrew":false, "StarSystem":"Kholul", "SystemAddress":2415659059547, "StarPos":[-46.93750,-7.84375,-152.18750], 
+        "SystemAllegiance":"Independent", "SystemEconomy":"$economy_Colony;", "SystemEconomy_Localised":"Colony", 
+        "SystemSecondEconomy":"$economy_Terraforming;", "SystemSecondEconomy_Localised":"Terraforming", "SystemGovernment":"$government_Corporate;", 
+        "SystemGovernment_Localised":"Corporate", "SystemSecurity":"$SYSTEM_SECURITY_medium;", "SystemSecurity_Localised":"Medium Security", 
+        "Population":178961, "Body":"Kholul 9", "BodyID":37, "BodyType":"Planet", 
+        "Powers":[ "Pranav Antal", "Jerome Archer" ], "PowerplayState":"Unoccupied", "PowerplayConflictProgress":[ 
+            { "Power":"Pranav Antal", "ConflictProgress":0.005875 }, 
+            { "Power":"Jerome Archer", "ConflictProgress":0.478375 } ], 
+        "Factions":[ 
+            { "Name":"Kholul Parish", "FactionState":"None", "Government":"Theocracy", "Influence":0.080597, "Allegiance":"Independent", 
+              "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":15.000000, 
+              "PendingStates":[ { "State":"CivilWar", "Trend":0 } ] }, 
+            { "Name":"Kholul Purple United Int", "FactionState":"None", "Government":"Corporate", "Influence":0.148259, "Allegiance":"Independent", 
+              "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":15.000000 }, 
+            { "Name":"Kholul Blue Rats", "FactionState":"Bust", "Government":"Anarchy", "Influence":0.009950, "Allegiance":"Independent", 
+              "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":0.000000, "ActiveStates":[ { "State":"Bust" } ] }, 
+            { "Name":"Sirius Inc", "FactionState":"None", "Government":"Democracy", "Influence":0.134328, "Allegiance":"Independent", 
+               "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":92.936203, 
+               "PendingStates":[ { "State":"Expansion", "Trend":0 } ] } 
+        ], "SystemFaction":{ "Name":"SI Terraforming" }, 
+        "Conflicts":[ 
+            { "WarType":"civilwar", "Status":"pending", "Faction1":{ "Name":"Kholul Parish", "Stake":"", "WonDays":0 }, 
+              "Faction2":{ "Name":"Kholul Movement", "Stake":"McDevitt Laboratory", "WonDays":0 } } 
+        ] }"#;
+    let line: crate::log_line::EDLogLine = serde_json::from_str(json).expect("Should parse");
+
+    assert!(matches!(
+        line.event(),
+        crate::log_line::EDLogEvent::Location(_)
+    ));
+    if let crate::log_line::EDLogEvent::Location(header) = line.event() {
+        assert_eq!(header.population, 178961);
+    }
 }
