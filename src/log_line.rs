@@ -3,7 +3,12 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     commander::{
-        EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward, EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends, EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogNewCommander, EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogRank, EDLogReputation, EDLogResurrect, EDLogVehicleSwitch
+        EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward,
+        EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends,
+        EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogNewCommander, EDLogPowerplay,
+        EDLogPowerplayCollect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin,
+        EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogRank,
+        EDLogReputation, EDLogResurrect, EDLogVehicleSwitch,
     },
     common_types::{BodyInformation, Credits, EDLogName},
     community_goal::EDLogCommunityGoal,

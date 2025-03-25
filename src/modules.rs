@@ -193,7 +193,6 @@ pub struct EDLogFetchRemoteModule {
     ship_id: u64,
 }
 
-
 #[test]
 fn test_exploration() {
     let json = r#"{ "Name":"$int_cargorack_size6_class1_name;", "Name_Localised":"Cargo Rack", "StorageSlot":158, "StarSystem":"LP 932-12", "MarketID":3702691328, "TransferCost":0, "TransferTime":0, "BuyPrice":362591, "Hot":false }"#;
