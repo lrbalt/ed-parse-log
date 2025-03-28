@@ -185,7 +185,7 @@ pub struct EDLogPowerplay {
     pub rank: u64,
     pub merits: Merits,
     pub votes: Option<u64>,
-    #[serde(with="duration_as_secs")]
+    #[serde(with = "duration_as_secs")]
     pub time_pledged: Duration,
 }
 

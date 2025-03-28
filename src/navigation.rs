@@ -1,6 +1,9 @@
-use crate::common_types::{
-    Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionName, Powers, StarClass,
-    StationInformation, ThargoidWar,
+use crate::{
+    common_types::{
+        Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionName, Powers, StarClass,
+        StationInformation, ThargoidWar,
+    },
+    log_line::{EDLogEvent, Extractable},
 };
 use serde::{Deserialize, Serialize};
 
@@ -57,39 +60,48 @@ pub struct EDLogFSDTarget {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 // todo: refactor with location->edloglocation
 pub struct EDLogFSDJump {
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
-    star_system: String,
-    system_address: u64,
-    star_pos: [f64; 3],
-    system_allegiance: Allegiance,
-    system_economy: String,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
+    pub star_system: String,
+    pub system_address: u64,
+    pub star_pos: [f64; 3],
+    pub system_allegiance: Allegiance,
+    pub system_economy: String,
     #[serde(rename = "SystemEconomy_Localised")]
-    system_economy_localised: String,
-    system_second_economy: String,
+    pub system_economy_localised: String,
+    pub system_second_economy: String,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    system_second_economy_localised: String,
-    system_government: String,
+    pub system_second_economy_localised: String,
+    pub system_government: String,
     #[serde(rename = "SystemGovernment_Localised")]
-    system_government_localised: String,
-    system_security: String,
+    pub system_government_localised: String,
+    pub system_security: String,
     #[serde(rename = "SystemSecurity_Localised")]
-    system_security_localised: String,
-    population: u64,
-    body: String,
+    pub system_security_localised: String,
+    pub population: u64,
+    pub body: String,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    body_type: BodyType,
+    pub body_id: u64,
+    pub body_type: BodyType,
     #[serde(flatten)]
-    powerplay: Option<Powers>,
-    thargoid_war: Option<ThargoidWar>,
-    jump_dist: f64,
-    fuel_used: f64,
-    fuel_level: f64,
-    boost_used: Option<u64>,
-    factions: Option<Vec<Faction>>,
-    system_faction: Option<FactionName>,
-    conflicts: Option<Vec<Conflict>>,
+    pub powerplay: Option<Powers>,
+    pub thargoid_war: Option<ThargoidWar>,
+    pub jump_dist: f64,
+    pub fuel_used: f64,
+    pub fuel_level: f64,
+    pub boost_used: Option<u64>,
+    pub factions: Option<Vec<Faction>>,
+    pub system_faction: Option<FactionName>,
+    pub conflicts: Option<Vec<Conflict>>,
+}
+
+impl Extractable for EDLogFSDJump {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::FSDJump(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -229,7 +241,7 @@ fn test_jsd_jump() {
         line.event(),
         crate::log_line::EDLogEvent::FSDJump(_)
     ));
-    if let crate::log_line::EDLogEvent::FSDJump(header) = line.event() {
+    if let EDLogEvent::FSDJump(header) = line.event() {
         assert_eq!(header.taxi, Some(false));
         assert_eq!(header.body_id, 1);
     }
@@ -251,7 +263,7 @@ fn test_approach_settlement() {
         line.event(),
         crate::log_line::EDLogEvent::ApproachSettlement(_)
     ));
-    if let crate::log_line::EDLogEvent::ApproachSettlement(header) = line.event() {
+    if let EDLogEvent::ApproachSettlement(header) = line.event() {
         assert_eq!(header.system_address, 2833906537146);
     }
 }

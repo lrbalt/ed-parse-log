@@ -499,7 +499,7 @@ pub enum ShipScanType {
     Cargo,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub enum Allegiance {
     #[serde(rename = "")]
     None,
@@ -537,20 +537,20 @@ pub enum PowerplayState {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PowerplayConflictProgress {
-    power: String,
-    conflict_progress: f64,
+    pub power: String,
+    pub conflict_progress: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Powers {
-    controlling_power: Option<String>,
-    powers: Vec<String>,
-    powerplay_state: PowerplayState,
-    powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
-    powerplay_state_control_progress: Option<f64>,
-    powerplay_state_reinforcement: Option<u64>,
-    powerplay_state_undermining: Option<u64>,
+    pub controlling_power: Option<String>,
+    pub powers: Vec<String>,
+    pub powerplay_state: PowerplayState,
+    pub powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
+    pub powerplay_state_control_progress: Option<f64>,
+    pub powerplay_state_reinforcement: Option<u64>,
+    pub powerplay_state_undermining: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

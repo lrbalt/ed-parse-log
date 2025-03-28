@@ -156,24 +156,24 @@ pub enum ReserveLevel {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScan {
-    scan_type: ScanType,
-    body_name: String,
+    pub scan_type: ScanType,
+    pub body_name: String,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    parents: Option<Vec<BodyParent>>,
-    star_system: String,
-    system_address: u64,
+    pub body_id: u64,
+    pub parents: Option<Vec<BodyParent>>,
+    pub star_system: String,
+    pub system_address: u64,
     #[serde(rename = "DistanceFromArrivalLS")]
-    distance_from_arrival_ls: f64,
+    pub distance_from_arrival_ls: f64,
     #[serde(flatten)]
-    star_details: Option<ScannedStarDetails>,
+    pub star_details: Option<ScannedStarDetails>,
     #[serde(flatten)]
-    body_details: Option<ScannedBodyDetails>,
+    pub body_details: Option<ScannedBodyDetails>,
     #[serde(flatten)]
-    common_details: Option<ScannedCommonDetails>,
-    reserve_level: Option<ReserveLevel>,
-    was_discovered: bool,
-    was_mapped: bool,
+    pub common_details: Option<ScannedCommonDetails>,
+    pub reserve_level: Option<ReserveLevel>,
+    pub was_discovered: bool,
+    pub was_mapped: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -185,8 +185,8 @@ pub struct EDLogScanned {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDiscoveryScan {
-    system_address: u64,
-    bodies: u64,
+    pub system_address: u64,
+    pub bodies: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -200,25 +200,25 @@ pub struct EDLogDatalinkScan {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNavBeaconScan {
-    system_address: u64,
-    num_bodies: u64,
+    pub system_address: u64,
+    pub num_bodies: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScanOrganic {
-    scan_type: ScanType,
-    genus: String,
+    pub scan_type: ScanType,
+    pub genus: String,
     #[serde(rename = "Genus_Localised")]
-    genus_localised: String,
-    species: String,
+    pub genus_localised: String,
+    pub species: String,
     #[serde(rename = "Species_Localised")]
-    species_localised: String,
-    variant: Option<String>,
+    pub species_localised: String,
+    pub variant: Option<String>,
     #[serde(rename = "Variant_Localised")]
-    variant_localised: Option<String>,
-    system_address: u64,
-    body: u64,
+    pub variant_localised: Option<String>,
+    pub system_address: u64,
+    pub body: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -338,11 +338,11 @@ pub struct EDLogSellOrganicData {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSDiscoveryScan {
-    progress: f64,
-    body_count: u64,
-    non_body_count: u64,
-    system_name: String,
-    system_address: u64,
+    pub progress: f64,
+    pub body_count: u64,
+    pub non_body_count: u64,
+    pub system_name: String,
+    pub system_address: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

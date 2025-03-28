@@ -527,6 +527,16 @@ pub enum EDLogEvent {
     CargoTransfer(EDLogCargoTransfer),
 }
 
+pub trait Extractable {
+    fn extract(event: &EDLogEvent) -> Option<&Self>;
+}
+
+impl EDLogEvent {
+    pub fn extract<T: Extractable>(&self) -> Option<&T> {
+        T::extract(self)
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct EDLogLine {
     timestamp: DateTime<Utc>,
@@ -541,6 +551,10 @@ impl EDLogLine {
 
     pub fn timestamp(&self) -> &DateTime<Utc> {
         &self.timestamp
+    }
+
+    pub fn extract<T: Extractable>(&self) -> Option<&T> {
+        self.event.extract::<T>()
     }
 }
 
