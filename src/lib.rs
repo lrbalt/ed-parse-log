@@ -21,4 +21,5 @@ pub mod statistics;
 pub mod suits;
 pub mod supercruise;
 pub mod transport;
+pub(crate) mod utils;
 pub mod wing;

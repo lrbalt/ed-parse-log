@@ -1,4 +1,6 @@
 use crate::common_types::{CrimeType, Merits, StationType};
+use crate::utils::duration_as_secs;
+use chrono::Duration;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -183,7 +185,8 @@ pub struct EDLogPowerplay {
     pub rank: u64,
     pub merits: Merits,
     pub votes: Option<u64>,
-    pub time_pledged: u64,
+    #[serde(with="duration_as_secs")]
+    pub time_pledged: Duration,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

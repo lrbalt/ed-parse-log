@@ -30,6 +30,25 @@ pub enum MyError {
     ErrorsFoundInLogFiles,
 }
 
+pub fn format_duration(d: &Duration) -> String {
+    let weeks = d.num_weeks();
+    let d = *d - Duration::weeks(weeks);
+    let days = d.num_days();
+    let d = d - Duration::days(days);
+    let hours = d.num_hours();
+    let d = d - Duration::hours(hours);
+    let minutes = d.num_minutes();
+    let d = d - Duration::minutes(minutes);
+    let secs = d.num_seconds();
+
+    match (weeks, days, hours, minutes, secs) {
+        (0, 0, 0, m, s) => format!("{m}:{s}"),
+        (0, 0, h, _m, _s) => format!("{h}h"),
+        (0, d, h, _m, _s) => format!("{d}d {h}:h"),
+        (w, d, h, _m, _s) => format!("{w}w {d}d {h}h"),
+    }
+}
+
 fn progression_string_map(a: u64, b: u64, map: &[&str]) -> String {
     if a == b {
         map[a as usize].to_string()
@@ -88,6 +107,14 @@ fn progression_string_perc(a: u64, b: u64) -> String {
         format!("{}%", a)
     } else {
         format!("{}% → {}%", a, b)
+    }
+}
+
+fn progression_string_duration(a: Duration, b: Duration) -> String {
+    if a == b {
+        format!("{}%", format_duration(&a))
+    } else {
+        format!("{}% → {}%", format_duration(&a), format_duration(&b))
     }
 }
 
@@ -275,7 +302,7 @@ pub struct PowerPlayProgress {
     power: String,
     rank: u64,
     merits: Merits,
-    time_pledged: u64,
+    time_pledged: Duration,
 }
 
 impl PowerPlayProgress {
@@ -336,7 +363,7 @@ impl Display for PowerPlay {
             self.end.progress(),
             power_play_rank_range(self.end.rank).1,
             progression_string_merits(self.start.merits, self.end.merits),
-            progression_string_num(self.start.time_pledged, self.end.time_pledged),
+            progression_string_duration(self.start.time_pledged, self.end.time_pledged),
         )
     }
 }

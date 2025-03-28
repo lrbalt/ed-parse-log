@@ -113,6 +113,7 @@ pub enum MarketItemType {
     EmergencyPowercells,
     SurfaceStabilisers,
     StructuralRegulators,
+    CropHarvesters,
 
     Drones,
     PersonalEffects,
