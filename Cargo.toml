@@ -19,3 +19,4 @@ rayon = { version = "1.10.0" }
 thiserror = { version = "2.0.12" }
 numfmt = { version = "1.1.1" }
 prettytable-rs = { version = "0.10.0", default-features = false}
+itertools = { version = "0.14.0"}

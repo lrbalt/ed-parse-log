@@ -491,6 +491,7 @@ pub enum StationType {
     AsteroidBase,
     PlanetaryConstructionDepot,
     DockablePlanetStation,
+    SpaceConstructionDepot,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

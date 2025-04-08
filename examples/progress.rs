@@ -135,7 +135,7 @@ impl CreditsProgress {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::Statistics(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         let wealth = first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -157,7 +157,7 @@ impl CreditsProgress {
             )
         });
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         let fleet_carrier = first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -194,7 +194,7 @@ impl CreditsProgress {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::LoadGame(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         let credits = first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -267,7 +267,7 @@ impl ReputationProgress {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::Reputation(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -338,7 +338,7 @@ impl PowerPlay {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::Powerplay(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -407,7 +407,7 @@ impl RankProgress {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::Rank(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -484,7 +484,7 @@ impl RankProgressionChange {
             .iter()
             .filter(|line| matches!(line.event(), EDLogEvent::Progress(_)));
         let first = reps.next();
-        let last = reps.last();
+        let last = reps.next_back();
 
         first.and_then(|first| {
             let last = last.unwrap_or(first);
@@ -586,7 +586,7 @@ pub fn read_logs() -> Result<Mutex<Vec<EDLogLine>>, MyError> {
         });
 
     let e = errors.lock().unwrap();
-    if e.len() > 0 {
+    if !e.is_empty() {
         println!("Errors found while parsing log files. First 5 are:");
         for (index, error) in e.iter().take(5).enumerate() {
             eprintln!(

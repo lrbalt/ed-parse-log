@@ -85,7 +85,7 @@ pub fn read_logs(path: &str) -> Result<Mutex<Vec<EDLogLine>>, MyError> {
         });
 
     let e = errors.lock().unwrap();
-    if e.len() > 0 {
+    if !e.is_empty() {
         println!("Errors found while parsing log files. First 5 are:");
         for (index, error) in e.iter().take(5).enumerate() {
             eprintln!(
@@ -187,7 +187,7 @@ fn collect_system_data(
 
     let number_of_jumps = jumps.clone().count();
     let first_jump = jumps.next().cloned();
-    let last_jump = if let Some(data) = jumps.last() {
+    let last_jump = if let Some(data) = jumps.next_back() {
         Some(data.clone())
     } else {
         first_jump.clone()
@@ -197,7 +197,7 @@ fn collect_system_data(
         .iter()
         .filter(|line| matches!(line.event(), EDLogEvent::Location(_)));
     let first_loc = locations.next().cloned();
-    let last_loc = if let Some(data) = locations.last() {
+    let last_loc = if let Some(data) = locations.next_back() {
         Some(data.clone())
     } else {
         first_loc.clone()
@@ -241,7 +241,7 @@ fn collect_system_data(
             .and_then(|l| l.powerplay.clone()),
         (Some(l), None) => l.extract::<EDLogLocation>().and_then(|l| l.powers.clone()),
         (Some(ll), Some(lf)) => {
-            if ll.timestamp() < lf.timestamp() {
+            if ll.timestamp() > lf.timestamp() {
                 ll.extract::<EDLogLocation>().and_then(|l| l.powers.clone())
             } else {
                 lf.extract::<EDLogFSDJump>()

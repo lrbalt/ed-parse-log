@@ -1,37 +1,38 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CommunityGoalTopTier {
-    name: String,
-    bonus: String,
+    pub name: String,
+    pub bonus: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CommunityGoal {
     #[serde(rename = "CGID")]
-    cgid: u64,
-    title: String,
-    system_name: String,
-    market_name: String,
-    expiry: String,
-    is_complete: bool,
-    current_total: u64,
-    player_contribution: u64,
-    num_contributors: u64,
-    top_tier: CommunityGoalTopTier,
-    top_rank_size: Option<u64>,
-    player_in_top_rank: Option<bool>,
-    tier_reached: Option<String>,
-    player_percentile_band: u64,
-    bonus: Option<u64>,
+    pub cgid: u64,
+    pub title: String,
+    pub system_name: String,
+    pub market_name: String,
+    pub expiry: DateTime<Utc>,
+    pub is_complete: bool,
+    pub current_total: u64,
+    pub player_contribution: u64,
+    pub num_contributors: u64,
+    pub top_tier: CommunityGoalTopTier,
+    pub top_rank_size: Option<u64>,
+    pub player_in_top_rank: Option<bool>,
+    pub tier_reached: Option<String>,
+    pub player_percentile_band: u64,
+    pub bonus: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCommunityGoal {
-    current_goals: Vec<CommunityGoal>,
+    pub current_goals: Vec<CommunityGoal>,
 }
 
 #[test]
