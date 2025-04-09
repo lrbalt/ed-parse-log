@@ -44,9 +44,9 @@ use crate::{
     },
     materials::EDLogMaterials,
     mission::{
-        EDLogBounty, EDLogDatalinkVoucher, EDLogFactionKillBond, EDLogMissionAbandoned,
-        EDLogMissionAccepted, EDLogMissionCompleted, EDLogMissionFailed, EDLogMissionRedirected,
-        EDLogMissions, EDLogRedeemVoucher, EDLogSearchAndRescue,
+        EDLogBounty, EDLogCapitalShipBond, EDLogDatalinkVoucher, EDLogFactionKillBond,
+        EDLogMissionAbandoned, EDLogMissionAccepted, EDLogMissionCompleted, EDLogMissionFailed,
+        EDLogMissionRedirected, EDLogMissions, EDLogRedeemVoucher, EDLogSearchAndRescue,
     },
     modules::{
         EDLogFetchRemoteModule, EDLogModuleBuy, EDLogModuleBuyAndStore, EDLogModuleRetrieve,
@@ -434,6 +434,7 @@ pub enum EDLogEvent {
     RedeemVoucher(EDLogRedeemVoucher),
     DatalinkVoucher(EDLogDatalinkVoucher),
     FactionKillBond(EDLogFactionKillBond),
+    CapShipBond(EDLogCapitalShipBond),
 
     // Market
     Market(EDLogMarket),

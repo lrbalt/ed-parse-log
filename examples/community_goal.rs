@@ -236,7 +236,6 @@ pub fn main() {
     let mut table = Table::new();
     table.add_row(row!["ID", "Complete", "Title", "When", "Details", "Reward"]);
     for goal in goals {
-
         let when = format!(
             "Joined: {}\nStatus: {}\nExpire: {}\nReward: {}",
             goal.join_timestamp
@@ -255,7 +254,7 @@ pub fn main() {
         );
 
         let details = format!(
-            "Total: {}\nNumber of contributors: {}\nTop Tier: {}",
+            "Total: {}\nNumber of contributors: {}\nTop Tier: {}\nTier reached: {}",
             goal.goal
                 .as_ref()
                 .map(|g| dec_formatter.fmt2(g.current_total).to_string())
@@ -268,20 +267,20 @@ pub fn main() {
                 .as_ref()
                 .map(|g| g.top_tier.name.clone())
                 .unwrap_or_else(|| "n/a".to_string()),
+            goal.goal
+                .as_ref()
+                .and_then(|g| g.tier_reached.clone())
+                .unwrap_or_else(|| "n/a".to_string()),
         );
         let reward = format!(
-            "Player contribution: {}\nTier reached: {} {}\nBonus:{}\nReward:{}",
+            "Player contribution: {}\nYou're in top {}%\nBonus:{}\nReward:{}",
             goal.goal
                 .as_ref()
                 .map(|g| dec_formatter.fmt2(g.player_contribution).to_string())
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()
-                .and_then(|g| g.tier_reached.clone())
-                .unwrap_or_else(|| "n/a".to_string()),
-            goal.goal
-                .as_ref()
-                .map(|g| "(".to_owned() + &g.player_percentile_band.to_string() + "%)")
+                .map(|g| g.player_percentile_band.to_string())
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()

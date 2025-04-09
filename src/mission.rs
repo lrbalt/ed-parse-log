@@ -1,3 +1,4 @@
+use crate::common_types::Credits;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -275,6 +276,14 @@ pub struct EDLogDatalinkVoucher {
     reward: u64,
     victim_faction: String,
     payee_faction: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCapitalShipBond {
+    reward: Credits,
+    awarding_faction: String,
+    victim_faction: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
