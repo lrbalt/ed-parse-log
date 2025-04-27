@@ -1,9 +1,13 @@
+use chrono::{DateTime, Utc};
 use ed_parse_log_files::{
-    common_types::{Allegiance, Powers},
+    common_types::{Allegiance, FSSSignalType, Powers},
+    docking::EDLogDocked,
+    exploration::EDLogFSSSignalDiscovered,
     location::EDLogLocation,
     log_line::{EDLogEvent, EDLogLine},
     navigation::EDLogFSDJump,
 };
+use itertools::Itertools;
 use prettytable::{Table, cell, format, row};
 use rayon::iter::{IntoParallelRefIterator, ParallelBridge, ParallelIterator};
 use std::{
@@ -104,26 +108,17 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
         .lock()
         .unwrap()
         .par_iter()
-        //
-        // filter on the lines that contain system data
-        //
-        .filter(|line| {
-            matches!(
-                line.event(),
-                EDLogEvent::Scan(_)
-                    | EDLogEvent::DiscoveryScan(_)
-                    | EDLogEvent::NavBeaconScan(_)
-                    | EDLogEvent::ScanOrganic(_)
-                    | EDLogEvent::FSSDiscoveryScan(_)
-                    | EDLogEvent::Location(_)
-                    | EDLogEvent::FSDJump(_)
-            )
-        })
         .map(|line| match line.event() {
             EDLogEvent::Scan(d) => Some((line, d.system_address)),
+            EDLogEvent::DiscoveryScan(d) => Some((line, d.system_address)),
+            EDLogEvent::NavBeaconScan(d) => Some((line, d.system_address)),
+            EDLogEvent::ScanOrganic(d) => Some((line, d.system_address)),
             EDLogEvent::FSSDiscoveryScan(d) => Some((line, d.system_address)),
             EDLogEvent::Location(d) => Some((line, d.system_address)),
             EDLogEvent::FSDJump(d) => Some((line, d.system_address)),
+            EDLogEvent::ApproachSettlement(d) => Some((line, d.system_address)),
+            EDLogEvent::Docked(d) => Some((line, d.system_address)),
+            EDLogEvent::FSSSignalDiscovered(d) => Some((line, d.system_address)),
             _ => None,
         })
         //
@@ -163,6 +158,11 @@ fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<
     None
 }
 
+struct FoundMarket {
+    market_id: u64,
+    station_name: String,
+}
+
 struct SystemData {
     system_address: u64,
     system_name: String,
@@ -172,6 +172,8 @@ struct SystemData {
     last_allegiance: Option<Allegiance>,
     first_powerplay: Option<Powers>,
     last_powerplay: Option<Powers>,
+    found_markets: Vec<FoundMarket>,
+    found_signals: Vec<(DateTime<Utc>, EDLogFSSSignalDiscovered)>,
 }
 
 fn collect_system_data(
@@ -202,6 +204,49 @@ fn collect_system_data(
     } else {
         first_loc.clone()
     };
+
+    let found_markets = lines
+        .iter()
+        .filter(|line| matches!(line.event(), EDLogEvent::Docked(_)))
+        .filter_map(|line| {
+            line.extract::<EDLogDocked>().map(|l| FoundMarket {
+                market_id: l.market_id,
+                station_name: l.station_name.clone(),
+            })
+        })
+        //
+        // reverse so unique will keep the latest
+        //
+        .rev()
+        .unique_by(|m| m.market_id)
+        .collect::<Vec<_>>();
+
+    let found_signals = lines
+        .iter()
+        //
+        // get all discovered signals
+        //
+        .filter(|line| matches!(line.event(), EDLogEvent::FSSSignalDiscovered(_)))
+        .filter_map(|line| {
+            line.extract::<EDLogFSSSignalDiscovered>()
+                .map(|f| (line.timestamp(), f))
+        })
+        // 
+        // remove noise from USS signals
+        //
+        .filter(|(_, s)| {
+            s.signal_type
+                .as_ref()
+                .map(|t| !matches!(t, FSSSignalType::Uss))
+                .unwrap_or(true)
+        })
+        //
+        // remove duplicate signals and keep the latest (lines is sorted)
+        //
+        .unique_by(|m| m.1.signal_name.as_str())
+        .rev()
+        .map(|(t, s)| (*t, s.clone()))
+        .collect::<Vec<_>>();
 
     let last_allegiance = last_loc
         .as_ref()
@@ -259,6 +304,8 @@ fn collect_system_data(
         last_allegiance,
         first_powerplay,
         last_powerplay,
+        found_markets,
+        found_signals,
     })
 }
 
@@ -312,8 +359,14 @@ fn pp_control(pp_data: &Powers) -> String {
 fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
     if system_data.is_none() {
         println!("No data found for {system_name}");
+        return;
     }
+
     let data = system_data.unwrap();
+
+    // format for inner tables
+    let mut format = *format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR;
+    format.padding(1, 0);
 
     let mut table = Table::new();
     table.add_row(row![
@@ -329,16 +382,126 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                 .map(|j| j.timestamp().to_string())
                 .unwrap_or("n/a".to_string()),
             data.last_jump
+                .as_ref()
                 .map(|j| j.timestamp().to_string())
                 .unwrap_or("n/a".to_string()),
         )
     ]);
+
+    let last_jump = data
+        .last_jump
+        .as_ref()
+        .and_then(|l| l.extract::<EDLogFSDJump>());
+
+    let economies = last_jump
+        .as_ref()
+        .map(|j| {
+            (
+                j.system_economy_localised.clone(),
+                j.system_second_economy_localised.clone(),
+            )
+        })
+        .unwrap_or_else(|| ("n/a".to_string(), "n/a".to_string()));
+
     table.add_row(row![
-        "Last known allegiance",
-        data.last_allegiance
-            .map(|a| format!("{:?}", a))
-            .unwrap_or("n/a".to_string())
+        "Government\nAllegiance\nFaction\nSecurity\nEconomy",
+        format!(
+            "{}\n{}\n{}\n{}\n1. {} 2. {}",
+            last_jump
+                .as_ref()
+                .map(|j| j.system_government_localised.as_str())
+                .unwrap_or("n/a"),
+            data.last_allegiance
+                .map(|a| format!("{:?}", a))
+                .unwrap_or("n/a".to_string()),
+            last_jump
+                .as_ref()
+                .map(|j| j.system_security_localised.as_str())
+                .unwrap_or("n/a"),
+            last_jump
+                .and_then(|j| j
+                    .system_faction
+                    .as_ref()
+                    .map(|f| format!("{} in state {:?}", f.name, f.faction_state)))
+                .unwrap_or("n/a".to_string()),
+            economies.0,
+            economies.1,
+        )
     ]);
+
+    if let Some(lj) = last_jump {
+        if let Some(factions) = lj.factions.as_ref() {
+            let mut factions_table = Table::new();
+            factions_table.set_format(format);
+            factions_table.set_titles(row![
+                "Faction",
+                "Government",
+                "Allegiance",
+                "Influence",
+                "Reputation"
+            ]);
+            for faction in factions {
+                factions_table.add_row(row![
+                    faction.name,
+                    faction.government,
+                    faction.allegiance,
+                    format!("{:.1}%", faction.influence * 100.0),
+                    format!("{:.1}%", faction.my_reputation),
+                ]);
+            }
+            table.add_row(row!["Factions", cell!(factions_table)]);
+        } else {
+            table.add_row(row!["Factions", "None"]);
+        }
+    }
+
+    let signals = data
+        .found_signals
+        .iter()
+        .map(|m| {
+            row![
+                m.1.signal_name_localised
+                    .as_ref()
+                    .unwrap_or(&m.1.signal_name),
+                m.1.signal_type
+                    .as_ref()
+                    .map(|m| format!("{:?}", m))
+                    .unwrap_or("None".to_string()),
+                m.0.to_string()
+            ]
+        })
+        .collect::<Vec<_>>();
+
+    let signals = if signals.is_empty() {
+        cell!("None")
+    } else {
+        let mut signals_table = Table::new();
+        signals_table.set_format(format);
+        signals_table.set_titles(row!["Signal Name", "Signal Type", "Last seen"]);
+        for signal in signals {
+            signals_table.add_row(signal);
+        }
+        cell!(signals_table)
+    };
+    table.add_row(row!["Signals", signals]);
+
+    let markets = data
+        .found_markets
+        .iter()
+        .map(|m| row![m.station_name, m.market_id]).collect::<Vec<_>>();
+
+    let markets = if markets.is_empty() {
+        cell!("None")
+    } else {
+        let mut markets_table = Table::new();
+        markets_table.set_format(format);
+        markets_table.set_titles(row!["Station Name", "Market ID"]);
+        for market in markets {
+            markets_table.add_row(market);
+        }
+        cell!(markets_table)
+    };
+    table.add_row(row!["Markets", markets]);
 
     let pp = if let Some(pp_data) = data.last_powerplay {
         let mut pp = Table::new();
@@ -357,12 +520,10 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
             control.add_cell(cell!(pp_control(&pp_data)));
         }
 
-        pp.add_row(header);
+        pp.set_titles(header);
         pp.add_row(info);
         pp.add_row(conflict);
         pp.add_row(control);
-        let mut format = *format::consts::FORMAT_NO_BORDER;
-        format.padding(1, 0);
         pp.set_format(format);
         cell!(pp)
     } else {

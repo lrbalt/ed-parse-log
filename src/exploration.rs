@@ -1,7 +1,7 @@
-use crate::common_types::{
+use crate::{common_types::{
     CodexBodyInformation, FSSSignalType, LuminosityType, MaterialCategory, ScanType, ShipScanType,
     SignalType, StarClass, Unknown,
-};
+}, log_line::{EDLogEvent, Extractable}};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -29,18 +29,27 @@ pub struct SpawningInfo {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSSSignalDiscovered {
-    system_address: u64,
-    signal_name: String,
+    pub system_address: u64,
+    pub signal_name: String,
     #[serde(rename = "SignalName_Localised")]
-    signal_name_localised: Option<String>,
-    signal_type: Option<FSSSignalType>,
+    pub signal_name_localised: Option<String>,
+    pub signal_type: Option<FSSSignalType>,
     #[serde(rename = "USSType")]
-    uss_type: Option<String>,
+    pub uss_type: Option<String>,
     #[serde(rename = "USSType_Localised")]
-    uss_type_localised: Option<String>,
+    pub uss_type_localised: Option<String>,
     #[serde(flatten)]
-    spawning_info: Option<SpawningInfo>,
-    is_station: Option<bool>,
+    pub spawning_info: Option<SpawningInfo>,
+    pub is_station: Option<bool>,
+}
+
+impl Extractable for EDLogFSSSignalDiscovered {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::FSSSignalDiscovered(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

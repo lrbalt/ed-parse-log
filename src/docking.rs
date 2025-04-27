@@ -1,6 +1,9 @@
-use crate::common_types::{
-    Allegiance, FactionName, MaterialCategory, StationEconomy, StationService, StationType,
-    TechBrokerType, TraderType,
+use crate::{
+    common_types::{
+        Allegiance, FactionName, MaterialCategory, StationEconomy, StationService, StationType,
+        TechBrokerType, TraderType,
+    },
+    log_line::{EDLogEvent, Extractable},
 };
 use serde::{Deserialize, Serialize};
 
@@ -142,6 +145,15 @@ pub struct EDLogDocked {
     pub wanted: Option<bool>,
     pub active_fine: Option<bool>,
     pub landing_pads: Option<LandingPads>,
+}
+
+impl Extractable for EDLogDocked {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::Docked(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

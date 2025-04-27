@@ -748,8 +748,8 @@ pub struct StationEconomy {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionName {
-    name: String,
-    faction_state: Option<FactionState>,
+    pub name: String,
+    pub faction_state: Option<FactionState>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -775,19 +775,19 @@ pub struct FactionPendingState {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Faction {
-    name: String,
-    faction_state: FactionState,
-    government: String,
-    influence: f64,
-    allegiance: String,
-    happiness: String,
+    pub name: String,
+    pub faction_state: FactionState,
+    pub government: String,
+    pub influence: f64,
+    pub allegiance: String,
+    pub happiness: String,
     #[serde(rename = "Happiness_Localised")]
-    happiness_localised: Option<String>,
-    squadron_faction: Option<bool>,
-    my_reputation: f64,
-    recovering_states: Option<Vec<FactionRecoveringState>>,
-    active_states: Option<Vec<FactionActiveState>>,
-    pending_states: Option<Vec<FactionPendingState>>,
+    pub happiness_localised: Option<String>,
+    pub squadron_faction: Option<bool>,
+    pub my_reputation: f64,
+    pub recovering_states: Option<Vec<FactionRecoveringState>>,
+    pub active_states: Option<Vec<FactionActiveState>>,
+    pub pending_states: Option<Vec<FactionPendingState>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

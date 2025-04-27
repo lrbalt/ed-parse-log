@@ -3,7 +3,16 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     commander::{
-        EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime, EDLogCommunityGoalJoin, EDLogCommunityGoalReward, EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits, EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends, EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogJoinACrew, EDLogNewCommander, EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogQuitACrew, EDLogRank, EDLogReputation, EDLogRequestPowerMicroResources, EDLogResurrect, EDLogSharedBookmarkToSquadron, EDLogVehicleSwitch
+        EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
+        EDLogCommunityGoalJoin, EDLogCommunityGoalReward, EDLogCrewAssign, EDLogCrewFire,
+        EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits, EDLogCrewMemberRoleChange,
+        EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends,
+        EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogJoinACrew, EDLogNewCommander,
+        EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver,
+        EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave, EDLogPowerplayMerits,
+        EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogQuitACrew, EDLogRank,
+        EDLogReputation, EDLogRequestPowerMicroResources, EDLogResurrect,
+        EDLogSharedBookmarkToSquadron, EDLogVehicleSwitch,
     },
     common_types::{
         BodyInformation, Credits, EDLogLeftSquadron, EDLogName, EDLogNpcCrewPaidWage,
