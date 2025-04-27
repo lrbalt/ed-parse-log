@@ -1,7 +1,10 @@
-use crate::{common_types::{
-    CodexBodyInformation, FSSSignalType, LuminosityType, MaterialCategory, ScanType, ShipScanType,
-    SignalType, StarClass, Unknown,
-}, log_line::{EDLogEvent, Extractable}};
+use crate::{
+    common_types::{
+        CodexBodyInformation, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
+        ShipScanType, SignalType, StarClass, Unknown,
+    },
+    log_line::{EDLogEvent, Extractable},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -326,30 +329,6 @@ pub struct EDLogSellExplorationData {
     base_value: u64,
     bonus: u64,
     total_earnings: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct SoldBioData {
-    genus: String,
-    #[serde(rename = "Genus_Localised")]
-    genus_localised: String,
-    species: String,
-    #[serde(rename = "Species_Localised")]
-    species_localised: String,
-    variant: Option<String>,
-    #[serde(rename = "Variant_Localised")]
-    variant_localised: Option<String>,
-    value: u64,
-    bonus: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSellOrganicData {
-    #[serde(rename = "MarketID")]
-    market_id: u64,
-    bio_data: Vec<SoldBioData>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

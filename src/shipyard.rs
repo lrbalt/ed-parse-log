@@ -1,5 +1,6 @@
 use crate::{
     common_types::{Credits, StarSystemData},
+    log_line::{EDLogEvent, Extractable},
     ship::ShipType,
 };
 use serde::{Deserialize, Serialize};
@@ -127,10 +128,19 @@ pub struct EDLogShipRedeemed {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStoredShips {
-    station_name: String,
+    pub station_name: String,
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    star_system: String,
-    ships_here: Vec<Ship>,
-    ships_remote: Vec<Ship>,
+    pub market_id: u64,
+    pub star_system: String,
+    pub ships_here: Vec<Ship>,
+    pub ships_remote: Vec<Ship>,
+}
+
+impl Extractable for EDLogStoredShips {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::StoredShips(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }

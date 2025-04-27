@@ -231,7 +231,7 @@ fn collect_system_data(
             line.extract::<EDLogFSSSignalDiscovered>()
                 .map(|f| (line.timestamp(), f))
         })
-        // 
+        //
         // remove noise from USS signals
         //
         .filter(|(_, s)| {
@@ -488,7 +488,8 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
     let markets = data
         .found_markets
         .iter()
-        .map(|m| row![m.station_name, m.market_id]).collect::<Vec<_>>();
+        .map(|m| row![m.station_name, m.market_id])
+        .collect::<Vec<_>>();
 
     let markets = if markets.is_empty() {
         cell!("None")

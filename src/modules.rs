@@ -1,4 +1,7 @@
-use crate::common_types::EngineerModification;
+use crate::{
+    common_types::EngineerModification,
+    log_line::{EDLogEvent, Extractable},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -38,10 +41,19 @@ pub struct StoredModule {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStoredModules {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: String,
-    star_system: String,
-    items: Vec<StoredModule>,
+    pub market_id: u64,
+    pub station_name: String,
+    pub star_system: String,
+    pub items: Vec<StoredModule>,
+}
+
+impl Extractable for EDLogStoredModules {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::StoredModules(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

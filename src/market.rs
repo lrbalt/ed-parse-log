@@ -1,4 +1,7 @@
-use crate::common_types::{CarrierDockingAccess, Credits, StationType};
+use crate::{
+    common_types::{CarrierDockingAccess, Credits, StationType},
+    log_line::{EDLogEvent, Extractable},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -269,11 +272,20 @@ pub struct EDLogDeliverPowerMicroResources {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarket {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: String,
-    station_type: StationType,
-    carrier_docking_access: Option<CarrierDockingAccess>,
-    star_system: String,
+    pub market_id: u64,
+    pub station_name: String,
+    pub station_type: StationType,
+    pub carrier_docking_access: Option<CarrierDockingAccess>,
+    pub star_system: String,
+}
+
+impl Extractable for EDLogMarket {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::Market(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -299,12 +311,12 @@ pub struct EDLogCargoDepot {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct RequiredResource {
-    name: String,
+    pub name: String,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
-    required_amount: u64,
-    provided_amount: u64,
-    payment: Credits,
+    pub name_localised: Option<String>,
+    pub required_amount: u64,
+    pub provided_amount: u64,
+    pub payment: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -320,11 +332,20 @@ pub struct ContributedResource {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogColonisationConstructionDepot {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    construction_progress: f64,
-    construction_complete: bool,
-    construction_failed: bool,
-    resources_required: Vec<RequiredResource>,
+    pub market_id: u64,
+    pub construction_progress: f64,
+    pub construction_complete: bool,
+    pub construction_failed: bool,
+    pub resources_required: Vec<RequiredResource>,
+}
+
+impl Extractable for EDLogColonisationConstructionDepot {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::ColonisationConstructionDepot(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -333,4 +354,28 @@ pub struct EDLogColonisationContribution {
     #[serde(rename = "MarketID")]
     market_id: u64,
     contributions: Vec<ContributedResource>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct SoldBioData {
+    genus: String,
+    #[serde(rename = "Genus_Localised")]
+    genus_localised: String,
+    species: String,
+    #[serde(rename = "Species_Localised")]
+    species_localised: String,
+    variant: Option<String>,
+    #[serde(rename = "Variant_Localised")]
+    variant_localised: Option<String>,
+    value: Credits,
+    bonus: Credits,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogSellOrganicData {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    bio_data: Vec<SoldBioData>,
 }

@@ -1,6 +1,9 @@
-use crate::common_types::{
-    Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
-    PowerplayState, StationInformation, ThargoidWar,
+use crate::{
+    common_types::{
+        Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
+        PowerplayState, StationInformation, ThargoidWar,
+    },
+    log_line::{EDLogEvent, Extractable},
 };
 use serde::{Deserialize, Serialize};
 
@@ -302,10 +305,19 @@ pub struct EDLogCarrierStats {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFCMaterials {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    carrier_name: String,
+    pub market_id: u64,
+    pub carrier_name: String,
     #[serde(rename = "CarrierID")]
-    carrier_id: String,
+    pub carrier_id: String,
+}
+
+impl Extractable for EDLogFCMaterials {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::FCMaterials(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[test]

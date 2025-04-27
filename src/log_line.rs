@@ -34,7 +34,7 @@ use crate::{
         EDLogMiningRefined, EDLogMultiSellExplorationData, EDLogNavBeaconScan,
         EDLogProspectedAsteroid, EDLogSAAScanComplete, EDLogSAASignalsFound, EDLogScan,
         EDLogScanBaryCentre, EDLogScanOrganic, EDLogScanned, EDLogSellExplorationData,
-        EDLogSellOrganicData, EDLogStationBernalSphere,
+        EDLogStationBernalSphere,
     },
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCrewServices,
@@ -49,7 +49,8 @@ use crate::{
     market::{
         EDLogBuyMicroResources, EDLogCargoDepot, EDLogColonisationConstructionDepot,
         EDLogColonisationContribution, EDLogDeliverPowerMicroResources, EDLogMarket,
-        EDLogMarketBuy, EDLogMarketSell, EDLogSellMicroResources, EDLogTradeMicroResources,
+        EDLogMarketBuy, EDLogMarketSell, EDLogSellMicroResources, EDLogSellOrganicData,
+        EDLogTradeMicroResources,
     },
     materials::EDLogMaterials,
     mission::{

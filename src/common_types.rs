@@ -486,7 +486,7 @@ pub enum FSSSignalType {
     Codex,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub enum StationType {
     #[serde(rename = "")]
     None,
@@ -505,6 +505,35 @@ pub enum StationType {
     PlanetaryConstructionDepot,
     DockablePlanetStation,
     SpaceConstructionDepot,
+}
+
+impl Display for StationType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            StationType::None => write!(f, "None"),
+            StationType::Outpost => write!(f, "Outpost"),
+            StationType::Coriolis => write!(f, "Coriolis"),
+            StationType::Orbis => write!(f, "Orbis"),
+            StationType::FleetCarrier => write!(f, "Fleet Carrier"),
+            StationType::Ocellus => write!(f, "Ocellus"),
+            StationType::Bernal => write!(f, "Bernal"),
+            StationType::CraterOutpost => write!(f, "Crater Outpost"),
+            StationType::CraterPort => write!(f, "Crater Port"),
+            StationType::MegaShip => write!(f, "Mega Ship"),
+            StationType::SurfaceStation => write!(f, "Surface Station"),
+            StationType::OnFootSettlement => write!(f, "On Foot Settlement"),
+            StationType::AsteroidBase => write!(f, "Asteroid Base"),
+            StationType::PlanetaryConstructionDepot => {
+                write!(f, "Planetary Construction Depot")
+            }
+            StationType::DockablePlanetStation => {
+                write!(f, "Dockable Planet Station")
+            }
+            StationType::SpaceConstructionDepot => {
+                write!(f, "Space Construction Depot")
+            }
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -607,22 +636,22 @@ pub struct CodexBodyInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationInformation {
-    station_name: String,
+    pub station_name: String,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
-    station_type: StationType,
+    pub station_name_localised: Option<String>,
+    pub station_type: StationType,
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_faction: FactionName,
-    station_government: String,
+    pub market_id: u64,
+    pub station_faction: FactionName,
+    pub station_government: String,
     #[serde(rename = "StationGovernment_Localised")]
-    station_government_localised: String,
-    station_allegiance: Option<Allegiance>,
-    station_services: Vec<StationService>,
-    station_economy: String,
+    pub station_government_localised: String,
+    pub station_allegiance: Option<Allegiance>,
+    pub station_services: Vec<StationService>,
+    pub station_economy: String,
     #[serde(rename = "StationEconomy_Localised")]
-    station_economy_localised: String,
-    station_economies: Vec<StationEconomy>,
+    pub station_economy_localised: String,
+    pub station_economies: Vec<StationEconomy>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

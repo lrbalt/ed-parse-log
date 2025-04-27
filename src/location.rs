@@ -23,7 +23,7 @@ pub struct EDLogLocation {
     pub latitude: Option<f64>,
     pub longitude: Option<f64>,
     #[serde(flatten)]
-    pub station_info: Option<StationInformation>,
+    pub station_information: Option<StationInformation>,
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
     #[serde(rename = "InSRV")]

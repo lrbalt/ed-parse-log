@@ -262,12 +262,21 @@ pub struct BrokerCommodity {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTechnologyBroker {
-    broker_type: TechBrokerType,
+    pub broker_type: TechBrokerType,
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    items_unlocked: Vec<BrokerItemUnlocked>,
-    commodities: Vec<BrokerCommodity>,
-    materials: Vec<BrokerMaterial>,
+    pub market_id: u64,
+    pub items_unlocked: Vec<BrokerItemUnlocked>,
+    pub commodities: Vec<BrokerCommodity>,
+    pub materials: Vec<BrokerMaterial>,
+}
+
+impl Extractable for EDLogTechnologyBroker {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::TechnologyBroker(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

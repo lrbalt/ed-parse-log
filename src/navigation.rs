@@ -47,6 +47,15 @@ pub struct EDLogApproachSettlement {
     pub longitude: Option<f64>,
 }
 
+impl Extractable for EDLogApproachSettlement {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::ApproachSettlement(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSDTarget {
