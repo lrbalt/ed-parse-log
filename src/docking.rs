@@ -45,6 +45,8 @@ pub struct EDLogDockingRequested {
     #[serde(rename = "MarketID")]
     market_id: u64,
     station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
     station_type: StationType,
     landing_pads: Option<LandingPads>,
 }
@@ -65,6 +67,8 @@ pub struct EDLogDockingGranted {
     #[serde(rename = "MarketID")]
     market_id: u64,
     station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
     station_type: StationType,
 }
 
@@ -94,6 +98,8 @@ pub struct EDLogDockingDenied {
     #[serde(rename = "MarketID")]
     market_id: u64,
     station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
     station_type: StationType,
 }
 
@@ -109,37 +115,41 @@ pub struct EDLogDockingTimeout {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDocked {
-    station_name: String,
-    station_type: StationType,
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
-    station_state: Option<StationState>,
-    star_system: String,
-    system_address: u64,
+    pub station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
+    pub station_type: StationType,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
+    pub station_state: Option<StationState>,
+    pub star_system: String,
+    pub system_address: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_faction: FactionName,
-    station_government: String,
+    pub market_id: u64,
+    pub station_faction: FactionName,
+    pub station_government: String,
     #[serde(rename = "StationGovernment_Localised")]
-    station_government_localised: String,
-    station_allegiance: Option<Allegiance>,
-    station_services: Vec<StationService>,
-    station_economy: String,
+    pub station_government_localised: String,
+    pub station_allegiance: Option<Allegiance>,
+    pub station_services: Vec<StationService>,
+    pub station_economy: String,
     #[serde(rename = "StationEconomy_Localised")]
-    station_economy_localised: String,
-    station_economies: Vec<StationEconomy>,
+    pub station_economy_localised: String,
+    pub station_economies: Vec<StationEconomy>,
     #[serde(rename = "DistFromStarLS")]
-    dist_from_star_ls: f64,
-    cockpit_breach: Option<bool>,
-    wanted: Option<bool>,
-    active_fine: Option<bool>,
-    landing_pads: Option<LandingPads>,
+    pub dist_from_star_ls: f64,
+    pub cockpit_breach: Option<bool>,
+    pub wanted: Option<bool>,
+    pub active_fine: Option<bool>,
+    pub landing_pads: Option<LandingPads>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogUndocked {
     station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
     station_type: StationType,
     #[serde(rename = "MarketID")]
     market_id: u64,
@@ -204,6 +214,7 @@ pub struct EDLogPayBounties {
 pub struct EDLogPayFines {
     amount: u64,
     all_fines: bool,
+    faction: Option<String>,
     #[serde(rename = "ShipID")]
     ship_id: u64,
     broker_percentage: Option<f64>,

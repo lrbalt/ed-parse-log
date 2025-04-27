@@ -31,6 +31,16 @@ pub struct CommunityGoal {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCommunityGoalDiscard {
+    #[serde(rename = "CGID")]
+    pub cgid: u64,
+    pub name: String,
+    #[serde(rename = "System")]
+    pub system_name: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCommunityGoal {
     pub current_goals: Vec<CommunityGoal>,
 }

@@ -95,7 +95,7 @@ pub struct EDLogStatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     bounties_claimed: u64,
     #[serde(rename = "Bounty_Hunting_Profit")]
-    bounty_hunting_profit: Credits,
+    bounty_hunting_profit: f64, // TODO: only instance of Credits where f64 is used
     #[serde(rename = "Combat_Bonds")]
     combat_bonds: u64,
     #[serde(rename = "Combat_Bond_Profits")]
@@ -283,6 +283,8 @@ pub struct EDLogStatisticsPassengers {
     passengers_missions_delivered: u64,
     #[serde(rename = "Passengers_Missions_Ejected")]
     passengers_missions_ejected: u64,
+    #[serde(rename = "Passengers_Missions_Disgruntled")]
+    passengers_missions_disgruntled: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -322,16 +324,20 @@ pub struct EDLogStatisticSearchAndRescue {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogStatisticsTgEncounters {
+    #[serde(rename = "TG_ENCOUNTER_IMPRINT")]
+    tg_encounter_imprint: Option<u64>,
     #[serde(rename = "TG_ENCOUNTER_KILLED")]
     tg_encounter_killed: Option<u64>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL")]
-    tg_encounter_total: u64,
+    tg_encounter_total: Option<u64>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_SYSTEM")]
-    tg_encounter_total_last_system: String,
+    tg_encounter_total_last_system: Option<String>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP")]
-    tg_encounter_total_last_timestamp: String,
+    tg_encounter_total_last_timestamp: Option<String>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_SHIP")]
-    tg_encounter_total_last_ship: String,
+    tg_encounter_total_last_ship: Option<String>,
+    #[serde(rename = "TG_ENCOUNTER_WAKES")]
+    tg_encounter_wakes: Option<u64>,
     #[serde(rename = "TG_SCOUT_COUNT")]
     tg_scout_count: Option<u64>,
 }
@@ -483,6 +489,21 @@ pub struct EDLogStatisticsFleetcarrier {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
+pub struct EDLogStatisticsCQCStats {
+    #[serde(rename = "CQC_Credits_Earned")]
+    cqc_credits_earned: Option<Credits>,
+    #[serde(rename = "CQC_Time_Played")]
+    cqc_time_played: u64,
+    #[serde(rename = "CQC_KD")]
+    cqc_kd: f64,
+    #[serde(rename = "CQC_WL")]
+    cqc_wl: f64,
+    #[serde(rename = "CQC_Kills")]
+    cqc_kills: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct EDLogStatisticsExobiology {
     #[serde(rename = "Organic_Genus_Encountered")]
     organic_genus_encountered: u64,
@@ -529,6 +550,8 @@ pub struct EDLogStatistics {
     pub multicrew: EDLogStatisticsMulticrew,
     #[serde(rename = "Material_Trader_Stats")]
     pub material_trader_stats: EDLogStatisticsMaterialTraderStats,
+    #[serde(rename = "CQC")]
+    pub cqc_stats: Option<EDLogStatisticsCQCStats>,
     #[serde(rename = "FLEETCARRIER")]
     pub fleetcarrier: Option<EDLogStatisticsFleetcarrier>,
     pub exobiology: Option<EDLogStatisticsExobiology>,

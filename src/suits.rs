@@ -75,6 +75,8 @@ pub enum SuitMod {
     IncreasedAmmoReserves,
     #[serde(rename = "suit_reducedtoolbatteryconsumption")]
     ReducedToolBatteryConsumption,
+    #[serde(rename = "suit_increasedbatterycapacity")]
+    IncreasedBatteryCapacity,
     #[serde(rename = "suit_nightvision")]
     NightVision,
     #[serde(rename = "suit_increasedshieldregen")]
@@ -85,8 +87,16 @@ pub enum SuitMod {
     IncreasedSprintDuration,
     #[serde(rename = "suit_increasedmeleedamage")]
     IncreasedMeleeDamage,
+    #[serde(rename = "suit_quieterfootsteps")]
+    QuieterFootsteps,
     #[serde(rename = "suit_increasedo2capacity")]
     IncreasedO2Capacity,
+    #[serde(rename = "suit_improvedradar")]
+    ImprovedRadar,
+    #[serde(rename = "suit_adsmovementspeed")]
+    AdsMovementSpeed,
+    #[serde(rename = "suit_improvedarmourrating")]
+    ImprovedArmourRating,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -109,6 +119,8 @@ pub enum WeaponMod {
     ReloadSpeed,
     #[serde(rename = "weapon_accuracy")]
     Accuracy,
+    #[serde(rename = "weapon_handling")]
+    Handling,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -223,7 +235,7 @@ pub struct EDLogUpgradeSuit {
 pub struct EDLogDropItems {
     name: String,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: Option<String>,
     #[serde(rename = "Type")]
     item_type: String,
     #[serde(rename = "OwnerID")]

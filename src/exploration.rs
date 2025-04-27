@@ -260,10 +260,18 @@ pub struct ProspectedMaterial {
 pub struct EDLogProspectedAsteroid {
     materials: Vec<ProspectedMaterial>,
     motherlode_material: Option<String>,
+    #[serde(rename = "MotherlodeMaterial_Localised")]
+    motherlode_material_localised: Option<String>,
     content: String,
     #[serde(rename = "Content_Localised")]
     content_localised: String,
     remaining: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogAsteroidCracked {
+    body: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

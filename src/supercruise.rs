@@ -34,3 +34,18 @@ pub struct EDLogSupercruiseEntry {
     star_system: String,
     system_address: u64,
 }
+
+#[test]
+fn test_destination_drop() {
+    let json = r#"{ "timestamp":"2023-07-30T20:54:01Z", "event":"SupercruiseDestinationDrop", 
+                          "Type":"Wrangell Terminal", "Threat":0, "MarketID":3228997120 }"#;
+    let line: crate::log_line::EDLogLine = serde_json::from_str(json).expect("Should parse");
+
+    assert!(matches!(
+        line.event(),
+        crate::log_line::EDLogEvent::SupercruiseDestinationDrop(_)
+    ));
+    if let crate::log_line::EDLogEvent::SupercruiseDestinationDrop(header) = line.event() {
+        assert_eq!(header.market_id, Some(3228997120));
+    }
+}

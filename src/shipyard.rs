@@ -1,4 +1,7 @@
-use crate::{common_types::StarSystemData, ship::ShipType};
+use crate::{
+    common_types::{Credits, StarSystemData},
+    ship::ShipType,
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -13,7 +16,7 @@ pub struct Ship {
     #[serde(flatten)]
     start_system_data: Option<StarSystemData>,
     in_transit: Option<bool>,
-    value: u64,
+    value: Credits,
     hot: bool,
 }
 
@@ -44,7 +47,7 @@ pub struct EDLogShipyardTransfer {
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
     distance: f64,
-    transfer_price: u64,
+    transfer_price: Credits,
     transfer_time: u64,
     #[serde(rename = "MarketID")]
     market_id: u64,
@@ -75,7 +78,7 @@ pub struct EDLogShipyardBuy {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
     ship_type_localised: Option<String>,
-    ship_price: u64,
+    ship_price: Credits,
     store_old_ship: String,
     #[serde(rename = "StoreShipID")]
     store_ship_id: u64,
@@ -87,9 +90,14 @@ pub struct EDLogShipyardBuy {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSell {
     ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    ship_type_localised: Option<String>,
     #[serde(rename = "SellShipID")]
     sell_ship_id: u64,
-    ship_price: u64,
+    ship_price: Credits,
+    system: Option<String>,
+    #[serde(rename = "ShipMarketID")]
+    ship_market_id: Option<u64>,
     #[serde(rename = "MarketID")]
     market_id: u64,
 }
@@ -98,6 +106,8 @@ pub struct EDLogShipyardSell {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardRedeem {
     ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    ship_type_localised: Option<String>,
     #[serde(rename = "BundleID")]
     bundle_id: u64,
     #[serde(rename = "MarketID")]
@@ -108,6 +118,8 @@ pub struct EDLogShipyardRedeem {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipRedeemed {
     ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    ship_type_localised: Option<String>,
     #[serde(rename = "NewShipID")]
     new_ship_id: u64,
 }

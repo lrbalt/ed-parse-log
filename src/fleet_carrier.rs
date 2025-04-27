@@ -1,6 +1,6 @@
 use crate::common_types::{
-    Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayState,
-    StationInformation, ThargoidWar,
+    Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
+    PowerplayState, StationInformation, ThargoidWar,
 };
 use serde::{Deserialize, Serialize};
 
@@ -38,7 +38,8 @@ pub struct EDLogCarrierTradeOrder {
     commodity_localised: Option<String>,
     cancel_trade: Option<bool>,
     sale_order: Option<u32>,
-    price: Option<u64>,
+    purchase_order: Option<Credits>,
+    price: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -46,9 +47,10 @@ pub struct EDLogCarrierTradeOrder {
 pub struct EDLogCarrierBankTransfer {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
-    deposit: u64,
-    player_balance: u64,
-    carrier_balance: u64,
+    deposit: Option<Credits>,
+    withdraw: Option<Credits>,
+    player_balance: Credits,
+    carrier_balance: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -95,8 +97,13 @@ pub struct EDLogCarrierJump {
     #[serde(rename = "BodyID")]
     body_id: u64,
     body_type: BodyType,
-    powers: Option<Vec<String>>,
+    controlling_power: Option<String>,
+    powers: Option<Vec<String>>, // TODO: use Powers struct here
     powerplay_state: Option<PowerplayState>,
+    powerplay_state_control_progress: Option<f64>,
+    powerplay_state_reinforcement: Option<u64>,
+    powerplay_state_undermining: Option<u64>,
+    powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
     thargoid_war: Option<ThargoidWar>,
     factions: Option<Vec<Faction>>,
     system_faction: Option<FactionName>,
@@ -131,6 +138,10 @@ pub enum CrewRole {
     Shipyard,
     Bartender,
     PioneerSupplies,
+    BlackMarket,
+    Captain,
+    Commodities,
+    CarrierFuel,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -138,6 +149,8 @@ pub enum CrewServiceOperation {
     Activate,
     Pause,
     Resume,
+    Deactivate,
+    Replace,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -161,6 +174,27 @@ pub struct EDLogCarrierBuy {
     price: u64,
     variant: String,
     callsign: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierModulePack {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    operation: String,
+    pack_theme: String,
+    pack_tier: u64,
+    cost: Option<Credits>,
+    refund: Option<Credits>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCarrierDockingPermission {
+    #[serde(rename = "CarrierID")]
+    carrier_id: u64,
+    docking_access: String,
+    allow_notorious: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -189,13 +223,16 @@ pub enum ShipPack {}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
-pub enum ModulePack {}
+pub struct ModulePack {
+    pack_theme: String,
+    pack_tier: u64,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CrewMember {
     crew_name: Option<String>,
-    crew_role: String,
+    crew_role: CrewRole,
     activated: bool,
     enabled: Option<bool>,
     activated_props: Option<ActivatedProps>,
@@ -213,8 +250,8 @@ pub struct ActivatedProps {
 pub struct Finance {
     pub carrier_balance: Credits,
     pub reserve_balance: Credits,
-    pub reserve_percent: Option<f64>,
     pub available_balance: Credits,
+    pub reserve_percent: Option<f64>,
     #[serde(rename = "TaxRate_rearm")]
     pub tax_rate_rearm: Option<u64>,
     #[serde(rename = "TaxRate_refuel")]

@@ -34,17 +34,17 @@ pub struct EDLogLiftoff {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogApproachSettlement {
-    name: String,
+    pub name: String,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    pub name_localised: Option<String>,
     #[serde(flatten)]
-    station_information: Option<StationInformation>,
-    system_address: u64,
+    pub station_information: Option<StationInformation>,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    body_name: String,
-    latitude: Option<f64>,
-    longitude: Option<f64>,
+    pub body_id: u64,
+    pub body_name: String,
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -177,6 +177,12 @@ pub struct EDLogStartJump {
     taxi: Option<bool>,
     #[serde(flatten)]
     star_system: Option<JumpToStarsystem>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogJetConeBoost {
+    boost_value: f64,
 }
 
 #[test]

@@ -1,4 +1,4 @@
-use crate::common_types::{CarrierDockingAccess, StationType};
+use crate::common_types::{CarrierDockingAccess, Credits, StationType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -36,6 +36,8 @@ pub enum MarketItemType {
     Indium,
     Bromellite,
     Bertrandite,
+    Opal,
+    GrandIdierite,
 
     SyntheticFabrics,
     SyntheticReagents,
@@ -64,6 +66,7 @@ pub enum MarketItemType {
     FoodCartridges,
     Liquor,
     Beer,
+    Wine,
     BasicNarcotics,
     GeologicalEquipment,
     Biowaste,
@@ -114,6 +117,9 @@ pub enum MarketItemType {
     SurfaceStabilisers,
     StructuralRegulators,
     CropHarvesters,
+    DiagnosticSensor,
+    Hostage,
+    Scrap,
 
     Drones,
     PersonalEffects,
@@ -124,6 +130,7 @@ pub enum MarketItemType {
     AislingPromotionalMaterials,
     RepublicanFieldSupplies,
     RepublicanGarisonSupplies,
+    ImperialSlaves,
 
     KamitraCigars,
     FujinTea,
@@ -216,9 +223,11 @@ pub struct MicroResource {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyMicroResources {
+    total_count: Option<u64>,
     #[serde(flatten)]
-    micro_resource: MicroResource,
-    price: u64,
+    micro_resource: Option<MicroResource>,
+    micro_resources: Option<Vec<MicroResource>>,
+    price: Credits,
     #[serde(rename = "MarketID")]
     market_id: u64,
 }
@@ -272,11 +281,11 @@ pub struct EDLogMarket {
 pub struct EDLogCargoDepot {
     #[serde(rename = "MissionID")]
     mission_id: u64,
-    update_type: String, // TODO: enum
-    cargo_type: String,  // TODO: enum
+    update_type: String,        // TODO: enum
+    cargo_type: Option<String>, // TODO: enum
     #[serde(rename = "CargoType_Localised")]
     cargo_type_localised: Option<String>,
-    count: u64,
+    count: Option<u64>,
     #[serde(rename = "StartMarketID")]
     start_market_id: u64,
     #[serde(rename = "EndMarketID")]
@@ -285,4 +294,43 @@ pub struct EDLogCargoDepot {
     items_delivered: u64,
     total_items_to_deliver: u64,
     progress: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct RequiredResource {
+    name: String,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<String>,
+    required_amount: u64,
+    provided_amount: u64,
+    payment: Credits,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct ContributedResource {
+    name: String,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<String>,
+    amount: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogColonisationConstructionDepot {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    construction_progress: f64,
+    construction_complete: bool,
+    construction_failed: bool,
+    resources_required: Vec<RequiredResource>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogColonisationContribution {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    contributions: Vec<ContributedResource>,
 }

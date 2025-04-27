@@ -149,6 +149,27 @@ pub struct EDLogModuleSwap {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct MassStoredModule {
+    slot: String,
+    name: String,
+    #[serde(rename = "Name_Localised")]
+    name_localised: String,
+    hot: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogMassModuleStore {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    ship: String,
+    #[serde(rename = "ShipID")]
+    ship_id: u32,
+    items: Vec<MassStoredModule>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleStore {
     #[serde(rename = "MarketID")]
     market_id: u64,

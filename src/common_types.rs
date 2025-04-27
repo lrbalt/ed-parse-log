@@ -88,6 +88,8 @@ pub enum OnFootItem {
     RDX,
     SyntheticGenome,
     TrueFormFossil,
+    TacticalPlans,
+    TroopDeploymentRecords,
 
     HealthPack,
     EnergyCell,
@@ -279,6 +281,7 @@ pub enum OnFootItem {
     VirologyData,
     VisitorRegister,
     WeaponInventory,
+    WeaponTestData,
     XenoDefenceProtocols,
 }
 
@@ -323,6 +326,7 @@ pub enum BodyType {
 #[serde(rename_all = "camelCase")]
 pub enum CrimeType {
     CollidedAtSpeedInNoFireZone,
+    DockingMajorBlockingLandingPad,
     DockingMinorBlockingAirlock,
     FireInNoFireZone,
     DumpingNearStation,
@@ -368,13 +372,17 @@ pub enum CrimeType {
 pub enum CarrierDockingAccess {
     All,
     Friends,
+    None,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub enum StarClass {
+    #[serde(rename = "AeBe")]
+    Aebe,
     A,
     B,
+    C,
     D,
     DA,
     #[serde(rename = "DAB")]
@@ -394,9 +402,11 @@ pub enum StarClass {
     #[serde(rename = "M_RedGiant")]
     MRedGiant,
     N,
+    SupermassiveBlackHole,
     T,
     #[serde(rename = "TTS")]
     Tts,
+    W,
     Y,
 }
 
@@ -404,6 +414,8 @@ pub enum StarClass {
 pub enum LuminosityType {
     Va,
     V,
+    #[serde(rename = "I")]
+    One,
     #[serde(rename = "III")]
     Three,
     #[serde(rename = "IV")]
@@ -471,6 +483,7 @@ pub enum FSSSignalType {
     Titan,
     #[serde(rename = "USS")]
     Uss,
+    Codex,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -498,6 +511,7 @@ pub enum StationType {
 pub enum ShipScanType {
     Crime,
     Cargo,
+    Data,
 }
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug)]
@@ -522,6 +536,7 @@ pub enum DroneType {
     Decontamination,
     Recon,
     Research,
+    FuelTransfer,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -593,6 +608,8 @@ pub struct CodexBodyInformation {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationInformation {
     station_name: String,
+    #[serde(rename = "StationName_Localised")]
+    station_name_localised: Option<String>,
     station_type: StationType,
     #[serde(rename = "MarketID")]
     market_id: u64,
@@ -766,6 +783,7 @@ pub struct Faction {
     happiness: String,
     #[serde(rename = "Happiness_Localised")]
     happiness_localised: Option<String>,
+    squadron_faction: Option<bool>,
     my_reputation: f64,
     recovering_states: Option<Vec<FactionRecoveringState>>,
     active_states: Option<Vec<FactionActiveState>>,
@@ -857,6 +875,20 @@ pub enum ModuleEngineeringModifiers {
     ShieldBankSpinUp(ModifierValue),
     BurstRateOfFire(ModifierValue),
     BurstSize(ModifierValue),
+    ShieldBankDuration(ModifierValue),
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogLeftSquadron {
+    squadron_name: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogSquadronStartup {
+    squadron_name: String,
+    current_rank: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -889,10 +921,26 @@ pub enum TechBrokerType {
     Salvation,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogNpcCrewRank {
+    npc_crew_name: String,
+    npc_crew_id: u64,
+    rank_combat: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogNpcCrewPaidWage {
+    npc_crew_name: String,
+    npc_crew_id: u64,
+    amount: Credits,
+}
+
 #[test]
 fn test_faction() {
     let json = r#"{ "Name":"People's Madjandji Resistance", "FactionState":"None", "Government":"Democracy", "Influence":0.063555,
-          "Allegiance":"Federation", "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":0.000000 }"#;
+    "Allegiance":"Federation", "Happiness":"$Faction_HappinessBand2;", "Happiness_Localised":"Happy", "MyReputation":0.000000 }"#;
     let line: Result<Faction, _> = serde_json::from_str(json);
     assert!(line.is_ok());
 

@@ -1,4 +1,5 @@
-use crate::common_types::{CrimeType, Merits, StationType};
+use crate::common_types::{Credits, CrimeType, Merits, StationType};
+use crate::market::MicroResource;
 use crate::utils::duration_as_secs;
 use chrono::Duration;
 use serde::{Deserialize, Serialize};
@@ -261,6 +262,28 @@ pub struct EDLogResurrect {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogRequestPowerMicroResources {
+    total_count: u64,
+    micro_resources: Vec<MicroResource>,
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayDefect {
+    from_power: String,
+    to_power: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayLeave {
+    power: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayRank {
     power: String,
     rank: u64,
@@ -281,8 +304,8 @@ pub struct EDLogCommitCrime {
     victim: Option<String>,
     #[serde(rename = "Victim_Localised")]
     victim_localised: Option<String>,
-    bounty: Option<u64>,
-    fine: Option<u64>,
+    bounty: Option<Credits>,
+    fine: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -296,7 +319,11 @@ pub struct EDLogCrimeVictim {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CrewMemberRole {
+    Active,
     Helm,
+    OnShoreLeave,
+    OnFoot,
+    Idle,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -343,6 +370,7 @@ pub enum FriendStatus {
     Requested,
     Added,
     Lost,
+    Declined,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -384,7 +412,19 @@ pub struct EDLogCommunityGoalJoin {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogAppliedToSquadron {
+    squadron_name: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogInvitedToSquadron {
+    squadron_name: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogSharedBookmarkToSquadron {
     squadron_name: String,
 }
 
@@ -402,8 +442,81 @@ pub struct EDLogVehicleSwitch {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewMemberQuits {
+    crew: String,
+    telepresence: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogQuitACrew {
+    captain: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogJoinACrew {
+    captain: String,
+    telepresence: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewFire {
+    #[serde(rename = "Name")]
+    name: String,
+    #[serde(rename = "CrewID")]
+    crew_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewAssign {
+    name: String,
+    #[serde(rename = "CrewID")]
+    crew_id: u64,
+    role: CrewMemberRole,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewHire {
+    name: String,
+    #[serde(rename = "CrewID")]
+    crew_id: u64,
+    faction: String,
+    cost: Credits,
+    combat_rank: u8,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogChangeCrewRole {
+    role: CrewMemberRole,
+    telepresence: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewMemberRoleChange {
+    crew: String,
+    role: CrewMemberRole,
+    telepresence: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogCrewMemberJoins {
+    crew: String,
+    role: Option<CrewMemberRole>,
+    telepresence: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEndCrewSession {
     on_crime: bool,
+    telepresence: Option<bool>,
 }
 
 #[test]

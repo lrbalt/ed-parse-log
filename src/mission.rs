@@ -288,6 +288,32 @@ pub struct EDLogCapitalShipBond {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct Passenger {
+    #[serde(rename = "MissionID")]
+    mission_id: u64,
+    #[serde(rename = "Type")]
+    mission_type: String, // TODO: use enum
+    wanted: bool,
+    #[serde(rename = "VIP")]
+    vip: bool,
+    count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPassengers {
+    manifest: Vec<Passenger>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPVPKill {
+    victim: String,
+    combat_rank: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFactionKillBond {
     reward: u64,
     awarding_faction: String,

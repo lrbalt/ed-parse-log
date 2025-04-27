@@ -9,6 +9,8 @@ pub struct Inventory {
     name_localised: Option<String>,
     count: u64,
     stolen: u64,
+    #[serde(rename = "MissionID")]
+    mission_id: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -51,6 +53,7 @@ pub enum LegalStatus {
     Lawless,
     Enemy,
     Hunter,
+    Thargoid22,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -67,26 +70,34 @@ pub struct TargetedSubsystem {
 pub enum ShipType {
     #[serde(alias = "Adder")]
     Adder,
+    #[serde(alias = "adder_taxi")]
+    AdderTaxi,
     #[serde(alias = "Asp")]
     Asp,
     #[serde(rename = "asp_scout")]
     AspScout,
     #[serde(alias = "Anaconda")]
     Anaconda,
+    #[serde(alias = "BelugaLiner")]
     BelugaLiner,
     #[serde(alias = "CobraMkIII")]
     CobraMkIII,
     CobraMkIV,
+    #[serde(alias = "CobraMkV")]
     CobraMkV,
+    #[serde(alias = "Corsair")]
+    Corsair,
     #[serde(alias = "Cutter")]
     Cutter,
     DiamondBack,
+    #[serde(alias = "DiamondBackXL")]
     DiamondBackXL,
     #[serde(rename = "diamondback_taxi")]
     DiamondBackTaxi,
     Dolphin,
+    #[serde(alias = "Eagle")]
     Eagle,
-    #[serde(rename = "empire_courier")]
+    #[serde(rename = "empire_courier", alias = "Empire_Courier")]
     EmpireCourier,
     #[serde(rename = "empire_eagle", alias = "Empire_Eagle")]
     EmpireEagle,
@@ -108,15 +119,20 @@ pub enum ShipType {
     FerDeLance,
     #[serde(rename = "gdn_hybrid_fighter_v1")]
     GuardianHybridFighterV1,
+    #[serde(rename = "gdn_hybrid_fighter_v2")]
+    GuardianHybridFighterV2,
+    #[serde(rename = "gdn_hybrid_fighter_v3")]
+    GuardianHybridFighterV3,
     Hauler,
     #[serde(rename = "independent_fighter")]
     IndependantFighter,
     #[serde(rename = "independant_trader")]
     IndependentTrader,
-    #[serde(rename = "krait_light")]
+    #[serde(rename = "krait_light", alias = "Krait_Light")]
     KraitLight,
     #[serde(rename = "krait_mkii", alias = "Krait_MkII")]
     KraitMkII,
+    #[serde(alias = "Mamba")]
     Mamba,
     #[serde(alias = "Mandalay")]
     Mandalay,
@@ -127,7 +143,9 @@ pub enum ShipType {
     PythonNX,
     #[serde(alias = "SideWinder")]
     Sidewinder,
+    #[serde(alias = "Type6")]
     Type6,
+    #[serde(alias = "Type7")]
     Type7,
     #[serde(alias = "Type8")]
     Type8,
@@ -141,6 +159,7 @@ pub enum ShipType {
     TypeX2,
     #[serde(rename = "typex_3")]
     TypeX3,
+    #[serde(alias = "Viper")]
     Viper,
     #[serde(rename = "viper_mkiv")]
     ViperMkIV,
@@ -148,6 +167,8 @@ pub enum ShipType {
     ViperTaxi,
     #[serde(alias = "Vulture")]
     Vulture,
+    #[serde(rename = "vulture_taxi")]
+    VultureTaxi,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -200,6 +221,8 @@ pub struct EDLogInterdicted {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEscapeInterdiction {
     interdictor: String,
+    #[serde(rename = "Interdictor_Localised")]
+    interdictor_localised: Option<String>,
     is_player: bool,
 }
 
