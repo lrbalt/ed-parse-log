@@ -38,6 +38,10 @@ You can see what you have learned about a system called "Shinrarta Dezhra" by us
 
 <img width="769" alt="afbeelding" src="https://github.com/user-attachments/assets/d5054c57-d33c-4442-ab76-9cd97a8049ab" />
 
+And it shows Powerplay 2.0 progress, for example:
+
+<img width="752" alt="afbeelding" src="https://github.com/user-attachments/assets/0bde3dfa-a20a-4f6a-b4e4-3361cddfda4e" />
+
 And to see more information about a specific market, including status of colonisation and needed materials, you can find the id's using `system_info` above. For example "Jameson Memorial" is 128666762, so run
 
     cargo run --example market_info --release -- /path/to/log/files 128666762
