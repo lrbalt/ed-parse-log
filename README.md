@@ -15,6 +15,7 @@ After I worked on this crate I found [ed-journals](https://github.com/rster2002/
 * it parses all test files from [ed-journals](https://github.com/rster2002/ed-journals)
 * On my M2 Macbook it parses at ± 340 MB/s
 * it needs further refactoring to improve and dry the data model
+* examples show use of [Rayon](https://github.com/rayon-rs/rayon) to parse log files in parallel
 
 ### How to run an example
 
