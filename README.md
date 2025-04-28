@@ -1,6 +1,9 @@
 ### ed-parse-log
 Parse the log files of the flight simulator [Elite Dangerous](https://www.elitedangerous.com/). This repository contains some examples on how to use it.
 
+<img width="811" alt="afbeelding" src="https://github.com/user-attachments/assets/f5795716-d9dd-4600-b1a7-fb3a4260f287" />
+
+
 ### What can it do?
 * It uses `serde_json` to parse a line from a log file. 
 * It uses serde's `deny_unknown_fields` to be strict in parsing, i.e. it will fail on unexpected fields in a log line. 
