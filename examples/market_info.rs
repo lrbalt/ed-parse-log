@@ -255,7 +255,7 @@ fn show_market_data(market_data: &MarketData, market_id: u64) {
 
     // format for inner tables
     let mut format = *format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR;
-    format.padding(1, 0);
+    format.padding(1, 1);
 
     let mut table = Table::new();
     table.add_row(row![
@@ -295,12 +295,13 @@ fn show_market_data(market_data: &MarketData, market_id: u64) {
 
                     let mut resources_required = Table::new();
                     resources_required.set_format(format);
-                    resources_required.set_titles(row!["Resource", "Remaining", "Credit value"]);
+                    resources_required.set_titles(row!["Resource", "Remaining", "Credit value", "Total value"]);
 
                     for r in ccd.resources_required.iter() {
                         resources_required.add_row(row![
                             r.name_localised.as_ref().unwrap_or(&r.name),
                             r -> dec_formatter.fmt2(r.required_amount - r.provided_amount),
+                            r -> dec_formatter.fmt2(r.payment.0),
                             r -> dec_formatter.fmt2(r.payment.0 * (r.required_amount - r.provided_amount) as i64)
                         ]);
                     }
