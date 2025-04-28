@@ -40,7 +40,7 @@ You can see what you have learned about a system called "Shinrarta Dezhra" by us
 
 And it shows Powerplay 2.0 progress, for example:
 
-<img width="752" alt="afbeelding" src="https://github.com/user-attachments/assets/0bde3dfa-a20a-4f6a-b4e4-3361cddfda4e" />
+<img width="798" alt="afbeelding" src="https://github.com/user-attachments/assets/24212b3e-4f8c-4be6-a2a0-5f684c256ea9" />
 
 And to see more information about a specific market, including status of colonisation and needed materials, you can find the id's using `system_info` above. For example "Jameson Memorial" is 128666762, so run
 
