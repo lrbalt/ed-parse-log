@@ -50,6 +50,7 @@ pub enum LegalStatus {
     Unknown,
     Clean,
     Wanted,
+    WantedEnemy,
     Lawless,
     Enemy,
     Hunter,
