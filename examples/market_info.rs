@@ -297,15 +297,22 @@ fn show_market_data(market_data: &MarketData, market_id: u64) {
                     resources_required.set_format(format);
                     resources_required.set_titles(row!["Resource", "Remaining", "Credit value", "Total value"]);
 
-                    for r in ccd.resources_required.iter() {
+                    let mut resources = ccd.resources_required.clone();
+                    resources.sort_by(|a, b| (a.required_amount-a.provided_amount).cmp(&(b.required_amount-b.provided_amount)).reverse());
+
+                    let (mut sum_remaining, mut total_value) = (0,0);
+                    for r in resources.iter() {
                         resources_required.add_row(row![
                             r.name_localised.as_ref().unwrap_or(&r.name),
                             r -> dec_formatter.fmt2(r.required_amount - r.provided_amount),
                             r -> dec_formatter.fmt2(r.payment.0),
                             r -> dec_formatter.fmt2(r.payment.0 * (r.required_amount - r.provided_amount) as i64)
                         ]);
+                        sum_remaining += r.required_amount - r.provided_amount;
+                        total_value += r.payment.0 * (r.required_amount - r.provided_amount) as i64
                     }
-
+                    resources_required.add_row(row![]);
+                    resources_required.add_row(row!["Total",r -> dec_formatter.fmt2(sum_remaining),"",r -> dec_formatter.fmt2(total_value)]);
                     table.add_row(row!["Needed resources", cell!(resources_required)]);
                     cell!(table)
                 }
