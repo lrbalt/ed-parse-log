@@ -389,29 +389,6 @@ pub struct EDLogHoloscreenHacked {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCommunityGoalReward {
-    #[serde(rename = "CGID")]
-    pub cgid: u64,
-    pub name: String,
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<String>,
-    pub system: String,
-    pub reward: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCommunityGoalJoin {
-    #[serde(rename = "CGID")]
-    pub cgid: u64,
-    pub name: String,
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<String>,
-    pub system: String,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogAppliedToSquadron {
     squadron_name: String,
 }

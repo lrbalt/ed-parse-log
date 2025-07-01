@@ -5,6 +5,7 @@ use crate::{
     },
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -31,6 +32,12 @@ pub struct EDLogLiftoff {
     nearest_destination_localised: Option<String>,
 }
 
+#[testcase({ "timestamp":"2023-03-01T15:10:23Z", "event":"ApproachSettlement", "Name":"Nahavandi Penal colony", 
+            "MarketID":3790770944, "SystemAddress":7266413782417, "BodyID":9, "BodyName":"Luggerates A 3", 
+            "Latitude":62.048309, "Longitude":80.228821 })]
+#[testcase({ "timestamp":"2024-05-30T16:20:52Z", "event":"ApproachSettlement", 
+        "Name":"$Ancient_Small_002:#index=1;", "Name_Localised":"Guardian Structure", "SystemAddress":2833906537146, 
+        "BodyID":7, "BodyName":"Synuefe EU-Q c21-10 A 3", "Latitude":19.823612, "Longitude":-82.460922 })]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogApproachSettlement {
@@ -259,26 +266,5 @@ fn test_jsd_jump() {
     if let EDLogEvent::FSDJump(header) = line.event() {
         assert_eq!(header.taxi, Some(false));
         assert_eq!(header.body_id, 1);
-    }
-}
-
-#[test]
-fn test_approach_settlement() {
-    let json = r#"{ "timestamp":"2023-03-01T15:10:23Z", "event":"ApproachSettlement", "Name":"Nahavandi Penal colony", 
-            "MarketID":3790770944, "SystemAddress":7266413782417, "BodyID":9, "BodyName":"Luggerates A 3", 
-            "Latitude":62.048309, "Longitude":80.228821 }"#;
-    assert!(serde_json::from_str::<crate::log_line::EDLogLine>(json).is_ok());
-
-    let json = r#"{ "timestamp":"2024-05-30T16:20:52Z", "event":"ApproachSettlement", 
-        "Name":"$Ancient_Small_002:#index=1;", "Name_Localised":"Guardian Structure", "SystemAddress":2833906537146, 
-        "BodyID":7, "BodyName":"Synuefe EU-Q c21-10 A 3", "Latitude":19.823612, "Longitude":-82.460922 }"#;
-    let line: crate::log_line::EDLogLine = serde_json::from_str(json).expect("Should parse");
-
-    assert!(matches!(
-        line.event(),
-        crate::log_line::EDLogEvent::ApproachSettlement(_)
-    ));
-    if let EDLogEvent::ApproachSettlement(header) = line.event() {
-        assert_eq!(header.system_address, 2833906537146);
     }
 }

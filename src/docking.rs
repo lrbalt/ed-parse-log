@@ -5,6 +5,7 @@ use crate::{
     },
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -77,14 +78,15 @@ pub struct EDLogDockingGranted {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum DockingDeniedReason {
-    NoReason,
     Distance,
-    NoSpace,
-    TooLarge,
-    RestrictedAccess,
-    Offences,
+    DockOffline,
     Hostile,
     JumpImminent,
+    NoReason,
+    NoSpace,
+    Offences,
+    RestrictedAccess,
+    TooLarge,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -94,6 +96,7 @@ pub enum StationState {
     Construction,
 }
 
+#[testcase({ "timestamp":"2025-06-30T12:38:07Z", "event":"DockingDenied", "Reason":"DockOffline", "MarketID":3906562304, "StationName":"Joshi Military Complex", "StationType":"OnFootSettlement" })]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingDenied {

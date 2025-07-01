@@ -1,7 +1,6 @@
 use chrono::{DateTime, Utc};
 use ed_parse_log_files::{
-    commander::{EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
-    community_goal::CommunityGoal,
+    community_goal::{CommunityGoal, EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
     log_line::{EDLogEvent, EDLogLine},
 };
 use itertools::Itertools;

@@ -13,6 +13,7 @@ publish = false
 serde = { version = "1.0.217", features = ["derive"] }
 serde_json = { version = "1.0.140" }
 chrono = { version = "0.4.39", features=["serde"] }
+ed-parse-log-file-testcase = { path = "ed-parse-log-file-testcase" }
 
 [dev-dependencies]
 rayon = { version = "1.10.0" }

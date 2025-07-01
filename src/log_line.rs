@@ -4,21 +4,21 @@ use serde::{Deserialize, Serialize};
 use crate::{
     commander::{
         EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
-        EDLogCommunityGoalJoin, EDLogCommunityGoalReward, EDLogCrewAssign, EDLogCrewFire,
-        EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits, EDLogCrewMemberRoleChange,
-        EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark, EDLogEndCrewSession, EDLogFriends,
-        EDLogHoloscreenHacked, EDLogInvitedToSquadron, EDLogJoinACrew, EDLogNewCommander,
-        EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver,
-        EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave, EDLogPowerplayMerits,
-        EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPromotion, EDLogQuitACrew, EDLogRank,
-        EDLogReputation, EDLogRequestPowerMicroResources, EDLogResurrect,
-        EDLogSharedBookmarkToSquadron, EDLogVehicleSwitch,
+        EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
+        EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark,
+        EDLogEndCrewSession, EDLogFriends, EDLogHoloscreenHacked, EDLogInvitedToSquadron,
+        EDLogJoinACrew, EDLogNewCommander, EDLogPowerplay, EDLogPowerplayCollect,
+        EDLogPowerplayDefect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin,
+        EDLogPowerplayLeave, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary,
+        EDLogPromotion, EDLogQuitACrew, EDLogRank, EDLogReputation,
+        EDLogRequestPowerMicroResources, EDLogResurrect, EDLogSharedBookmarkToSquadron,
+        EDLogVehicleSwitch,
     },
     common_types::{
         BodyInformation, Credits, EDLogLeftSquadron, EDLogName, EDLogNpcCrewPaidWage,
         EDLogNpcCrewRank, EDLogSquadronStartup,
     },
-    community_goal::{EDLogCommunityGoal, EDLogCommunityGoalDiscard},
+    community_goal::{EDLogCommunityGoal, EDLogCommunityGoalDiscard, EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
     docking::{
         EDLogBuyAmmo, EDLogDocked, EDLogDockingCancelled, EDLogDockingDenied, EDLogDockingGranted,
         EDLogDockingRequested, EDLogDockingTimeout, EDLogMaterialCollected, EDLogMaterialTrade,
@@ -292,7 +292,6 @@ pub enum EDLogEvent {
     SystemsShutdown,
     Shutdown,
     Music(EDLogMusic),
-    CommunityGoal(EDLogCommunityGoal),
 
     // Commander
     Commander(EDLogCommander),
@@ -324,6 +323,7 @@ pub enum EDLogEvent {
     AppliedToSquadron(EDLogAppliedToSquadron),
     SharedBookmarkToSquadron(EDLogSharedBookmarkToSquadron),
     HoloscreenHacked(EDLogHoloscreenHacked),
+    CommunityGoal(EDLogCommunityGoal),
     CommunityGoalReward(EDLogCommunityGoalReward),
     CommunityGoalJoin(EDLogCommunityGoalJoin),
     CommunityGoalDiscard(EDLogCommunityGoalDiscard),
