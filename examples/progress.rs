@@ -61,15 +61,15 @@ fn progression_string_str(a: &str, b: &str) -> String {
     if a == b {
         a.to_string()
     } else {
-        format!("{} → {}", a, b)
+        format!("{a} → {b}")
     }
 }
 
 fn progression_string_num(a: u64, b: u64) -> String {
     if a == b {
-        format!("{}", a)
+        format!("{a}")
     } else {
-        format!("{} → {}", a, b)
+        format!("{a} → {b}")
     }
 }
 
@@ -96,17 +96,17 @@ fn progression_string_merits(a: Merits, b: Merits) -> String {
 
 fn progression_string_f64(a: f64, b: f64) -> String {
     if a == b {
-        format!("{:.1}%", a)
+        format!("{a:.1}%")
     } else {
-        format!("{:.1}% → {:.1}%", a, b)
+        format!("{a:.1}% → {b:.1}%")
     }
 }
 
 fn progression_string_perc(a: u64, b: u64) -> String {
     if a == b {
-        format!("{}%", a)
+        format!("{a}%")
     } else {
-        format!("{}% → {}%", a, b)
+        format!("{a}% → {b}%")
     }
 }
 
@@ -439,8 +439,7 @@ impl Display for RankProgress {
         let cqc = progression_string_num(self.start.cqc, self.end.cqc);
         write!(
             f,
-            "Combat: {}\nTrade: {}\nExplore: {}\nSoldier: {}\nExobiology: {}\nEmpire: {}\nFederation: {}\nCQC: {}",
-            combat, trade, explore, soldier, exobiology, empire, federation, cqc
+            "Combat: {combat}\nTrade: {trade}\nExplore: {explore}\nSoldier: {soldier}\nExobiology: {exobiology}\nEmpire: {empire}\nFederation: {federation}\nCQC: {cqc}"
         )
     }
 }
@@ -514,8 +513,7 @@ impl Display for RankProgressionChange {
 
         write!(
             f,
-            "Combat: {}\nTrade: {}\nExplore: {}\nSoldier: {}\nExobiology: {}\nEmpire: {}\nFederation: {}\nCQC: {}",
-            combat, trade, explore, soldier, exobiologist, empire, federation, cqc,
+            "Combat: {combat}\nTrade: {trade}\nExplore: {explore}\nSoldier: {soldier}\nExobiology: {exobiologist}\nEmpire: {empire}\nFederation: {federation}\nCQC: {cqc}",
         )
     }
 }

@@ -342,13 +342,13 @@ fn pp_control(pp_data: &Powers) -> String {
     };
 
     let reinforcement = if let Some(reinformcement) = pp_data.powerplay_state_reinforcement {
-        format!("{}", reinformcement)
+        format!("{reinformcement}")
     } else {
         "n/a".to_string()
     };
 
     let undermining = if let Some(undermining) = pp_data.powerplay_state_undermining {
-        format!("{}", undermining)
+        format!("{undermining}")
     } else {
         "n/a".to_string()
     };
@@ -412,7 +412,7 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                 .map(|j| j.system_government_localised.as_str())
                 .unwrap_or("n/a"),
             data.last_allegiance
-                .map(|a| format!("{:?}", a))
+                .map(|a| format!("{a:?}"))
                 .unwrap_or("n/a".to_string()),
             last_jump
                 .as_ref()
@@ -465,7 +465,7 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                     .unwrap_or(&m.1.signal_name),
                 m.1.signal_type
                     .as_ref()
-                    .map(|m| format!("{:?}", m))
+                    .map(|m| format!("{m:?}"))
                     .unwrap_or("None".to_string()),
                 m.0.to_string()
             ]

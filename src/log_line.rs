@@ -18,7 +18,10 @@ use crate::{
         BodyInformation, Credits, EDLogLeftSquadron, EDLogName, EDLogNpcCrewPaidWage,
         EDLogNpcCrewRank, EDLogSquadronStartup,
     },
-    community_goal::{EDLogCommunityGoal, EDLogCommunityGoalDiscard, EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
+    community_goal::{
+        EDLogCommunityGoal, EDLogCommunityGoalDiscard, EDLogCommunityGoalJoin,
+        EDLogCommunityGoalReward,
+    },
     docking::{
         EDLogBuyAmmo, EDLogDocked, EDLogDockingCancelled, EDLogDockingDenied, EDLogDockingGranted,
         EDLogDockingRequested, EDLogDockingTimeout, EDLogMaterialCollected, EDLogMaterialTrade,

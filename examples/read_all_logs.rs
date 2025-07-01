@@ -60,7 +60,7 @@ fn start() -> Result<(), std::io::Error> {
     let db: Mutex<Vec<EDLogLine>> = Mutex::new(Vec::new());
 
     let start = Local::now();
-    println!("Starting at {}", start);
+    println!("Starting at {start}");
 
     let files = read_dir(path)?
         .map(|e| e.map(|e| e.path()))
@@ -138,7 +138,7 @@ fn start() -> Result<(), std::io::Error> {
     let lines = db.lock().unwrap();
 
     let end = Local::now();
-    println!("Completed at {}", end);
+    println!("Completed at {end}");
     let delta = end - start;
     println!(
         "Reading al logs took {}",
