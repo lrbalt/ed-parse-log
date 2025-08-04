@@ -138,6 +138,8 @@ pub enum ShipType {
     #[serde(alias = "Mandalay")]
     Mandalay,
     Orca,
+    #[serde(alias = "panthermkii")]
+    PantherMkII,
     #[serde(alias = "Python")]
     Python,
     #[serde(rename = "python_nx", alias = "Python_NX")]
