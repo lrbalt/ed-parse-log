@@ -477,6 +477,7 @@ pub enum FSSSignalType {
     StationONeilOrbis,
     StationONeilCylinder,
     FleetCarrier,
+    SquadronCarrier,
     Megaship,
     StationMegaShip,
     TouristBeacon,

@@ -5,13 +5,16 @@ use crate::{
     },
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-21T10:38:49Z", "event":"CarrierFinance", "CarrierID":123456789, "CarrierType":"FleetCarrier", "CarrierBalance":18879410990, "ReserveBalance":18879410990, "AvailableBalance":0, "ReservePercent":100, "TaxRate_rearm":25, "TaxRate_refuel":25, "TaxRate_repair":25 })]
 pub struct EDLogCarrierFinance {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
     pub carrier_balance: Credits,
     pub reserve_balance: Credits,
     pub available_balance: Credits,
@@ -47,9 +50,11 @@ pub struct EDLogCarrierTradeOrder {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-21T10:38:45Z", "event":"CarrierBankTransfer", "CarrierID":123456789, "CarrierType":"FleetCarrier", "Deposit":12610000, "PlayerBalance":18879865108, "CarrierBalance":18879410990 })]
 pub struct EDLogCarrierBankTransfer {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
+    carrier_type: Option<CarrierType>,
     deposit: Option<Credits>,
     withdraw: Option<Credits>,
     player_balance: Credits,
@@ -57,10 +62,18 @@ pub struct EDLogCarrierBankTransfer {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum CarrierType {
+    FleetCarrier,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-08-25T17:21:24Z", "event":"CarrierJumpRequest", "CarrierID":123456789, "SystemName":"Eurybia", "Body":"Eurybia 2", "SystemAddress":1458309141194, "BodyID":7, "DepartureTime":"2024-08-25T17:46:10Z" })]
+#[testcase({ "timestamp":"2025-08-21T19:35:04Z", "event":"CarrierJumpRequest", "CarrierType":"FleetCarrier", "CarrierID":123456789, "SystemName":"Prooe Drye LV-C c1-2", "Body":"Prooe Drye LV-C c1-2", "SystemAddress":631192163082, "BodyID":0, "DepartureTime":"2025-08-21T20:08:10Z" })]
 pub struct EDLogCarrierJumpRequest {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
+    carrier_type: Option<CarrierType>,
     system_name: String,
     body: Option<String>,
     system_address: u64,
@@ -158,9 +171,11 @@ pub enum CrewServiceOperation {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-20T13:11:21Z", "event":"CarrierCrewServices", "CarrierID":3706278912, "CarrierType":"FleetCarrier", "CrewRole":"Bartender", "Operation":"Pause", "CrewName":"Aleeah Bogdani" })]
 pub struct EDLogCarrierCrewServices {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
+    carrier_type: Option<CarrierType>,
     crew_role: CrewRole,
     operation: CrewServiceOperation,
     crew_name: String,
@@ -202,9 +217,11 @@ pub struct EDLogCarrierDockingPermission {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-21T15:02:57Z", "event":"CarrierLocation", "CarrierType":"FleetCarrier", "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
 pub struct EDLogCarrierLocation {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
+    carrier_type: Option<CarrierType>,
     star_system: String,
     system_address: u64,
     #[serde(rename = "BodyID")]
@@ -286,6 +303,7 @@ pub struct SpaceUsage {
 pub struct EDLogCarrierStats {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
     pub callsign: String,
     pub name: String,
     pub docking_access: String,
@@ -450,5 +468,137 @@ fn test_exploration() {
         assert_eq!(&header.name, "My First Carrier");
         assert_eq!(header.crew.len(), 14);
         assert_eq!(header.finance.carrier_balance, Credits(803361));
+    }
+}
+
+#[test]
+fn test_new_carrier_stats() {
+    let json2 = r#"{
+    "timestamp": "2025-08-21T15:15:01Z",
+    "event": "CarrierStats",
+    "CarrierID": 1234567,
+    "CarrierType": "FleetCarrier",
+    "Callsign": "MFC-MFC",
+    "Name": "My First Carrier",
+    "DockingAccess": "all",
+    "AllowNotorious": false,
+    "FuelLevel": 1000,
+    "JumpRangeCurr": 500.000000,
+    "JumpRangeMax": 500.000000,
+    "PendingDecommission": false,
+    "SpaceUsage": {
+        "TotalCapacity": 25000,
+        "Crew": 6370,
+        "Cargo": 6470,
+        "CargoSpaceReserved": 0,
+        "ShipPacks": 0,
+        "ModulePacks": 0,
+        "FreeSpace": 12160
+    },
+    "Finance": {
+        "CarrierBalance": 19076712640,
+        "ReserveBalance": 19076712640,
+        "AvailableBalance": 0,
+        "TaxRate_rearm": 25,
+        "TaxRate_refuel": 25,
+        "TaxRate_repair": 25
+    },
+    "Crew": [
+        {
+            "CrewRole": "BlackMarket",
+            "Activated": false
+        },
+        {
+            "CrewRole": "Captain",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Kirk Strickland"
+        },
+        {
+            "CrewRole": "Refuel",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Akemi Cunningham"
+        },
+        {
+            "CrewRole": "Repair",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Guinevere Shepherd"
+        },
+        {
+            "CrewRole": "Rearm",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Marlee Bullock"
+        },
+        {
+            "CrewRole": "Commodities",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Owen Grimes"
+        },
+        {
+            "CrewRole": "VoucherRedemption",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Clementine Chandler"
+        },
+        {
+            "CrewRole": "Exploration",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Medha Frost"
+        },
+        {
+            "CrewRole": "Shipyard",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Chevelle Rivera"
+        },
+        {
+            "CrewRole": "Outfitting",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Drew Gill"
+        },
+        {
+            "CrewRole": "CarrierFuel",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Lauren Adkins"
+        },
+        {
+            "CrewRole": "VistaGenomics",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Ramiro Bentley"
+        },
+        {
+            "CrewRole": "PioneerSupplies",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Jenessa Alford"
+        },
+        {
+            "CrewRole": "Bartender",
+            "Activated": true,
+            "Enabled": false,
+            "CrewName": "Aleeah Bogdani"
+        }
+    ],
+    "ShipPacks": [],
+    "ModulePacks": []
+}"#;
+    let line2: crate::log_line::EDLogLine = serde_json::from_str(json2).expect("Should parse");
+
+    assert!(matches!(
+        line2.event(),
+        crate::log_line::EDLogEvent::CarrierStats(_)
+    ));
+    if let crate::log_line::EDLogEvent::CarrierStats(header) = line2.event() {
+        assert_eq!(&header.name, "My First Carrier");
+        assert_eq!(header.crew.len(), 14);
+        assert_eq!(header.finance.carrier_balance, Credits(19076712640));
     }
 }

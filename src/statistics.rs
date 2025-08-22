@@ -1,6 +1,5 @@
-use serde::{Deserialize, Serialize};
-
 use crate::common_types::Credits;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
@@ -323,6 +322,59 @@ pub struct EDLogStatisticSearchAndRescue {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
+pub struct EDLogStatisticsSquadron {
+    #[serde(rename = "Squadron_Bank_Credits_Deposited")]
+    squadron_bank_credits_deposited: Credits,
+    #[serde(rename = "Squadron_Bank_Credits_Withdrawn")]
+    squadron_bank_credits_withdrawn: Credits,
+    #[serde(rename = "Squadron_Bank_Commodities_Deposited_Num")]
+    squadron_bank_commodities_deposited_num: u64,
+    #[serde(rename = "Squadron_Bank_Commodities_Deposited_Value")]
+    squadron_bank_commodities_deposited_value: Credits,
+    #[serde(rename = "Squadron_Bank_Commodities_Withdrawn_Num")]
+    squadron_bank_commodities_withdrawn_num: u64,
+    #[serde(rename = "Squadron_Bank_Commodities_Withdrawn_Value")]
+    squadron_bank_commodities_withdrawn_value: Credits,
+    #[serde(rename = "Squadron_Bank_PersonalAssets_Deposited_Num")]
+    squadron_bank_personal_assets_deposited_num: u64,
+    #[serde(rename = "Squadron_Bank_PersonalAssets_Deposited_Value")]
+    squadron_bank_personal_assets_deposited_value: Credits,
+    #[serde(rename = "Squadron_Bank_PersonalAssets_Withdrawn_Num")]
+    squadron_bank_personal_assets_withdrawn_num: u64,
+    #[serde(rename = "Squadron_Bank_PersonalAssets_Withdrawn_Value")]
+    squadron_bank_personal_assets_withdrawn_value: Credits,
+    #[serde(rename = "Squadron_Bank_Ships_Deposited_Num")]
+    squadron_bank_ships_deposited_num: u64,
+    #[serde(rename = "Squadron_Bank_Ships_Deposited_Value")]
+    squadron_bank_ships_deposited_value: Credits,
+    #[serde(rename = "Squadron_Leaderboard_aegis_highestcontribution")]
+    squadron_leaderboard_aegis_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_bgs_highestcontribution")]
+    squadron_leaderboard_bgs_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_bounty_highestcontribution")]
+    squadron_leaderboard_bounty_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_colonisation_contribution_highestcontribution")]
+    squadron_leaderboard_colonisation_contribution_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_combat_highestcontribution")]
+    squadron_leaderboard_combat_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_cqc_highestcontribution")]
+    squadron_leaderboard_cqc_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_exploration_highestcontribution")]
+    squadron_leaderboard_exploration_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_mining_highestcontribution")]
+    squadron_leaderboard_mining_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_powerplay_highestcontribution")]
+    squadron_leaderboard_powerplay_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_trade_highestcontribution")]
+    squadron_leaderboard_trade_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_trade_illicit_highestcontribution")]
+    squadron_leaderboard_trade_illicit_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_podiums")]
+    squadron_leaderboard_podiums: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
 pub struct EDLogStatisticsTgEncounters {
     #[serde(rename = "TG_ENCOUNTER_IMPRINT")]
     tg_encounter_imprint: Option<u64>,
@@ -543,6 +595,7 @@ pub struct EDLogStatistics {
     pub passengers: EDLogStatisticsPassengers,
     #[serde(rename = "Search_And_Rescue")]
     pub search_and_rescue: EDLogStatisticSearchAndRescue,
+    pub squadron: Option<EDLogStatisticsSquadron>,
     #[serde(rename = "TG_ENCOUNTERS")]
     pub tg_encounters: Option<EDLogStatisticsTgEncounters>,
     pub crafting: EDLogStatisticsCrafting,

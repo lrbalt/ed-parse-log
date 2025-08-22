@@ -5,6 +5,7 @@ use crate::{
     },
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -31,6 +32,7 @@ pub struct SpawningInfo {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-21T14:55:03Z", "event":"FSSSignalDiscovered", "SystemAddress":908486218450, "SignalName":"U | HOFI", "SignalType":"SquadronCarrier", "IsStation":true })]
 pub struct EDLogFSSSignalDiscovered {
     pub system_address: u64,
     pub signal_name: String,
