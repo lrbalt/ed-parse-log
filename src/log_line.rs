@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -50,10 +51,10 @@ use crate::{
     location::EDLogLocation,
     locker::EDLogShipLocker,
     market::{
-        EDLogBuyMicroResources, EDLogCargoDepot, EDLogColonisationConstructionDepot,
-        EDLogColonisationContribution, EDLogDeliverPowerMicroResources, EDLogMarket,
-        EDLogMarketBuy, EDLogMarketSell, EDLogSellMicroResources, EDLogSellOrganicData,
-        EDLogTradeMicroResources,
+        EDLogBuyMicroResources, EDLogBuyTradeData, EDLogCargoDepot,
+        EDLogColonisationConstructionDepot, EDLogColonisationContribution,
+        EDLogDeliverPowerMicroResources, EDLogMarket, EDLogMarketBuy, EDLogMarketSell,
+        EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources,
     },
     materials::EDLogMaterials,
     mission::{
@@ -80,8 +81,9 @@ use crate::{
         EDLogSynthesis, EDLogUnderAttack, ShipType,
     },
     shipyard::{
-        EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardRedeem,
-        EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredShips,
+        EDLogSellShipOnRebuy, EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew,
+        EDLogShipyardRedeem, EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer,
+        EDLogStoredShips,
     },
     statistics::EDLogStatistics,
     suits::{
@@ -154,7 +156,11 @@ pub struct EDLogMusic {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogReceivedText {
+#[testcase({ "timestamp":"2023-07-30T14:40:36Z", "event":"ReceiveText", "From":"$ShipName_PassengerLiner_Cruise;", 
+             "From_Localised":"Cruise Ship", "Message":"$CruiseLiner_SCPatrol05;", 
+             "Message_Localised":"This is your captain. Due to some unforeseen delays, we will be arriving at our next destination later than scheduled.", 
+             "Channel":"npc" })]
+pub struct EDLogReceiveText {
     from: String,
     #[serde(rename = "From_Localised")]
     from_localised: Option<String>,
@@ -476,6 +482,7 @@ pub enum EDLogEvent {
     CargoDepot(EDLogCargoDepot),
     ColonisationConstructionDepot(EDLogColonisationConstructionDepot),
     ColonisationContribution(EDLogColonisationContribution),
+    BuyTradeData(EDLogBuyTradeData),
 
     // Shipyard
     ShipyardSwap(EDLogShipyardSwap),
@@ -487,6 +494,7 @@ pub enum EDLogEvent {
     StoredShips(EDLogStoredShips),
     ShipyardRedeem(EDLogShipyardRedeem),
     ShipRedeemed(EDLogShipRedeemed),
+    SellShipOnRebuy(EDLogSellShipOnRebuy),
 
     // Suit and backpack
     SuitLoadout(EDLogSuitLoadout),
@@ -566,7 +574,7 @@ pub enum EDLogEvent {
     FighterRebuilt(EDLogFighterRebuilt),
 
     Screenshot(EDLogScreenshot),
-    ReceiveText(EDLogReceivedText),
+    ReceiveText(EDLogReceiveText),
     SendText(EDLogSendText),
     USSDrop(EDLogUSSDrop),
     CollectItems(EDLogCollectItems),

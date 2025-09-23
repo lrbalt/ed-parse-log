@@ -2,6 +2,7 @@ use crate::{
     common_types::{CarrierDockingAccess, Credits, StationType},
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -41,6 +42,10 @@ pub enum MarketItemType {
     Bertrandite,
     Opal,
     GrandIdierite,
+    Serendibite,
+    Haematite,
+    Monazite,
+    Thorium,
 
     SyntheticFabrics,
     SyntheticReagents,
@@ -123,6 +128,12 @@ pub enum MarketItemType {
     DiagnosticSensor,
     Hostage,
     Scrap,
+    CoolingHoses,
+    ReactiveArmour,
+    ConductiveFabrics,
+    AdvancedMedicines,
+    Lanthanum,
+    CombatStabilisers,
 
     Drones,
     PersonalEffects,
@@ -143,6 +154,7 @@ pub enum MarketItemType {
     VegaSlimWeed,
     EraninPearlWhisky,
     DamnaCarapaces,
+    AlienEggs,
 
     OccupiedCryoPod,
 
@@ -233,6 +245,14 @@ pub struct EDLogBuyMicroResources {
     price: Credits,
     #[serde(rename = "MarketID")]
     market_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-06-28T19:16:15Z", "event":"BuyTradeData", "System":"Quator", "Cost":100 })]
+pub struct EDLogBuyTradeData {
+    system: String,
+    cost: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

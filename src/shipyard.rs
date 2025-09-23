@@ -3,6 +3,7 @@ use crate::{
     log_line::{EDLogEvent, Extractable},
     ship::ShipType,
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -123,6 +124,18 @@ pub struct EDLogShipRedeemed {
     ship_type_localised: Option<String>,
     #[serde(rename = "NewShipID")]
     new_ship_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-06-20T21:24:02Z", "event":"SellShipOnRebuy", "ShipType":"mamba", "System":"14 Ceti", "SellShipId":3, "ShipPrice":73796265 })]
+pub struct EDLogSellShipOnRebuy {
+    ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    ship_type_localised: Option<String>,
+    system: String,
+    sell_ship_id: u64,
+    ship_price: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

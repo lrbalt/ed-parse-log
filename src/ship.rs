@@ -1,4 +1,5 @@
 use crate::{common_types::PilotRank, market::MarketItemType};
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -15,6 +16,8 @@ pub struct Inventory {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-06-07T23:31:33Z", "event":"EjectCargo", "Type":"alliancetradeagreements", 
+             "Type_Localised":"Alliance Trade Agreements", "Count":2, "Abandoned":false, "PowerplayOrigin":"" })]
 pub struct EDLogEjectCargo {
     #[serde(rename = "Type")]
     cargo_type: String,
@@ -22,6 +25,7 @@ pub struct EDLogEjectCargo {
     cargo_type_localised: Option<String>,
     count: u64,
     abandoned: bool,
+    powerplay_origin: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

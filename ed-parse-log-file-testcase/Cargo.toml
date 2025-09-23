@@ -1,6 +1,6 @@
 [package]
 name = "ed-parse-log-file-testcase"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 
 [lib]
@@ -9,5 +9,5 @@ proc-macro = true
 [dependencies]
 syn = "2.0"
 quote = "1.0"
-proc-macro2 = "1.0.95"
-uuid= {version = "1.17.0", features = ["v4"]}
+proc-macro2 = "1.0.101"
+uuid= {version = "1.18.1", features = ["v4"]}

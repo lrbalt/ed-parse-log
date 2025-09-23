@@ -149,10 +149,10 @@ fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<
             EDLogEvent::FSDJump(d) => Some((d.system_address, &d.star_system)),
             _ => None,
         };
-        if let Some((id, name)) = found_id {
-            if name == system_name {
-                return Some(id);
-            }
+        if let Some((id, name)) = found_id
+            && name == system_name
+        {
+            return Some(id);
         }
     }
     None

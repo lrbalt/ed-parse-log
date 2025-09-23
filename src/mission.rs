@@ -1,4 +1,5 @@
 use crate::common_types::Credits;
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -250,6 +251,7 @@ pub enum VoucherType {
     Settlement,
     Codex,
     Scannable,
+    Trade,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -261,6 +263,7 @@ pub struct VoucherFaction {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-06-28T21:45:34Z", "event":"RedeemVoucher", "Type":"trade", "Amount":14229 })]
 pub struct EDLogRedeemVoucher {
     #[serde(rename = "Type")]
     voucher_type: VoucherType,

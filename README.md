@@ -1,5 +1,5 @@
 ### ed-parse-log
-Parse the log files of the flight simulator [Elite Dangerous](https://www.elitedangerous.com/). This repository contains some examples on how to use it.
+Parse the log files of the space flight simulator [Elite Dangerous](https://www.elitedangerous.com/). This repository contains some examples on how to use it.
 
 ### What can it do?
 * It uses `serde_json` to parse a line from a log file. 

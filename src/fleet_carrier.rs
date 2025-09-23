@@ -128,9 +128,11 @@ pub struct EDLogCarrierJump {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-09-01T19:09:57Z", "event":"CarrierJumpCancelled", "CarrierType":"FleetCarrier", "CarrierID":3706278912 })]
 pub struct EDLogCarrierJumpCancelled {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
+    carrier_type: Option<CarrierType>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
