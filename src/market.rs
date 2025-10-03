@@ -134,6 +134,7 @@ pub enum MarketItemType {
     AdvancedMedicines,
     Lanthanum,
     CombatStabilisers,
+    ArticulationMotors,
 
     Drones,
     PersonalEffects,
@@ -201,9 +202,10 @@ pub struct EDLogMarketBuy {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T03:29:58Z", "event":"MarketSell", "Type":"biowaste", "Count":1, "SellPrice":10, "TotalSale":10, "AvgPricePaid":0 })]
 pub struct EDLogMarketSell {
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     #[serde(rename = "Type")]
     sell_type: MarketItemType,
     #[serde(rename = "Type_Localised")]

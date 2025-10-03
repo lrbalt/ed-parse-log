@@ -1,25 +1,27 @@
+use ed_parse_log_file_testcase::testcase_struct;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogRawMaterial {
+pub struct RawMaterial {
     name: String,
     count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogNonRawMaterial {
+#[testcase_struct({ "Name":"decodedemissiondata", "Count":9 })]
+pub struct NonRawMaterial {
     name: String,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: Option<String>,
     count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterials {
-    raw: Vec<EDLogRawMaterial>,
-    manufactured: Vec<EDLogNonRawMaterial>,
-    encoded: Vec<EDLogNonRawMaterial>,
+    raw: Vec<RawMaterial>,
+    manufactured: Vec<NonRawMaterial>,
+    encoded: Vec<NonRawMaterial>,
 }

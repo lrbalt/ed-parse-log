@@ -1,15 +1,16 @@
 use crate::{common_types::PilotRank, market::MarketItemType};
-use ed_parse_log_file_testcase::testcase;
+use ed_parse_log_file_testcase::{testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Name":"algae", "Count":1 })]
 pub struct Inventory {
     name: MarketItemType,
     #[serde(rename = "Name_Localised")]
     name_localised: Option<String>,
     count: u64,
-    stolen: u64,
+    stolen: Option<u64>,
     #[serde(rename = "MissionID")]
     mission_id: Option<u64>,
 }
@@ -30,9 +31,10 @@ pub struct EDLogEjectCargo {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"Cargo", "Inventory":[  ] })]
 pub struct EDLogCargo {
-    vessel: String,
-    count: u64,
+    vessel: Option<String>,
+    count: Option<u64>,
     inventory: Option<Vec<Inventory>>,
 }
 

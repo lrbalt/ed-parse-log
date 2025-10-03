@@ -71,6 +71,13 @@ pub struct PassengerMissionInformation {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T01:47:41Z", "event":"MissionAccepted", 
+    "Faction":"Independent Murung Values Party", "Name":"Mission_Delivery_Boom", 
+    "LocalisedName":"Boom time delivery of 6 units of Biowaste", "Commodity":"$Biowaste_Name;", 
+    "Commodity_Localised":"Biowaste", "Count":6, "TargetFaction":"Belu Silver Federal Industry", 
+    "DestinationSystem":"57 Zeta Serpentis", "DestinationStation":"Musabayev Dock", 
+    "Expiry":"2017-10-18T01:45:04Z", "Influence":"Low", "Reputation":"Low", 
+    "Reward":157815, "MissionID":228681523 })]
 pub struct EDLogMissionAccepted {
     faction: String,
     name: String,
@@ -83,7 +90,7 @@ pub struct EDLogMissionAccepted {
     commodity: Option<CommodityMission>,
     donation: Option<String>,
     expiry: Option<String>,
-    wing: bool,
+    wing: Option<bool>,
     influence: String,
     reputation: String,
     reward: Option<u64>,
@@ -162,7 +169,7 @@ pub struct EDLogMissionCompleted {
     reward: Option<u64>,
     commodity_reward: Option<Vec<CommodityReward>>,
     materials_reward: Option<Vec<MaterialReward>>,
-    faction_effects: Vec<FactionEffect>,
+    faction_effects: Option<Vec<FactionEffect>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

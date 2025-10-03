@@ -109,15 +109,18 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
         .unwrap()
         .par_iter()
         .map(|line| match line.event() {
-            EDLogEvent::Scan(d) => Some((line, d.system_address)),
+            EDLogEvent::Scan(d) => d.system_address.map(|a| (line, a)),
             EDLogEvent::DiscoveryScan(d) => Some((line, d.system_address)),
-            EDLogEvent::NavBeaconScan(d) => Some((line, d.system_address)),
+            EDLogEvent::NavBeaconScan(d) => d.system_address.map(|a| (line, a)),
             EDLogEvent::ScanOrganic(d) => Some((line, d.system_address)),
             EDLogEvent::FSSDiscoveryScan(d) => Some((line, d.system_address)),
-            EDLogEvent::Location(d) => Some((line, d.system_address)),
-            EDLogEvent::FSDJump(d) => Some((line, d.system_address)),
-            EDLogEvent::ApproachSettlement(d) => Some((line, d.system_address)),
-            EDLogEvent::Docked(d) => Some((line, d.system_address)),
+            EDLogEvent::Location(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::ApproachSettlement(d) => d
+                .body_information
+                .as_ref()
+                .map(|b| (line, b.system_address)),
+            EDLogEvent::Docked(d) => d.system_address.map(|a| (line, a)),
             EDLogEvent::FSSSignalDiscovered(d) => Some((line, d.system_address)),
             _ => None,
         })
@@ -143,10 +146,12 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
 fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<u64> {
     for line in db.lock().unwrap().iter() {
         let found_id = match line.event() {
-            EDLogEvent::Scan(d) => Some((d.system_address, &d.star_system)),
+            EDLogEvent::Scan(d) => d
+                .system_address
+                .and_then(|a| d.star_system.as_ref().map(|s| (a, s))),
             EDLogEvent::FSSDiscoveryScan(d) => Some((d.system_address, &d.system_name)),
-            EDLogEvent::Location(d) => Some((d.system_address, &d.star_system)),
-            EDLogEvent::FSDJump(d) => Some((d.system_address, &d.star_system)),
+            EDLogEvent::Location(d) => d.system_address.map(|a| (a, &d.star_system)),
+            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (a, &d.star_system)),
             _ => None,
         };
         if let Some((id, name)) = found_id
@@ -208,11 +213,11 @@ fn collect_system_data(
     let found_markets = lines
         .iter()
         .filter(|line| matches!(line.event(), EDLogEvent::Docked(_)))
-        .filter_map(|line| {
-            line.extract::<EDLogDocked>().map(|l| FoundMarket {
-                market_id: l.market_id,
-                station_name: l.station_name.clone(),
-            })
+        .filter_map(|line| line.extract::<EDLogDocked>())
+        .filter(|docked_line| docked_line.market_id.is_some())
+        .map(|l| FoundMarket {
+            market_id: l.market_id.expect("Checked to be Some above"),
+            station_name: l.station_name.clone(),
         })
         //
         // reverse so unique will keep the latest
@@ -398,7 +403,9 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
         .map(|j| {
             (
                 j.system_economy_localised.clone(),
-                j.system_second_economy_localised.clone(),
+                j.system_second_economy_localised
+                    .clone()
+                    .unwrap_or_else(|| String::from("n/a")),
             )
         })
         .unwrap_or_else(|| ("n/a".to_string(), "n/a".to_string()));
@@ -419,10 +426,10 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                 .map(|j| j.system_security_localised.as_str())
                 .unwrap_or("n/a"),
             last_jump
-                .and_then(|j| j
-                    .system_faction
-                    .as_ref()
-                    .map(|f| format!("{} in state {:?}", f.name, f.faction_state)))
+                .and_then(|j| j.system_faction_name.as_ref().map(|f| format!(
+                    "{} in state {:?}",
+                    f.system_faction.name, f.system_faction.faction_state
+                )))
                 .unwrap_or("n/a".to_string()),
             economies.0,
             economies.1,
@@ -446,7 +453,10 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                     faction.government,
                     faction.allegiance,
                     format!("{:.1}%", faction.influence * 100.0),
-                    format!("{:.1}%", faction.my_reputation),
+                    faction
+                        .my_reputation
+                        .map(|r| format!("{r:.1}%"))
+                        .unwrap_or("n/a".to_string()),
                 ]);
             }
             table.add_row(row!["Factions", cell!(factions_table)]);

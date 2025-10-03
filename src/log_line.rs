@@ -130,11 +130,12 @@ pub struct LoadGameShip {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
+#[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"LoadGame", "Commander":"JournalServer", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Open", "Credits":766731, "Loan":0 })]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
-    pub fid: String,
+    pub fid: Option<String>,
     pub commander: String,
-    pub horizons: bool,
+    pub horizons: Option<bool>,
     pub odyssey: Option<bool>,
     #[serde(flatten)]
     pub ship: Option<LoadGameShip>,

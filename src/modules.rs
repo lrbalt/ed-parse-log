@@ -1,7 +1,8 @@
 use crate::{
-    common_types::EngineerModification,
+    common_types::{Credits, EngineerModification},
     log_line::{EDLogEvent, Extractable},
 };
+use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -68,7 +69,7 @@ pub struct SwapOutItem {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleRetrieve {
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     slot: String,
     retrieved_item: String,
     #[serde(rename = "RetrievedItem_Localised")]
@@ -76,11 +77,12 @@ pub struct EDLogModuleRetrieve {
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u32,
-    hot: bool,
+    hot: Option<bool>,
     #[serde(flatten)]
     engineer_modification: Option<EngineerModification>,
     #[serde(flatten)]
     swap_out_item: Option<SwapOutItem>,
+    cost: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -182,9 +184,10 @@ pub struct EDLogMassModuleStore {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T02:57:13Z", "event":"ModuleStore", "Slot":"Slot06_Size2", "StoredItem":"$int_repairer_size2_class3_name;", "StoredItem_Localised":"AFM Unit", "Ship":"cobramkiii", "ShipID":1 })]
 pub struct EDLogModuleStore {
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     slot: String,
     stored_item: String,
     #[serde(rename = "StoredItem_Localised")]
@@ -192,7 +195,7 @@ pub struct EDLogModuleStore {
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u32,
-    hot: bool,
+    hot: Option<bool>,
     #[serde(flatten)]
     engineer_modification: Option<EngineerModification>,
 }

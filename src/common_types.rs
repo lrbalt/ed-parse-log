@@ -1,5 +1,6 @@
+use ed_parse_log_file_testcase::testcase_struct;
 use serde::{Deserialize, Serialize};
-use std::{fmt::Display, ops::Sub};
+use std::{fmt::Display, ops::Sub, str::FromStr};
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
 pub struct Merits(u64);
@@ -658,23 +659,40 @@ pub struct StationInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum StationService {
+    #[serde(alias = "Dock")]
     Dock,
+    #[serde(alias = "Autodock")]
     Autodock,
+    #[serde(alias = "Commodities")]
     Commodities,
+    #[serde(alias = "Contacts")]
     Contacts,
+    #[serde(alias = "Exploration")]
     Exploration,
+    #[serde(alias = "Missions")]
     Missions,
+    #[serde(alias = "Outfitting")]
     Outfitting,
-    Crewlounge,
+    #[serde(alias = "CrewLounge")]
+    CrewLounge,
+    #[serde(alias = "Rearm")]
     Rearm,
+    #[serde(alias = "Refuel")]
     Refuel,
+    #[serde(alias = "Repair")]
     Repair,
     Engineer,
+    #[serde(alias = "MissionsGenerated")]
     MissionsGenerated,
+    #[serde(alias = "Facilitator")]
     Facilitator,
+    #[serde(alias = "FlightController")]
     FlightController,
+    #[serde(alias = "StationOperations")]
     StationOperations,
+    #[serde(alias = "Powerplay")]
     Powerplay,
+    #[serde(alias = "SearchAndRescue")]
     SearchRescue,
     #[serde(rename = "stationMenu")]
     StationMenu,
@@ -683,8 +701,11 @@ pub enum StationService {
     Bartender,
     PioneerSupplies,
     ApexInterstellar,
+    #[serde(alias = "BlackMarket")]
     BlackMarket,
+    #[serde(alias = "Shipyard")]
     Shipyard,
+    #[serde(alias = "Tuning")]
     Tuning,
     Shop,
     VistaGenomics,
@@ -782,6 +803,17 @@ pub struct FactionName {
     pub faction_state: Option<FactionState>,
 }
 
+impl FromStr for FactionName {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(FactionName {
+            name: s.to_string(),
+            faction_state: None,
+        })
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionRecoveringState {
@@ -804,17 +836,21 @@ pub struct FactionPendingState {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Name":"Pilots Federation Local Branch", "FactionState":"None", 
+    "Government":"Democracy", "Influence":0.000000, "Allegiance":"PilotsFederation" })]
+#[testcase_struct({ "Name":"Murung Services", "FactionState":"Boom", "Government":"Corporate", 
+    "Influence":0.332667, "Allegiance":"Federation" })]
 pub struct Faction {
     pub name: String,
     pub faction_state: FactionState,
     pub government: String,
     pub influence: f64,
     pub allegiance: String,
-    pub happiness: String,
+    pub happiness: Option<String>,
     #[serde(rename = "Happiness_Localised")]
     pub happiness_localised: Option<String>,
     pub squadron_faction: Option<bool>,
-    pub my_reputation: f64,
+    pub my_reputation: Option<f64>,
     pub recovering_states: Option<Vec<FactionRecoveringState>>,
     pub active_states: Option<Vec<FactionActiveState>>,
     pub pending_states: Option<Vec<FactionPendingState>>,

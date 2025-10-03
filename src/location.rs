@@ -1,9 +1,9 @@
 use crate::{
     common_types::{
-        Allegiance, BodyType, Conflict, Faction, FactionName, Powers, StationInformation,
-        ThargoidWar,
+        Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers, StationInformation, ThargoidWar
     },
     log_line::{EDLogEvent, Extractable},
+    utils::string_or_struct,
 };
 use serde::{Deserialize, Serialize};
 
@@ -11,6 +11,13 @@ use serde::{Deserialize, Serialize};
 #[serde(deny_unknown_fields)]
 pub struct Trend {
     trend: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct SystemFactionName {
+    #[serde(deserialize_with = "string_or_struct")]
+    pub system_faction: FactionName,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -29,15 +36,15 @@ pub struct EDLogLocation {
     #[serde(rename = "InSRV")]
     pub in_srv: Option<bool>,
     pub star_system: String,
-    pub system_address: u64,
+    pub system_address: Option<u64>,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,
     pub system_economy: String,
     #[serde(rename = "SystemEconomy_Localised")]
     pub system_economy_localised: String,
-    pub system_second_economy: String,
+    pub system_second_economy: Option<String>,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    pub system_second_economy_localised: String,
+    pub system_second_economy_localised: Option<String>,
     pub system_government: String,
     #[serde(rename = "SystemGovernment_Localised")]
     pub system_government_localised: String,
@@ -47,14 +54,16 @@ pub struct EDLogLocation {
     pub population: u64,
     pub body: String,
     #[serde(rename = "BodyID")]
-    pub body_id: u64,
+    pub body_id: Option<u64>,
     pub body_type: BodyType,
     #[serde(flatten)]
     pub powers: Option<Powers>,
     pub thargoid_war: Option<ThargoidWar>,
     pub factions: Option<Vec<Faction>>,
-    pub system_faction: Option<FactionName>,
+    #[serde(flatten)]
+    pub system_faction_name: Option<SystemFactionName>,
     pub conflicts: Option<Vec<Conflict>>,
+    pub faction_state: Option<FactionState>,
 }
 
 impl Extractable for EDLogLocation {

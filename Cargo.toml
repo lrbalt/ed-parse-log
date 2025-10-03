@@ -1,6 +1,6 @@
 [package]
 name = "ed-parse-log-files"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["Reinier Balt <lrbalt@gmail.com>"]
 description = "A library to read log files from Elite Dangerous"
@@ -17,7 +17,7 @@ ed-parse-log-file-testcase = { path = "ed-parse-log-file-testcase" }
 
 [dev-dependencies]
 rayon = { version = "1.10.0" }
-thiserror = { version = "2.0.12" }
+thiserror = { version = "2.0.17" }
 numfmt = { version = "1.2.0" }
 prettytable-rs = { version = "0.10.0", default-features = false}
 itertools = { version = "0.14.0"}

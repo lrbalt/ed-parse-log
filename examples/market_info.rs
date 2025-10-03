@@ -110,7 +110,7 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, market_id: u64) -> Result<Vec<EDLo
         .map(|line| match line.event() {
             EDLogEvent::ColonisationConstructionDepot(d) => Some((line, d.market_id)),
             EDLogEvent::Market(d) => Some((line, d.market_id)),
-            EDLogEvent::Docked(d) => Some((line, d.market_id)),
+            EDLogEvent::Docked(d) => d.market_id.map(|mid| (line, mid)),
             EDLogEvent::TechnologyBroker(d) => Some((line, d.market_id)),
             EDLogEvent::Location(d) => d.station_information.as_ref().map(|d| (line, d.market_id)),
             EDLogEvent::ApproachSettlement(d) => {

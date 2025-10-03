@@ -3,7 +3,7 @@ use crate::{
         Allegiance, FactionName, MaterialCategory, StationEconomy, StationService, StationType,
         TechBrokerType, TraderType,
     },
-    log_line::{EDLogEvent, Extractable},
+    log_line::{EDLogEvent, Extractable}, utils::string_or_struct,
 };
 use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
@@ -47,11 +47,11 @@ pub struct LandingPads {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingRequested {
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     station_name: String,
     #[serde(rename = "StationName_Localised")]
     station_name_localised: Option<String>,
-    station_type: StationType,
+    station_type: Option<StationType>,
     landing_pads: Option<LandingPads>,
 }
 
@@ -69,11 +69,11 @@ pub struct EDLogDockingCancelled {
 pub struct EDLogDockingGranted {
     landing_pad: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     station_name: String,
     #[serde(rename = "StationName_Localised")]
     station_name_localised: Option<String>,
-    station_type: StationType,
+    station_type: Option<StationType>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -127,11 +127,13 @@ pub struct EDLogDocked {
     pub station_type: StationType,
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
+    pub faction_state: Option<String>,
     pub station_state: Option<StationState>,
     pub star_system: String,
-    pub system_address: u64,
+    pub system_address: Option<u64>,
     #[serde(rename = "MarketID")]
-    pub market_id: u64,
+    pub market_id: Option<u64>,
+    #[serde(deserialize_with = "string_or_struct")]
     pub station_faction: FactionName,
     pub station_government: String,
     #[serde(rename = "StationGovernment_Localised")]
@@ -141,7 +143,7 @@ pub struct EDLogDocked {
     pub station_economy: String,
     #[serde(rename = "StationEconomy_Localised")]
     pub station_economy_localised: String,
-    pub station_economies: Vec<StationEconomy>,
+    pub station_economies: Option<Vec<StationEconomy>>,
     #[serde(rename = "DistFromStarLS")]
     pub dist_from_star_ls: f64,
     pub cockpit_breach: Option<bool>,
@@ -161,13 +163,14 @@ impl Extractable for EDLogDocked {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T01:49:26Z", "event":"Undocked", "StationName":"Verrazzano's Inheritance", "StationType":"SurfaceStation" })]
 pub struct EDLogUndocked {
     station_name: String,
     #[serde(rename = "StationName_Localised")]
     station_name_localised: Option<String>,
     station_type: StationType,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    market_id: Option<u64>,
     taxi: Option<bool>,
     multicrew: Option<bool>,
 }

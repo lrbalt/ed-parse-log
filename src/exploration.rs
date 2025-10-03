@@ -169,14 +169,15 @@ pub enum ReserveLevel {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T03:05:10Z", "event":"Scan", "BodyName":"Wolf 865 A B Belt Cluster 1", "DistanceFromArrivalLS":237.092957 })]
 pub struct EDLogScan {
-    pub scan_type: ScanType,
+    pub scan_type: Option<ScanType>,
     pub body_name: String,
     #[serde(rename = "BodyID")]
-    pub body_id: u64,
+    pub body_id: Option<u64>,
     pub parents: Option<Vec<BodyParent>>,
-    pub star_system: String,
-    pub system_address: u64,
+    pub star_system: Option<String>,
+    pub system_address: Option<u64>,
     #[serde(rename = "DistanceFromArrivalLS")]
     pub distance_from_arrival_ls: f64,
     #[serde(flatten)]
@@ -186,8 +187,8 @@ pub struct EDLogScan {
     #[serde(flatten)]
     pub common_details: Option<ScannedCommonDetails>,
     pub reserve_level: Option<ReserveLevel>,
-    pub was_discovered: bool,
-    pub was_mapped: bool,
+    pub was_discovered: Option<bool>,
+    pub was_mapped: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -213,8 +214,9 @@ pub struct EDLogDatalinkScan {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T03:05:10Z", "event":"NavBeaconScan", "NumBodies":24 })]
 pub struct EDLogNavBeaconScan {
-    pub system_address: u64,
+    pub system_address: Option<u64>,
     pub num_bodies: u64,
 }
 
@@ -325,12 +327,13 @@ pub struct EDLogBuyExplorationData {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2017-10-17T02:42:32Z", "event":"SellExplorationData", "Systems":[ "Sinann", "Alrai Sector DL-Y d82", "Alrai Sector DL-Y d110" ], "Discovered":[  ], "BaseValue":9998, "Bonus":0 })]
 pub struct EDLogSellExplorationData {
     systems: Vec<String>,
     discovered: Vec<Unknown>,
     base_value: u64,
     bonus: u64,
-    total_earnings: u64,
+    total_earnings: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

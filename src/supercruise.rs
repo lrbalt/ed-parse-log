@@ -21,10 +21,10 @@ pub struct EDLogSupercruiseExit {
     taxi: Option<bool>,
     multicrew: Option<bool>,
     star_system: String,
-    system_address: u64,
+    system_address: Option<u64>,
     body: String,
     #[serde(rename = "BodyID")]
-    body_id: u64,
+    body_id: Option<u64>,
     body_type: BodyType,
 }
 
@@ -34,5 +34,5 @@ pub struct EDLogSupercruiseEntry {
     taxi: Option<bool>,
     multicrew: Option<bool>,
     star_system: String,
-    system_address: u64,
+    system_address: Option<u64>,
 }
