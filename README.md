@@ -11,8 +11,11 @@ Parse the log files of the space flight simulator [Elite Dangerous](https://www.
 After I worked on this crate I found [ed-journals](https://github.com/rster2002/ed-journals)
 
 ### Current status
-* This crate can parse my own logs going back to june 2022
-* it parses all test files from [ed-journals](https://github.com/rster2002/ed-journals)
+* This crate can parse my own logs going back to june 2022.
+* it parses all test files from the repo's below some of which go back to 2017
+** [ed-journals](https://github.com/rster2002/ed-journals)
+** [ed-scout](https://github.com/joncage/ed-scout)
+** [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
 * On my M2 Macbook it parses at ± 340 MB/s
 * it needs further refactoring to improve and dry the data model
 
