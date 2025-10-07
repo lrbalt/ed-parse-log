@@ -189,6 +189,7 @@ pub struct EDLogScan {
     pub reserve_level: Option<ReserveLevel>,
     pub was_discovered: Option<bool>,
     pub was_mapped: Option<bool>,
+    pub was_footfalled: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
