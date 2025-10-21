@@ -16,7 +16,7 @@ After I worked on this crate I found [ed-journals](https://github.com/rster2002/
 ** [ed-journals](https://github.com/rster2002/ed-journals)
 ** [ed-scout](https://github.com/joncage/ed-scout)
 ** [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
-* On my M2 Macbook it parses at ± 340 MB/s
+* On my M2 Macbook it parses at ± 300 MB/s
 * it needs further refactoring to improve and dry the data model
 
 ### How to run an example

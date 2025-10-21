@@ -135,6 +135,9 @@ pub enum MarketItemType {
     Lanthanum,
     CombatStabilisers,
     ArticulationMotors,
+    ThermalCoolingUnits,
+    SkimerComponents,
+    MineralExtractors,
 
     Drones,
     PersonalEffects,
