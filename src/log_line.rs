@@ -612,6 +612,11 @@ impl EDLogLine {
     pub fn extract<T: Extractable>(&self) -> Option<&T> {
         self.event.extract::<T>()
     }
+
+    // from https://doc.rust-lang.org/reference/items/enumerations.html#casting
+    pub fn discriminant(&self) -> u8 {
+        unsafe { *(self as *const Self as *const u8) }
+    }
 }
 
 #[test]
