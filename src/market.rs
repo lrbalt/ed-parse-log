@@ -138,6 +138,7 @@ pub enum MarketItemType {
     ThermalCoolingUnits,
     SkimerComponents,
     MineralExtractors,
+    GeologicalSamples,
 
     Drones,
     PersonalEffects,

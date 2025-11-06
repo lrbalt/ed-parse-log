@@ -57,17 +57,9 @@ fn progression_string_map(a: u64, b: u64, map: &[&str]) -> String {
     }
 }
 
-fn progression_string_str(a: &str, b: &str) -> String {
+fn progression_string<T: PartialEq + ToString + Display>(a: &T, b: &T) -> String {
     if a == b {
         a.to_string()
-    } else {
-        format!("{a} → {b}")
-    }
-}
-
-fn progression_string_num(a: u64, b: u64) -> String {
-    if a == b {
-        format!("{a}")
     } else {
         format!("{a} → {b}")
     }
@@ -94,7 +86,7 @@ fn progression_string_merits(a: Merits, b: Merits) -> String {
     }
 }
 
-fn progression_string_f64(a: f64, b: f64) -> String {
+fn progression_string_perc<T: PartialEq + ToString + Display>(a: &T, b: &T) -> String {
     if a == b {
         format!("{a:.1}%")
     } else {
@@ -102,19 +94,11 @@ fn progression_string_f64(a: f64, b: f64) -> String {
     }
 }
 
-fn progression_string_perc(a: u64, b: u64) -> String {
-    if a == b {
-        format!("{a}%")
-    } else {
-        format!("{a}% → {b}%")
-    }
-}
-
 fn progression_string_duration(a: Duration, b: Duration) -> String {
     if a == b {
-        format!("{}%", format_duration(&a))
+        format_duration(&a)
     } else {
-        format!("{}% → {}%", format_duration(&a), format_duration(&b))
+        format!("{} → {}", format_duration(&a), format_duration(&b))
     }
 }
 
@@ -289,10 +273,10 @@ impl Display for ReputationProgress {
         write!(
             f,
             "Federation: {}\nEmpire: {}\nIndependent: {}\nAlliance: {}",
-            progression_string_f64(self.start.federation, self.end.federation),
-            progression_string_f64(self.start.empire, self.end.empire),
-            progression_string_f64(self.start.independent, self.end.independent),
-            progression_string_f64(self.start.alliance, self.end.alliance),
+            progression_string_perc(&self.start.federation, &self.end.federation),
+            progression_string_perc(&self.start.empire, &self.end.empire),
+            progression_string_perc(&self.start.independent, &self.end.independent),
+            progression_string_perc(&self.start.alliance, &self.end.alliance),
         )
     }
 }
@@ -358,8 +342,8 @@ impl Display for PowerPlay {
         write!(
             f,
             "Power: {}\nRank: {}\nRank progress: {:.1}% ({})\nMerits: {}\nTime Pledged: {}",
-            progression_string_str(&self.start.power, &self.end.power),
-            progression_string_num(self.start.rank, self.end.rank),
+            progression_string(&self.start.power, &self.end.power),
+            progression_string(&self.start.rank, &self.end.rank),
             self.end.progress(),
             power_play_rank_range(self.end.rank).1,
             progression_string_merits(self.start.merits, self.end.merits),
@@ -436,7 +420,7 @@ impl Display for RankProgress {
         let empire = progression_string_map(self.start.empire, self.end.empire, &EMPIRE_RANK);
         let federation =
             progression_string_map(self.start.federation, self.end.federation, &FEDERATION_RANK);
-        let cqc = progression_string_num(self.start.cqc, self.end.cqc);
+        let cqc = progression_string(&self.start.cqc, &self.end.cqc);
         write!(
             f,
             "Combat: {combat}\nTrade: {trade}\nExplore: {explore}\nSoldier: {soldier}\nExobiology: {exobiology}\nEmpire: {empire}\nFederation: {federation}\nCQC: {cqc}"
@@ -502,14 +486,15 @@ impl RankProgressionChange {
 
 impl Display for RankProgressionChange {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let combat = progression_string_perc(self.start.combat, self.end.combat);
-        let trade = progression_string_perc(self.start.trade, self.end.trade);
-        let explore = progression_string_perc(self.start.explore, self.end.explore);
-        let soldier = progression_string_perc(self.start.soldier, self.end.soldier);
-        let exobiologist = progression_string_perc(self.start.exobiologist, self.end.exobiologist);
-        let empire = progression_string_perc(self.start.empire, self.end.empire);
-        let federation = progression_string_perc(self.start.federation, self.end.federation);
-        let cqc = progression_string_perc(self.start.cqc, self.end.cqc);
+        let combat = progression_string_perc(&self.start.combat, &self.end.combat);
+        let trade = progression_string_perc(&self.start.trade, &self.end.trade);
+        let explore = progression_string_perc(&self.start.explore, &self.end.explore);
+        let soldier = progression_string_perc(&self.start.soldier, &self.end.soldier);
+        let exobiologist =
+            progression_string_perc(&self.start.exobiologist, &self.end.exobiologist);
+        let empire = progression_string_perc(&self.start.empire, &self.end.empire);
+        let federation = progression_string_perc(&self.start.federation, &self.end.federation);
+        let cqc = progression_string_perc(&self.start.cqc, &self.end.cqc);
 
         write!(
             f,
