@@ -34,16 +34,36 @@ pub struct EDLogBuyAmmo {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-10-15T18:34:25Z", "event":"Repair", "Items":[ "$python_nx_cockpit_name;", "Hull", "$modularcargobaydoor_name;", "Wear" ], "Cost":811 })]
 pub struct EDLogRepair {
-    item: Option<String>,
-    items: Option<Vec<String>>,
-    cost: u64,
+    pub item: Option<String>,
+    pub items: Option<Vec<String>>,
+    pub cost: Credits,
+}
+
+impl Extractable for EDLogRepair {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::Repair(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-06T18:58:12Z", "event":"RepairAll", "Cost":22513 })]
 pub struct EDLogRepairAll {
-    cost: u64,
+    pub cost: Credits,
+}
+
+impl Extractable for EDLogRepairAll {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::RepairAll(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
