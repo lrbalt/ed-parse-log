@@ -1,18 +1,29 @@
 use crate::{
     common_types::{
-        Allegiance, FactionName, MaterialCategory, StationEconomy, StationService, StationType,
-        TechBrokerType, TraderType,
+        Allegiance, Credits, FactionName, MaterialCategory, StationEconomy, StationService,
+        StationType, TechBrokerType, TraderType,
     },
-    log_line::{EDLogEvent, Extractable}, utils::string_or_struct,
+    log_line::{EDLogEvent, Extractable},
+    utils::string_or_struct,
 };
 use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-06T18:58:11Z", "event":"RefuelAll", "Cost":60, "Amount":1.187222 })]
 pub struct EDLogRefuelAll {
-    cost: u64,
-    amount: f64,
+    pub cost: Credits,
+    pub amount: f64,
+}
+
+impl Extractable for EDLogRefuelAll {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::RefuelAll(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

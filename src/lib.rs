@@ -23,3 +23,5 @@ pub mod supercruise;
 pub mod transport;
 pub(crate) mod utils;
 pub mod wing;
+
+pub use utils::to_human_readable_string;

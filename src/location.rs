@@ -1,6 +1,7 @@
 use crate::{
     common_types::{
-        Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers, StationInformation, ThargoidWar
+        Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers,
+        StationInformation, ThargoidWar,
     },
     log_line::{EDLogEvent, Extractable},
     utils::string_or_struct,

@@ -1,6 +1,10 @@
 use ed_parse_log_file_testcase::testcase_struct;
 use serde::{Deserialize, Serialize};
-use std::{fmt::Display, ops::Sub, str::FromStr};
+use std::{
+    fmt::Display,
+    ops::{Mul, Sub},
+    str::FromStr,
+};
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
 pub struct Merits(u64);
@@ -42,16 +46,25 @@ impl Sub for Credits {
     }
 }
 
+impl Mul<i64> for Credits {
+    type Output = Credits;
+
+    fn mul(self, rhs: i64) -> Self::Output {
+        Credits(rhs * self.0)
+    }
+}
+
+impl Mul<u64> for Credits {
+    type Output = Credits;
+
+    fn mul(self, rhs: u64) -> Self::Output {
+        self * (rhs as i64)
+    }
+}
+
 impl Credits {
     pub fn to_human_readable_string(&self) -> String {
-        match self.0 {
-            -1_000..=999 => format!("{}", self.0),
-            1_000..=999_999 | -1_000_000..-1_000 => format!("{}K", self.0 / 1_000),
-            1_000_000..=999_999_999 | -1_000_000_000..-1_000_000 => {
-                format!("{}M", self.0 / 1_000_000)
-            }
-            (1_000_000_000..) | (..-1_000_000_000) => format!("{}B", self.0 / 1_000_000_000),
-        }
+        crate::utils::to_human_readable_string(self.0)
     }
 }
 

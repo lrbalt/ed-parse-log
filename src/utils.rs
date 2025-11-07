@@ -71,3 +71,14 @@ where
 
     deserializer.deserialize_any(StringOrStruct(PhantomData))
 }
+
+pub fn to_human_readable_string(value: i64) -> String {
+    match value {
+        -1_000..=999 => format!("{}", value),
+        1_000..=999_999 | -1_000_000..-1_000 => format!("{}K", value / 1_000),
+        1_000_000..=999_999_999 | -1_000_000_000..-1_000_000 => {
+            format!("{}M", value / 1_000_000)
+        }
+        (1_000_000_000..) | (..-1_000_000_000) => format!("{}B", value / 1_000_000_000),
+    }
+}

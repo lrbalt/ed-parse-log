@@ -1,7 +1,10 @@
 use crate::{
     common_types::{
-        Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionState, Powers, StarClass, StationInformation, ThargoidWar
-    }, location::SystemFactionName, log_line::{EDLogEvent, Extractable}
+        Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionState, Powers, StarClass,
+        StationInformation, ThargoidWar,
+    },
+    location::SystemFactionName,
+    log_line::{EDLogEvent, Extractable},
 };
 use ed_parse_log_file_testcase::testcase;
 use serde::{Deserialize, Serialize};
