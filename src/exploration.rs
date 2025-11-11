@@ -1,11 +1,11 @@
 use crate::{
     common_types::{
-        CodexBodyInformation, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
+        CodexBodyInformation, Credits, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
         ShipScanType, SignalType, StarClass, Unknown,
     },
     log_line::{EDLogEvent, Extractable},
 };
-use ed_parse_log_file_testcase::testcase;
+use ed_parse_log_files_macros::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -322,19 +322,55 @@ pub struct EDLogDataScanned {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyExplorationData {
-    system: String,
-    cost: u64,
+    pub system: String,
+    pub cost: Credits,
+}
+
+impl Extractable for EDLogBuyExplorationData {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::BuyExplorationData(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T02:42:32Z", "event":"SellExplorationData", "Systems":[ "Sinann", "Alrai Sector DL-Y d82", "Alrai Sector DL-Y d110" ], "Discovered":[  ], "BaseValue":9998, "Bonus":0 })]
 pub struct EDLogSellExplorationData {
-    systems: Vec<String>,
-    discovered: Vec<Unknown>,
-    base_value: u64,
-    bonus: u64,
-    total_earnings: Option<u64>,
+    pub systems: Vec<String>,
+    pub discovered: Vec<Unknown>,
+    pub base_value: Credits,
+    pub bonus: Credits,
+    pub total_earnings: Option<Credits>,
+}
+
+impl Extractable for EDLogSellExplorationData {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::SellExplorationData(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogMultiSellExplorationData {
+    pub discovered: Vec<DiscoveredSystem>,
+    pub base_value: Credits,
+    pub bonus: Credits,
+    pub total_earnings: Credits,
+}
+
+impl Extractable for EDLogMultiSellExplorationData {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        if let EDLogEvent::MultiSellExplorationData(loc) = event {
+            return Some(loc);
+        }
+        None
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -459,15 +495,6 @@ pub struct EDLogSAASignalsFound {
     body_id: u64,
     signals: Vec<BodySignal>,
     genuses: Option<Vec<SAAGenus>>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogMultiSellExplorationData {
-    discovered: Vec<DiscoveredSystem>,
-    base_value: u64,
-    bonus: u64,
-    total_earnings: u64,
 }
 
 #[test]

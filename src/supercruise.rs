@@ -1,5 +1,5 @@
 use crate::common_types::BodyType;
-use ed_parse_log_file_testcase::testcase;
+use ed_parse_log_files_macros::testcase;
 use serde::{Deserialize, Serialize};
 
 #[testcase({ "timestamp":"2023-07-30T20:54:01Z", "event":"SupercruiseDestinationDrop", "Type":"Wrangell Terminal", "Threat":0, "MarketID":3228997120 })]

@@ -1,6 +1,6 @@
 [package]
 name = "ed-parse-log-files"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 authors = ["Reinier Balt <lrbalt@gmail.com>"]
 description = "A library to read log files from Elite Dangerous"
@@ -13,7 +13,7 @@ publish = false
 serde = { version = "1.0.219", features = ["derive"] }
 serde_json = { version = "1.0.142" }
 chrono = { version = "0.4.41", features = ["serde"] }
-ed-parse-log-file-testcase = { path = "ed-parse-log-file-testcase" }
+ed-parse-log-files-macros = { path = "ed-parse-log-files-macros" }
 
 [dev-dependencies]
 rayon = { version = "1.10.0" }

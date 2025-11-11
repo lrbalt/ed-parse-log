@@ -1,5 +1,5 @@
 use crate::common_types::Credits;
-use ed_parse_log_file_testcase::testcase;
+use ed_parse_log_files_macros::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -220,8 +220,8 @@ pub struct EDLogSearchAndRescue {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BountyReward {
-    faction: String,
-    reward: u64,
+    pub faction: String,
+    pub reward: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -235,18 +235,18 @@ pub struct BountyPilot {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBounty {
-    rewards: Option<Vec<BountyReward>>,
-    reward: Option<f64>,
+    pub rewards: Option<Vec<BountyReward>>,
+    pub reward: Option<f64>,
     #[serde(flatten)]
-    pilot: Option<BountyPilot>,
-    target: String,
+    pub pilot: Option<BountyPilot>,
+    pub target: String,
     #[serde(rename = "Target_Localised")]
-    target_localised: Option<String>,
-    total_reward: Option<u64>,
-    victim_faction: String,
+    pub target_localised: Option<String>,
+    pub total_reward: Option<Credits>,
+    pub victim_faction: String,
     #[serde(rename = "VictimFaction_Localised")]
-    victim_faction_localised: Option<String>,
-    shared_with_others: Option<u64>,
+    pub victim_faction_localised: Option<String>,
+    pub shared_with_others: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -265,16 +265,17 @@ pub enum VoucherType {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct VoucherFaction {
     faction: String,
-    amount: u64,
+    amount: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-06-28T21:45:34Z", "event":"RedeemVoucher", "Type":"trade", "Amount":14229 })]
+#[testcase({ "timestamp":"2025-11-09T20:07:12Z", "event":"RedeemVoucher", "Type":"bounty", "Amount":1500, "Factions":[ { "Faction":"", "Amount":1500 } ], "BrokerPercentage":25.000000 })]
 pub struct EDLogRedeemVoucher {
     #[serde(rename = "Type")]
     voucher_type: VoucherType,
-    amount: u64,
+    amount: Credits,
     faction: Option<String>,
     factions: Option<Vec<VoucherFaction>>,
     broker_percentage: Option<f32>,
@@ -283,7 +284,7 @@ pub struct EDLogRedeemVoucher {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDatalinkVoucher {
-    reward: u64,
+    reward: Credits,
     victim_faction: String,
     payee_faction: String,
 }

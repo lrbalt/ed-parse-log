@@ -5,7 +5,7 @@ use crate::{
     },
     log_line::{EDLogEvent, Extractable},
 };
-use ed_parse_log_file_testcase::testcase;
+use ed_parse_log_files_macros::testcase;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

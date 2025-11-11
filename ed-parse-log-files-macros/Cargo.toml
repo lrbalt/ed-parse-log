@@ -1,0 +1,13 @@
+[package]
+name = "ed-parse-log-files-macros"
+version = "0.2.0"
+edition = "2024"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "2.0"
+quote = "1.0"
+proc-macro2 = "1.0"
+uuid = { version = "1.18", features = ["v4"] }

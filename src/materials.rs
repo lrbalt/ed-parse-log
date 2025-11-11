@@ -1,4 +1,4 @@
-use ed_parse_log_file_testcase::testcase_struct;
+use ed_parse_log_files_macros::testcase_struct;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
