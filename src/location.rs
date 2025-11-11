@@ -3,7 +3,6 @@ use crate::{
         Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers,
         StationInformation, ThargoidWar,
     },
-    log_line::EDLogEvent,
     utils::string_or_struct,
 };
 use ed_parse_log_files_macros::Extractable;
@@ -101,7 +100,7 @@ fn test_location() {
         line.event(),
         crate::log_line::EDLogEvent::Location(_)
     ));
-    if let EDLogEvent::Location(header) = line.event() {
+    if let crate::log_line::EDLogEvent::Location(header) = line.event() {
         assert_eq!(header.population, 178961);
     }
 }

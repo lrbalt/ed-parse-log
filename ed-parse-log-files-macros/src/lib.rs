@@ -78,13 +78,13 @@ pub fn extractable_derive(input: TokenStream) -> TokenStream {
         variant_name = variant_name.as_str()[5..].to_string();
     }
     let extractor: syn::Stmt = syn::parse_str(&format!(
-        "if let EDLogEvent::{variant_name}(loc) = event {{ Some(loc) }} else {{ None }}"
+        "if let crate::log_line::EDLogEvent::{variant_name}(loc) = event {{ Some(loc) }} else {{ None }}"
     ))
     .unwrap();
 
     let generated = quote! {
         impl crate::log_line::Extractable for #ty_name {
-            fn extract(event: &EDLogEvent) -> Option<&Self> {
+            fn extract(event: &crate::log_line::EDLogEvent) -> Option<&Self> {
                 #extractor
             }
         }

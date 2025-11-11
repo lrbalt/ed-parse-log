@@ -1,4 +1,4 @@
-use ed_parse_log_files_macros::testcase_struct;
+use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
@@ -1001,7 +1001,7 @@ pub enum TechBrokerType {
     Salvation,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNpcCrewRank {
     npc_crew_name: String,
@@ -1009,7 +1009,7 @@ pub struct EDLogNpcCrewRank {
     rank_combat: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNpcCrewPaidWage {
     npc_crew_name: String,

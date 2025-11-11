@@ -3,7 +3,6 @@ use crate::{
         Allegiance, Credits, FactionName, MaterialCategory, StationEconomy, StationService,
         StationType, TechBrokerType, TraderType,
     },
-    log_line::EDLogEvent,
     utils::string_or_struct,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
@@ -47,37 +46,37 @@ pub struct LandingPads {
     large: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingRequested {
     #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
-    station_name: String,
+    pub market_id: Option<u64>,
+    pub station_name: String,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
-    station_type: Option<StationType>,
-    landing_pads: Option<LandingPads>,
+    pub station_name_localised: Option<String>,
+    pub station_type: Option<StationType>,
+    pub landing_pads: Option<LandingPads>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingCancelled {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: String,
-    station_type: StationType,
+    pub market_id: u64,
+    pub station_name: String,
+    pub station_type: StationType,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingGranted {
-    landing_pad: u64,
+    pub landing_pad: u64,
     #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
-    station_name: String,
+    pub market_id: Option<u64>,
+    pub station_name: String,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
-    station_type: Option<StationType>,
+    pub station_name_localised: Option<String>,
+    pub station_type: Option<StationType>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -101,7 +100,7 @@ pub enum StationState {
 }
 
 #[testcase({ "timestamp":"2025-06-30T12:38:07Z", "event":"DockingDenied", "Reason":"DockOffline", "MarketID":3906562304, "StationName":"Joshi Military Complex", "StationType":"OnFootSettlement" })]
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingDenied {
     reason: DockingDeniedReason,
@@ -113,7 +112,7 @@ pub struct EDLogDockingDenied {
     station_type: StationType,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingTimeout {
     #[serde(rename = "MarketID")]
@@ -156,7 +155,7 @@ pub struct EDLogDocked {
     pub landing_pads: Option<LandingPads>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T01:49:26Z", "event":"Undocked", "StationName":"Verrazzano's Inheritance", "StationType":"SurfaceStation" })]
 pub struct EDLogUndocked {
@@ -170,7 +169,7 @@ pub struct EDLogUndocked {
     multicrew: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogOutfitting {
     #[serde(rename = "MarketID")]
@@ -189,7 +188,7 @@ pub struct ExchangedMaterials {
     quantity: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterialTrade {
     #[serde(rename = "MarketID")]
@@ -199,7 +198,7 @@ pub struct EDLogMaterialTrade {
     received: ExchangedMaterials,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterialCollected {
     category: MaterialCategory,

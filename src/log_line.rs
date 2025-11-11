@@ -1,7 +1,3 @@
-use chrono::{DateTime, Utc};
-use ed_parse_log_files_macros::testcase;
-use serde::{Deserialize, Serialize};
-
 use crate::{
     commander::{
         EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
@@ -98,6 +94,9 @@ use crate::{
     },
     wing::EDLogWingJoin,
 };
+use chrono::{DateTime, Utc};
+use ed_parse_log_files_macros::{Extractable, testcase};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
@@ -128,7 +127,7 @@ pub struct LoadGameShip {
     game_mode: GameMode,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase")]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"LoadGame", "Commander":"JournalServer", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Open", "Credits":766731, "Loan":0 })]
 pub struct EDLogLoadGame {
@@ -149,13 +148,13 @@ pub struct EDLogLoadGame {
     pub build: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMusic {
     music_track: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2023-07-30T14:40:36Z", "event":"ReceiveText", "From":"$ShipName_PassengerLiner_Cruise;", 
              "From_Localised":"Cruise Ship", "Message":"$CruiseLiner_SCPatrol05;", 
@@ -171,7 +170,7 @@ pub struct EDLogReceiveText {
     channel: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSendText {
     to: String,
@@ -179,7 +178,7 @@ pub struct EDLogSendText {
     sent: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogFileHeader {
     part: u64,
@@ -230,7 +229,7 @@ pub enum USSType {
     AXWaeponsFire,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogUSSDrop {
     #[serde(rename = "USSType")]
@@ -241,7 +240,7 @@ pub struct EDLogUSSDrop {
     uss_threat: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogCollectCargo {
     #[serde(rename = "Type")]
@@ -265,7 +264,7 @@ pub struct CargoTransfer {
     direction: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCargoTransfer {
     transfers: Vec<CargoTransfer>,
@@ -280,7 +279,7 @@ pub struct LocationOnBody {
     altitude: f64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScreenshot {
     filename: String,
@@ -468,7 +467,7 @@ pub enum EDLogEvent {
     RedeemVoucher(EDLogRedeemVoucher),
     DatalinkVoucher(EDLogDatalinkVoucher),
     FactionKillBond(EDLogFactionKillBond),
-    CapShipBond(EDLogCapitalShipBond),
+    CapitalShipBond(EDLogCapitalShipBond),
     PVPKill(EDLogPVPKill),
     Passengers(EDLogPassengers),
 

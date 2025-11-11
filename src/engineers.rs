@@ -1,4 +1,5 @@
 use crate::common_types::ModuleEngineeringModifiers;
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -19,12 +20,12 @@ pub struct Engineer {
     rank: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerProgress {
     #[serde(flatten)]
-    engineer: Option<Engineer>,
-    engineers: Option<Vec<Engineer>>,
+    pub engineer: Option<Engineer>,
+    pub engineers: Option<Vec<Engineer>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -45,39 +46,39 @@ pub struct ExperimentalEffect {
     experimental_effect_localised: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerCraft {
-    slot: String,
-    module: String,
-    ingredients: Vec<EngineerCraftIngredient>,
-    engineer: Option<String>,
+    pub slot: String,
+    pub module: String,
+    pub ingredients: Vec<EngineerCraftIngredient>,
+    pub engineer: Option<String>,
     #[serde(rename = "EngineerID")]
-    engineer_id: u64,
+    pub engineer_id: u64,
     #[serde(rename = "BlueprintID")]
-    blueprint_id: u64,
-    blueprint_name: String,
-    level: u64,
-    quality: f64,
+    pub blueprint_id: u64,
+    pub blueprint_name: String,
+    pub level: u64,
+    pub quality: f64,
     #[serde(flatten)]
-    experimental_effect: Option<ExperimentalEffect>,
-    modifiers: Vec<ModuleEngineeringModifiers>,
+    pub experimental_effect: Option<ExperimentalEffect>,
+    pub modifiers: Vec<ModuleEngineeringModifiers>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerContribution {
-    engineer: String,
+    pub engineer: String,
     #[serde(rename = "EngineerID")]
-    engineer_id: u64,
+    pub engineer_id: u64,
     #[serde(rename = "Type")]
-    contribution_type: String,
-    commodity: Option<String>,
+    pub contribution_type: String,
+    pub commodity: Option<String>,
     #[serde(rename = "Commodity_Localised")]
-    commodity_localised: Option<String>,
-    material: Option<String>,
+    pub commodity_localised: Option<String>,
+    pub material: Option<String>,
     #[serde(rename = "Material_Localised")]
-    material_localised: Option<String>,
-    quantity: u64,
-    total_quantity: u64,
+    pub material_localised: Option<String>,
+    pub quantity: u64,
+    pub total_quantity: u64,
 }

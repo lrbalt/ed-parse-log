@@ -1,20 +1,23 @@
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+use crate::common_types::Credits;
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCancelTaxi {
-    refund: u64,
+    refund: Credits,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBookTaxi {
-    cost: u64,
+    cost: Credits,
     destination_system: String,
     destination_location: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDropshipDeploy {
     star_system: String,
@@ -26,17 +29,17 @@ pub struct EDLogDropshipDeploy {
     on_planet: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBookDropship {
     retreat: bool,
-    cost: u64,
+    cost: Credits,
     destination_system: String,
     destination_location: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCancelDropship {
-    refund: u64,
+    refund: Credits,
 }

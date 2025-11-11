@@ -1,4 +1,5 @@
 use crate::common_types::Credits;
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -581,7 +582,7 @@ pub struct EDLogStatisticsExobiology {
     organic_species: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStatistics {
     #[serde(rename = "Bank_Account")]

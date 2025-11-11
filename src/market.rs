@@ -1,7 +1,4 @@
-use crate::{
-    common_types::{CarrierDockingAccess, Credits, StationType},
-    log_line::EDLogEvent,
-};
+use crate::common_types::{CarrierDockingAccess, Credits, StationType};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -190,7 +187,7 @@ pub enum MarketItemType {
     MetaAlloys,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarketBuy {
     #[serde(rename = "MarketID")]
@@ -204,7 +201,7 @@ pub struct EDLogMarketBuy {
     total_cost: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T03:29:58Z", "event":"MarketSell", "Type":"biowaste", "Count":1, "SellPrice":10, "TotalSale":10, "AvgPricePaid":0 })]
 pub struct EDLogMarketSell {
@@ -241,7 +238,7 @@ pub struct MicroResource {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyMicroResources {
     total_count: Option<u64>,
@@ -253,7 +250,7 @@ pub struct EDLogBuyMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-06-28T19:16:15Z", "event":"BuyTradeData", "System":"Quator", "Cost":100 })]
 pub struct EDLogBuyTradeData {
@@ -261,7 +258,7 @@ pub struct EDLogBuyTradeData {
     cost: Credits,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTradeMicroResources {
     offered: Vec<MicroResource>,
@@ -275,7 +272,7 @@ pub struct EDLogTradeMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellMicroResources {
     total_count: u64,
@@ -285,7 +282,7 @@ pub struct EDLogSellMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDeliverPowerMicroResources {
     total_count: u64,
@@ -305,7 +302,7 @@ pub struct EDLogMarket {
     pub star_system: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCargoDepot {
     #[serde(rename = "MissionID")]
@@ -356,7 +353,7 @@ pub struct EDLogColonisationConstructionDepot {
     pub resources_required: Vec<RequiredResource>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogColonisationContribution {
     #[serde(rename = "MarketID")]
@@ -380,7 +377,7 @@ pub struct SoldBioData {
     bonus: Credits,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellOrganicData {
     #[serde(rename = "MarketID")]

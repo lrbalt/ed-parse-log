@@ -1,6 +1,5 @@
 use crate::{
     common_types::{Credits, StarSystemData},
-    log_line::EDLogEvent,
     ship::ShipType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
@@ -22,7 +21,7 @@ pub struct Ship {
     hot: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSwap {
     ship_type: ShipType,
@@ -37,7 +36,7 @@ pub struct EDLogShipyardSwap {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardTransfer {
     ship_type: ShipType,
@@ -55,7 +54,7 @@ pub struct EDLogShipyardTransfer {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardNew {
     ship_type: ShipType,
@@ -65,7 +64,7 @@ pub struct EDLogShipyardNew {
     new_ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyard {
     #[serde(rename = "MarketID")]
@@ -74,7 +73,7 @@ pub struct EDLogShipyard {
     star_system: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardBuy {
     ship_type: ShipType,
@@ -88,7 +87,7 @@ pub struct EDLogShipyardBuy {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSell {
     ship_type: ShipType,
@@ -104,7 +103,7 @@ pub struct EDLogShipyardSell {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardRedeem {
     ship_type: ShipType,
@@ -116,7 +115,7 @@ pub struct EDLogShipyardRedeem {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipRedeemed {
     ship_type: ShipType,
@@ -126,7 +125,7 @@ pub struct EDLogShipRedeemed {
     new_ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-06-20T21:24:02Z", "event":"SellShipOnRebuy", "ShipType":"mamba", "System":"14 Ceti", "SellShipId":3, "ShipPrice":73796265 })]
 pub struct EDLogSellShipOnRebuy {

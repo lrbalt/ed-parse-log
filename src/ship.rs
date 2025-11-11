@@ -1,5 +1,5 @@
 use crate::{common_types::PilotRank, market::MarketItemType};
-use ed_parse_log_files_macros::{testcase, testcase_struct};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -29,7 +29,7 @@ pub struct EDLogEjectCargo {
     powerplay_origin: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"Cargo", "Inventory":[  ] })]
 pub struct EDLogCargo {
@@ -38,13 +38,13 @@ pub struct EDLogCargo {
     inventory: Option<Vec<Inventory>>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShieldState {
     shields_up: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogReservoirReplenished {
     fuel_main: f64,
@@ -180,7 +180,7 @@ pub enum ShipType {
     VultureTaxi,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipTargeted {
     target_locked: bool,
@@ -204,7 +204,7 @@ pub struct EDLogShipTargeted {
     subsystem: Option<TargetedSubsystem>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogInterdiction {
     success: bool,
@@ -213,7 +213,7 @@ pub struct EDLogInterdiction {
     power: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogInterdicted {
     submitted: bool,
@@ -226,7 +226,7 @@ pub struct EDLogInterdicted {
     is_thargoid: Option<bool>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEscapeInterdiction {
     interdictor: String,
@@ -235,19 +235,19 @@ pub struct EDLogEscapeInterdiction {
     is_player: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRebootRepair {
     modules: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogUnderAttack {
     target: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogHullDamage {
     health: f64,
@@ -264,14 +264,14 @@ pub struct SynthesisMaterial {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSynthesis {
     name: String,
     materials: Vec<SynthesisMaterial>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogAfmuRepairs {
     module: String,
@@ -281,7 +281,7 @@ pub struct EDLogAfmuRepairs {
     health: f32,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSetUserShipName {
     ship: String,
@@ -291,7 +291,7 @@ pub struct EDLogSetUserShipName {
     user_ship_id: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogClearImpound {
     ship_type: String,
@@ -306,7 +306,7 @@ pub struct EDLogClearImpound {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLaunchFighter {
     loadout: String,
@@ -315,21 +315,21 @@ pub struct EDLogLaunchFighter {
     player_controlled: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogDockFighter {
     #[serde(rename = "ID")]
     id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogFighterDestroyed {
     #[serde(rename = "ID")]
     id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(deny_unknown_fields)]
 pub struct EDLogFighterRebuilt {
     #[serde(rename = "Loadout")]

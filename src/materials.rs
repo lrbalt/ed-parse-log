@@ -1,4 +1,4 @@
-use ed_parse_log_files_macros::testcase_struct;
+use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -18,7 +18,7 @@ pub struct NonRawMaterial {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterials {
     raw: Vec<RawMaterial>,

@@ -1,5 +1,5 @@
 use crate::{common_types::ModuleEngineeringModifiers, ship::ShipType};
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -53,7 +53,7 @@ pub struct LoadOutStats {
     rebuy: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-15T04:34:40Z", "event":"Loadout", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "Modules":[  ] })]
 #[testcase({ "timestamp": "2024-01-14T18:13:22Z", "event": "Loadout", "Ship": "cobramkiii", "ShipID": 23, "ShipName": "HMS SCAVENGER", "ShipIdent": "LRB-C3", 

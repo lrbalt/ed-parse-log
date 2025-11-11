@@ -1,3 +1,4 @@
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -22,7 +23,7 @@ pub struct LockerContent {
     data: Vec<ShipLockerItem>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipLocker {
     #[serde(flatten)]

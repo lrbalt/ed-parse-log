@@ -4,7 +4,6 @@ use crate::{
         StationInformation, ThargoidWar,
     },
     location::SystemFactionName,
-    log_line::EDLogEvent,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -64,7 +63,7 @@ pub struct EDLogApproachSettlement {
     pub body_information: Option<BodyInformationOfSettlement>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSDTarget {
     name: String,
@@ -114,7 +113,7 @@ pub struct EDLogFSDJump {
     pub conflicts: Option<Vec<Conflict>>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockSRV {
     #[serde(rename = "SRVType")]
@@ -125,7 +124,7 @@ pub struct EDLogDockSRV {
     id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLaunchSRV {
     #[serde(rename = "SRVType")]
@@ -138,7 +137,7 @@ pub struct EDLogLaunchSRV {
     player_controlled: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSRVDestroyed {
     #[serde(rename = "ID")]
@@ -149,7 +148,7 @@ pub struct EDLogSRVDestroyed {
     srv_type_localised: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTouchdown {
     player_controlled: bool,
@@ -180,7 +179,7 @@ pub struct JumpToStarsystem {
     star_class: StarClass,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStartJump {
     jump_type: JumpType,
@@ -189,7 +188,7 @@ pub struct EDLogStartJump {
     star_system: Option<JumpToStarsystem>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogJetConeBoost {
     boost_value: f64,
@@ -257,7 +256,7 @@ fn test_jsd_jump() {
         line.event(),
         crate::log_line::EDLogEvent::FSDJump(_)
     ));
-    if let EDLogEvent::FSDJump(header) = line.event() {
+    if let crate::log_line::EDLogEvent::FSDJump(header) = line.event() {
         assert_eq!(header.taxi, Some(false));
         assert_eq!(header.body_id, Some(1));
     }

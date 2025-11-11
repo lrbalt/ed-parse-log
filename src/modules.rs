@@ -1,7 +1,4 @@
-use crate::{
-    common_types::{Credits, EngineerModification},
-    log_line::EDLogEvent,
-};
+use crate::common_types::{Credits, EngineerModification};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -56,7 +53,7 @@ pub struct SwapOutItem {
     swap_out_item_localised: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleRetrieve {
     #[serde(rename = "MarketID")]
@@ -84,7 +81,7 @@ pub struct SellItem {
     sell_item_localised: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleBuy {
     slot: String,
@@ -96,16 +93,16 @@ pub struct EDLogModuleBuy {
     buy_item_localised: String,
     #[serde(flatten)]
     sell_item: Option<SellItem>,
-    sell_price: Option<u64>,
+    sell_price: Option<Credits>,
     #[serde(rename = "MarketID")]
     market_id: u64,
-    buy_price: u64,
+    buy_price: Credits,
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleSell {
     #[serde(rename = "MarketID")]
@@ -114,13 +111,13 @@ pub struct EDLogModuleSell {
     sell_item: String,
     #[serde(rename = "SellItem_Localised")]
     sell_item_localised: String,
-    sell_price: u64,
+    sell_price: Credits,
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleSellRemote {
     storage_slot: u64,
@@ -128,13 +125,13 @@ pub struct EDLogModuleSellRemote {
     #[serde(rename = "SellItem_Localised")]
     sell_item_localised: String,
     server_id: u64,
-    sell_price: u64,
+    sell_price: Credits,
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleSwap {
     #[serde(rename = "MarketID")]
@@ -162,7 +159,7 @@ pub struct MassStoredModule {
     hot: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMassModuleStore {
     #[serde(rename = "MarketID")]
@@ -173,7 +170,7 @@ pub struct EDLogMassModuleStore {
     items: Vec<MassStoredModule>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T02:57:13Z", "event":"ModuleStore", "Slot":"Slot06_Size2", "StoredItem":"$int_repairer_size2_class3_name;", "StoredItem_Localised":"AFM Unit", "Ship":"cobramkiii", "ShipID":1 })]
 pub struct EDLogModuleStore {
@@ -191,7 +188,7 @@ pub struct EDLogModuleStore {
     engineer_modification: Option<EngineerModification>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleBuyAndStore {
     buy_item: String,
@@ -199,13 +196,13 @@ pub struct EDLogModuleBuyAndStore {
     buy_item_localised: String,
     #[serde(rename = "MarketID")]
     market_id: u64,
-    buy_price: u64,
+    buy_price: Credits,
     ship: String,
     #[serde(rename = "ShipID")]
     ship_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFetchRemoteModule {
     storage_slot: u64,
@@ -213,7 +210,7 @@ pub struct EDLogFetchRemoteModule {
     #[serde(rename = "StoredItem_Localised")]
     stored_item_localised: String,
     server_id: u64,
-    transfer_cost: u64,
+    transfer_cost: Credits,
     transfer_time: u64,
     ship: String,
     #[serde(rename = "ShipID")]
