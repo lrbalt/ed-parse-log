@@ -1,8 +1,8 @@
 use crate::{
     common_types::{Credits, EngineerModification},
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -38,7 +38,7 @@ pub struct StoredModule {
     hot: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStoredModules {
     #[serde(rename = "MarketID")]
@@ -46,15 +46,6 @@ pub struct EDLogStoredModules {
     pub station_name: String,
     pub star_system: String,
     pub items: Vec<StoredModule>,
-}
-
-impl Extractable for EDLogStoredModules {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::StoredModules(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

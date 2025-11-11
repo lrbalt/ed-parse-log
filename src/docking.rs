@@ -3,13 +3,13 @@ use crate::{
         Allegiance, Credits, FactionName, MaterialCategory, StationEconomy, StationService,
         StationType, TechBrokerType, TraderType,
     },
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
     utils::string_or_struct,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-11-06T18:58:11Z", "event":"RefuelAll", "Cost":60, "Amount":1.187222 })]
 pub struct EDLogRefuelAll {
@@ -17,22 +17,13 @@ pub struct EDLogRefuelAll {
     pub amount: f64,
 }
 
-impl Extractable for EDLogRefuelAll {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::RefuelAll(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyAmmo {
-    cost: u64,
+    cost: Credits,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2024-10-15T18:34:25Z", "event":"Repair", "Items":[ "$python_nx_cockpit_name;", "Hull", "$modularcargobaydoor_name;", "Wear" ], "Cost":811 })]
 pub struct EDLogRepair {
@@ -41,29 +32,11 @@ pub struct EDLogRepair {
     pub cost: Credits,
 }
 
-impl Extractable for EDLogRepair {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::Repair(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-11-06T18:58:12Z", "event":"RepairAll", "Cost":22513 })]
 pub struct EDLogRepairAll {
     pub cost: Credits,
-}
-
-impl Extractable for EDLogRepairAll {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::RepairAll(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -149,7 +122,7 @@ pub struct EDLogDockingTimeout {
     station_type: StationType,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDocked {
     pub station_name: String,
@@ -181,15 +154,6 @@ pub struct EDLogDocked {
     pub wanted: Option<bool>,
     pub active_fine: Option<bool>,
     pub landing_pads: Option<LandingPads>,
-}
-
-impl Extractable for EDLogDocked {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::Docked(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -245,10 +209,10 @@ pub struct EDLogMaterialCollected {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPayBounties {
-    amount: u64,
+    amount: Credits,
     all_fines: Option<bool>,
     faction: Option<String>,
     #[serde(rename = "Faction_Localised")]
@@ -258,10 +222,10 @@ pub struct EDLogPayBounties {
     broker_percentage: f64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPayFines {
-    amount: u64,
+    amount: Credits,
     all_fines: bool,
     faction: Option<String>,
     #[serde(rename = "ShipID")]
@@ -296,7 +260,7 @@ pub struct BrokerCommodity {
     count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTechnologyBroker {
     pub broker_type: TechBrokerType,
@@ -307,16 +271,7 @@ pub struct EDLogTechnologyBroker {
     pub materials: Vec<BrokerMaterial>,
 }
 
-impl Extractable for EDLogTechnologyBroker {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::TechnologyBroker(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRestockVehicle {
     #[serde(rename = "Type")]
@@ -326,6 +281,6 @@ pub struct EDLogRestockVehicle {
     loadout: String,
     #[serde(rename = "ID")]
     id: Option<u64>,
-    cost: u64,
+    cost: Credits,
     count: u64,
 }

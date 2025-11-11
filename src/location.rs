@@ -3,9 +3,10 @@ use crate::{
         Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers,
         StationInformation, ThargoidWar,
     },
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
     utils::string_or_struct,
 };
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -21,7 +22,7 @@ pub struct SystemFactionName {
     pub system_faction: FactionName,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLocation {
     #[serde(rename = "DistFromStarLS")]
@@ -65,15 +66,6 @@ pub struct EDLogLocation {
     pub system_faction_name: Option<SystemFactionName>,
     pub conflicts: Option<Vec<Conflict>>,
     pub faction_state: Option<FactionState>,
-}
-
-impl Extractable for EDLogLocation {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::Location(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[test]

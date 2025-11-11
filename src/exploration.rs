@@ -3,9 +3,9 @@ use crate::{
         CodexBodyInformation, Credits, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
         ShipScanType, SignalType, StarClass, Unknown,
     },
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -30,7 +30,7 @@ pub struct SpawningInfo {
     time_remaining: f32,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-08-21T14:55:03Z", "event":"FSSSignalDiscovered", "SystemAddress":908486218450, "SignalName":"U | HOFI", "SignalType":"SquadronCarrier", "IsStation":true })]
 pub struct EDLogFSSSignalDiscovered {
@@ -46,15 +46,6 @@ pub struct EDLogFSSSignalDiscovered {
     #[serde(flatten)]
     pub spawning_info: Option<SpawningInfo>,
     pub is_station: Option<bool>,
-}
-
-impl Extractable for EDLogFSSSignalDiscovered {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::FSSSignalDiscovered(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -319,23 +310,14 @@ pub struct EDLogDataScanned {
     data_type_localised: Option<String>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyExplorationData {
     pub system: String,
     pub cost: Credits,
 }
 
-impl Extractable for EDLogBuyExplorationData {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::BuyExplorationData(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T02:42:32Z", "event":"SellExplorationData", "Systems":[ "Sinann", "Alrai Sector DL-Y d82", "Alrai Sector DL-Y d110" ], "Discovered":[  ], "BaseValue":9998, "Bonus":0 })]
 pub struct EDLogSellExplorationData {
@@ -346,31 +328,13 @@ pub struct EDLogSellExplorationData {
     pub total_earnings: Option<Credits>,
 }
 
-impl Extractable for EDLogSellExplorationData {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::SellExplorationData(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMultiSellExplorationData {
     pub discovered: Vec<DiscoveredSystem>,
     pub base_value: Credits,
     pub bonus: Credits,
     pub total_earnings: Credits,
-}
-
-impl Extractable for EDLogMultiSellExplorationData {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::MultiSellExplorationData(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

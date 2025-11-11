@@ -3,9 +3,9 @@ use crate::{
         Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
         PowerplayState, StationInformation, ThargoidWar,
     },
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -321,7 +321,7 @@ pub struct EDLogCarrierStats {
     pub module_packs: Vec<ModulePack>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFCMaterials {
     #[serde(rename = "MarketID")]
@@ -329,15 +329,6 @@ pub struct EDLogFCMaterials {
     pub carrier_name: String,
     #[serde(rename = "CarrierID")]
     pub carrier_id: String,
-}
-
-impl Extractable for EDLogFCMaterials {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::FCMaterials(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[test]

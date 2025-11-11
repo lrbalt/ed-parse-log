@@ -4,9 +4,9 @@ use crate::{
         StationInformation, ThargoidWar,
     },
     location::SystemFactionName,
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -52,7 +52,7 @@ pub struct BodyInformationOfSettlement {
         "Name":"$Ancient_Small_002:#index=1;", "Name_Localised":"Guardian Structure", "SystemAddress":2833906537146, 
         "BodyID":7, "BodyName":"Synuefe EU-Q c21-10 A 3", "Latitude":19.823612, "Longitude":-82.460922 })]
 #[testcase({ "timestamp":"2017-10-17T01:41:51Z", "event":"ApproachSettlement", "Name":"Verrazzano's Inheritance" })]
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogApproachSettlement {
     pub name: String,
@@ -64,15 +64,6 @@ pub struct EDLogApproachSettlement {
     pub body_information: Option<BodyInformationOfSettlement>,
 }
 
-impl Extractable for EDLogApproachSettlement {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::ApproachSettlement(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSDTarget {
@@ -82,7 +73,7 @@ pub struct EDLogFSDTarget {
     remaining_jumps_in_route: Option<u64>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 // todo: refactor with location->edloglocation
 pub struct EDLogFSDJump {
@@ -121,15 +112,6 @@ pub struct EDLogFSDJump {
     pub system_faction_name: Option<SystemFactionName>,
     pub faction_state: Option<FactionState>,
     pub conflicts: Option<Vec<Conflict>>,
-}
-
-impl Extractable for EDLogFSDJump {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::FSDJump(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

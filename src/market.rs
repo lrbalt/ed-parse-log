@@ -1,8 +1,8 @@
 use crate::{
     common_types::{CarrierDockingAccess, Credits, StationType},
-    log_line::{EDLogEvent, Extractable},
+    log_line::EDLogEvent,
 };
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -294,7 +294,7 @@ pub struct EDLogDeliverPowerMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarket {
     #[serde(rename = "MarketID")]
@@ -303,15 +303,6 @@ pub struct EDLogMarket {
     pub station_type: StationType,
     pub carrier_docking_access: Option<CarrierDockingAccess>,
     pub star_system: String,
-}
-
-impl Extractable for EDLogMarket {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::Market(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -354,7 +345,7 @@ pub struct ContributedResource {
     amount: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogColonisationConstructionDepot {
     #[serde(rename = "MarketID")]
@@ -363,15 +354,6 @@ pub struct EDLogColonisationConstructionDepot {
     pub construction_complete: bool,
     pub construction_failed: bool,
     pub resources_required: Vec<RequiredResource>,
-}
-
-impl Extractable for EDLogColonisationConstructionDepot {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        if let EDLogEvent::ColonisationConstructionDepot(loc) = event {
-            return Some(loc);
-        }
-        None
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

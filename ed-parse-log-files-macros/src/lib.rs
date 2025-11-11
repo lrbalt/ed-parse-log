@@ -19,17 +19,17 @@ pub fn testcase(attr: TokenStream, item: TokenStream) -> TokenStream {
     let json_str = attr.to_string();
 
     let generated = quote! {
-            #ast
+        #ast
 
-            #[test]
-            fn #fn_name() {
-                use crate::log_line::EDLogLine;
-                let str = #json_str;
-                let line = serde_json::from_str::<EDLogLine>(str).expect("Should parse");
+        #[test]
+        fn #fn_name() {
+            use crate::log_line::EDLogLine;
+            let str = #json_str;
+            let line = serde_json::from_str::<EDLogLine>(str).expect("Should parse");
 
-                assert!(matches!(line.event(),crate::log_line::EDLogEvent::#ty_name(_)));
-            }
-        };
+            assert!(matches!(line.event(),crate::log_line::EDLogEvent::#ty_name(_)));
+        }
+    };
 
     generated.into()
 }
@@ -51,15 +51,43 @@ pub fn testcase_struct(attr: TokenStream, item: TokenStream) -> TokenStream {
     let json_str = attr.to_string();
 
     let generated = quote! {
-            #ast
+        #ast
 
-            #[test]
-            fn #fn_name() {
-                let str = #json_str;
-                let result = serde_json::from_str::<#ty_name>(str);
-                assert!(result.is_ok(), "Should parse, got: {:?}", result);
+        #[test]
+        fn #fn_name() {
+            let str = #json_str;
+            let result = serde_json::from_str::<#ty_name>(str);
+            assert!(result.is_ok(), "Should parse, got: {:?}", result);
+        }
+    };
+
+    generated.into()
+}
+
+#[proc_macro_derive(Extractable)]
+pub fn extractable_derive(input: TokenStream) -> TokenStream {
+    // Construct a representation of Rust code as a syntax tree
+    // that we can manipulate.
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+
+    let ty_name = &ast.ident;
+
+    let mut variant_name = format!("{}", ast.ident);
+    if variant_name.starts_with("EDLog") {
+        // Remove the EDLog prefix for the type name
+        variant_name = variant_name.as_str()[5..].to_string();
+    }
+    let extractor: syn::Stmt = syn::parse_str(&format!(
+        "if let EDLogEvent::{variant_name}(loc) = event {{ Some(loc) }} else {{ None }}"
+    ))
+    .unwrap();
+
+    let generated = quote! {
+        impl crate::log_line::Extractable for #ty_name {
+            fn extract(event: &EDLogEvent) -> Option<&Self> {
+                #extractor
             }
-        };
-
+        }
+    };
     generated.into()
 }
