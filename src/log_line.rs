@@ -467,6 +467,7 @@ pub enum EDLogEvent {
     RedeemVoucher(EDLogRedeemVoucher),
     DatalinkVoucher(EDLogDatalinkVoucher),
     FactionKillBond(EDLogFactionKillBond),
+    #[serde(rename = "CapShipBond")]
     CapitalShipBond(EDLogCapitalShipBond),
     PVPKill(EDLogPVPKill),
     Passengers(EDLogPassengers),

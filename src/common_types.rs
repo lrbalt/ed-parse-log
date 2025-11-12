@@ -486,6 +486,7 @@ pub enum FSSSignalType {
     Outpost,
     Installation,
     StationCoriolis,
+    StationDodec,
     StationAsteroid,
     StationBernalSphere,
     StationONeilOrbis,
