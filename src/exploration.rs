@@ -211,6 +211,7 @@ pub struct EDLogNavBeaconScan {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-13T20:22:43Z", "event":"ScanOrganic", "ScanType":"Sample", "Genus":"$Codex_Ent_Ingensradices_Genus_Name;", "Genus_Localised":"Radicoida", "Species":"$Codex_Ent_Ingensradices_Unicus_Name;", "Species_Localised":"Radicoida Unica", "Variant":"$Codex_Ent_Ingensradices_Unicus_Name;", "Variant_Localised":"Radicoida Unica", "WasLogged":false, "SystemAddress":147882789259, "Body":3 })]
 pub struct EDLogScanOrganic {
     pub scan_type: ScanType,
     pub genus: String,
@@ -224,6 +225,7 @@ pub struct EDLogScanOrganic {
     pub variant_localised: Option<String>,
     pub system_address: u64,
     pub body: u64,
+    pub was_logged: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
