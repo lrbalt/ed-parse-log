@@ -50,12 +50,12 @@ pub struct EDLogCarrierTradeOrder {
 #[testcase({ "timestamp":"2025-08-21T10:38:45Z", "event":"CarrierBankTransfer", "CarrierID":123456789, "CarrierType":"FleetCarrier", "Deposit":12610000, "PlayerBalance":18879865108, "CarrierBalance":18879410990 })]
 pub struct EDLogCarrierBankTransfer {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    carrier_type: Option<CarrierType>,
-    deposit: Option<Credits>,
-    withdraw: Option<Credits>,
-    player_balance: Credits,
-    carrier_balance: Credits,
+    pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
+    pub deposit: Option<Credits>,
+    pub withdraw: Option<Credits>,
+    pub player_balance: Credits,
+    pub carrier_balance: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

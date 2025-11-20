@@ -136,6 +136,8 @@ pub enum MarketItemType {
     SkimerComponents,
     MineralExtractors,
     GeologicalSamples,
+    EncryptedCorrespondence,
+    ScientificSamples,
 
     Drones,
     PersonalEffects,
@@ -191,14 +193,14 @@ pub enum MarketItemType {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarketBuy {
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
     #[serde(rename = "Type")]
-    buy_type: MarketItemType,
+    pub buy_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
-    buy_type_localised: Option<String>,
-    count: u64,
-    buy_price: u64,
-    total_cost: u64,
+    pub buy_type_localised: Option<String>,
+    pub count: u64,
+    pub buy_price: Credits,
+    pub total_cost: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -206,18 +208,18 @@ pub struct EDLogMarketBuy {
 #[testcase({ "timestamp":"2017-10-17T03:29:58Z", "event":"MarketSell", "Type":"biowaste", "Count":1, "SellPrice":10, "TotalSale":10, "AvgPricePaid":0 })]
 pub struct EDLogMarketSell {
     #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
+    pub market_id: Option<u64>,
     #[serde(rename = "Type")]
-    sell_type: MarketItemType,
+    pub sell_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
-    sell_type_localised: Option<String>,
-    count: u64,
-    sell_price: u64,
-    total_sale: u64,
-    avg_price_paid: u64,
-    illegal_goods: Option<bool>,
-    stolen_goods: Option<bool>,
-    black_market: Option<bool>,
+    pub sell_type_localised: Option<String>,
+    pub count: u64,
+    pub sell_price: Credits,
+    pub total_sale: Credits,
+    pub avg_price_paid: Credits,
+    pub illegal_goods: Option<bool>,
+    pub stolen_goods: Option<bool>,
+    pub black_market: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -364,23 +366,23 @@ pub struct EDLogColonisationContribution {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SoldBioData {
-    genus: String,
+    pub genus: String,
     #[serde(rename = "Genus_Localised")]
-    genus_localised: String,
-    species: String,
+    pub genus_localised: String,
+    pub species: String,
     #[serde(rename = "Species_Localised")]
-    species_localised: String,
-    variant: Option<String>,
+    pub species_localised: String,
+    pub variant: Option<String>,
     #[serde(rename = "Variant_Localised")]
-    variant_localised: Option<String>,
-    value: Credits,
-    bonus: Credits,
+    pub variant_localised: Option<String>,
+    pub value: Credits,
+    pub bonus: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellOrganicData {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    bio_data: Vec<SoldBioData>,
+    pub market_id: u64,
+    pub bio_data: Vec<SoldBioData>,
 }

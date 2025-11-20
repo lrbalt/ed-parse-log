@@ -2,7 +2,8 @@ use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
-    ops::{Mul, Sub},
+    iter::Sum,
+    ops::{Add, AddAssign, Mul, Neg, Sub},
     str::FromStr,
 };
 
@@ -38,11 +39,31 @@ impl Display for Credits {
     }
 }
 
+impl Add for Credits {
+    type Output = Credits;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Credits(self.0 + rhs.0)
+    }
+}
+
+impl AddAssign for Credits {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+    }
+}
+
 impl Sub for Credits {
     type Output = Credits;
 
     fn sub(self, rhs: Self) -> Self::Output {
         Credits(self.0 - rhs.0)
+    }
+}
+
+impl Sum for Credits {
+    fn sum<I: Iterator<Item = Credits>>(iter: I) -> Self {
+        iter.fold(Credits(0), |acc, x| acc + x)
     }
 }
 
@@ -59,6 +80,14 @@ impl Mul<u64> for Credits {
 
     fn mul(self, rhs: u64) -> Self::Output {
         self * (rhs as i64)
+    }
+}
+
+impl Neg for Credits {
+    type Output = Credits;
+
+    fn neg(self) -> Self::Output {
+        Credits(-self.0)
     }
 }
 

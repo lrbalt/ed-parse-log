@@ -97,6 +97,7 @@ use crate::{
 use chrono::{DateTime, Utc};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
+use strum::{Display, EnumDiscriminants, EnumIter};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
@@ -291,8 +292,9 @@ pub struct EDLogScreenshot {
     location_on_body: Option<LocationOnBody>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, EnumDiscriminants)]
 #[serde(tag = "event", deny_unknown_fields)]
+#[strum_discriminants(derive(EnumIter, Display))]
 #[allow(clippy::large_enum_variant)]
 pub enum EDLogEvent {
     #[serde(rename = "Fileheader")]
