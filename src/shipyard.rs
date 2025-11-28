@@ -76,31 +76,31 @@ pub struct EDLogShipyard {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardBuy {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
-    ship_price: Credits,
-    store_old_ship: String,
+    pub ship_type_localised: Option<String>,
+    pub ship_price: Credits,
+    pub store_old_ship: String,
     #[serde(rename = "StoreShipID")]
-    store_ship_id: u64,
+    pub store_ship_id: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSell {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    pub ship_type_localised: Option<String>,
     #[serde(rename = "SellShipID")]
-    sell_ship_id: u64,
-    ship_price: Credits,
-    system: Option<String>,
+    pub sell_ship_id: u64,
+    pub ship_price: Credits,
+    pub system: Option<String>,
     #[serde(rename = "ShipMarketID")]
-    ship_market_id: Option<u64>,
+    pub ship_market_id: Option<u64>,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

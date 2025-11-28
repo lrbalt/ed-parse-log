@@ -1,6 +1,6 @@
 [package]
 name = "ed-parse-log-files"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2024"
 authors = ["Reinier Balt <lrbalt@gmail.com>"]
 description = "A library to read log files from Elite Dangerous"
@@ -10,14 +10,14 @@ categories = ["game-development"]
 publish = false
 
 [dependencies]
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = { version = "1.0.142" }
-chrono = { version = "0.4.41", features = ["serde"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.145" }
+chrono = { version = "0.4.42", features = ["serde"] }
 ed-parse-log-files-macros = { path = "ed-parse-log-files-macros" }
 strum = { version = "0.27.2", features = ["derive"] }
 
 [dev-dependencies]
-rayon = { version = "1.10.0" }
+rayon = { version = "1.11.0" }
 thiserror = { version = "2.0.17" }
 numfmt = { version = "1.2.0" }
 prettytable-rs = { version = "0.10.0", default-features = false }

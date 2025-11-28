@@ -243,13 +243,13 @@ pub struct MicroResource {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyMicroResources {
-    total_count: Option<u64>,
+    pub total_count: Option<u64>,
     #[serde(flatten)]
-    micro_resource: Option<MicroResource>,
-    micro_resources: Option<Vec<MicroResource>>,
-    price: Credits,
+    pub micro_resource: Option<MicroResource>,
+    pub micro_resources: Option<Vec<MicroResource>>,
+    pub price: Credits,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -277,11 +277,11 @@ pub struct EDLogTradeMicroResources {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellMicroResources {
-    total_count: u64,
-    micro_resources: Vec<MicroResource>,
-    price: u64,
+    pub total_count: u64,
+    pub micro_resources: Vec<MicroResource>,
+    pub price: Credits,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

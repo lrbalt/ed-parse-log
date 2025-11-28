@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
     iter::Sum,
-    ops::{Add, AddAssign, Mul, Neg, Sub},
+    ops::{Add, AddAssign, Mul, Neg, Sub, SubAssign},
     str::FromStr,
 };
 
@@ -30,7 +30,7 @@ impl Display for Merits {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Default)]
 pub struct Credits(pub i64);
 
 impl Display for Credits {
@@ -58,6 +58,12 @@ impl Sub for Credits {
 
     fn sub(self, rhs: Self) -> Self::Output {
         Credits(self.0 - rhs.0)
+    }
+}
+
+impl SubAssign for Credits {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.0 -= rhs.0;
     }
 }
 

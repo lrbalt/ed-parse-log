@@ -19,7 +19,7 @@ pub struct EDLogRefuelAll {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyAmmo {
-    cost: Credits,
+    pub cost: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -211,25 +211,25 @@ pub struct EDLogMaterialCollected {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPayBounties {
-    amount: Credits,
-    all_fines: Option<bool>,
-    faction: Option<String>,
+    pub amount: Credits,
+    pub all_fines: Option<bool>,
+    pub faction: Option<String>,
     #[serde(rename = "Faction_Localised")]
-    faction_localised: Option<String>,
+    pub faction_localised: Option<String>,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    broker_percentage: f64,
+    pub ship_id: u64,
+    pub broker_percentage: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPayFines {
-    amount: Credits,
-    all_fines: bool,
-    faction: Option<String>,
+    pub amount: Credits,
+    pub all_fines: bool,
+    pub faction: Option<String>,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    broker_percentage: Option<f64>,
+    pub ship_id: u64,
+    pub broker_percentage: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
