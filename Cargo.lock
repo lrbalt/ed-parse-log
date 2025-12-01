@@ -125,7 +125,7 @@ checksum = "d6add3b8cff394282be81f3fc1a0605db594ed69890078ca6e2cab1c408bcf04"
 
 [[package]]
 name = "ed-parse-log-files"
-version = "0.1.7"
+version = "0.1.8"
 dependencies = [
  "chrono",
  "ed-parse-log-files-macros",

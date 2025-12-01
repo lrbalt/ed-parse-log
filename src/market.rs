@@ -18,6 +18,7 @@ pub enum MarketItemType {
     Palladium,
     Osmium,
     Gold,
+    #[serde(alias = "Painite")]
     Painite,
     Beryllium,
     Bauxite,
@@ -47,6 +48,7 @@ pub enum MarketItemType {
     Monazite,
     Thorium,
 
+    #[serde(alias = "SyntheticFabrics")]
     SyntheticFabrics,
     SyntheticReagents,
     SyntheticMeat,
@@ -55,6 +57,7 @@ pub enum MarketItemType {
     ReinforcedMountingPlate,
     MarineSupplies,
     Clothing,
+    #[serde(alias = "ConsumerTechnology")]
     ConsumerTechnology,
     DomesticAppliances,
     MagneticeMitterCoil,
@@ -62,18 +65,30 @@ pub enum MarketItemType {
     Explosives,
     PowerGenerators,
     ComercialSamples,
+    #[serde(alias = "USSCargoTechnicalBlueprints")]
     UssCargoTechnicalBlueprints,
+    #[serde(alias = "USSCargoTradeData")]
     UssCargoTradeData,
+    #[serde(alias = "USSCargoBlackBox")]
+    UssCargoBlackBox,
+    #[serde(alias = "USSCargoMilitaryPlans")]
+    UssCargoMilitaryPlans,
+    #[serde(alias = "EncriptedDataStorage")]
     EncriptedDataStorage,
     AnimalMeat,
     Coffee,
+    #[serde(alias = "Grain")]
     Grain,
     Fish,
+    #[serde(alias = "Algae")]
     Algae,
     FruitAndVegetables,
+    #[serde(alias = "FoodCartridges")]
     FoodCartridges,
+    #[serde(alias = "Liquor")]
     Liquor,
     Beer,
+    #[serde(alias = "Wine")]
     Wine,
     BasicNarcotics,
     GeologicalEquipment,
@@ -83,6 +98,7 @@ pub enum MarketItemType {
     Landmines,
     NerveAgents,
     LithiumHydroxide,
+    #[serde(alias = "Tobacco")]
     Tobacco,
     Tea,
     ProgenitorCells,
@@ -90,6 +106,8 @@ pub enum MarketItemType {
     MethaneClathRate,
     PersonalGifts,
     PersonalWeapons,
+    #[serde(alias = "PersonalEffects")]
+    PersonalEffects,
     MilitarygradeFabrics,
     BattleWeapons,
     NonLethalWeapons,
@@ -112,6 +130,7 @@ pub enum MarketItemType {
     TerrainenrichmentSystems,
     HelioStaticFurnaces,
     SemiConductors,
+    #[serde(alias = "Polymers")]
     Polymers,
     InsulatingMembrane,
     CMMComposite,
@@ -141,11 +160,15 @@ pub enum MarketItemType {
     GeologicalSamples,
     EncryptedCorrespondence,
     ScientificSamples,
+    #[serde(alias = "ComercialSamples")]
+    CommercialSamples,
+    BootLegLiquor,
+    PyrophylLite,
 
     Drones,
-    PersonalEffects,
+    #[serde(alias = "DamagedEscapePod")]
     DamagedEscapePod,
-    UssCargoBlackbox,
+    #[serde(alias = "WreckageComponents")]
     WreckageComponents,
     AislingMediaMaterials,
     AislingPromotionalMaterials,
@@ -163,9 +186,11 @@ pub enum MarketItemType {
     DamnaCarapaces,
     AlienEggs,
 
+    #[serde(alias = "OccupiedCryoPod")]
     OccupiedCryoPod,
 
     AncientCasket,
+    #[serde(alias = "AncientRelic")]
     AncientRelic,
     AncientTablet,
     AncientTotem,
@@ -173,22 +198,39 @@ pub enum MarketItemType {
     AncientOrb,
     AncientKey,
 
+    #[serde(alias = "ThargoidTitanDriveComponent")]
     ThargoidTitanDriveComponent,
+    #[serde(alias = "ThargoidBoneFragments")]
     ThargoidBoneFragments,
-    ThargoidGeneratorTissuesample,
+    #[serde(alias = "ThargoidGeneratorTissueSample")]
+    ThargoidGeneratorTissueSample,
+    #[serde(alias = "ThargoidCystSpecimen")]
     ThargoidCystSpecimen,
+    #[serde(alias = "ThargoidPod")]
     ThargoidPod,
+    #[serde(alias = "ThargoidOrganSample")]
     ThargoidOrganSample,
+    #[serde(alias = "ThargoidTissueSampleType5")]
     ThargoidTissueSampleType5,
+    #[serde(alias = "ThargoidTissueSampleType6")]
     ThargoidTissueSampleType6,
+    #[serde(alias = "ThargoidTissueSampleType7")]
     ThargoidTissueSampleType7,
+    #[serde(alias = "ThargoidTissueSampleType9a")]
     ThargoidTissueSampleType9a,
+    #[serde(alias = "ThargoidTissueSampleType9b")]
     ThargoidTissueSampleType9b,
+    #[serde(alias = "ThargoidTissueSampleType9c")]
     ThargoidTissueSampleType9c,
+    #[serde(alias = "ThargoidHeart")]
     ThargoidHeart,
+    #[serde(alias = "UnknownResin")]
     UnknownResin,
+    #[serde(alias = "UnknownArtifact")]
     UnknownArtifact,
+    #[serde(alias = "UnknownSack")]
     UnknownSack,
+    #[serde(alias = "MetaAlloys")]
     MetaAlloys,
 }
 

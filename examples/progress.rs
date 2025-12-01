@@ -1,11 +1,12 @@
 use chrono::{DateTime, Duration, Utc};
 use ed_parse_log_files::{
     commander::{
-        COMBAT_RANK, EDLogPowerplay, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK,
-        EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK, power_play_rank_range,
+        COMBAT_RANK, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK,
+        FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK,
     },
     common_types::{Credits, Merits},
     log_line::{EDLogEvent, EDLogLine},
+    powerplay::{EDLogPowerplay, power_play_rank_range},
 };
 use prettytable::{Table, cell, row};
 use rayon::prelude::*;

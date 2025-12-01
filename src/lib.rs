@@ -15,6 +15,7 @@ pub mod materials;
 pub mod mission;
 pub mod modules;
 pub mod navigation;
+pub mod powerplay;
 pub mod ship;
 pub mod shipyard;
 pub mod statistics;

@@ -4,11 +4,8 @@ use crate::{
         EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
         EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
         EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDied, EDLogEmbarkOrDisembark,
-        EDLogEndCrewSession, EDLogFriends, EDLogHoloscreenHacked, EDLogInvitedToSquadron,
-        EDLogJoinACrew, EDLogNewCommander, EDLogPowerplay, EDLogPowerplayCollect,
-        EDLogPowerplayDefect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin,
-        EDLogPowerplayLeave, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary,
-        EDLogPromotion, EDLogQuitACrew, EDLogRank, EDLogReputation,
+        EDLogEndCrewSession, EDLogFriends, EDLogInvitedToSquadron, EDLogJoinACrew,
+        EDLogNewCommander, EDLogPromotion, EDLogQuitACrew, EDLogRank, EDLogReputation,
         EDLogRequestPowerMicroResources, EDLogResurrect, EDLogSharedBookmarkToSquadron,
         EDLogVehicleSwitch,
     },
@@ -51,7 +48,7 @@ use crate::{
         EDLogBuyMicroResources, EDLogBuyTradeData, EDLogCargoDepot,
         EDLogColonisationConstructionDepot, EDLogColonisationContribution,
         EDLogDeliverPowerMicroResources, EDLogMarket, EDLogMarketBuy, EDLogMarketSell,
-        EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources,
+        EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources, MarketItemType,
     },
     materials::EDLogMaterials,
     mission::{
@@ -69,6 +66,11 @@ use crate::{
         EDLogApproachSettlement, EDLogDockSRV, EDLogFSDJump, EDLogFSDTarget, EDLogFuelScoop,
         EDLogJetConeBoost, EDLogLaunchSRV, EDLogLiftoff, EDLogSRVDestroyed, EDLogStartJump,
         EDLogTouchdown,
+    },
+    powerplay::{
+        EDLogHoloscreenHacked, EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDefect,
+        EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave,
+        EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary,
     },
     ship::{
         EDLogAfmuRepairs, EDLogCargo, EDLogClearImpound, EDLogDockFighter, EDLogEjectCargo,
@@ -96,42 +98,38 @@ use crate::{
     wing::EDLogWingJoin,
 };
 use chrono::{DateTime, Utc};
-use ed_parse_log_files_macros::{Extractable, testcase};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumDiscriminants, EnumIter};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct GameModeGroup {
-    group: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(tag = "game_mode")]
 pub enum GameMode {
-    Group(GameModeGroup),
+    Group,
     Solo,
+    Open,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1"})]
 pub struct LoadGameShip {
-    ship: ShipType,
+    pub ship: ShipType,
     #[serde(rename = "Ship_Localised")]
-    ship_localised: EDString,
+    pub ship_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    ship_name: EDString,
-    ship_ident: EDString,
-    fuel_level: f64,
-    fuel_capacity: f64,
-    #[serde(flatten)]
-    game_mode: GameMode,
+    pub ship_id: u64,
+    pub ship_name: EDString,
+    pub ship_ident: EDString,
+    pub fuel_level: Option<f64>,
+    pub fuel_capacity: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase")]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"LoadGame", "Commander":"JournalServer", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Open", "Credits":766731, "Loan":0 })]
+#[testcase({ "timestamp":"2022-11-10T18:50:06Z", "event":"LoadGame", "FID":"F1234567", "Commander":"Myself", "Horizons":true, "Odyssey":true, "Credits":1234431, "Loan":0, "language":"English/UK", "gameversion":"4.0.0.1450", "build":"r286858/r0 " })]
+#[testcase({ "timestamp":"2022-09-12T18:45:38Z", "event":"LoadGame", "FID":"F1234567", "Commander":"MySelf", "Horizons":true, "Ship":"FerDeLance", "Ship_Localised":"Fer-de-Lance", "ShipID":34, "ShipName":"", "ShipIdent":"", "FuelLevel":7.689338, "FuelCapacity":8.000000, "GameMode":"Group", "Group":"REINIER", "Credits":123321, "Loan":0 })]
+#[testcase({ "timestamp":"2025-11-30T20:10:08Z", "event":"LoadGame", "FID":"F1234567", "Commander":"MySelf", "Horizons":true, "Odyssey":true, "Ship":"Python_NX", "Ship_Localised":"Python Mk II", "ShipID":12, "ShipName":"MyName", "ShipIdent":"IDENT1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Solo", "Credits":12341234, "Loan":0, "language":"English/UK", "gameversion":"4.2.2.1", "build":"r321306/r0 " })]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
     pub fid: Option<EDString>,
@@ -148,6 +146,8 @@ pub struct EDLogLoadGame {
     pub gameversion: Option<EDString>,
     #[serde(rename = "build")]
     pub build: Option<EDString>,
+    pub game_mode: Option<GameMode>,
+    pub group: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -246,7 +246,7 @@ pub struct EDLogUSSDrop {
 #[serde(deny_unknown_fields)]
 pub struct EDLogCollectCargo {
     #[serde(rename = "Type")]
-    cargo_type: EDString,
+    cargo_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
     cargo_type_localised: Option<EDString>,
     #[serde(rename = "Stolen")]
@@ -259,7 +259,7 @@ pub struct EDLogCollectCargo {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CargoTransfer {
     #[serde(rename = "Type")]
-    cargo_type: EDString,
+    cargo_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
     cargo_type_localised: Option<EDString>,
     count: u32,
@@ -645,5 +645,23 @@ fn test_receivetext() {
     assert!(matches!(line.event(), EDLogEvent::ReceiveText(_)));
     if let EDLogEvent::ReceiveText(header) = line.event() {
         assert_eq!(header.message.as_str(), "$CruiseLiner_SCPatrol05;");
+    }
+}
+#[test]
+fn test_optional_loadgame() {
+    let json = r#"{
+        "timestamp":"2025-11-30T20:10:08Z", "event":"LoadGame", "FID":"F1234567", "Commander":"MySelf", 
+        "Horizons":true, "Odyssey":true, 
+        "Ship":"Python_NX", "Ship_Localised":"Python Mk II", "ShipID":99, "ShipName":"myship", "ShipIdent":"IDNT-12", 
+        "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Solo", "Credits":123456, "Loan":0, 
+        "language":"English/UK", "gameversion":"4.2.2.1", "build":"r321306/r0 " }"#;
+    let line: EDLogLine = serde_json::from_str(json).expect("Should parse");
+
+    assert!(matches!(line.event(), EDLogEvent::LoadGame(_)));
+
+    if let EDLogEvent::LoadGame(content) = line.event() {
+        assert!(content.fid.is_some(), "data has a FID");
+        assert_eq!(content.fid.unwrap().as_str(), "F1234567");
+        assert!(content.ship.is_some(), "data should contain a ship");
     }
 }
