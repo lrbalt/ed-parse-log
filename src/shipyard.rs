@@ -1,4 +1,5 @@
 use crate::{
+    EDString,
     common_types::{Credits, StarSystemData},
     ship::ShipType,
 };
@@ -12,8 +13,8 @@ pub struct Ship {
     ship_id: u64,
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
-    name: Option<String>,
+    ship_type_localised: Option<EDString>,
+    name: Option<EDString>,
     #[serde(flatten)]
     start_system_data: Option<StarSystemData>,
     in_transit: Option<bool>,
@@ -26,7 +27,7 @@ pub struct Ship {
 pub struct EDLogShipyardSwap {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
     ship_id: u64,
     store_old_ship: ShipType,
@@ -41,10 +42,10 @@ pub struct EDLogShipyardSwap {
 pub struct EDLogShipyardTransfer {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    system: Option<String>,
+    system: Option<EDString>,
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
     distance: f64,
@@ -59,7 +60,7 @@ pub struct EDLogShipyardTransfer {
 pub struct EDLogShipyardNew {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "NewShipID")]
     new_ship_id: u64,
 }
@@ -69,8 +70,8 @@ pub struct EDLogShipyardNew {
 pub struct EDLogShipyard {
     #[serde(rename = "MarketID")]
     market_id: u64,
-    station_name: String,
-    star_system: String,
+    station_name: EDString,
+    star_system: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -78,9 +79,9 @@ pub struct EDLogShipyard {
 pub struct EDLogShipyardBuy {
     pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    pub ship_type_localised: Option<String>,
+    pub ship_type_localised: Option<EDString>,
     pub ship_price: Credits,
-    pub store_old_ship: String,
+    pub store_old_ship: EDString,
     #[serde(rename = "StoreShipID")]
     pub store_ship_id: u64,
     #[serde(rename = "MarketID")]
@@ -92,11 +93,11 @@ pub struct EDLogShipyardBuy {
 pub struct EDLogShipyardSell {
     pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    pub ship_type_localised: Option<String>,
+    pub ship_type_localised: Option<EDString>,
     #[serde(rename = "SellShipID")]
     pub sell_ship_id: u64,
     pub ship_price: Credits,
-    pub system: Option<String>,
+    pub system: Option<EDString>,
     #[serde(rename = "ShipMarketID")]
     pub ship_market_id: Option<u64>,
     #[serde(rename = "MarketID")]
@@ -108,7 +109,7 @@ pub struct EDLogShipyardSell {
 pub struct EDLogShipyardRedeem {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "BundleID")]
     bundle_id: u64,
     #[serde(rename = "MarketID")]
@@ -120,7 +121,7 @@ pub struct EDLogShipyardRedeem {
 pub struct EDLogShipRedeemed {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "NewShipID")]
     new_ship_id: u64,
 }
@@ -131,8 +132,8 @@ pub struct EDLogShipRedeemed {
 pub struct EDLogSellShipOnRebuy {
     ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
-    system: String,
+    ship_type_localised: Option<EDString>,
+    system: EDString,
     sell_ship_id: u64,
     ship_price: Credits,
 }
@@ -140,10 +141,10 @@ pub struct EDLogSellShipOnRebuy {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStoredShips {
-    pub station_name: String,
+    pub station_name: EDString,
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    pub star_system: String,
+    pub star_system: EDString,
     pub ships_here: Vec<Ship>,
     pub ships_remote: Vec<Ship>,
 }

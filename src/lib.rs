@@ -25,3 +25,12 @@ pub(crate) mod utils;
 pub mod wing;
 
 pub use utils::to_human_readable_string;
+
+#[cfg(feature = "interning")]
+use symbol_table::GlobalSymbol;
+
+#[cfg(feature = "interning")]
+pub type EDString = GlobalSymbol;
+
+#[cfg(not(feature = "interning"))]
+pub type EDString = String;

@@ -1,4 +1,5 @@
 use crate::{
+    EDString,
     common_types::{
         Allegiance, Credits, FactionName, MaterialCategory, StationEconomy, StationService,
         StationType, TechBrokerType, TraderType,
@@ -51,9 +52,9 @@ pub struct LandingPads {
 pub struct EDLogDockingRequested {
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
-    pub station_name: String,
+    pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    pub station_name_localised: Option<String>,
+    pub station_name_localised: Option<EDString>,
     pub station_type: Option<StationType>,
     pub landing_pads: Option<LandingPads>,
 }
@@ -63,7 +64,7 @@ pub struct EDLogDockingRequested {
 pub struct EDLogDockingCancelled {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    pub station_name: String,
+    pub station_name: EDString,
     pub station_type: StationType,
 }
 
@@ -73,9 +74,9 @@ pub struct EDLogDockingGranted {
     pub landing_pad: u64,
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
-    pub station_name: String,
+    pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    pub station_name_localised: Option<String>,
+    pub station_name_localised: Option<EDString>,
     pub station_type: Option<StationType>,
 }
 
@@ -106,9 +107,9 @@ pub struct EDLogDockingDenied {
     reason: DockingDeniedReason,
     #[serde(rename = "MarketID")]
     market_id: u64,
-    station_name: String,
+    station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
+    station_name_localised: Option<EDString>,
     station_type: StationType,
 }
 
@@ -117,35 +118,35 @@ pub struct EDLogDockingDenied {
 pub struct EDLogDockingTimeout {
     #[serde(rename = "MarketID")]
     market_id: u64,
-    station_name: String,
+    station_name: EDString,
     station_type: StationType,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDocked {
-    pub station_name: String,
+    pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
+    station_name_localised: Option<EDString>,
     pub station_type: StationType,
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
-    pub faction_state: Option<String>,
+    pub faction_state: Option<EDString>,
     pub station_state: Option<StationState>,
-    pub star_system: String,
+    pub star_system: EDString,
     pub system_address: Option<u64>,
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
     #[serde(deserialize_with = "string_or_struct")]
     pub station_faction: FactionName,
-    pub station_government: String,
+    pub station_government: EDString,
     #[serde(rename = "StationGovernment_Localised")]
-    pub station_government_localised: String,
+    pub station_government_localised: EDString,
     pub station_allegiance: Option<Allegiance>,
     pub station_services: Vec<StationService>,
-    pub station_economy: String,
+    pub station_economy: EDString,
     #[serde(rename = "StationEconomy_Localised")]
-    pub station_economy_localised: String,
+    pub station_economy_localised: EDString,
     pub station_economies: Option<Vec<StationEconomy>>,
     #[serde(rename = "DistFromStarLS")]
     pub dist_from_star_ls: f64,
@@ -159,9 +160,9 @@ pub struct EDLogDocked {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T01:49:26Z", "event":"Undocked", "StationName":"Verrazzano's Inheritance", "StationType":"SurfaceStation" })]
 pub struct EDLogUndocked {
-    station_name: String,
+    station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<String>,
+    station_name_localised: Option<EDString>,
     station_type: StationType,
     #[serde(rename = "MarketID")]
     market_id: Option<u64>,
@@ -174,16 +175,16 @@ pub struct EDLogUndocked {
 pub struct EDLogOutfitting {
     #[serde(rename = "MarketID")]
     market_id: u64,
-    station_name: String,
-    star_system: String,
+    station_name: EDString,
+    star_system: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ExchangedMaterials {
-    material: String,
+    material: EDString,
     #[serde(rename = "Material_Localised")]
-    material_localised: Option<String>,
+    material_localised: Option<EDString>,
     category: MaterialCategory,
     quantity: u64,
 }
@@ -202,9 +203,9 @@ pub struct EDLogMaterialTrade {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMaterialCollected {
     category: MaterialCategory,
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
 }
 
@@ -213,9 +214,9 @@ pub struct EDLogMaterialCollected {
 pub struct EDLogPayBounties {
     pub amount: Credits,
     pub all_fines: Option<bool>,
-    pub faction: Option<String>,
+    pub faction: Option<EDString>,
     #[serde(rename = "Faction_Localised")]
-    pub faction_localised: Option<String>,
+    pub faction_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
     pub broker_percentage: f64,
@@ -226,7 +227,7 @@ pub struct EDLogPayBounties {
 pub struct EDLogPayFines {
     pub amount: Credits,
     pub all_fines: bool,
-    pub faction: Option<String>,
+    pub faction: Option<EDString>,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
     pub broker_percentage: Option<f64>,
@@ -235,17 +236,17 @@ pub struct EDLogPayFines {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BrokerItemUnlocked {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BrokerMaterial {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
     category: MaterialCategory,
 }
@@ -253,9 +254,9 @@ pub struct BrokerMaterial {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BrokerCommodity {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
 }
 
@@ -274,10 +275,10 @@ pub struct EDLogTechnologyBroker {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRestockVehicle {
     #[serde(rename = "Type")]
-    vehicle_type: String,
+    vehicle_type: EDString,
     #[serde(rename = "Type_Localised")]
-    vehicle_type_localised: Option<String>,
-    loadout: String,
+    vehicle_type_localised: Option<EDString>,
+    loadout: EDString,
     #[serde(rename = "ID")]
     id: Option<u64>,
     cost: Credits,

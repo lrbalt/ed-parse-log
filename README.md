@@ -6,6 +6,7 @@ Parse the log files of the space flight simulator [Elite Dangerous](https://www.
 * It uses serde's `deny_unknown_fields` to be strict in parsing, i.e. it will fail on unexpected fields in a log line. 
 * It does not integrate with any online database like [Inara](inara.cz), so all information comes from the parsed log lines alone. 
 * It uses `Option` to handle new fields and other differences in the way log files are filled over time by different versions of Elite.
+* You can use a String interner to reduce memory footprint. Use the feature `interning` to enable. Enabled by default.
 
 ### Alternatives
 After I worked on this crate I found [ed-journals](https://github.com/rster2002/ed-journals)
@@ -16,7 +17,7 @@ After I worked on this crate I found [ed-journals](https://github.com/rster2002/
 ** [ed-journals](https://github.com/rster2002/ed-journals)
 ** [ed-scout](https://github.com/joncage/ed-scout)
 ** [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
-* On my M2 Macbook it parses at ± 300 MB/s
+* On my M2 Macbook it parses at ± 275 MB/s (without string interning) or ±290 MB/s (with string interning) as measured by the `read_all_logs` example
 * it needs further refactoring to improve and dry the data model
 
 ### How to run an example

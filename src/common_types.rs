@@ -1,3 +1,4 @@
+use crate::EDString;
 use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -633,15 +634,15 @@ pub enum PowerplayState {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PowerplayConflictProgress {
-    pub power: String,
+    pub power: EDString,
     pub conflict_progress: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Powers {
-    pub controlling_power: Option<String>,
-    pub powers: Vec<String>,
+    pub controlling_power: Option<EDString>,
+    pub powers: Vec<EDString>,
     pub powerplay_state: PowerplayState,
     pub powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
     pub powerplay_state_control_progress: Option<f64>,
@@ -652,7 +653,7 @@ pub struct Powers {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StarSystemData {
-    star_system: String,
+    star_system: EDString,
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
     transfer_price: u64,
@@ -662,9 +663,9 @@ pub struct StarSystemData {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyInformation {
-    star_system: String,
+    star_system: EDString,
     system_address: u64,
-    body: String,
+    body: EDString,
     #[serde(rename = "BodyID")]
     body_id: u64,
 }
@@ -672,14 +673,14 @@ pub struct BodyInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CodexBodyInformation {
-    system: String,
+    system: EDString,
     system_address: u64,
     #[serde(rename = "BodyID")]
     body_id: u64,
-    nearest_destination: String,
+    nearest_destination: EDString,
     #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<String>,
-    traits: Vec<String>,
+    nearest_destination_localised: Option<EDString>,
+    traits: Vec<EDString>,
     latitude: Option<f64>,
     longitude: Option<f64>,
 }
@@ -687,21 +688,21 @@ pub struct CodexBodyInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationInformation {
-    pub station_name: String,
+    pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
-    pub station_name_localised: Option<String>,
+    pub station_name_localised: Option<EDString>,
     pub station_type: StationType,
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub station_faction: FactionName,
-    pub station_government: String,
+    pub station_government: EDString,
     #[serde(rename = "StationGovernment_Localised")]
-    pub station_government_localised: String,
+    pub station_government_localised: EDString,
     pub station_allegiance: Option<Allegiance>,
     pub station_services: Vec<StationService>,
-    pub station_economy: String,
+    pub station_economy: EDString,
     #[serde(rename = "StationEconomy_Localised")]
-    pub station_economy_localised: String,
+    pub station_economy_localised: EDString,
     pub station_economies: Vec<StationEconomy>,
 }
 
@@ -793,8 +794,8 @@ pub enum ConflictStatus {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ConflictFaction {
-    name: String,
-    stake: String,
+    name: EDString,
+    stake: EDString,
     won_days: u64,
 }
 
@@ -833,22 +834,22 @@ pub struct ThargoidWar {
     success_state_reached: bool,
     war_progress: f64,
     remaining_ports: u64,
-    estimated_remaining_time: Option<String>,
+    estimated_remaining_time: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEconomy {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     proportion: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionName {
-    pub name: String,
+    pub name: EDString,
     pub faction_state: Option<FactionState>,
 }
 
@@ -857,7 +858,7 @@ impl FromStr for FactionName {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(FactionName {
-            name: s.to_string(),
+            name: s.into(),
             faction_state: None,
         })
     }
@@ -890,14 +891,14 @@ pub struct FactionPendingState {
 #[testcase_struct({ "Name":"Murung Services", "FactionState":"Boom", "Government":"Corporate", 
     "Influence":0.332667, "Allegiance":"Federation" })]
 pub struct Faction {
-    pub name: String,
+    pub name: EDString,
     pub faction_state: FactionState,
-    pub government: String,
+    pub government: EDString,
     pub influence: f64,
-    pub allegiance: String,
-    pub happiness: Option<String>,
+    pub allegiance: EDString,
+    pub happiness: Option<EDString>,
     #[serde(rename = "Happiness_Localised")]
-    pub happiness_localised: Option<String>,
+    pub happiness_localised: Option<EDString>,
     pub squadron_faction: Option<bool>,
     pub my_reputation: Option<f64>,
     pub recovering_states: Option<Vec<FactionRecoveringState>>,
@@ -908,7 +909,7 @@ pub struct Faction {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EngineerModification {
-    engineer_modifications: String,
+    engineer_modifications: EDString,
     level: u64,
     quality: f64,
 }
@@ -924,9 +925,9 @@ pub struct ModifierValue {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModifierDescription {
-    value_str: String,
+    value_str: EDString,
     #[serde(rename = "ValueStr_Localised")]
-    value_str_localised: String,
+    value_str_localised: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -997,20 +998,20 @@ pub enum ModuleEngineeringModifiers {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLeftSquadron {
-    squadron_name: String,
+    squadron_name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSquadronStartup {
-    squadron_name: String,
+    squadron_name: EDString,
     current_rank: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogName {
-    name: String,
+    name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1040,7 +1041,7 @@ pub enum TechBrokerType {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNpcCrewRank {
-    npc_crew_name: String,
+    npc_crew_name: EDString,
     npc_crew_id: u64,
     rank_combat: u64,
 }
@@ -1048,7 +1049,7 @@ pub struct EDLogNpcCrewRank {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogNpcCrewPaidWage {
-    npc_crew_name: String,
+    npc_crew_name: EDString,
     npc_crew_id: u64,
     amount: Credits,
 }

@@ -166,7 +166,7 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogMarket>())
         .cloned();
 
-    let station_name = market.as_ref().map(|m| &m.station_name);
+    let station_name = market.as_ref().map(|m| m.station_name.as_str());
     let station_type = market.as_ref().map(|m| m.station_type);
 
     let docked = market_items
@@ -176,7 +176,7 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogDocked>())
         .cloned();
 
-    let station_name = station_name.or(docked.as_ref().map(|d| &d.station_name));
+    let station_name = station_name.or(docked.as_ref().map(|d| d.station_name.as_str()));
     let station_type = station_type.or(docked.as_ref().map(|m| m.station_type));
 
     let _techbroker = market_items
@@ -193,9 +193,11 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogLocation>())
         .cloned();
 
-    let station_name = station_name.or(location
-        .as_ref()
-        .and_then(|l| l.station_information.as_ref().map(|si| &si.station_name)));
+    let station_name = station_name.or(location.as_ref().and_then(|l| {
+        l.station_information
+            .as_ref()
+            .map(|si| si.station_name.as_str())
+    }));
     let station_type = station_type.or(location
         .as_ref()
         .and_then(|l| l.station_information.as_ref().map(|si| si.station_type)));
@@ -207,9 +209,11 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogApproachSettlement>())
         .cloned();
 
-    let station_name = station_name.or(approach
-        .as_ref()
-        .and_then(|l| l.station_information.as_ref().map(|si| &si.station_name)));
+    let station_name = station_name.or(approach.as_ref().and_then(|l| {
+        l.station_information
+            .as_ref()
+            .map(|si| si.station_name.as_str())
+    }));
     let station_type = station_type.or(approach
         .as_ref()
         .and_then(|l| l.station_information.as_ref().map(|si| si.station_type)));
@@ -235,7 +239,7 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogStoredShips>())
         .cloned();
 
-    let station_name = station_name.cloned();
+    let station_name = station_name.map(|s| s.to_string());
 
     MarketData {
         ccd,

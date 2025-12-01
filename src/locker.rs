@@ -1,12 +1,13 @@
+use crate::EDString;
 use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ShipLockerItem {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     #[serde(rename = "OwnerID")]
     owner_id: u64,
     #[serde(rename = "MissionID")]

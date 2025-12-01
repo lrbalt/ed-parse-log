@@ -148,10 +148,10 @@ fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<
         let found_id = match line.event() {
             EDLogEvent::Scan(d) => d
                 .system_address
-                .and_then(|a| d.star_system.as_ref().map(|s| (a, s))),
-            EDLogEvent::FSSDiscoveryScan(d) => Some((d.system_address, &d.system_name)),
-            EDLogEvent::Location(d) => d.system_address.map(|a| (a, &d.star_system)),
-            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (a, &d.star_system)),
+                .and_then(|a| d.star_system.as_ref().map(|s| (a, s.as_str()))),
+            EDLogEvent::FSSDiscoveryScan(d) => Some((d.system_address, d.system_name.as_str())),
+            EDLogEvent::Location(d) => d.system_address.map(|a| (a, d.star_system.as_str())),
+            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (a, d.star_system.as_str())),
             _ => None,
         };
         if let Some((id, name)) = found_id
@@ -217,7 +217,7 @@ fn collect_system_data(
         .filter(|docked_line| docked_line.market_id.is_some())
         .map(|l| FoundMarket {
             market_id: l.market_id.expect("Checked to be Some above"),
-            station_name: l.station_name.clone(),
+            station_name: l.station_name.to_string(),
         })
         //
         // reverse so unique will keep the latest
@@ -323,7 +323,7 @@ fn pp_info(pp_data: &Powers) -> String {
             .as_ref()
             .map(|p| p.to_string())
             .unwrap_or("None".to_string()),
-        pp_data.powers.join("\n")
+        pp_data.powers.iter().map(|p| p.as_str()).join("\n")
     )
 }
 
@@ -402,13 +402,13 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
         .as_ref()
         .map(|j| {
             (
-                j.system_economy_localised.clone(),
+                j.system_economy_localised.as_str(),
                 j.system_second_economy_localised
-                    .clone()
-                    .unwrap_or_else(|| String::from("n/a")),
+                    .map(|s| s.as_str())
+                    .unwrap_or("n/a"),
             )
         })
-        .unwrap_or_else(|| ("n/a".to_string(), "n/a".to_string()));
+        .unwrap_or_else(|| ("n/a", "n/a"));
 
     table.add_row(row![
         "Government\nAllegiance\nFaction\nSecurity\nEconomy",

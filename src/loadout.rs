@@ -1,4 +1,4 @@
-use crate::{common_types::ModuleEngineeringModifiers, ship::ShipType};
+use crate::{EDString, common_types::ModuleEngineeringModifiers, ship::ShipType};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -12,25 +12,25 @@ pub struct FuelCapacity {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModuleEngineering {
-    engineer: Option<String>,
+    engineer: Option<EDString>,
     #[serde(rename = "EngineerID")]
     engineer_id: u64,
     #[serde(rename = "BlueprintID")]
     blueprint_id: u64,
-    blueprint_name: String,
+    blueprint_name: EDString,
     level: u64,
     quality: f64,
-    experimental_effect: Option<String>,
+    experimental_effect: Option<EDString>,
     #[serde(rename = "ExperimentalEffect_Localised")]
-    experimental_effect_localised: Option<String>,
+    experimental_effect_localised: Option<EDString>,
     modifiers: Vec<ModuleEngineeringModifiers>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Module {
-    slot: String,
-    item: String,
+    slot: EDString,
+    item: EDString,
     on: bool,
     priority: u64,
     ammo_in_clip: Option<u64>,
@@ -63,8 +63,8 @@ pub struct EDLogLoadout {
     ship: ShipType,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    ship_name: String,
-    ship_ident: String,
+    ship_name: EDString,
+    ship_ident: EDString,
     hot: Option<bool>,
     #[serde(flatten)]
     loadout_stats: Option<LoadOutStats>,

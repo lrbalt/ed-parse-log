@@ -264,12 +264,12 @@ pub fn main() {
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()
-                .map(|g| g.top_tier.name.clone())
-                .unwrap_or_else(|| "n/a".to_string()),
+                .map(|g| g.top_tier.name.as_str())
+                .unwrap_or("n/a"),
             goal.goal
                 .as_ref()
-                .and_then(|g| g.tier_reached.clone())
-                .unwrap_or_else(|| "n/a".to_string()),
+                .and_then(|g| g.tier_reached.map(|s| s.as_str()))
+                .unwrap_or("n/a"),
         );
         let reward = format!(
             "Player contribution: {}\nYou're in top {}%\nBonus:{}\nReward:{}",
@@ -299,7 +299,7 @@ pub fn main() {
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()
-                .map(|g| line_break(&g.title, 30))
+                .map(|g| line_break(g.title.as_str(), 30))
                 .unwrap_or_else(|| "n/a".to_string()),
             when,
             details,

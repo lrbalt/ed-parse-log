@@ -1,4 +1,4 @@
-use crate::{common_types::PilotRank, market::MarketItemType};
+use crate::{EDString, common_types::PilotRank, market::MarketItemType};
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 pub struct Inventory {
     name: MarketItemType,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
     stolen: Option<u64>,
     #[serde(rename = "MissionID")]
@@ -21,19 +21,19 @@ pub struct Inventory {
              "Type_Localised":"Alliance Trade Agreements", "Count":2, "Abandoned":false, "PowerplayOrigin":"" })]
 pub struct EDLogEjectCargo {
     #[serde(rename = "Type")]
-    cargo_type: String,
+    cargo_type: EDString,
     #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<String>,
+    cargo_type_localised: Option<EDString>,
     count: u64,
     abandoned: bool,
-    powerplay_origin: Option<String>,
+    powerplay_origin: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"Cargo", "Inventory":[  ] })]
 pub struct EDLogCargo {
-    vessel: Option<String>,
+    vessel: Option<EDString>,
     count: Option<u64>,
     inventory: Option<Vec<Inventory>>,
 }
@@ -66,9 +66,9 @@ pub enum LegalStatus {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct TargetedSubsystem {
-    subsystem: String,
+    subsystem: EDString,
     #[serde(rename = "Subsystem_Localised")]
-    subsystem_localised: String,
+    subsystem_localised: EDString,
     subsystem_health: f64,
 }
 
@@ -186,19 +186,19 @@ pub struct EDLogShipTargeted {
     target_locked: bool,
     ship: Option<ShipType>,
     #[serde(rename = "Ship_Localised")]
-    ship_localised: Option<String>,
+    ship_localised: Option<EDString>,
     scan_stage: Option<u64>,
-    pilot_name: Option<String>,
+    pilot_name: Option<EDString>,
     #[serde(rename = "PilotName_Localised")]
-    pilot_name_localised: Option<String>,
+    pilot_name_localised: Option<EDString>,
     #[serde(rename = "SquadronID")]
-    squadron_id: Option<String>,
+    squadron_id: Option<EDString>,
     pilot_rank: Option<PilotRank>,
     shield_health: Option<f64>,
     hull_health: Option<f64>,
-    faction: Option<String>,
+    faction: Option<EDString>,
     legal_status: Option<LegalStatus>,
-    power: Option<String>,
+    power: Option<EDString>,
     bounty: Option<u64>,
     #[serde(flatten)]
     subsystem: Option<TargetedSubsystem>,
@@ -209,42 +209,42 @@ pub struct EDLogShipTargeted {
 pub struct EDLogInterdiction {
     success: bool,
     is_player: bool,
-    faction: String,
-    power: Option<String>,
+    faction: EDString,
+    power: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogInterdicted {
     submitted: bool,
-    interdictor: Option<String>,
+    interdictor: Option<EDString>,
     #[serde(rename = "Interdictor_Localised")]
-    interdictor_localised: Option<String>,
+    interdictor_localised: Option<EDString>,
     is_player: bool,
     combat_rank: Option<u8>,
-    faction: Option<String>,
+    faction: Option<EDString>,
     is_thargoid: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEscapeInterdiction {
-    interdictor: String,
+    interdictor: EDString,
     #[serde(rename = "Interdictor_Localised")]
-    interdictor_localised: Option<String>,
+    interdictor_localised: Option<EDString>,
     is_player: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogRebootRepair {
-    modules: Vec<String>,
+    modules: Vec<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogUnderAttack {
-    target: Option<String>,
+    target: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -258,25 +258,25 @@ pub struct EDLogHullDamage {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SynthesisMaterial {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSynthesis {
-    name: String,
+    name: EDString,
     materials: Vec<SynthesisMaterial>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogAfmuRepairs {
-    module: String,
+    module: EDString,
     #[serde(rename = "Module_Localised")]
-    module_localised: String,
+    module_localised: EDString,
     fully_repaired: bool,
     health: f32,
 }
@@ -284,22 +284,22 @@ pub struct EDLogAfmuRepairs {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSetUserShipName {
-    ship: String,
+    ship: EDString,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    user_ship_name: String,
-    user_ship_id: String,
+    user_ship_name: EDString,
+    user_ship_id: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogClearImpound {
-    ship_type: String,
+    ship_type: EDString,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<String>,
+    ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    system: Option<String>,
+    system: Option<EDString>,
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
     #[serde(rename = "MarketID")]
@@ -309,7 +309,7 @@ pub struct EDLogClearImpound {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLaunchFighter {
-    loadout: String,
+    loadout: EDString,
     #[serde(rename = "ID")]
     id: u64,
     player_controlled: bool,
@@ -333,7 +333,7 @@ pub struct EDLogFighterDestroyed {
 #[serde(deny_unknown_fields)]
 pub struct EDLogFighterRebuilt {
     #[serde(rename = "Loadout")]
-    loadout: String,
+    loadout: EDString,
     #[serde(rename = "ID")]
     id: u64,
 }

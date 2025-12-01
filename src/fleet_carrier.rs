@@ -1,6 +1,9 @@
-use crate::common_types::{
-    Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
-    PowerplayState, StationInformation, ThargoidWar,
+use crate::{
+    EDString,
+    common_types::{
+        Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
+        PowerplayState, StationInformation, ThargoidWar,
+    },
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -36,7 +39,7 @@ pub struct EDLogCarrierTradeOrder {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
     black_market: bool,
-    commodity: String,
+    commodity: EDString, // check on MarketItemType versus OnFootItem
     #[serde(rename = "Commodity_Localised")]
     commodity_localised: Option<String>,
     cancel_trade: Option<bool>,
@@ -71,12 +74,12 @@ pub struct EDLogCarrierJumpRequest {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
     carrier_type: Option<CarrierType>,
-    system_name: String,
-    body: Option<String>,
+    system_name: EDString,
+    body: Option<EDString>,
     system_address: u64,
     #[serde(rename = "BodyID")]
     body_id: u64,
-    departure_time: String,
+    departure_time: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -89,29 +92,29 @@ pub struct EDLogCarrierJump {
     taxi: Option<bool>,
     multicrew: Option<bool>,
     // TODO: location has overlapping fields
-    star_system: String,
+    star_system: EDString,
     system_address: u64,
     star_pos: [f64; 3],
     system_allegiance: Allegiance,
-    system_economy: String,
+    system_economy: EDString,
     #[serde(rename = "SystemEconomy_Localised")]
-    system_economy_localised: String,
-    system_second_economy: String,
+    system_economy_localised: EDString,
+    system_second_economy: EDString,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    system_second_economy_localised: String,
-    system_government: String,
+    system_second_economy_localised: EDString,
+    system_government: EDString,
     #[serde(rename = "SystemGovernment_Localised")]
-    system_government_localised: String,
-    system_security: String,
+    system_government_localised: EDString,
+    system_security: EDString,
     #[serde(rename = "SystemSecurity_Localised")]
-    system_security_localised: String,
+    system_security_localised: EDString,
     population: u64,
-    body: String,
+    body: EDString,
     #[serde(rename = "BodyID")]
     body_id: u64,
     body_type: BodyType,
-    controlling_power: Option<String>,
-    powers: Option<Vec<String>>, // TODO: use Powers struct here
+    controlling_power: Option<EDString>,
+    powers: Option<Vec<EDString>>, // TODO: use Powers struct here
     powerplay_state: Option<PowerplayState>,
     powerplay_state_control_progress: Option<f64>,
     powerplay_state_reinforcement: Option<u64>,
@@ -177,7 +180,7 @@ pub struct EDLogCarrierCrewServices {
     carrier_type: Option<CarrierType>,
     crew_role: CrewRole,
     operation: CrewServiceOperation,
-    crew_name: String,
+    crew_name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -186,11 +189,11 @@ pub struct EDLogCarrierBuy {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
     bought_at_market: u64,
-    location: String,
+    location: EDString,
     system_address: u64,
     price: Credits,
-    variant: String,
-    callsign: String,
+    variant: EDString,
+    callsign: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -198,8 +201,8 @@ pub struct EDLogCarrierBuy {
 pub struct EDLogCarrierModulePack {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
-    operation: String,
-    pack_theme: String,
+    operation: EDString,
+    pack_theme: EDString,
     pack_tier: u64,
     cost: Option<Credits>,
     refund: Option<Credits>,
@@ -210,7 +213,7 @@ pub struct EDLogCarrierModulePack {
 pub struct EDLogCarrierDockingPermission {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
-    docking_access: String,
+    docking_access: EDString,
     allow_notorious: bool,
 }
 
@@ -221,7 +224,7 @@ pub struct EDLogCarrierLocation {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
     carrier_type: Option<CarrierType>,
-    star_system: String,
+    star_system: EDString,
     system_address: u64,
     #[serde(rename = "BodyID")]
     body_id: u64,
@@ -232,8 +235,8 @@ pub struct EDLogCarrierLocation {
 pub struct EDLogCarrierNameChange {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
-    name: String,
-    callsign: String,
+    name: EDString,
+    callsign: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -243,14 +246,14 @@ pub enum ShipPack {}
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase")]
 pub struct ModulePack {
-    pack_theme: String,
+    pack_theme: EDString,
     pack_tier: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CrewMember {
-    crew_name: Option<String>,
+    crew_name: Option<EDString>,
     crew_role: CrewRole,
     activated: bool,
     enabled: Option<bool>,
@@ -261,7 +264,7 @@ pub struct CrewMember {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ActivatedProps {
     enabled: bool,
-    crew_name: String,
+    crew_name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -303,9 +306,9 @@ pub struct EDLogCarrierStats {
     #[serde(rename = "CarrierID")]
     pub carrier_id: u64,
     pub carrier_type: Option<CarrierType>,
-    pub callsign: String,
-    pub name: String,
-    pub docking_access: String,
+    pub callsign: EDString,
+    pub name: EDString,
+    pub docking_access: EDString,
     pub allow_notorious: bool,
     pub fuel_level: u64,
     pub jump_range_curr: f64,
@@ -323,9 +326,9 @@ pub struct EDLogCarrierStats {
 pub struct EDLogFCMaterials {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    pub carrier_name: String,
+    pub carrier_name: EDString,
     #[serde(rename = "CarrierID")]
-    pub carrier_id: String,
+    pub carrier_id: EDString,
 }
 
 #[test]
@@ -455,7 +458,7 @@ fn test_exploration() {
         crate::log_line::EDLogEvent::CarrierStats(_)
     ));
     if let crate::log_line::EDLogEvent::CarrierStats(header) = line2.event() {
-        assert_eq!(&header.name, "My First Carrier");
+        assert_eq!(header.name.as_str(), "My First Carrier");
         assert_eq!(header.crew.len(), 14);
         assert_eq!(header.finance.carrier_balance, Credits(803361));
     }
@@ -587,7 +590,7 @@ fn test_new_carrier_stats() {
         crate::log_line::EDLogEvent::CarrierStats(_)
     ));
     if let crate::log_line::EDLogEvent::CarrierStats(header) = line2.event() {
-        assert_eq!(&header.name, "My First Carrier");
+        assert_eq!(header.name.as_str(), "My First Carrier");
         assert_eq!(header.crew.len(), 14);
         assert_eq!(header.finance.carrier_balance, Credits(19076712640));
     }

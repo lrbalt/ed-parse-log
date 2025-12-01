@@ -1,4 +1,4 @@
-use crate::common_types::ModuleEngineeringModifiers;
+use crate::{EDString, common_types::ModuleEngineeringModifiers};
 use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
@@ -12,7 +12,7 @@ pub enum EngineerProgress {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Engineer {
-    engineer: Option<String>,
+    engineer: Option<EDString>,
     #[serde(rename = "EngineerID")]
     engineer_id: Option<u64>,
     progress: EngineerProgress,
@@ -31,33 +31,33 @@ pub struct EDLogEngineerProgress {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EngineerCraftIngredient {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ExperimentalEffect {
-    apply_experimental_effect: String,
-    experimental_effect: String,
+    apply_experimental_effect: EDString,
+    experimental_effect: EDString,
     #[serde(rename = "ExperimentalEffect_Localised")]
-    experimental_effect_localised: String,
+    experimental_effect_localised: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerCraft {
-    pub slot: String,
-    pub module: String,
+    pub slot: EDString,
+    pub module: EDString,
     pub ingredients: Vec<EngineerCraftIngredient>,
-    pub engineer: Option<String>,
+    pub engineer: Option<EDString>,
     #[serde(rename = "EngineerID")]
     pub engineer_id: u64,
     #[serde(rename = "BlueprintID")]
     pub blueprint_id: u64,
-    pub blueprint_name: String,
+    pub blueprint_name: EDString,
     pub level: u64,
     pub quality: f64,
     #[serde(flatten)]
@@ -68,17 +68,17 @@ pub struct EDLogEngineerCraft {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEngineerContribution {
-    pub engineer: String,
+    pub engineer: EDString,
     #[serde(rename = "EngineerID")]
     pub engineer_id: u64,
     #[serde(rename = "Type")]
-    pub contribution_type: String,
-    pub commodity: Option<String>,
+    pub contribution_type: EDString,
+    pub commodity: Option<EDString>,
     #[serde(rename = "Commodity_Localised")]
-    pub commodity_localised: Option<String>,
-    pub material: Option<String>,
+    pub commodity_localised: Option<EDString>,
+    pub material: Option<EDString>,
     #[serde(rename = "Material_Localised")]
-    pub material_localised: Option<String>,
+    pub material_localised: Option<EDString>,
     pub quantity: u64,
     pub total_quantity: u64,
 }

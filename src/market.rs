@@ -1,4 +1,7 @@
-use crate::common_types::{CarrierDockingAccess, Credits, StationType};
+use crate::{
+    EDString,
+    common_types::{CarrierDockingAccess, Credits, StationType},
+};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -197,7 +200,7 @@ pub struct EDLogMarketBuy {
     #[serde(rename = "Type")]
     pub buy_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
-    pub buy_type_localised: Option<String>,
+    pub buy_type_localised: Option<EDString>,
     pub count: u64,
     pub buy_price: Credits,
     pub total_cost: Credits,
@@ -212,7 +215,7 @@ pub struct EDLogMarketSell {
     #[serde(rename = "Type")]
     pub sell_type: MarketItemType,
     #[serde(rename = "Type_Localised")]
-    pub sell_type_localised: Option<String>,
+    pub sell_type_localised: Option<EDString>,
     pub count: u64,
     pub sell_price: Credits,
     pub total_sale: Credits,
@@ -233,9 +236,9 @@ pub enum MicroResourceType {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct MicroResource {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     category: MicroResourceType,
     count: u64,
 }
@@ -256,7 +259,7 @@ pub struct EDLogBuyMicroResources {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-06-28T19:16:15Z", "event":"BuyTradeData", "System":"Quator", "Cost":100 })]
 pub struct EDLogBuyTradeData {
-    system: String,
+    system: EDString,
     cost: Credits,
 }
 
@@ -265,9 +268,9 @@ pub struct EDLogBuyTradeData {
 pub struct EDLogTradeMicroResources {
     offered: Vec<MicroResource>,
     total_count: u64,
-    received: String,
+    received: EDString,
     #[serde(rename = "Received_Localised")]
-    received_localised: Option<String>,
+    received_localised: Option<EDString>,
     count: u64,
     category: MicroResourceType,
     #[serde(rename = "MarketID")]
@@ -298,10 +301,10 @@ pub struct EDLogDeliverPowerMicroResources {
 pub struct EDLogMarket {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
-    pub station_name: String,
+    pub station_name: EDString,
     pub station_type: StationType,
     pub carrier_docking_access: Option<CarrierDockingAccess>,
-    pub star_system: String,
+    pub star_system: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -309,10 +312,10 @@ pub struct EDLogMarket {
 pub struct EDLogCargoDepot {
     #[serde(rename = "MissionID")]
     mission_id: u64,
-    update_type: String,        // TODO: enum
-    cargo_type: Option<String>, // TODO: enum
+    update_type: EDString,        // TODO: enum
+    cargo_type: Option<EDString>, // TODO: enum
     #[serde(rename = "CargoType_Localised")]
-    cargo_type_localised: Option<String>,
+    cargo_type_localised: Option<EDString>,
     count: Option<u64>,
     #[serde(rename = "StartMarketID")]
     start_market_id: u64,
@@ -327,9 +330,9 @@ pub struct EDLogCargoDepot {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct RequiredResource {
-    pub name: String,
+    pub name: EDString,
     #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<String>,
+    pub name_localised: Option<EDString>,
     pub required_amount: u64,
     pub provided_amount: u64,
     pub payment: Credits,
@@ -338,9 +341,9 @@ pub struct RequiredResource {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ContributedResource {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     amount: u64,
 }
 
@@ -366,15 +369,15 @@ pub struct EDLogColonisationContribution {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SoldBioData {
-    pub genus: String,
+    pub genus: EDString,
     #[serde(rename = "Genus_Localised")]
-    pub genus_localised: String,
-    pub species: String,
+    pub genus_localised: EDString,
+    pub species: EDString,
     #[serde(rename = "Species_Localised")]
-    pub species_localised: String,
-    pub variant: Option<String>,
+    pub species_localised: EDString,
+    pub variant: Option<EDString>,
     #[serde(rename = "Variant_Localised")]
-    pub variant_localised: Option<String>,
+    pub variant_localised: Option<EDString>,
     pub value: Credits,
     pub bonus: Credits,
 }

@@ -1,4 +1,5 @@
 use crate::{
+    EDString,
     commander::{
         EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
         EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
@@ -102,7 +103,7 @@ use strum::{Display, EnumDiscriminants, EnumIter};
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct GameModeGroup {
-    group: String,
+    group: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -117,11 +118,11 @@ pub enum GameMode {
 pub struct LoadGameShip {
     ship: ShipType,
     #[serde(rename = "Ship_Localised")]
-    ship_localised: String,
+    ship_localised: EDString,
     #[serde(rename = "ShipID")]
     ship_id: u64,
-    ship_name: String,
-    ship_ident: String,
+    ship_name: EDString,
+    ship_ident: EDString,
     fuel_level: f64,
     fuel_capacity: f64,
     #[serde(flatten)]
@@ -133,8 +134,8 @@ pub struct LoadGameShip {
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"LoadGame", "Commander":"JournalServer", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Open", "Credits":766731, "Loan":0 })]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
-    pub fid: Option<String>,
-    pub commander: String,
+    pub fid: Option<EDString>,
+    pub commander: EDString,
     pub horizons: Option<bool>,
     pub odyssey: Option<bool>,
     #[serde(flatten)]
@@ -142,17 +143,17 @@ pub struct EDLogLoadGame {
     pub credits: Credits,
     pub loan: Credits,
     #[serde(rename = "language")]
-    pub language: Option<String>,
+    pub language: Option<EDString>,
     #[serde(rename = "gameversion")]
-    pub gameversion: Option<String>,
+    pub gameversion: Option<EDString>,
     #[serde(rename = "build")]
-    pub build: Option<String>,
+    pub build: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMusic {
-    music_track: String,
+    music_track: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -162,20 +163,20 @@ pub struct EDLogMusic {
              "Message_Localised":"This is your captain. Due to some unforeseen delays, we will be arriving at our next destination later than scheduled.", 
              "Channel":"npc" })]
 pub struct EDLogReceiveText {
-    from: String,
+    from: EDString,
     #[serde(rename = "From_Localised")]
-    from_localised: Option<String>,
-    message: String,
+    from_localised: Option<EDString>,
+    message: EDString,
     #[serde(rename = "Message_Localised")]
-    message_localised: Option<String>,
-    channel: String,
+    message_localised: Option<EDString>,
+    channel: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSendText {
     to: String,
-    message: String,
+    message: EDString,
     sent: bool,
 }
 
@@ -183,11 +184,11 @@ pub struct EDLogSendText {
 #[serde(deny_unknown_fields)]
 pub struct EDLogFileHeader {
     part: u64,
-    language: String,
+    language: EDString,
     #[serde(rename = "Odyssey")]
     odyssey: Option<bool>,
-    gameversion: String,
-    build: String,
+    gameversion: EDString,
+    build: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -236,7 +237,7 @@ pub struct EDLogUSSDrop {
     #[serde(rename = "USSType")]
     uss_type: USSType,
     #[serde(rename = "USSType_Localised")]
-    uss_type_localised: String,
+    uss_type_localised: EDString,
     #[serde(rename = "USSThreat")]
     uss_threat: u64,
 }
@@ -245,9 +246,9 @@ pub struct EDLogUSSDrop {
 #[serde(deny_unknown_fields)]
 pub struct EDLogCollectCargo {
     #[serde(rename = "Type")]
-    cargo_type: String,
+    cargo_type: EDString,
     #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<String>,
+    cargo_type_localised: Option<EDString>,
     #[serde(rename = "Stolen")]
     stolen: bool,
     #[serde(rename = "MissionID")]
@@ -258,11 +259,11 @@ pub struct EDLogCollectCargo {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CargoTransfer {
     #[serde(rename = "Type")]
-    cargo_type: String,
+    cargo_type: EDString,
     #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<String>,
+    cargo_type_localised: Option<EDString>,
     count: u32,
-    direction: String,
+    direction: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -283,11 +284,11 @@ pub struct LocationOnBody {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScreenshot {
-    filename: String,
+    filename: EDString,
     width: u64,
     height: u64,
-    system: Option<String>,
-    body: Option<String>,
+    system: Option<EDString>,
+    body: Option<EDString>,
     #[serde(flatten)]
     location_on_body: Option<LocationOnBody>,
 }
@@ -629,7 +630,7 @@ fn test_fileheader() {
     assert!(matches!(line.event(), EDLogEvent::FileHeader(_)));
     if let EDLogEvent::FileHeader(header) = line.event() {
         assert!(header.odyssey.unwrap());
-        assert_eq!(header.gameversion, "4.1.0.100");
+        assert_eq!(header.gameversion.as_str(), "4.1.0.100");
     }
 }
 
@@ -643,6 +644,6 @@ fn test_receivetext() {
 
     assert!(matches!(line.event(), EDLogEvent::ReceiveText(_)));
     if let EDLogEvent::ReceiveText(header) = line.event() {
-        assert_eq!(header.message, "$CruiseLiner_SCPatrol05;");
+        assert_eq!(header.message.as_str(), "$CruiseLiner_SCPatrol05;");
     }
 }

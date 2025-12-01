@@ -1,4 +1,7 @@
-use crate::common_types::{Credits, OnFootItem};
+use crate::{
+    EDString,
+    common_types::{Credits, OnFootItem},
+};
 use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
@@ -10,7 +13,7 @@ pub enum UnknownItem {}
 pub struct EDLogCollectItems {
     name: OnFootItem,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     #[serde(rename = "Type")]
     item_type: BackpackItemType,
     #[serde(rename = "OwnerID")]
@@ -32,7 +35,7 @@ pub enum BackpackItemType {
 pub struct BackpackItem {
     name: OnFootItem,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     #[serde(rename = "OwnerID")]
     owner_id: u64,
     #[serde(rename = "MissionID")]
@@ -54,7 +57,7 @@ pub struct EDLogBackpackChange {
 pub struct EDLogUseConsumable {
     name: OnFootItem,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     #[serde(rename = "Type")]
     item_type: BackpackItemType,
 }
@@ -127,12 +130,12 @@ pub enum WeaponMod {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct SuitModule {
-    slot_name: String,
+    slot_name: EDString,
     #[serde(rename = "SuitModuleID")]
     suit_module_id: u64,
-    module_name: String,
+    module_name: EDString,
     #[serde(rename = "ModuleName_Localised")]
-    module_name_localised: String,
+    module_name_localised: EDString,
     class: u64,
     weapon_mods: Vec<WeaponMod>,
 }
@@ -142,22 +145,22 @@ pub struct SuitModule {
 pub struct EDLogSuitLoadout {
     #[serde(rename = "SuitID")]
     suit_id: u64,
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "SuitName_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     suit_mods: Vec<SuitMod>,
     #[serde(rename = "LoadoutID")]
     loadout_id: u64,
-    loadout_name: String,
+    loadout_name: EDString,
     modules: Vec<SuitModule>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuySuit {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     price: Credits,
     #[serde(rename = "SuitID")]
     suit_id: u64,
@@ -170,9 +173,9 @@ pub struct EDLogSellSuit {
     #[serde(rename = "SuitID")]
     suit_id: u64,
     suit_mods: Vec<SuitMod>,
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     price: Credits,
 }
 
@@ -181,13 +184,13 @@ pub struct EDLogSellSuit {
 pub struct EDLogCreateSuitLoadout {
     #[serde(rename = "SuitID")]
     suit_id: u64,
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "SuitName_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     suit_mods: Vec<SuitMod>,
     #[serde(rename = "LoadoutID")]
     loadout_id: u64,
-    loadout_name: String,
+    loadout_name: EDString,
     modules: Vec<SuitModule>,
 }
 
@@ -196,12 +199,12 @@ pub struct EDLogCreateSuitLoadout {
 pub struct EDLogRenameSuitLoadout {
     #[serde(rename = "SuitID")]
     suit_id: u64,
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "SuitName_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     #[serde(rename = "LoadoutID")]
     loadout_id: u64,
-    loadout_name: String,
+    loadout_name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -209,12 +212,12 @@ pub struct EDLogRenameSuitLoadout {
 pub struct EDLogDeleteSuitLoadout {
     #[serde(rename = "SuitID")]
     suit_id: u64,
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "SuitName_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     #[serde(rename = "LoadoutID")]
     loadout_id: u64,
-    loadout_name: String,
+    loadout_name: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -223,9 +226,9 @@ pub struct EDLogUpgradeSuit {
     #[serde(rename = "SuitID")]
     suit_id: u64,
     #[serde(rename = "Name")]
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "Name_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     class: u8,
     cost: Credits,
     resources: Vec<UpgradeResource>,
@@ -234,11 +237,11 @@ pub struct EDLogUpgradeSuit {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDropItems {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     #[serde(rename = "Type")]
-    item_type: String,
+    item_type: EDString,
     #[serde(rename = "OwnerID")]
     owner_id: u64,
     #[serde(rename = "MissionID")]
@@ -249,18 +252,18 @@ pub struct EDLogDropItems {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLoadoutEquipModule {
-    loadout_name: String,
+    loadout_name: EDString,
     #[serde(rename = "SuitID")]
     suit_id: u64,
-    suit_name: String,
+    suit_name: EDString,
     #[serde(rename = "SuitName_Localised")]
-    suit_name_localised: String,
+    suit_name_localised: EDString,
     #[serde(rename = "LoadoutID")]
     loadout_id: u64,
-    slot_name: String,
-    module_name: String,
+    slot_name: EDString,
+    module_name: EDString,
     #[serde(rename = "ModuleName_Localised")]
-    module_name_localised: String,
+    module_name_localised: EDString,
     class: u64,
     weapon_mods: Vec<WeaponMod>,
     #[serde(rename = "SuitModuleID")]
@@ -270,18 +273,18 @@ pub struct EDLogLoadoutEquipModule {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct UpgradeResource {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogUpgradeWeapon {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: Option<String>,
+    name_localised: Option<EDString>,
     class: u64,
     #[serde(rename = "SuitModuleID")]
     suit_module_id: u64,
@@ -292,9 +295,9 @@ pub struct EDLogUpgradeWeapon {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogBuyWeapon {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     class: u64,
     price: Credits,
     #[serde(rename = "SuitModuleID")]
@@ -305,9 +308,9 @@ pub struct EDLogBuyWeapon {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSellWeapon {
-    name: String,
+    name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: String,
+    name_localised: EDString,
     class: u64,
     price: Credits,
     #[serde(rename = "SuitModuleID")]

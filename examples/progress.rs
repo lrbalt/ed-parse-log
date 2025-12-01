@@ -302,7 +302,7 @@ impl PowerPlayProgress {
 impl From<&EDLogPowerplay> for PowerPlayProgress {
     fn from(value: &EDLogPowerplay) -> Self {
         PowerPlayProgress {
-            power: value.power.clone(),
+            power: value.power.to_string(),
             rank: value.rank,
             merits: value.merits,
             time_pledged: value.time_pledged,

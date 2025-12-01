@@ -1,4 +1,4 @@
-use crate::common_types::BodyType;
+use crate::{EDString, common_types::BodyType};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -7,9 +7,9 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseDestinationDrop {
     #[serde(rename = "Type")]
-    dest_type: String,
+    dest_type: EDString,
     #[serde(rename = "Type_Localised")]
-    dest_type_localised: Option<String>,
+    dest_type_localised: Option<EDString>,
     threat: u64,
     #[serde(rename = "MarketID")]
     market_id: Option<u64>,
@@ -20,9 +20,9 @@ pub struct EDLogSupercruiseDestinationDrop {
 pub struct EDLogSupercruiseExit {
     taxi: Option<bool>,
     multicrew: Option<bool>,
-    star_system: String,
+    star_system: EDString,
     system_address: Option<u64>,
-    body: String,
+    body: EDString,
     #[serde(rename = "BodyID")]
     body_id: Option<u64>,
     body_type: BodyType,
@@ -33,6 +33,6 @@ pub struct EDLogSupercruiseExit {
 pub struct EDLogSupercruiseEntry {
     taxi: Option<bool>,
     multicrew: Option<bool>,
-    star_system: String,
+    star_system: EDString,
     system_address: Option<u64>,
 }

@@ -1,4 +1,5 @@
 use crate::{
+    EDString,
     common_types::{
         Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers,
         StationInformation, ThargoidWar,
@@ -40,20 +41,20 @@ pub struct EDLogLocation {
     pub system_address: Option<u64>,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,
-    pub system_economy: String,
+    pub system_economy: EDString,
     #[serde(rename = "SystemEconomy_Localised")]
-    pub system_economy_localised: String,
-    pub system_second_economy: Option<String>,
+    pub system_economy_localised: EDString,
+    pub system_second_economy: Option<EDString>,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    pub system_second_economy_localised: Option<String>,
-    pub system_government: String,
+    pub system_second_economy_localised: Option<EDString>,
+    pub system_government: EDString,
     #[serde(rename = "SystemGovernment_Localised")]
-    pub system_government_localised: String,
-    pub system_security: String,
+    pub system_government_localised: EDString,
+    pub system_security: EDString,
     #[serde(rename = "SystemSecurity_Localised")]
-    pub system_security_localised: String,
+    pub system_security_localised: EDString,
     pub population: u64,
-    pub body: String,
+    pub body: EDString,
     #[serde(rename = "BodyID")]
     pub body_id: Option<u64>,
     pub body_type: BodyType,

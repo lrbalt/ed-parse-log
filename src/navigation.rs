@@ -1,4 +1,5 @@
 use crate::{
+    EDString,
     common_types::{
         Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionState, Powers, StarClass,
         StationInformation, ThargoidWar,
@@ -27,9 +28,9 @@ pub struct EDLogLiftoff {
     on_planet: Option<bool>,
     latitude: Option<f64>,
     longitude: Option<f64>,
-    nearest_destination: Option<String>,
+    nearest_destination: Option<EDString>,
     #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<String>,
+    nearest_destination_localised: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -39,7 +40,7 @@ pub struct BodyInformationOfSettlement {
     pub system_address: u64,
     #[serde(rename = "BodyID")]
     pub body_id: u64,
-    pub body_name: String,
+    pub body_name: EDString,
     pub latitude: Option<f64>,
     pub longitude: Option<f64>,
 }
@@ -54,9 +55,9 @@ pub struct BodyInformationOfSettlement {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogApproachSettlement {
-    pub name: String,
+    pub name: EDString,
     #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<String>,
+    pub name_localised: Option<EDString>,
     #[serde(flatten)]
     pub station_information: Option<StationInformation>,
     #[serde(flatten)]
@@ -66,7 +67,7 @@ pub struct EDLogApproachSettlement {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSDTarget {
-    name: String,
+    name: EDString,
     system_address: u64,
     star_class: StarClass,
     remaining_jumps_in_route: Option<u64>,
@@ -78,24 +79,24 @@ pub struct EDLogFSDTarget {
 pub struct EDLogFSDJump {
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
-    pub star_system: String,
+    pub star_system: EDString,
     pub system_address: Option<u64>,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,
-    pub system_economy: String,
+    pub system_economy: EDString,
     #[serde(rename = "SystemEconomy_Localised")]
-    pub system_economy_localised: String,
-    pub system_second_economy: Option<String>,
+    pub system_economy_localised: EDString,
+    pub system_second_economy: Option<EDString>,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    pub system_second_economy_localised: Option<String>,
-    pub system_government: String,
+    pub system_second_economy_localised: Option<EDString>,
+    pub system_government: EDString,
     #[serde(rename = "SystemGovernment_Localised")]
-    pub system_government_localised: String,
-    pub system_security: String,
+    pub system_government_localised: EDString,
+    pub system_security: EDString,
     #[serde(rename = "SystemSecurity_Localised")]
-    pub system_security_localised: String,
+    pub system_security_localised: EDString,
     pub population: u64,
-    pub body: Option<String>,
+    pub body: Option<EDString>,
     #[serde(rename = "BodyID")]
     pub body_id: Option<u64>,
     pub body_type: Option<BodyType>,
@@ -117,9 +118,9 @@ pub struct EDLogFSDJump {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockSRV {
     #[serde(rename = "SRVType")]
-    srvtype: Option<String>,
+    srvtype: Option<EDString>,
     #[serde(rename = "SRVType_Localised")]
-    srvtype_localised: Option<String>,
+    srvtype_localised: Option<EDString>,
     #[serde(rename = "ID")]
     id: u64,
 }
@@ -128,10 +129,10 @@ pub struct EDLogDockSRV {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogLaunchSRV {
     #[serde(rename = "SRVType")]
-    srvtype: Option<String>,
+    srvtype: Option<EDString>,
     #[serde(rename = "SRVType_Localised")]
-    srvtype_localised: Option<String>,
-    loadout: String,
+    srvtype_localised: Option<EDString>,
+    loadout: EDString,
     #[serde(rename = "ID")]
     id: u64,
     player_controlled: bool,
@@ -143,9 +144,9 @@ pub struct EDLogSRVDestroyed {
     #[serde(rename = "ID")]
     id: u64,
     #[serde(rename = "SRVType")]
-    srv_type: String,
+    srv_type: EDString,
     #[serde(rename = "SRVType_Localised")]
-    srv_type_localised: String,
+    srv_type_localised: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -160,9 +161,9 @@ pub struct EDLogTouchdown {
     on_planet: Option<bool>,
     latitude: Option<f64>,
     longitude: Option<f64>,
-    nearest_destination: Option<String>,
+    nearest_destination: Option<EDString>,
     #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<String>,
+    nearest_destination_localised: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -174,7 +175,7 @@ pub enum JumpType {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct JumpToStarsystem {
-    star_system: String,
+    star_system: EDString,
     system_address: u64,
     star_class: StarClass,
 }

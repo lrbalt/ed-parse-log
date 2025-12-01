@@ -1,4 +1,4 @@
-use crate::common_types::Credits;
+use crate::{EDString, common_types::Credits};
 use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
@@ -384,11 +384,11 @@ pub struct EDLogStatisticsTgEncounters {
     #[serde(rename = "TG_ENCOUNTER_TOTAL")]
     tg_encounter_total: Option<u64>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_SYSTEM")]
-    tg_encounter_total_last_system: Option<String>,
+    tg_encounter_total_last_system: Option<EDString>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP")]
-    tg_encounter_total_last_timestamp: Option<String>,
+    tg_encounter_total_last_timestamp: Option<EDString>,
     #[serde(rename = "TG_ENCOUNTER_TOTAL_LAST_SHIP")]
-    tg_encounter_total_last_ship: Option<String>,
+    tg_encounter_total_last_ship: Option<EDString>,
     #[serde(rename = "TG_ENCOUNTER_WAKES")]
     tg_encounter_wakes: Option<u64>,
     #[serde(rename = "TG_SCOUT_COUNT")]
