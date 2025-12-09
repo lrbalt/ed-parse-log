@@ -56,9 +56,9 @@ pub struct EDLogPowerplayDeliver {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayMerits {
-    power: EDString,
-    merits_gained: Merits,
-    total_merits: Merits,
+    pub power: EDString,
+    pub merits_gained: Merits,
+    pub total_merits: Merits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -84,8 +84,8 @@ pub struct EDLogPowerplayLeave {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayRank {
-    power: EDString,
-    rank: u64,
+    pub power: EDString,
+    pub rank: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
