@@ -283,11 +283,11 @@ pub fn main() {
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()
-                .and_then(|g| g.bonus.map(|b| dec_formatter.fmt2(b).to_string()))
+                .and_then(|g| g.bonus.map(|b| dec_formatter.fmt2(b.0).to_string()))
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.reward
                 .as_ref()
-                .map(|g| dec_formatter.fmt2(g.reward).to_string())
+                .map(|g| dec_formatter.fmt2(g.reward.0).to_string())
                 .unwrap_or_else(|| "n/a".to_string()),
         );
 

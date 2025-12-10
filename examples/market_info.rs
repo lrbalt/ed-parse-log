@@ -110,7 +110,7 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, market_id: u64) -> Result<Vec<EDLo
         .map(|line| match line.event() {
             EDLogEvent::ColonisationConstructionDepot(d) => Some((line, d.market_id)),
             EDLogEvent::Market(d) => Some((line, d.market_id)),
-            EDLogEvent::Docked(d) => d.market_id.map(|mid| (line, mid)),
+            EDLogEvent::Docked(d) => d.station_identification.market_id.map(|mid| (line, mid)),
             EDLogEvent::TechnologyBroker(d) => Some((line, d.market_id)),
             EDLogEvent::Location(d) => d.station_information.as_ref().map(|d| (line, d.market_id)),
             EDLogEvent::ApproachSettlement(d) => {
@@ -176,8 +176,13 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
         .and_then(|l| l.extract::<EDLogDocked>())
         .cloned();
 
-    let station_name = station_name.or(docked.as_ref().map(|d| d.station_name.as_str()));
-    let station_type = station_type.or(docked.as_ref().map(|m| m.station_type));
+    let station_name = station_name.or(docked
+        .as_ref()
+        .map(|d| d.station_identification.station_name.as_str()));
+
+    let station_type = station_type.or(docked
+        .as_ref()
+        .and_then(|m| m.station_identification.station_type));
 
     let _techbroker = market_items
         .iter()

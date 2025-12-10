@@ -42,42 +42,43 @@ pub struct EDLogRepairAll {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LandingPads {
-    small: u64,
-    medium: u64,
-    large: u64,
+    pub small: u64,
+    pub medium: u64,
+    pub large: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingRequested {
+pub struct StationIdentification {
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
     pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
     pub station_name_localised: Option<EDString>,
     pub station_type: Option<StationType>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogDockingRequested {
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
     pub landing_pads: Option<LandingPads>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingCancelled {
-    #[serde(rename = "MarketID")]
-    pub market_id: u64,
-    pub station_name: EDString,
-    pub station_type: StationType,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingGranted {
     pub landing_pad: u64,
-    #[serde(rename = "MarketID")]
-    pub market_id: Option<u64>,
-    pub station_name: EDString,
-    #[serde(rename = "StationName_Localised")]
-    pub station_name_localised: Option<EDString>,
-    pub station_type: Option<StationType>,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -105,38 +106,28 @@ pub enum StationState {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingDenied {
     reason: DockingDeniedReason,
-    #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: EDString,
-    #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<EDString>,
-    station_type: StationType,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockingTimeout {
-    #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: EDString,
-    station_type: StationType,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDocked {
-    pub station_name: EDString,
-    #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<EDString>,
-    pub station_type: StationType,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
     pub faction_state: Option<EDString>,
     pub station_state: Option<StationState>,
     pub star_system: EDString,
     pub system_address: Option<u64>,
-    #[serde(rename = "MarketID")]
-    pub market_id: Option<u64>,
     #[serde(deserialize_with = "string_or_struct")]
     pub station_faction: FactionName,
     pub station_government: EDString,
@@ -160,22 +151,18 @@ pub struct EDLogDocked {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T01:49:26Z", "event":"Undocked", "StationName":"Verrazzano's Inheritance", "StationType":"SurfaceStation" })]
 pub struct EDLogUndocked {
-    station_name: EDString,
-    #[serde(rename = "StationName_Localised")]
-    station_name_localised: Option<EDString>,
-    station_type: StationType,
-    #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
     taxi: Option<bool>,
     multicrew: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2022-09-17T13:01:22Z", "event":"Outfitting", "MarketID":3223506432, "StationName":"Coleman Ring", "StarSystem":"BZ Ceti" })]
 pub struct EDLogOutfitting {
-    #[serde(rename = "MarketID")]
-    market_id: u64,
-    station_name: EDString,
+    #[serde(flatten)]
+    pub station_identification: StationIdentification,
     star_system: EDString,
 }
 

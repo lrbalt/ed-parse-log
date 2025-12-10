@@ -1,8 +1,9 @@
 use chrono::{DateTime, Duration, Utc};
 use ed_parse_log_files::{
     commander::{
-        COMBAT_RANK, EDLogRank, EDLogReputation, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK,
-        FEDERATION_RANK, SOLDIER_RANK, TRADE_RANK,
+        COMBAT_RANK, CQCRank, CombatRank, EDLogRank, EDLogReputation, EMPIRE_RANK,
+        EXOBIOLOGIST_RANK, EXPLORE_RANK, EmpireRank, ExobiologistRank, ExploreRank,
+        FEDERATION_RANK, FederationRank, SOLDIER_RANK, SoldierRank, TRADE_RANK, TradeRank,
     },
     common_types::{Credits, Merits},
     log_line::{EDLogEvent, EDLogLine},
@@ -50,7 +51,7 @@ pub fn format_duration(d: &Duration) -> String {
     }
 }
 
-fn progression_string_map(a: u64, b: u64, map: &[&str]) -> String {
+fn progression_string_map(a: u8, b: u8, map: &[&str]) -> String {
     if a == b {
         map[a as usize].to_string()
     } else {
@@ -355,14 +356,14 @@ impl Display for PowerPlay {
 
 #[derive(Debug)]
 pub struct Rank {
-    pub combat: u64,
-    pub trade: u64,
-    pub explore: u64,
-    pub soldier: u64,
-    pub exobiologist: u64,
-    pub empire: u64,
-    pub federation: u64,
-    pub cqc: u64,
+    pub combat: CombatRank,
+    pub trade: TradeRank,
+    pub explore: ExploreRank,
+    pub soldier: SoldierRank,
+    pub exobiologist: ExobiologistRank,
+    pub empire: EmpireRank,
+    pub federation: FederationRank,
+    pub cqc: CQCRank,
 }
 
 impl From<&EDLogRank> for Rank {
@@ -431,14 +432,14 @@ impl Display for RankProgress {
 
 #[derive(Debug)]
 pub struct RankProgression {
-    combat: u64,
-    trade: u64,
-    explore: u64,
-    soldier: u64,
-    exobiologist: u64,
-    empire: u64,
-    federation: u64,
-    cqc: u64,
+    combat: CombatRank,
+    trade: TradeRank,
+    explore: ExploreRank,
+    soldier: SoldierRank,
+    exobiologist: ExobiologistRank,
+    empire: EmpireRank,
+    federation: FederationRank,
+    cqc: CQCRank,
 }
 
 impl From<&EDLogRank> for RankProgression {

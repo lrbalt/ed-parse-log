@@ -214,10 +214,13 @@ fn collect_system_data(
         .iter()
         .filter(|line| matches!(line.event(), EDLogEvent::Docked(_)))
         .filter_map(|line| line.extract::<EDLogDocked>())
-        .filter(|docked_line| docked_line.market_id.is_some())
+        .filter(|docked_line| docked_line.station_identification.market_id.is_some())
         .map(|l| FoundMarket {
-            market_id: l.market_id.expect("Checked to be Some above"),
-            station_name: l.station_name.to_string(),
+            market_id: l
+                .station_identification
+                .market_id
+                .expect("Checked to be Some above"),
+            station_name: l.station_identification.station_name.to_string(),
         })
         //
         // reverse so unique will keep the latest

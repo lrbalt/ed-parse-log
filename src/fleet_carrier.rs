@@ -64,6 +64,7 @@ pub struct EDLogCarrierBankTransfer {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CarrierType {
     FleetCarrier,
+    SquadronCarrier,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

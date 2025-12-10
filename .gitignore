@@ -1,5 +1,6 @@
 /target
 /bla.json
 /bli.json
+/collect.json
 .DS_Store
 *.exe

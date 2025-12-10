@@ -1,6 +1,6 @@
-use crate::EDString;
+use crate::{EDString, common_types::Credits};
 use chrono::{DateTime, Utc};
-use ed_parse_log_files_macros::testcase;
+use ed_parse_log_files_macros::{testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -19,7 +19,7 @@ pub struct EDLogCommunityGoalReward {
     #[serde(rename = "Name_Localised")]
     pub name_localised: Option<EDString>,
     pub system: EDString,
-    pub reward: u64,
+    pub reward: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -35,6 +35,7 @@ pub struct EDLogCommunityGoalJoin {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "CGID":834, "Title":"HIP 87621 Exobiology Initiative", "SystemName":"HIP 87621", "MarketName":"Exogene Sciences", "Expiry":"2025-11-27T16:00:00Z", "IsComplete":false, "CurrentTotal":3189792, "PlayerContribution":283, "NumContributors":25373, "TopTier":{ "Name":"Tier 5", "Bonus":"" }, "TopRankSize":10, "PlayerInTopRank":false, "TierReached":"Tier 3", "PlayerPercentileBand":25, "Bonus":235000000 } )]
 pub struct CommunityGoal {
     #[serde(rename = "CGID")]
     pub cgid: u64,
@@ -51,7 +52,7 @@ pub struct CommunityGoal {
     pub player_in_top_rank: Option<bool>,
     pub tier_reached: Option<EDString>,
     pub player_percentile_band: u64,
-    pub bonus: Option<u64>,
+    pub bonus: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

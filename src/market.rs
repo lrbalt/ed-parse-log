@@ -13,10 +13,12 @@ pub enum MarketItemType {
     Tritium,
     Platinum,
     Titanium,
+    #[serde(alias = "Cobalt")]
     Cobalt,
     Steel,
     Palladium,
     Osmium,
+    #[serde(alias = "Gold")]
     Gold,
     #[serde(alias = "Painite")]
     Painite,
@@ -26,6 +28,7 @@ pub enum MarketItemType {
     Samarium,
     Lepidolite,
     Rutile,
+    #[serde(alias = "Uraninite")]
     Uraninite,
     Moissanite,
     LowTemperatureDiamond,
@@ -69,6 +72,8 @@ pub enum MarketItemType {
     UssCargoTechnicalBlueprints,
     #[serde(alias = "USSCargoTradeData")]
     UssCargoTradeData,
+    #[serde(alias = "USSCargoPrototypeTech")]
+    UssCargoPrototypeTech,
     #[serde(alias = "USSCargoBlackBox")]
     UssCargoBlackBox,
     #[serde(alias = "USSCargoMilitaryPlans")]
@@ -164,6 +169,9 @@ pub enum MarketItemType {
     CommercialSamples,
     BootLegLiquor,
     PyrophylLite,
+    Leather,
+    Robotics,
+    NaturalFabrics,
 
     Drones,
     #[serde(alias = "DamagedEscapePod")]

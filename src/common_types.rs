@@ -1,5 +1,5 @@
-use crate::EDString;
-use ed_parse_log_files_macros::{Extractable, testcase_struct};
+use crate::{EDString, commander::CombatRank};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
@@ -656,7 +656,7 @@ pub struct StarSystemData {
     star_system: EDString,
     #[serde(rename = "ShipMarketID")]
     ship_market_id: u64,
-    transfer_price: u64,
+    transfer_price: Credits,
     transfer_time: u64,
 }
 
@@ -772,6 +772,8 @@ pub enum StationService {
     RegisteringColonisation,
     ColonisationContribution,
     Refinery,
+    #[serde(rename = "squadronBank")]
+    SquadronBank,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1003,9 +1005,15 @@ pub struct EDLogLeftSquadron {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-13T16:13:26Z", "event":"SquadronStartup", "SquadronID":75645, "SquadronName":"ENDURANCE EXPLORATION", "CurrentRank":4, "CurrentRankName":"Agent" })]
+#[testcase({"timestamp":"2024-02-14T17:32:56Z","event":"SquadronStartup","SquadronName":"ENDURANCE EXPLORATION","CurrentRank":4})]
+#[testcase({ "timestamp":"2025-11-13T16:13:26Z", "event":"SquadronStartup", "SquadronID":75645, "SquadronName":"ENDURANCE EXPLORATION", "CurrentRank":4, "CurrentRankName":"Agent" })]
 pub struct EDLogSquadronStartup {
+    #[serde(rename = "SquadronID")]
+    squadrion_id: Option<u64>,
     squadron_name: EDString,
     current_rank: u64,
+    current_rank_name: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1043,7 +1051,7 @@ pub enum TechBrokerType {
 pub struct EDLogNpcCrewRank {
     npc_crew_name: EDString,
     npc_crew_id: u64,
-    rank_combat: u64,
+    rank_combat: CombatRank,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

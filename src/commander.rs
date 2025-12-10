@@ -3,7 +3,7 @@ use crate::{
     common_types::{Credits, CrimeType, StationType},
     market::MicroResource,
 };
-use ed_parse_log_files_macros::Extractable;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -134,31 +134,41 @@ pub const FEDERATION_RANK: [&str; 15] = [
     "Admiral",
 ];
 
+pub type CombatRank = u8;
+pub type TradeRank = u8;
+pub type ExploreRank = u8;
+pub type SoldierRank = u8;
+pub type ExobiologistRank = u8;
+pub type EmpireRank = u8;
+pub type FederationRank = u8;
+pub type CQCRank = u8;
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-09-13T18:29:43Z", "event":"Rank", "Combat":9, "Trade":12, "Explore":9, "Soldier":8, "Exobiologist":8, "Empire":12, "Federation":12, "CQC":0 })]
 pub struct EDLogRank {
-    pub combat: u64,
-    pub trade: u64,
-    pub explore: u64,
-    pub soldier: Option<u64>,
-    pub exobiologist: Option<u64>,
-    pub empire: u64,
-    pub federation: u64,
+    pub combat: CombatRank,
+    pub trade: TradeRank,
+    pub explore: ExploreRank,
+    pub soldier: Option<SoldierRank>,
+    pub exobiologist: Option<ExobiologistRank>,
+    pub empire: EmpireRank,
+    pub federation: FederationRank,
     #[serde(rename = "CQC")]
-    pub cqc: u64,
+    pub cqc: CQCRank,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPromotion {
-    combat: Option<u8>,
-    trade: Option<u8>,
-    explore: Option<u8>,
-    soldier: Option<u8>,
-    exobiologist: Option<u8>,
-    empire: Option<u8>,
-    federation: Option<u8>,
-    cqc: Option<u8>,
+    pub combat: Option<u8>,
+    pub trade: Option<u8>,
+    pub explore: Option<u8>,
+    pub soldier: Option<u8>,
+    pub exobiologist: Option<u8>,
+    pub empire: Option<u8>,
+    pub federation: Option<u8>,
+    pub cqc: Option<u8>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -173,28 +183,31 @@ pub struct EDLogReputation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Killer {
-    name: EDString,
-    ship: EDString,
-    rank: EDString,
+    pub name: EDString,
+    pub ship: EDString,
+    pub rank: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-12-16T17:30:36Z", "event":"Died", "KillerName":"$UNKNOWN;", "KillerName_Localised":"Unknown", "KillerShip":"unknownsaucer", "KillerRank":"Elite" })]
+#[testcase({ "timestamp":"2024-03-03T10:57:41Z", "event":"Died", "Killers":[ { "Name":"Cmdr ilovetogank", "Ship":"krait_mkii", "Rank":"Dangerous" }, { "Name":"Cmdr ganker2", "Ship":"cutter", "Rank":"Elite" } ] })]
 pub struct EDLogDied {
-    killers: Option<Vec<Killer>>,
-    killer_name: Option<EDString>,
+    pub killers: Option<Vec<Killer>>,
+    pub killer_name: Option<EDString>,
     #[serde(rename = "KillerName_Localised")]
-    killer_name_localised: Option<EDString>,
-    killer_ship: Option<EDString>,
-    killer_rank: Option<EDString>,
+    pub killer_name_localised: Option<EDString>,
+    pub killer_ship: Option<EDString>,
+    pub killer_rank: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-12-13T18:27:19Z", "event":"Resurrect", "Option":"rebuy", "Cost":4326918, "Bankrupt":false })]
 pub struct EDLogResurrect {
-    option: EDString,
-    cost: u64,
-    bankrupt: bool,
+    pub option: EDString,
+    pub cost: Credits,
+    pub bankrupt: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -220,11 +233,12 @@ pub struct EDLogCommitCrime {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-03-17T13:44:57Z", "event":"CrimeVictim", "Offender":"MiniMe", "CrimeType":"assault", "Bounty":200 })]
 pub struct EDLogCrimeVictim {
-    offender: EDString,
-    crime_type: CrimeType,
-    bounty: Option<u64>,
-    fine: Option<u64>,
+    pub offender: EDString,
+    pub crime_type: CrimeType,
+    pub bounty: Option<Credits>,
+    pub fine: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -366,7 +380,7 @@ pub struct EDLogCrewHire {
     crew_id: u64,
     faction: EDString,
     cost: Credits,
-    combat_rank: u8,
+    combat_rank: CombatRank,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -397,4 +411,27 @@ pub struct EDLogCrewMemberJoins {
 pub struct EDLogEndCrewSession {
     on_crime: bool,
     telepresence: Option<bool>,
+}
+
+#[test]
+fn test_embark_or_disembark() {
+    use crate::log_line::{EDLogEvent, EDLogLine};
+
+    let json = r#"{ "timestamp":"2025-09-18T19:05:29Z", "event":"Disembark", 
+        "SRV":false, "Taxi":false, "Multicrew":false, 
+        "ID":35, "StarSystem":"Hill Pa Hsi", "SystemAddress":9467315955121, 
+        "Body":"Curie Gateway", "BodyID":37, 
+        "OnStation":true, "OnPlanet":false, 
+        "StationName":"Curie Gateway", "StationType":"Coriolis", "MarketID":3228628736 }"#;
+    let line: EDLogLine = serde_json::from_str(json).expect("should parse");
+
+    assert!(matches!(line.event(), EDLogEvent::Disembark(_)));
+
+    if let EDLogEvent::Disembark(details) = line.event() {
+        assert!(details.station.is_some());
+        assert_eq!(
+            "Curie Gateway",
+            details.station.as_ref().unwrap().station_name.as_str()
+        );
+    }
 }
