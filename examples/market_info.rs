@@ -154,15 +154,13 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
 
     let ccd = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::ColonisationConstructionDepot(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::ColonisationConstructionDepot(_)))
         .and_then(|l| l.extract::<EDLogColonisationConstructionDepot>())
         .cloned();
 
     let market = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::Market(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::Market(_)))
         .and_then(|l| l.extract::<EDLogMarket>())
         .cloned();
 
@@ -171,8 +169,7 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
 
     let docked = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::Docked(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::Docked(_)))
         .and_then(|l| l.extract::<EDLogDocked>())
         .cloned();
 
@@ -186,15 +183,13 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
 
     let _techbroker = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::TechnologyBroker(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::TechnologyBroker(_)))
         .and_then(|l| l.extract::<EDLogTechnologyBroker>())
         .cloned();
 
     let location = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::Location(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::Location(_)))
         .and_then(|l| l.extract::<EDLogLocation>())
         .cloned();
 
@@ -209,8 +204,7 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
 
     let approach = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::ApproachSettlement(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::ApproachSettlement(_)))
         .and_then(|l| l.extract::<EDLogApproachSettlement>())
         .cloned();
 
@@ -225,22 +219,19 @@ fn collect_market_data(market_items: &[EDLogLine], market_id: u64) -> MarketData
 
     let _fc_mats = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::FCMaterials(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::FCMaterials(_)))
         .and_then(|l| l.extract::<EDLogFCMaterials>())
         .cloned();
 
     let _stored_mods = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::StoredModules(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::StoredModules(_)))
         .and_then(|l| l.extract::<EDLogStoredModules>())
         .cloned();
 
     let _stored_ships = market_items
         .iter()
-        .filter(|line| matches!(line.event(), EDLogEvent::StoredShips(_)))
-        .next_back()
+        .rfind(|line| matches!(line.event(), EDLogEvent::StoredShips(_)))
         .and_then(|l| l.extract::<EDLogStoredShips>())
         .cloned();
 
