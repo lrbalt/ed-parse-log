@@ -934,6 +934,8 @@ pub struct ModifierDescription {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(tag = "Label")]
+#[testcase_struct({ "Label":"DamagePerSecond", "Value":367.200012, "OriginalValue":216.000000, "LessIsGood":0 })]
+#[testcase_struct({ "Label":"DamageType", "ValueStr":"$Thermic;", "ValueStr_Localised":"Thermal" })]
 pub enum ModuleEngineeringModifiers {
     AmmoClipSize(ModifierValue),
     AmmoMaximum(ModifierValue),

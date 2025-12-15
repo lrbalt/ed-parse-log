@@ -1,5 +1,5 @@
 use crate::EDString;
-use ed_parse_log_files_macros::Extractable;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -26,6 +26,12 @@ pub struct LockerContent {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-12-09T19:58:35Z", "event":"ShipLocker" })]
+#[testcase({ "timestamp":"2025-12-09T20:19:43Z", "event":"ShipLocker", 
+    "Items":[ { "Name":"geneticsample", "Name_Localised":"Biological Sample", "OwnerID":0, "Count":20 }, { "Name":"lazarus", "OwnerID":0, "Count":6 }], 
+    "Components":[ { "Name":"graphene", "OwnerID":0, "Count":40 }, { "Name":"carbonfibreplating", "Name_Localised":"Carbon Fibre Plating", "OwnerID":0, "Count":10 }], 
+    "Consumables":[ { "Name":"healthpack", "Name_Localised":"Medkit", "OwnerID":0, "Count":100 } ], 
+    "Data":[ { "Name":"biometricdata", "Name_Localised":"Biometric Data", "OwnerID":0, "Count":8 }] })]
 pub struct EDLogShipLocker {
     #[serde(flatten)]
     content: Option<LockerContent>,

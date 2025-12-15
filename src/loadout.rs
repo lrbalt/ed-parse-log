@@ -1,5 +1,9 @@
-use crate::{EDString, common_types::ModuleEngineeringModifiers, ship::ShipType};
-use ed_parse_log_files_macros::{Extractable, testcase};
+use crate::{
+    EDString,
+    common_types::{Credits, ModuleEngineeringModifiers},
+    ship::ShipType,
+};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -11,6 +15,7 @@ pub struct FuelCapacity {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"Engineer":"Zacariah Nemo", "EngineerID":300050, "BlueprintID":128673459, "BlueprintName":"Weapon_Overcharged", "Level":5, "Quality":1.000000, "ExperimentalEffect":"special_drag_munitions", "ExperimentalEffect_Localised":"Drag Munitions", "Modifiers":[]})]
 pub struct ModuleEngineering {
     engineer: Option<EDString>,
     #[serde(rename = "EngineerID")]
@@ -28,6 +33,7 @@ pub struct ModuleEngineering {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Slot":"LargeHardpoint1", "Item":"hpt_slugshot_fixed_large_range", "On":true, "Priority":0, "AmmoInClip":3, "AmmoInHopper":180, "Health":1.000000, "Value":1536538})]
 pub struct Module {
     slot: EDString,
     item: EDString,
@@ -36,21 +42,21 @@ pub struct Module {
     ammo_in_clip: Option<u64>,
     ammo_in_hopper: Option<u64>,
     health: f64,
-    value: Option<u64>,
+    value: Option<Credits>,
     engineering: Option<ModuleEngineering>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LoadOutStats {
-    hull_value: u64,
-    modules_value: u64,
+    hull_value: Credits,
+    modules_value: Credits,
     hull_health: f64,
     unladen_mass: f64,
     cargo_capacity: u64,
     max_jump_range: f64,
     fuel_capacity: FuelCapacity,
-    rebuy: u64,
+    rebuy: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

@@ -1,5 +1,5 @@
 use crate::{EDString, common_types::Credits};
-use ed_parse_log_files_macros::Extractable;
+use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -23,7 +23,12 @@ pub struct StatisticsBankAccountOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsBankAccount {
+#[testcase_struct({ "Current_Wealth":12341234, "Spent_On_Ships":12341234, "Spent_On_Outfitting":12341234, 
+    "Spent_On_Repairs":12341234, "Spent_On_Fuel":1253673, "Spent_On_Ammo_Consumables":12341234, "Insurance_Claims":88, 
+    "Spent_On_Insurance":12341234, "Owned_Ship_Count":26, "Spent_On_Suits":12341234, "Spent_On_Weapons":12341234, 
+    "Spent_On_Suit_Consumables":123443, "Suits_Owned":7, "Weapons_Owned":11, "Spent_On_Premium_Stock":12341234, 
+    "Premium_Stock_Bought":17 })]
+pub struct StatisticsBankAccount {
     #[serde(rename = "Current_Wealth")]
     pub current_wealth: Credits,
     #[serde(rename = "Spent_On_Ships")]
@@ -91,11 +96,19 @@ pub struct StatisticsCombatOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsCombat {
+#[testcase_struct({ "Bounties_Claimed":9450, "Bounty_Hunting_Profit":12341234, "Combat_Bonds":12341234, 
+    "Combat_Bond_Profits":12341234, "Assassinations":284, "Assassination_Profits":12341234, 
+    "Highest_Single_Reward":2107790, "Skimmers_Killed":162, "OnFoot_Combat_Bonds":14468, 
+    "OnFoot_Combat_Bonds_Profits":12341234, "OnFoot_Vehicles_Destroyed":0, "OnFoot_Ships_Destroyed":0, 
+    "Dropships_Taken":34, "Dropships_Booked":71, "Dropships_Cancelled":1, "ConflictZone_High":387, 
+    "ConflictZone_Medium":40, "ConflictZone_Low":38, "ConflictZone_Total":465, "ConflictZone_High_Wins":387, 
+    "ConflictZone_Medium_Wins":40, "ConflictZone_Low_Wins":38, "ConflictZone_Total_Wins":465, 
+    "Settlement_Defended":33, "Settlement_Conquered":7, "OnFoot_Skimmers_Killed":71, "OnFoot_Scavs_Killed":384 })]
+pub struct StatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     bounties_claimed: u64,
     #[serde(rename = "Bounty_Hunting_Profit")]
-    bounty_hunting_profit: f64, // TODO: only instance of Credits where f64 is used
+    bounty_hunting_profit: Credits, // TODO: only instance of Credits where f64 is used
     #[serde(rename = "Combat_Bonds")]
     combat_bonds: u64,
     #[serde(rename = "Combat_Bond_Profits")]
@@ -153,7 +166,13 @@ pub struct StatisticsCrimeOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsCrime {
+#[testcase_struct({ "Notoriety":0, "Fines":227, "Total_Fines":123412, "Bounties_Received":513, 
+    "Total_Bounties":1234123, "Highest_Bounty":123412, "Malware_Uploaded":0, "Settlements_State_Shutdown":7, 
+    "Production_Sabotage":0, "Production_Theft":127, "Total_Murders":919, "Citizens_Murdered":443, 
+    "Omnipol_Murdered":1, "Guards_Murdered":475, "Data_Stolen":496, "Goods_Stolen":1234, "Sample_Stolen":3, 
+    "Total_Stolen":1234, "Turrets_Destroyed":0, "Turrets_Overloaded":0, "Turrets_Total":0, 
+    "Value_Stolen_StateChange":1234, "Profiles_Cloned":152 })]
+pub struct StatisticsCrime {
     #[serde(rename = "Notoriety")]
     notoriety: u64,
     #[serde(rename = "Fines")]
@@ -172,7 +191,9 @@ pub struct EDLogStatisticsCrime {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsSmuggling {
+#[testcase_struct({ "Black_Markets_Traded_With":22, "Black_Markets_Profits":123412, "Resources_Smuggled":143, 
+    "Average_Profit":12344.217391304, "Highest_Single_Transaction":139902 })]
+pub struct StatisticsSmuggling {
     #[serde(rename = "Black_Markets_Traded_With")]
     black_markets_traded_with: u64,
     #[serde(rename = "Black_Markets_Profits")]
@@ -198,15 +219,17 @@ pub struct StatisticsTradingOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsTrading {
+#[testcase_struct({ "Markets_Traded_With":147, "Market_Profits":12341234, "Resources_Traded":199113, "Average_Profit":123412.0073607, 
+    "Highest_Single_Transaction":12341234, "Data_Sold":756, "Goods_Sold":3932, "Assets_Sold":4311 })]
+pub struct StatisticsTrading {
     #[serde(rename = "Markets_Traded_With")]
     markets_traded_with: u64,
     #[serde(rename = "Market_Profits")]
-    market_profits: i64,
+    market_profits: Credits,
     #[serde(rename = "Resources_Traded")]
     resources_traded: u64,
     #[serde(rename = "Average_Profit")]
-    average_profit: f64,
+    average_profit: f64, // TODO: floating point credits type
     #[serde(rename = "Highest_Single_Transaction")]
     highest_single_transaction: Credits,
     #[serde(flatten)]
@@ -215,7 +238,8 @@ pub struct EDLogStatisticsTrading {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsMining {
+#[testcase_struct({ "Mining_Profits":12341234, "Quantity_Mined":7988, "Materials_Collected":56783 })]
+pub struct StatisticsMining {
     #[serde(rename = "Mining_Profits")]
     mining_profits: Credits,
     #[serde(rename = "Quantity_Mined")]
@@ -245,7 +269,12 @@ pub struct StatisticsExplorationOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsExploration {
+#[testcase_struct({ "Systems_Visited":5576, "Exploration_Profits":12341234, "Planets_Scanned_To_Level_2":57981, 
+    "Planets_Scanned_To_Level_3":57981, "Efficient_Scans":970, "Highest_Payout":1234123, "Total_Hyperspace_Distance":270553, 
+    "Total_Hyperspace_Jumps":9839, "Greatest_Distance_From_Start":24111.762273172, "Time_Played":7045860, 
+    "OnFoot_Distance_Travelled":1124559, "Shuttle_Journeys":26, "Shuttle_Distance_Travelled":297.87090093009, 
+    "Spent_On_Shuttles":146647, "First_Footfalls":156, "Planet_Footfalls":403, "Settlements_Visited":124 })]
+pub struct StatisticsExploration {
     #[serde(rename = "Systems_Visited")]
     systems_visited: u64,
     #[serde(rename = "Exploration_Profits")]
@@ -272,7 +301,9 @@ pub struct EDLogStatisticsExploration {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsPassengers {
+#[testcase_struct({ "Passengers_Missions_Accepted":13, "Passengers_Missions_Bulk":6, "Passengers_Missions_VIP":104, 
+    "Passengers_Missions_Delivered":110, "Passengers_Missions_Ejected":0 })]
+pub struct StatisticsPassengers {
     #[serde(rename = "Passengers_Missions_Accepted")]
     passengers_missions_accepted: Option<u64>,
     #[serde(rename = "Passengers_Missions_Bulk")]
@@ -310,7 +341,10 @@ pub struct StatisticsSeachAndRescueOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticSearchAndRescue {
+#[testcase_struct({ "SearchRescue_Traded":1388, "SearchRescue_Profit":43947801, "SearchRescue_Count":170, "Salvage_Legal_POI":5986700, 
+"Salvage_Legal_Settlements":58208700, "Salvage_Illegal_POI":10200000, "Salvage_Illegal_Settlements":405000, "Maglocks_Opened":1092, 
+"Panels_Opened":354, "Settlements_State_FireOut":951, "Settlements_State_Reboot":66 })]
+pub struct StatisticSearchAndRescue {
     #[serde(rename = "SearchRescue_Traded")]
     search_rescue_traded: u64,
     #[serde(rename = "SearchRescue_Profit")]
@@ -323,7 +357,17 @@ pub struct EDLogStatisticSearchAndRescue {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsSquadron {
+#[testcase_struct({ "Squadron_Bank_Credits_Deposited":0, "Squadron_Bank_Credits_Withdrawn":0, "Squadron_Bank_Commodities_Deposited_Num":0, 
+    "Squadron_Bank_Commodities_Deposited_Value":0, "Squadron_Bank_Commodities_Withdrawn_Num":0, "Squadron_Bank_Commodities_Withdrawn_Value":0, 
+    "Squadron_Bank_PersonalAssets_Deposited_Num":0, "Squadron_Bank_PersonalAssets_Deposited_Value":0, "Squadron_Bank_PersonalAssets_Withdrawn_Num":0, 
+    "Squadron_Bank_PersonalAssets_Withdrawn_Value":0, "Squadron_Bank_Ships_Deposited_Num":0, "Squadron_Bank_Ships_Deposited_Value":0, 
+    "Squadron_Leaderboard_aegis_highestcontribution":0, "Squadron_Leaderboard_bgs_highestcontribution":0, 
+    "Squadron_Leaderboard_bounty_highestcontribution":0, "Squadron_Leaderboard_colonisation_contribution_highestcontribution":0, 
+    "Squadron_Leaderboard_combat_highestcontribution":0, "Squadron_Leaderboard_cqc_highestcontribution":0, 
+    "Squadron_Leaderboard_exploration_highestcontribution":0, "Squadron_Leaderboard_mining_highestcontribution":0, 
+    "Squadron_Leaderboard_powerplay_highestcontribution":0, "Squadron_Leaderboard_trade_highestcontribution":0, 
+    "Squadron_Leaderboard_trade_illicit_highestcontribution":0, "Squadron_Leaderboard_podiums":0 })]
+pub struct StatisticsSquadron {
     #[serde(rename = "Squadron_Bank_Credits_Deposited")]
     squadron_bank_credits_deposited: Credits,
     #[serde(rename = "Squadron_Bank_Credits_Withdrawn")]
@@ -376,7 +420,9 @@ pub struct EDLogStatisticsSquadron {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsTgEncounters {
+#[testcase_struct({ "TG_ENCOUNTER_KILLED":10032, "TG_ENCOUNTER_TOTAL":171, "TG_ENCOUNTER_TOTAL_LAST_SYSTEM":"Pleiades Sector SZ-O b6-0", 
+    "TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP":"3311-11-24 11:13", "TG_ENCOUNTER_TOTAL_LAST_SHIP":"Mandalay" })]
+pub struct StatisticsTgEncounters {
     #[serde(rename = "TG_ENCOUNTER_IMPRINT")]
     tg_encounter_imprint: Option<u64>,
     #[serde(rename = "TG_ENCOUNTER_KILLED")]
@@ -418,7 +464,12 @@ pub struct StatisticsCraftingOnFoot {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsCrafting {
+#[testcase_struct({ "Count_Of_Used_Engineers":25, "Recipes_Generated":6364, "Recipes_Generated_Rank_1":902, 
+    "Recipes_Generated_Rank_2":972, "Recipes_Generated_Rank_3":1250, "Recipes_Generated_Rank_4":1413, 
+    "Recipes_Generated_Rank_5":1827, "Suit_Mods_Applied":9, "Weapon_Mods_Applied":18, "Suits_Upgraded":6, 
+    "Weapons_Upgraded":24, "Suits_Upgraded_Full":0, "Weapons_Upgraded_Full":0, "Suit_Mods_Applied_Full":3, 
+    "Weapon_Mods_Applied_Full":5 })]
+pub struct StatisticsCrafting {
     #[serde(rename = "Count_Of_Used_Engineers")]
     count_of_used_engineers: u64,
     #[serde(rename = "Recipes_Generated")]
@@ -439,7 +490,8 @@ pub struct EDLogStatisticsCrafting {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsCrew {
+#[testcase_struct({ "NpcCrew_TotalWages":0, "NpcCrew_Hired":0, "NpcCrew_Fired":0, "NpcCrew_Died":0 })]
+pub struct StatisticsCrew {
     #[serde(rename = "NpcCrew_TotalWages")]
     npc_crew_total_wages: Option<Credits>,
     #[serde(rename = "NpcCrew_Hired")]
@@ -452,7 +504,9 @@ pub struct EDLogStatisticsCrew {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsMulticrew {
+#[testcase_struct({ "Multicrew_Time_Total":870, "Multicrew_Gunner_Time_Total":0, "Multicrew_Fighter_Time_Total":0, 
+    "Multicrew_Credits_Total":0, "Multicrew_Fines_Total":0 })]
+pub struct StatisticsMulticrew {
     #[serde(rename = "Multicrew_Time_Total")]
     multicrew_time_total: u64,
     #[serde(rename = "Multicrew_Gunner_Time_Total")]
@@ -490,7 +544,11 @@ pub struct StatisticsMaterialTraderStatsDetail {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsMaterialTraderStats {
+#[testcase_struct({ "Trades_Completed":3819, "Materials_Traded":101524, "Encoded_Materials_Traded":34911, 
+    "Raw_Materials_Traded":17768, "Grade_1_Materials_Traded":19443, "Grade_2_Materials_Traded":22717, 
+    "Grade_3_Materials_Traded":21980, "Grade_4_Materials_Traded":20526, "Grade_5_Materials_Traded":16858, 
+    "Assets_Traded_In":307, "Assets_Traded_Out":1146 })]
+pub struct StatisticsMaterialTraderStats {
     #[serde(rename = "Trades_Completed")]
     trades_completed: u64,
     #[serde(rename = "Materials_Traded")]
@@ -501,7 +559,13 @@ pub struct EDLogStatisticsMaterialTraderStats {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsFleetcarrier {
+#[testcase_struct({ "FLEETCARRIER_EXPORT_TOTAL":8486, "FLEETCARRIER_IMPORT_TOTAL":3347, "FLEETCARRIER_TRADEPROFIT_TOTAL":848492, 
+    "FLEETCARRIER_TRADESPEND_TOTAL":335341, "FLEETCARRIER_STOLENPROFIT_TOTAL":0, "FLEETCARRIER_STOLENSPEND_TOTAL":0, 
+    "FLEETCARRIER_DISTANCE_TRAVELLED":55819.323803593, "FLEETCARRIER_TOTAL_JUMPS":197, "FLEETCARRIER_SHIPYARD_SOLD":0, 
+    "FLEETCARRIER_SHIPYARD_PROFIT":0, "FLEETCARRIER_OUTFITTING_SOLD":254, "FLEETCARRIER_OUTFITTING_PROFIT":0, "FLEETCARRIER_REARM_TOTAL":233, 
+    "FLEETCARRIER_REFUEL_TOTAL":757, "FLEETCARRIER_REFUEL_PROFIT":1913, "FLEETCARRIER_REPAIRS_TOTAL":465, "FLEETCARRIER_VOUCHERS_REDEEMED":954,
+    "FLEETCARRIER_VOUCHERS_PROFIT":12341234 })]
+pub struct StatisticsFleetcarrier {
     #[serde(rename = "FLEETCARRIER_EXPORT_TOTAL")]
     fleetcarrier_export_total: u64,
     #[serde(rename = "FLEETCARRIER_IMPORT_TOTAL")]
@@ -542,7 +606,7 @@ pub struct EDLogStatisticsFleetcarrier {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsCQCStats {
+pub struct StatisticsCQCStats {
     #[serde(rename = "CQC_Credits_Earned")]
     cqc_credits_earned: Option<Credits>,
     #[serde(rename = "CQC_Time_Played")]
@@ -557,7 +621,10 @@ pub struct EDLogStatisticsCQCStats {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
-pub struct EDLogStatisticsExobiology {
+#[testcase_struct({ "Organic_Genus_Encountered":16, "Organic_Species_Encountered":66, "Organic_Variant_Encountered":225, 
+    "Organic_Data_Profits":12341234, "Organic_Data":515, "First_Logged_Profits":12341234, "First_Logged":336, "Organic_Systems":128, 
+    "Organic_Planets":210, "Organic_Genus":11, "Organic_Species":19 })]
+pub struct StatisticsExobiology {
     #[serde(rename = "Organic_Genus_Encountered")]
     organic_genus_encountered: u64,
     #[serde(rename = "Organic_Species_Encountered")]
@@ -586,27 +653,27 @@ pub struct EDLogStatisticsExobiology {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStatistics {
     #[serde(rename = "Bank_Account")]
-    pub bank_account: EDLogStatisticsBankAccount,
-    pub combat: EDLogStatisticsCombat,
-    pub crime: EDLogStatisticsCrime,
-    pub smuggling: EDLogStatisticsSmuggling,
-    pub trading: EDLogStatisticsTrading,
-    pub mining: EDLogStatisticsMining,
-    pub exploration: EDLogStatisticsExploration,
-    pub passengers: EDLogStatisticsPassengers,
+    pub bank_account: StatisticsBankAccount,
+    pub combat: StatisticsCombat,
+    pub crime: StatisticsCrime,
+    pub smuggling: StatisticsSmuggling,
+    pub trading: StatisticsTrading,
+    pub mining: StatisticsMining,
+    pub exploration: StatisticsExploration,
+    pub passengers: StatisticsPassengers,
     #[serde(rename = "Search_And_Rescue")]
-    pub search_and_rescue: EDLogStatisticSearchAndRescue,
-    pub squadron: Option<EDLogStatisticsSquadron>,
+    pub search_and_rescue: StatisticSearchAndRescue,
+    pub squadron: Option<StatisticsSquadron>,
     #[serde(rename = "TG_ENCOUNTERS")]
-    pub tg_encounters: Option<EDLogStatisticsTgEncounters>,
-    pub crafting: EDLogStatisticsCrafting,
-    pub crew: EDLogStatisticsCrew,
-    pub multicrew: EDLogStatisticsMulticrew,
+    pub tg_encounters: Option<StatisticsTgEncounters>,
+    pub crafting: StatisticsCrafting,
+    pub crew: StatisticsCrew,
+    pub multicrew: StatisticsMulticrew,
     #[serde(rename = "Material_Trader_Stats")]
-    pub material_trader_stats: EDLogStatisticsMaterialTraderStats,
+    pub material_trader_stats: StatisticsMaterialTraderStats,
     #[serde(rename = "CQC")]
-    pub cqc_stats: Option<EDLogStatisticsCQCStats>,
+    pub cqc_stats: Option<StatisticsCQCStats>,
     #[serde(rename = "FLEETCARRIER")]
-    pub fleetcarrier: Option<EDLogStatisticsFleetcarrier>,
-    pub exobiology: Option<EDLogStatisticsExobiology>,
+    pub fleetcarrier: Option<StatisticsFleetcarrier>,
+    pub exobiology: Option<StatisticsExobiology>,
 }

@@ -184,8 +184,14 @@ pub struct EDLogCarrierCrewServices {
     crew_name: EDString,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum CarrierVariant {
+    CarrierDockB,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-01-08T12:36:19Z", "event":"CarrierBuy", "CarrierID":12341234, "BoughtAtMarket":3223259392, "Location":"Mitnahas", "SystemAddress":7267218695553, "Price":5000000000, "Variant":"CarrierDockB", "Callsign":"A1A-A1A" })]
 pub struct EDLogCarrierBuy {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
@@ -193,7 +199,7 @@ pub struct EDLogCarrierBuy {
     location: EDString,
     system_address: u64,
     price: Credits,
-    variant: EDString,
+    variant: CarrierVariant,
     callsign: EDString,
 }
 

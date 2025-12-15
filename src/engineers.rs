@@ -1,5 +1,5 @@
 use crate::{EDString, common_types::ModuleEngineeringModifiers};
-use ed_parse_log_files_macros::Extractable;
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -11,6 +11,7 @@ pub enum EngineerProgress {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Engineer":"Tod 'The Blaster' McQuinn", "EngineerID":300260, "Progress":"Known" })]
 pub struct Engineer {
     engineer: Option<EDString>,
     #[serde(rename = "EngineerID")]
@@ -22,6 +23,8 @@ pub struct Engineer {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2022-06-13T18:58:38Z", "event":"EngineerProgress", "Engineer":"Felicity Farseer", "EngineerID":300100, "Progress":"Invited" })]
+#[testcase({ "timestamp":"2022-06-15T18:12:12Z", "event":"EngineerProgress", "Engineers":[ { "Engineer":"Tod 'The Blaster' McQuinn", "EngineerID":300260, "Progress":"Known" } ] })]
 pub struct EDLogEngineerProgress {
     #[serde(flatten)]
     pub engineer: Option<Engineer>,

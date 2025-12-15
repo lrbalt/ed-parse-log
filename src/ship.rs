@@ -112,6 +112,8 @@ pub enum ShipType {
     Empirefighter,
     #[serde(rename = "empire_trader", alias = "Empire_Trader")]
     EmpireTrader,
+    #[serde(rename = "explorer_nx", alias = "Explorer_NX")]
+    CaspianExplorer,
     #[serde(rename = "federation_corvette", alias = "Federation_Corvette")]
     FederationCorvette,
     #[serde(rename = "federation_dropship")]
