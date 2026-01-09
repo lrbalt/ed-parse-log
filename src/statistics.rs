@@ -104,11 +104,18 @@ pub struct StatisticsCombatOnFoot {
     "ConflictZone_Medium":40, "ConflictZone_Low":38, "ConflictZone_Total":465, "ConflictZone_High_Wins":387, 
     "ConflictZone_Medium_Wins":40, "ConflictZone_Low_Wins":38, "ConflictZone_Total_Wins":465, 
     "Settlement_Defended":33, "Settlement_Conquered":7, "OnFoot_Skimmers_Killed":71, "OnFoot_Scavs_Killed":384 })]
+#[testcase_struct({ "Bounties_Claimed":18741, "Bounty_Hunting_Profit":1390383055.75, "Combat_Bonds":6279, 
+    "Combat_Bond_Profits":69816712, "Assassinations":138, "Assassination_Profits":57761837, "Highest_Single_Reward":2084395, 
+    "Skimmers_Killed":28, "OnFoot_Combat_Bonds":54907, "OnFoot_Combat_Bonds_Profits":6931746150, "OnFoot_Vehicles_Destroyed":0, 
+    "OnFoot_Ships_Destroyed":0, "Dropships_Taken":0, "Dropships_Booked":2, "Dropships_Cancelled":2, "ConflictZone_High":1700, 
+    "ConflictZone_Medium":64, "ConflictZone_Low":6, "ConflictZone_Total":1770, "ConflictZone_High_Wins":1692, 
+    "ConflictZone_Medium_Wins":62, "ConflictZone_Low_Wins":6, "ConflictZone_Total_Wins":1760, "Settlement_Defended":44, 
+    "Settlement_Conquered":18, "OnFoot_Skimmers_Killed":218, "OnFoot_Scavs_Killed":918 })]
 pub struct StatisticsCombat {
     #[serde(rename = "Bounties_Claimed")]
     bounties_claimed: u64,
     #[serde(rename = "Bounty_Hunting_Profit")]
-    bounty_hunting_profit: Credits, // TODO: only instance of Credits where f64 is used
+    bounty_hunting_profit: f64, // TODO: only instance of Credits where f64 is used
     #[serde(rename = "Combat_Bonds")]
     combat_bonds: u64,
     #[serde(rename = "Combat_Bond_Profits")]

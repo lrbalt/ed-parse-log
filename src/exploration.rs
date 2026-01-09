@@ -51,7 +51,7 @@ pub struct EDLogFSSSignalDiscovered {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct AtmosphereComposition {
-    name: EDString,
+    name: AtmosphereType,
     percent: f64,
 }
 
@@ -109,25 +109,101 @@ pub struct Ring {
     outer_rad: f64,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum AtmosphereType {
+    None,
+
+    Ammonia,
+    AmmoniaOxygen,
+    AmmoniaRich,
+    Argon,
+    ArgonRich,
+    CarbonDioxide,
+    CarbonDioxideRich,
+    EarthLike,
+    Hydrogen,
+    Helium,
+    Iron,
+    MetallicVapour,
+    Methane,
+    MethaneRich,
+    Neon,
+    NeonRich,
+    Nitrogen,
+    Oxygen,
+    Silicates,
+    SilicateVapour,
+    SulphurDioxide,
+    Water,
+    WaterRich,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum TerraformState {
+    #[serde(rename = "")]
+    None,
+    Terraformable,
+    Terraforming,
+    Terraformed,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum PlanetClass {
+    #[serde(rename = "Ammonia world")]
+    AmmoniaWorld,
+    #[serde(rename = "Earthlike body")]
+    EarthlikeBody,
+    #[serde(rename = "Gas giant with ammonia based life")]
+    GasGiantWithAmmoniaBasedLife,
+    #[serde(rename = "Gas giant with water based life")]
+    GasGiantWithWaterBasedLife,
+    #[serde(rename = "High metal content body")]
+    HighMetalContentBody,
+    #[serde(rename = "Helium rich gas giant")]
+    HeliumRichGasGiant,
+    #[serde(rename = "Icy body")]
+    IcyBody,
+    #[serde(rename = "Metal rich body")]
+    MetalRichBody,
+    #[serde(rename = "Rocky ice body")]
+    RockyIceBody,
+    #[serde(rename = "Rocky body")]
+    RockyBody,
+    #[serde(rename = "Sudarsky class I gas giant")]
+    SudarskyClassIGasGiant,
+    #[serde(rename = "Sudarsky class II gas giant")]
+    SudarskyClassIIGasGiant,
+    #[serde(rename = "Sudarsky class III gas giant")]
+    SudarskyClassIIIGasGiant,
+    #[serde(rename = "Sudarsky class IV gas giant")]
+    SudarskyClassIVGasGiant,
+    #[serde(rename = "Sudarsky class V gas giant")]
+    SudarskyClassVGasGiant,
+    #[serde(rename = "Water giant")]
+    WaterGiant,
+    #[serde(rename = "Water world")]
+    WaterWorld,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ScannedBodyDetails {
-    tidal_lock: bool,
-    terraform_state: EDString,
-    planet_class: EDString,
-    atmosphere: EDString,
-    atmosphere_type: EDString,
-    atmosphere_composition: Option<Vec<AtmosphereComposition>>,
-    volcanism: EDString,
+    pub tidal_lock: bool,
+    pub terraform_state: TerraformState,
+    pub planet_class: PlanetClass,
+    pub atmosphere: EDString,
+    pub atmosphere_type: AtmosphereType,
+    pub atmosphere_composition: Option<Vec<AtmosphereComposition>>,
+    pub volcanism: EDString,
     #[serde(rename = "MassEM")]
-    mass_em: f64,
-    radius: f64,
-    surface_gravity: f64,
-    surface_pressure: f64,
-    landable: bool,
-    materials: Option<Vec<MaterialOnBody>>,
-    composition: BodyComposition,
-    rings: Option<Vec<Ring>>,
+    pub mass_em: f64,
+    pub radius: f64,
+    pub surface_gravity: f64,
+    pub surface_pressure: f64,
+    pub landable: bool,
+    pub materials: Option<Vec<MaterialOnBody>>,
+    pub composition: BodyComposition,
+    pub rings: Option<Vec<Ring>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -341,6 +417,8 @@ pub struct EDLogMultiSellExplorationData {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-12-17T10:30:50Z", "event":"FSSDiscoveryScan", "Progress":1.000000, 
+    "BodyCount":2, "NonBodyCount":23, "SystemName":"HIP 12355", "SystemAddress":138741286052 })]
 pub struct EDLogFSSDiscoveryScan {
     pub progress: f64,
     pub body_count: u64,
@@ -360,37 +438,41 @@ pub struct EDLogStationBernalSphere {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-30T12:31:30Z", "event":"SAAScanComplete", 
+    "BodyName":"Prae Drye XZ-P d5-4 7 f", "SystemAddress":147194694067, "BodyID":69, "ProbesUsed":2, "EfficiencyTarget":4 })]
 pub struct EDLogSAAScanComplete {
-    body_name: EDString,
-    system_address: u64,
+    pub body_name: EDString,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    probes_used: u64,
-    efficiency_target: u64,
+    pub body_id: u64,
+    pub probes_used: u64,
+    pub efficiency_target: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogScanBaryCentre {
-    star_system: EDString,
-    system_address: u64,
+    pub star_system: EDString,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    semi_major_axis: f64,
-    eccentricity: f64,
-    orbital_inclination: f64,
-    periapsis: f64,
-    orbital_period: f64,
-    ascending_node: f64,
-    mean_anomaly: f64,
+    pub body_id: u64,
+    pub semi_major_axis: f64,
+    pub eccentricity: f64,
+    pub orbital_inclination: f64,
+    pub periapsis: f64,
+    pub orbital_period: f64,
+    pub ascending_node: f64,
+    pub mean_anomaly: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-01-07T19:57:12Z", "event":"FSSAllBodiesFound", 
+    "SystemName":"Hyades Sector MX-T b3-2", "SystemAddress":5068732245337, "Count":1 })]
 pub struct EDLogFSSAllBodiesFound {
-    system_name: EDString,
-    system_address: u64,
-    count: u64,
+    pub system_name: EDString,
+    pub system_address: u64,
+    pub count: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -455,12 +537,12 @@ pub struct SAAGenus {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSAASignalsFound {
-    body_name: EDString,
-    system_address: u64,
+    pub body_name: EDString,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    signals: Vec<BodySignal>,
-    genuses: Option<Vec<SAAGenus>>,
+    pub body_id: u64,
+    pub signals: Vec<BodySignal>,
+    pub genuses: Option<Vec<SAAGenus>>,
 }
 
 #[test]

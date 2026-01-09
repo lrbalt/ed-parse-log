@@ -663,11 +663,11 @@ pub struct StarSystemData {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyInformation {
-    star_system: EDString,
-    system_address: u64,
-    body: EDString,
+    pub star_system: EDString,
+    pub system_address: u64,
+    pub body: EDString,
     #[serde(rename = "BodyID")]
-    body_id: u64,
+    pub body_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

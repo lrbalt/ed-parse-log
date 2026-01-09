@@ -59,6 +59,7 @@ pub enum MarketItemType {
     AdvancedCatalysers,
     ReinforcedMountingPlate,
     MarineSupplies,
+    #[serde(alias = "Clothing")]
     Clothing,
     #[serde(alias = "ConsumerTechnology")]
     ConsumerTechnology,
@@ -151,6 +152,7 @@ pub enum MarketItemType {
     CropHarvesters,
     DiagnosticSensor,
     Hostage,
+    #[serde(alias = "Scrap")]
     Scrap,
     CoolingHoses,
     ReactiveArmour,
@@ -172,6 +174,7 @@ pub enum MarketItemType {
     Leather,
     Robotics,
     NaturalFabrics,
+    ScientificResearch,
 
     Drones,
     #[serde(alias = "DamagedEscapePod")]

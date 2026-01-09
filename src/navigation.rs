@@ -152,18 +152,18 @@ pub struct EDLogSRVDestroyed {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogTouchdown {
-    player_controlled: bool,
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
+    pub player_controlled: bool,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
     #[serde(flatten)]
-    start_system_info: Option<BodyInformation>,
-    on_station: Option<bool>,
-    on_planet: Option<bool>,
-    latitude: Option<f64>,
-    longitude: Option<f64>,
-    nearest_destination: Option<EDString>,
+    pub body_information: Option<BodyInformation>,
+    pub on_station: Option<bool>,
+    pub on_planet: Option<bool>,
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
+    pub nearest_destination: Option<EDString>,
     #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<EDString>,
+    pub nearest_destination_localised: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

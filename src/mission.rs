@@ -150,26 +150,41 @@ pub struct FactionEffect {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-12-15T09:36:49Z", "event":"MissionCompleted", "Faction":"CdE Corporation", "Name":"Mission_Sightseeing_name", 
+    "LocalisedName":"Christina Wood Seeks Sightseeing Adventure", "MissionID":12341234, "Commodity":"$ConsumerTechnology_Name;", 
+    "Commodity_Localised":"Consumer Technology", "Count":1, "DestinationSystem":"Sothis", "Reward":1818345, "FactionEffects":[ 
+        { 
+            "Faction":"CdE Corporation", "Effects":[ { "Effect":"$MISSIONUTIL_Interaction_Summary_SP_up;", "Effect_Localised":"The security status of $#MinorFaction; has improved in the $#System; system.", "Trend":"UpGood" } ], 
+            "Influence":[ { "SystemAddress":9463020987689, "Trend":"UpGood", "Influence":"++" } ], 
+            "ReputationTrend":"UpGood", "Reputation":"++" } 
+    ]})]
+#[testcase({ "timestamp":"2025-11-11T19:10:37Z", "event":"MissionCompleted", "Faction":"Kamadhenu Citizens' Forum", 
+    "Name":"Mission_AltruismCredits_name", "LocalisedName":"Donate 1,000,000 Cr to the cause", 
+    "MissionID":12341234, "Donation":"1000000", "Donated":1000000, "FactionEffects":[ { 
+        "Faction":"Kamadhenu Citizens' Forum", "Effects":[ { "Effect":"$MISSIONUTIL_Interaction_Summary_EP_up;", "Effect_Localised":"The economic status of $#MinorFaction; has improved in the $#System; system.", "Trend":"UpGood" } ], 
+        "Influence":[ { "SystemAddress":4756441502482, "Trend":"UpGood", "Influence":"++" } ], 
+        "ReputationTrend":"UpGood", "Reputation":"++" } 
+    ] })]
 pub struct EDLogMissionCompleted {
-    faction: EDString,
-    name: EDString,
-    localised_name: Option<EDString>,
+    pub faction: EDString,
+    pub name: EDString,
+    pub localised_name: Option<EDString>,
     #[serde(rename = "MissionID")]
-    mission_id: u64,
-    donation: Option<EDString>,
-    donated: Option<u64>,
+    pub mission_id: u64,
+    pub donation: Option<EDString>,
+    pub donated: Option<Credits>,
     #[serde(flatten)]
-    mission_target: Option<MissionTarget>,
+    pub mission_target: Option<MissionTarget>,
     #[serde(flatten)]
-    mission_destination: Option<MissionDestination>,
-    commodity: Option<EDString>,
+    pub mission_destination: Option<MissionDestination>,
+    pub commodity: Option<EDString>,
     #[serde(rename = "Commodity_Localised")]
-    commodity_localised: Option<EDString>,
-    count: Option<u64>,
-    reward: Option<u64>,
-    commodity_reward: Option<Vec<CommodityReward>>,
-    materials_reward: Option<Vec<MaterialReward>>,
-    faction_effects: Option<Vec<FactionEffect>>,
+    pub commodity_localised: Option<EDString>,
+    pub count: Option<u64>,
+    pub reward: Option<Credits>,
+    pub commodity_reward: Option<Vec<CommodityReward>>,
+    pub materials_reward: Option<Vec<MaterialReward>>,
+    pub faction_effects: Option<Vec<FactionEffect>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -271,7 +286,8 @@ pub struct VoucherFaction {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-06-28T21:45:34Z", "event":"RedeemVoucher", "Type":"trade", "Amount":14229 })]
-#[testcase({ "timestamp":"2025-11-09T20:07:12Z", "event":"RedeemVoucher", "Type":"bounty", "Amount":1500, "Factions":[ { "Faction":"", "Amount":1500 } ], "BrokerPercentage":25.000000 })]
+#[testcase({ "timestamp":"2025-11-09T20:07:12Z", "event":"RedeemVoucher", "Type":"bounty", "Amount":1500, 
+    "Factions":[ { "Faction":"", "Amount":1500 } ], "BrokerPercentage":25.000000 })]
 pub struct EDLogRedeemVoucher {
     #[serde(rename = "Type")]
     pub voucher_type: VoucherType,
@@ -325,8 +341,10 @@ pub struct EDLogPVPKill {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-01-05T20:04:31Z", "event":"FactionKillBond", "Reward":52500, 
+    "AwardingFaction":"Sirius Inc", "VictimFaction":"Race Marshalls" })]
 pub struct EDLogFactionKillBond {
-    reward: u64,
+    reward: Credits,
     awarding_faction: EDString,
     #[serde(rename = "AwardingFaction_Localised")]
     awarding_faction_localised: Option<EDString>,
