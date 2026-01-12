@@ -7,6 +7,7 @@ use std::{
     ops::{Add, AddAssign, Mul, Neg, Sub, SubAssign},
     str::FromStr,
 };
+use strum::Display;
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
 pub struct Merits(u64);
@@ -513,24 +514,37 @@ pub enum SAASignalType {
     Opal,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 pub enum FSSSignalType {
     Generic,
+    #[strum(to_string = "Resource Extraction")]
     ResourceExtraction,
     Combat,
+    #[strum(to_string = "Navigation Beacon")]
     NavBeacon,
     Outpost,
     Installation,
+    #[strum(to_string = "Coriolis Station")]
     StationCoriolis,
+    #[strum(to_string = "Dodec Station")]
     StationDodec,
+    #[strum(to_string = "Asteroid Station")]
     StationAsteroid,
+    #[strum(to_string = "Bernal Sphere Station")]
     StationBernalSphere,
+    #[strum(to_string = "O'Neil Orbis Station")]
     StationONeilOrbis,
+    #[strum(to_string = "O'Neil Cylinder Station")]
     StationONeilCylinder,
+    #[strum(to_string = "Fleet Carrier")]
     FleetCarrier,
+    #[strum(to_string = "Squadron Carrier")]
     SquadronCarrier,
+    #[strum(to_string = "Mega Ship")]
     Megaship,
+    #[strum(to_string = "Mega Ship (Station)")]
     StationMegaShip,
+    #[strum(to_string = "Tourist Beacon")]
     TouristBeacon,
     Titan,
     #[serde(rename = "USS")]
@@ -538,54 +552,37 @@ pub enum FSSSignalType {
     Codex,
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, Display)]
 pub enum StationType {
     #[serde(rename = "")]
+    #[strum(to_string = "None")]
     None,
-    Outpost,
-    Coriolis,
-    Orbis,
-    FleetCarrier,
-    Ocellus,
-    Bernal,
-    CraterOutpost,
-    CraterPort,
-    MegaShip,
-    SurfaceStation,
-    OnFootSettlement,
+    #[strum(to_string = "Asteroid Base")]
     AsteroidBase,
-    PlanetaryConstructionDepot,
+    Bernal,
+    Coriolis,
+    #[strum(to_string = "Crater Outpost")]
+    CraterOutpost,
+    #[strum(to_string = "Crater Port")]
+    CraterPort,
+    Dodec,
+    #[strum(to_string = "Dockable Planet Station")]
     DockablePlanetStation,
+    #[strum(to_string = "Fleet Carrier")]
+    FleetCarrier,
+    #[strum(to_string = "Mega Ship")]
+    MegaShip,
+    Ocellus,
+    #[strum(to_string = "On Foot Settlement")]
+    OnFootSettlement,
+    Orbis,
+    Outpost,
+    #[strum(to_string = "Planetary Construction Depot")]
+    PlanetaryConstructionDepot,
+    #[strum(to_string = "Space Construction Depot")]
     SpaceConstructionDepot,
-}
-
-impl Display for StationType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            StationType::None => write!(f, "None"),
-            StationType::Outpost => write!(f, "Outpost"),
-            StationType::Coriolis => write!(f, "Coriolis"),
-            StationType::Orbis => write!(f, "Orbis"),
-            StationType::FleetCarrier => write!(f, "Fleet Carrier"),
-            StationType::Ocellus => write!(f, "Ocellus"),
-            StationType::Bernal => write!(f, "Bernal"),
-            StationType::CraterOutpost => write!(f, "Crater Outpost"),
-            StationType::CraterPort => write!(f, "Crater Port"),
-            StationType::MegaShip => write!(f, "Mega Ship"),
-            StationType::SurfaceStation => write!(f, "Surface Station"),
-            StationType::OnFootSettlement => write!(f, "On Foot Settlement"),
-            StationType::AsteroidBase => write!(f, "Asteroid Base"),
-            StationType::PlanetaryConstructionDepot => {
-                write!(f, "Planetary Construction Depot")
-            }
-            StationType::DockablePlanetStation => {
-                write!(f, "Dockable Planet Station")
-            }
-            StationType::SpaceConstructionDepot => {
-                write!(f, "Space Construction Depot")
-            }
-        }
-    }
+    #[strum(to_string = "Surface Station")]
+    SurfaceStation,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -620,29 +617,73 @@ pub enum DroneType {
     FuelTransfer,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 pub enum PowerplayState {
     Unoccupied,
     Exploited,
     Controlled,
     Fortified,
     Contested,
+    #[strum(to_string = "Home System")]
     HomeSystem,
     Stronghold,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+pub enum Power {
+    #[serde(rename = "A. Lavigny-Duval")]
+    #[strum(to_string = "A. Lavigny-Duval")]
+    ALavignyDuval,
+    #[serde(rename = "Aisling Duval")]
+    #[strum(to_string = "Aisling Duval")]
+    AislingDuval,
+    #[serde(rename = "Archon Delaine")]
+    #[strum(to_string = "Archon Delaine")]
+    ArchonDelaine,
+    #[serde(rename = "Denton Patreus")]
+    #[strum(to_string = "Denton Patreus")]
+    DentonPatreus,
+    #[serde(rename = "Edmund Mahon")]
+    #[strum(to_string = "Edmund Mahon")]
+    EdmundMahon,
+    #[serde(rename = "Felicia Winters")]
+    #[strum(to_string = "Felicia Winters")]
+    FeliciaWinters,
+    #[serde(rename = "Jerome Archer")]
+    #[strum(to_string = "Jerome Archer")]
+    JeromeArcher,
+    #[serde(rename = "Li Yong-Rui")]
+    #[strum(to_string = "Li Yong-Rui")]
+    LiYongRui,
+    #[serde(rename = "Nakato Kaine")]
+    #[strum(to_string = "Nakato Kaine")]
+    NakatoKaine,
+    #[serde(rename = "Pranav Antal")]
+    #[strum(to_string = "Pranav Antal")]
+    PranavAntal,
+    #[serde(rename = "Yuri Grom")]
+    #[strum(to_string = "Yuri Grom")]
+    YuriGrom,
+    #[serde(rename = "Zachary Hudson")]
+    #[strum(to_string = "Zachary Hudson")]
+    ZacharyHudson,
+    #[serde(rename = "Zemina Torval")]
+    #[strum(to_string = "Zemina Torval")]
+    ZeminaTorval,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PowerplayConflictProgress {
-    pub power: EDString,
+    pub power: Power,
     pub conflict_progress: f64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Powers {
-    pub controlling_power: Option<EDString>,
-    pub powers: Vec<EDString>,
+    pub controlling_power: Option<Power>,
+    pub powers: Vec<Power>,
     pub powerplay_state: PowerplayState,
     pub powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
     pub powerplay_state_control_progress: Option<f64>,
@@ -695,12 +736,12 @@ pub struct StationInformation {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub station_faction: FactionName,
-    pub station_government: EDString,
+    pub station_government: GovernmentType,
     #[serde(rename = "StationGovernment_Localised")]
     pub station_government_localised: EDString,
     pub station_allegiance: Option<Allegiance>,
     pub station_services: Vec<StationService>,
-    pub station_economy: EDString,
+    pub station_economy: SystemEconomy,
     #[serde(rename = "StationEconomy_Localised")]
     pub station_economy_localised: EDString,
     pub station_economies: Vec<StationEconomy>,
@@ -842,7 +883,7 @@ pub struct ThargoidWar {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEconomy {
-    name: EDString,
+    name: SystemEconomy,
     #[serde(rename = "Name_Localised")]
     name_localised: EDString,
     proportion: f64,
@@ -886,6 +927,89 @@ pub struct FactionPendingState {
     trend: u64,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+pub enum GovernmentType {
+    #[serde(alias = "$government_Anarchy;")]
+    Anarchy,
+    #[serde(alias = "$government_Communism;")]
+    Communism,
+    #[serde(alias = "$government_Confederacy;")]
+    Confederacy,
+    #[serde(alias = "$government_Carrier;")]
+    Carrier,
+    #[serde(alias = "$government_Cooperative;")]
+    Cooperative,
+    #[serde(alias = "$government_Corporate;")]
+    Corporate,
+    #[serde(alias = "$government_Democracy;")]
+    Democracy,
+    #[serde(alias = "$government_Dictatorship;")]
+    Dictatorship,
+    #[serde(alias = "$government_Engineer;")]
+    Engineer,
+    #[serde(alias = "$government_Feudal;")]
+    Feudal,
+    // Imperial,
+    #[serde(alias = "$government_Patronage;")]
+    Patronage,
+    #[serde(alias = "$government_Prison;")]
+    Prison,
+    #[serde(alias = "$government_PrisonColony;")]
+    PrisonColony,
+    #[serde(alias = "$government_Theocracy;")]
+    Theocracy,
+    #[serde(alias = "$government_None;")]
+    None,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum SystemEconomy {
+    #[serde(alias = "$economy_Agri;")]
+    Agriculture,
+    #[serde(alias = "$economy_Colony;")]
+    Colony,
+    #[serde(alias = "$economy_Carrier;")]
+    Carrier,
+    #[serde(alias = "$economy_Damaged;")]
+    Damaged,
+    #[serde(alias = "$economy_Engineer;")]
+    Engineer,
+    #[serde(alias = "$economy_Extraction;")]
+    Extraction,
+    #[serde(alias = "$economy_HighTech;")]
+    HighTech,
+    #[serde(alias = "$economy_Industrial;")]
+    Industrial,
+    #[serde(alias = "$economy_Military;")]
+    Military,
+    #[serde(alias = "$economy_Prison;")]
+    Prison,
+    #[serde(alias = "$economy_Refinery;")]
+    Refinery,
+    #[serde(alias = "$economy_Rescue;")]
+    Rescue,
+    #[serde(alias = "$economy_Service;")]
+    Service,
+    #[serde(alias = "$economy_Terraforming;")]
+    Terraforming,
+    #[serde(alias = "$economy_Tourism;")]
+    Tourism,
+    #[serde(alias = "$economy_None;")]
+    None,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum SystemSecurity {
+    #[serde(alias = "$SYSTEM_SECURITY_high;")]
+    High,
+    #[serde(alias = "$SYSTEM_SECURITY_medium;")]
+    Medium,
+    #[serde(alias = "$SYSTEM_SECURITY_low;")]
+    Low,
+    #[serde(alias = "$GAlAXY_MAP_INFO_state_anarchy;")]
+    Anarchy,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase_struct({ "Name":"Pilots Federation Local Branch", "FactionState":"None", 
@@ -895,7 +1019,7 @@ pub struct FactionPendingState {
 pub struct Faction {
     pub name: EDString,
     pub faction_state: FactionState,
-    pub government: EDString,
+    pub government: GovernmentType,
     pub influence: f64,
     pub allegiance: EDString,
     pub happiness: Option<EDString>,

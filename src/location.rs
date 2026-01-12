@@ -1,8 +1,8 @@
 use crate::{
     EDString,
     common_types::{
-        Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, Powers,
-        StationInformation, ThargoidWar,
+        Allegiance, BodyType, Conflict, Faction, FactionName, FactionState, GovernmentType, Powers,
+        StationInformation, SystemEconomy, SystemSecurity, ThargoidWar,
     },
     utils::string_or_struct,
 };
@@ -41,16 +41,16 @@ pub struct EDLogLocation {
     pub system_address: Option<u64>,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,
-    pub system_economy: EDString,
+    pub system_economy: SystemEconomy,
     #[serde(rename = "SystemEconomy_Localised")]
     pub system_economy_localised: EDString,
-    pub system_second_economy: Option<EDString>,
+    pub system_second_economy: Option<SystemEconomy>,
     #[serde(rename = "SystemSecondEconomy_Localised")]
     pub system_second_economy_localised: Option<EDString>,
-    pub system_government: EDString,
+    pub system_government: GovernmentType,
     #[serde(rename = "SystemGovernment_Localised")]
     pub system_government_localised: EDString,
-    pub system_security: EDString,
+    pub system_security: SystemSecurity,
     #[serde(rename = "SystemSecurity_Localised")]
     pub system_security_localised: EDString,
     pub population: u64,

@@ -319,14 +319,14 @@ fn collect_system_data(
 
 fn pp_info(pp_data: &Powers) -> String {
     format!(
-        "{:?}\n{}\n{}",
+        "{}\n{}\n{}",
         pp_data.powerplay_state,
         pp_data
             .controlling_power
             .as_ref()
             .map(|p| p.to_string())
             .unwrap_or("None".to_string()),
-        pp_data.powers.iter().map(|p| p.as_str()).join("\n")
+        pp_data.powers.iter().map(|p| p.to_string()).join("\n")
     )
 }
 
@@ -478,7 +478,7 @@ fn show_system_data(system_data: Option<SystemData>, system_name: &str) {
                     .unwrap_or(&m.1.signal_name),
                 m.1.signal_type
                     .as_ref()
-                    .map(|m| format!("{m:?}"))
+                    .map(|m| m.to_string())
                     .unwrap_or("None".to_string()),
                 m.0.to_string()
             ]
