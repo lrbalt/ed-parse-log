@@ -1,4 +1,8 @@
-use crate::{EDString, commander::CombatRank};
+use crate::{
+    EDString,
+    commander::CombatRank,
+    log_line::{EDLogEvent, Extractable},
+};
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -362,14 +366,18 @@ pub enum FactionState {
     Lockdown,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
 pub enum BodyType {
     Star,
     Station,
     Planet,
+    #[strum(to_string = "Planetary Ring")]
     PlanetaryRing,
+    #[strum(to_string = "Stellar Ring")]
     StellarRing,
+    #[strum(to_string = "Asteroid Cluster")]
     AsteroidCluster,
+    #[strum(to_string = "Unknown")]
     Null,
 }
 
@@ -617,7 +625,7 @@ pub enum DroneType {
     FuelTransfer,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, Display)]
 pub enum PowerplayState {
     Unoccupied,
     Exploited,
@@ -629,7 +637,7 @@ pub enum PowerplayState {
     Stronghold,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
 pub enum Power {
     #[serde(rename = "A. Lavigny-Duval")]
     #[strum(to_string = "A. Lavigny-Duval")]
@@ -709,6 +717,16 @@ pub struct BodyInformation {
     pub body: EDString,
     #[serde(rename = "BodyID")]
     pub body_id: u64,
+}
+
+impl Extractable for BodyInformation {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        match event {
+            EDLogEvent::ApproachBody(info) => Some(info),
+            EDLogEvent::LeaveBody(info) => Some(info),
+            _ => None,
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -994,6 +1012,8 @@ pub enum SystemEconomy {
     Terraforming,
     #[serde(alias = "$economy_Tourism;")]
     Tourism,
+    #[serde(alias = "$economy_Undefined;")]
+    Undefined,
     #[serde(alias = "$economy_None;")]
     None,
 }

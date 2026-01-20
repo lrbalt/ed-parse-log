@@ -37,7 +37,7 @@ pub struct EDLogLocation {
     pub multicrew: Option<bool>,
     #[serde(rename = "InSRV")]
     pub in_srv: Option<bool>,
-    pub star_system: String,
+    pub star_system: EDString,
     pub system_address: Option<u64>,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,

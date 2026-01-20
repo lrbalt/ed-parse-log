@@ -2,6 +2,9 @@
 name = "ed-parse-log-files-macros"
 version = "0.2.0"
 edition = "2024"
+license = "MIT"
+authors = ["Reinier Balt <lrbalt@gmail.com>"]
+description = "A library with marcos to create tests for parsing log lines from Elite Dangerous"
 
 [lib]
 proc-macro = true
@@ -10,4 +13,4 @@ proc-macro = true
 syn = { version = "2.0", features = ["full"] }
 quote = "1.0"
 proc-macro2 = "1.0"
-uuid = { version = "1.18", features = ["v4"] }
+uuid = { version = "1.19", features = ["v4"] }
