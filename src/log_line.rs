@@ -296,7 +296,6 @@ pub struct EDLogScreenshot {
 #[derive(Serialize, Deserialize, Clone, Debug, Display, EnumDiscriminants)]
 #[serde(tag = "event", deny_unknown_fields)]
 #[strum_discriminants(derive(EnumIter, Display))]
-#[allow(clippy::large_enum_variant)]
 pub enum EDLogEvent {
     #[serde(rename = "Fileheader")]
     FileHeader(EDLogFileHeader),
@@ -347,7 +346,8 @@ pub enum EDLogEvent {
     Materials(EDLogMaterials),
 
     // Statistics
-    Statistics(EDLogStatistics),
+    // EDLogStatistics is boxed to reduce the size of EDLogEvent
+    Statistics(Box<EDLogStatistics>),
 
     // Engineers
     EngineerProgress(EDLogEngineerProgress),
