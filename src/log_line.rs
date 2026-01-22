@@ -360,7 +360,7 @@ pub enum EDLogEvent {
     DockingGranted(EDLogDockingGranted),
     DockingDenied(EDLogDockingDenied),
     DockingTimeout(EDLogDockingTimeout),
-    Docked(EDLogDocked),
+    Docked(Box<EDLogDocked>),
     Undocked(EDLogUndocked),
     RefuelAll(EDLogRefuelAll),
     BuyAmmo(EDLogBuyAmmo),
@@ -391,7 +391,7 @@ pub enum EDLogEvent {
     NavRoute,
     NavRouteClear,
     FSDTarget(EDLogFSDTarget),
-    FSDJump(EDLogFSDJump),
+    FSDJump(Box<EDLogFSDJump>),
     FuelScoop(EDLogFuelScoop),
     ApproachSettlement(EDLogApproachSettlement),
     ApproachBody(BodyInformation),
@@ -419,7 +419,7 @@ pub enum EDLogEvent {
     ScanBaryCentre(EDLogScanBaryCentre),
     StationBernalSphere(EDLogStationBernalSphere),
     MultiSellExplorationData(EDLogMultiSellExplorationData),
-    Scan(EDLogScan),
+    Scan(Box<EDLogScan>),
     Scanned(EDLogScanned),
     DiscoveryScan(EDLogDiscoveryScan),
     ScanOrganic(EDLogScanOrganic),
@@ -436,12 +436,12 @@ pub enum EDLogEvent {
     SellExplorationData(EDLogSellExplorationData),
 
     // FleetCarrier
-    CarrierStats(EDLogCarrierStats),
+    CarrierStats(Box<EDLogCarrierStats>),
     CarrierJumpRequest(EDLogCarrierJumpRequest),
     CarrierBankTransfer(EDLogCarrierBankTransfer),
     CarrierFinance(EDLogCarrierFinance),
     CarrierTradeOrder(EDLogCarrierTradeOrder),
-    CarrierJump(EDLogCarrierJump),
+    CarrierJump(Box<EDLogCarrierJump>),
     CarrierJumpCancelled(EDLogCarrierJumpCancelled),
     CarrierDepositFuel(EDLogCarrierDepositFuel),
     CarrierCrewServices(EDLogCarrierCrewServices),
@@ -462,7 +462,7 @@ pub enum EDLogEvent {
     Missions(EDLogMissions),
     MissionAccepted(EDLogMissionAccepted),
     MissionRedirected(EDLogMissionRedirected),
-    MissionCompleted(EDLogMissionCompleted),
+    MissionCompleted(Box<EDLogMissionCompleted>),
     MissionFailed(EDLogMissionFailed),
     MissionAbandoned(EDLogMissionAbandoned),
     SearchAndRescue(EDLogSearchAndRescue),
@@ -546,7 +546,7 @@ pub enum EDLogEvent {
     CrewMemberQuits(EDLogCrewMemberQuits),
 
     // Location
-    Location(EDLogLocation),
+    Location(Box<EDLogLocation>),
 
     // Loadout
     Loadout(EDLogLoadout),
