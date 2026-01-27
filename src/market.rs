@@ -332,6 +332,11 @@ pub struct EDLogTradeMicroResources {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-01-21T20:24:20Z", "event":"SellMicroResources", "TotalCount":44, 
+    "MicroResources":[ 
+        { "Name":"compactlibrary", "Name_Localised":"Compact Library", "Category":"Item", "Count":1 }, 
+        { "Name":"insight", "Category":"Item", "Count":1 } ], 
+    "Price":479000, "MarketID":3228823296 })]
 pub struct EDLogSellMicroResources {
     pub total_count: u64,
     pub micro_resources: Vec<MicroResource>,

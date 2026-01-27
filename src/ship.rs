@@ -275,12 +275,14 @@ pub struct EDLogSynthesis {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-01-23T15:42:09Z", "event":"AfmuRepairs", "Module":"$explorer_nx_cockpit_name;", 
+    "FullyRepaired":true, "Health":1.000000 })]
 pub struct EDLogAfmuRepairs {
-    module: EDString,
+    pub module: EDString,
     #[serde(rename = "Module_Localised")]
-    module_localised: EDString,
-    fully_repaired: bool,
-    health: f32,
+    pub module_localised: Option<EDString>,
+    pub fully_repaired: bool,
+    pub health: f32,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

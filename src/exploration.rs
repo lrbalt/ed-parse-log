@@ -258,6 +258,10 @@ pub enum ReserveLevel {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-17T03:05:10Z", "event":"Scan", "BodyName":"Wolf 865 A B Belt Cluster 1", "DistanceFromArrivalLS":237.092957 })]
+#[testcase({ "timestamp":"2026-01-25T16:27:37Z", "event":"Scan", "ScanType":"AutoScan", "BodyName":"Wepe ZE-A g415", "BodyID":0, 
+    "StarSystem":"Wepe ZE-A g415", "SystemAddress":27871541846, "DistanceFromArrivalLS":0.000000, "StarType":"O", "Subclass":0, 
+    "StellarMass":18.582031, "Radius":4406219776.000000, "AbsoluteMagnitude":-6.894470, "Age_MY":8, "SurfaceTemperature":34124.000000, 
+    "Luminosity":"Vz", "RotationPeriod":185024.686578, "AxialTilt":0.000000, "WasDiscovered":false, "WasMapped":false, "WasFootfalled":false })]
 pub struct EDLogScan {
     pub scan_type: Option<ScanType>,
     pub body_name: EDString,

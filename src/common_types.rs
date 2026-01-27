@@ -444,11 +444,13 @@ pub enum StarClass {
     C,
     D,
     DA,
-    #[serde(rename = "DAB")]
-    Dab,
-    #[serde(rename = "DAZ")]
-    Daz,
+    DAB,
+    DAV,
+    DAZ,
+    DB,
+    DBV,
     DC,
+    DCV,
     DQ,
     F,
     G,
@@ -461,10 +463,11 @@ pub enum StarClass {
     #[serde(rename = "M_RedGiant")]
     MRedGiant,
     N,
+    O,
+    S,
     SupermassiveBlackHole,
     T,
-    #[serde(rename = "TTS")]
-    Tts,
+    TTS,
     W,
     Y,
 }
