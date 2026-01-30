@@ -68,14 +68,33 @@ pub struct EDLogEngineerCraft {
     pub modifiers: Vec<ModuleEngineeringModifiers>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+pub enum EngineerContributionType {
+    Bond,
+    Bounty,
+    Commodity,
+    Credits,
+    Materials,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-01-20T19:22:48Z", "event":"EngineerContribution", "Engineer":"Colonel Bris Dekker", 
+    "EngineerID":300140, "Type":"Bond", "Quantity":126004, "TotalQuantity":1000000 })]
+#[testcase({ "timestamp":"2024-01-03T19:35:39Z", "event":"EngineerContribution", "Engineer":"The Sarge", "EngineerID":300040, 
+    "Type":"Materials", "Material":"shieldpatternanalysis", "Material_Localised":"Aberrant Shield Pattern Analysis", 
+    "Quantity":50, "TotalQuantity":50 })]
+#[testcase({ "timestamp":"2024-01-03T14:41:59Z", "event":"EngineerContribution", "Engineer":"Zacariah Nemo", "EngineerID":300050, 
+    "Type":"Commodity", "Commodity":"xihecompanions", "Commodity_Localised":"Xihe Biomorphic Companions", "Quantity":5, 
+    "TotalQuantity":25 })]
+#[testcase({ "timestamp":"2023-07-23T21:19:45Z", "event":"EngineerContribution", "Engineer":"Mel Brandon", "EngineerID":300280, 
+    "Type":"Bounty", "Quantity":100000, "TotalQuantity":100000 })]
 pub struct EDLogEngineerContribution {
     pub engineer: EDString,
     #[serde(rename = "EngineerID")]
     pub engineer_id: u64,
     #[serde(rename = "Type")]
-    pub contribution_type: EDString,
+    pub contribution_type: EngineerContributionType,
     pub commodity: Option<EDString>,
     #[serde(rename = "Commodity_Localised")]
     pub commodity_localised: Option<EDString>,

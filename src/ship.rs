@@ -134,7 +134,7 @@ pub enum ShipType {
     GuardianHybridFighterV3,
     Hauler,
     #[serde(rename = "independent_fighter")]
-    IndependantFighter,
+    IndependentFighter,
     #[serde(rename = "independant_trader")]
     IndependentTrader,
     #[serde(rename = "krait_light", alias = "Krait_Light")]
@@ -170,6 +170,8 @@ pub enum ShipType {
     TypeX2,
     #[serde(rename = "typex_3")]
     TypeX3,
+    #[serde(rename = "lakonminer")]
+    Type11Prospector,
     #[serde(alias = "Viper")]
     Viper,
     #[serde(rename = "viper_mkiv")]

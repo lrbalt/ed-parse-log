@@ -60,20 +60,20 @@ pub struct SwapOutItem {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleRetrieve {
     #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
-    slot: EDString,
-    retrieved_item: EDString,
+    pub market_id: Option<u64>,
+    pub slot: EDString,
+    pub retrieved_item: EDString,
     #[serde(rename = "RetrievedItem_Localised")]
-    retrieved_item_localised: EDString,
-    ship: EDString,
+    pub retrieved_item_localised: EDString,
+    pub ship: EDString,
     #[serde(rename = "ShipID")]
-    ship_id: u32,
-    hot: Option<bool>,
+    pub ship_id: u32,
+    pub hot: Option<bool>,
     #[serde(flatten)]
-    engineer_modification: Option<EngineerModification>,
+    pub engineer_modification: Option<EngineerModification>,
     #[serde(flatten)]
-    swap_out_item: Option<SwapOutItem>,
-    cost: Option<Credits>,
+    pub swap_out_item: Option<SwapOutItem>,
+    pub cost: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

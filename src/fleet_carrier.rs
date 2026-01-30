@@ -174,7 +174,8 @@ pub enum CrewServiceOperation {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-08-20T13:11:21Z", "event":"CarrierCrewServices", "CarrierID":3706278912, "CarrierType":"FleetCarrier", "CrewRole":"Bartender", "Operation":"Pause", "CrewName":"Aleeah Bogdani" })]
+#[testcase({ "timestamp":"2025-08-20T13:11:21Z", "event":"CarrierCrewServices", "CarrierID":3706278912, "CarrierType":"FleetCarrier", 
+    "CrewRole":"Bartender", "Operation":"Pause", "CrewName":"Aleeah Bogdani" })]
 pub struct EDLogCarrierCrewServices {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,
@@ -191,28 +192,29 @@ pub enum CarrierVariant {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2024-01-08T12:36:19Z", "event":"CarrierBuy", "CarrierID":12341234, "BoughtAtMarket":3223259392, "Location":"Mitnahas", "SystemAddress":7267218695553, "Price":5000000000, "Variant":"CarrierDockB", "Callsign":"A1A-A1A" })]
+#[testcase({ "timestamp":"2024-01-08T12:36:19Z", "event":"CarrierBuy", "CarrierID":12341234, "BoughtAtMarket":3223259392, 
+    "Location":"Mitnahas", "SystemAddress":7267218695553, "Price":5000000000, "Variant":"CarrierDockB", "Callsign":"A1A-A1A" })]
 pub struct EDLogCarrierBuy {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    bought_at_market: u64,
-    location: EDString,
-    system_address: u64,
-    price: Credits,
-    variant: CarrierVariant,
-    callsign: EDString,
+    pub carrier_id: u64,
+    pub bought_at_market: u64,
+    pub location: EDString,
+    pub system_address: u64,
+    pub price: Credits,
+    pub variant: CarrierVariant,
+    pub callsign: EDString,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierModulePack {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    operation: EDString,
-    pack_theme: EDString,
-    pack_tier: u64,
-    cost: Option<Credits>,
-    refund: Option<Credits>,
+    pub carrier_id: u64,
+    pub operation: EDString,
+    pub pack_theme: EDString,
+    pub pack_tier: u64,
+    pub cost: Option<Credits>,
+    pub refund: Option<Credits>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -226,7 +228,8 @@ pub struct EDLogCarrierDockingPermission {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-08-21T15:02:57Z", "event":"CarrierLocation", "CarrierType":"FleetCarrier", "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
+#[testcase({ "timestamp":"2025-08-21T15:02:57Z", "event":"CarrierLocation", "CarrierType":"FleetCarrier", 
+    "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
 pub struct EDLogCarrierLocation {
     #[serde(rename = "CarrierID")]
     carrier_id: u64,

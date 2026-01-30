@@ -40,19 +40,19 @@ pub struct EDLogShipyardSwap {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardTransfer {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
+    pub ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    system: Option<EDString>,
+    pub ship_id: u64,
+    pub system: Option<EDString>,
     #[serde(rename = "ShipMarketID")]
-    ship_market_id: u64,
-    distance: f64,
-    transfer_price: Credits,
-    transfer_time: u64,
+    pub ship_market_id: u64,
+    pub distance: f64,
+    pub transfer_price: Credits,
+    pub transfer_time: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -107,23 +107,23 @@ pub struct EDLogShipyardSell {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardRedeem {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
+    pub ship_type_localised: Option<EDString>,
     #[serde(rename = "BundleID")]
-    bundle_id: u64,
+    pub bundle_id: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipRedeemed {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
+    pub ship_type_localised: Option<EDString>,
     #[serde(rename = "NewShipID")]
-    new_ship_id: u64,
+    pub new_ship_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

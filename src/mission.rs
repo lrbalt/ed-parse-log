@@ -222,14 +222,16 @@ pub struct EDLogMissionRedirected {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-03-23T13:38:26Z", "event":"SearchAndRescue", "MarketID":3227740928, 
+    "Name":"usscargoblackbox", "Name_Localised":"Black Box", "Count":3, "Reward":92316 })]
 pub struct EDLogSearchAndRescue {
     #[serde(rename = "MarketID")]
-    market_id: u64,
-    name: EDString,
+    pub market_id: u64,
+    pub name: EDString,
     #[serde(rename = "Name_Localised")]
-    name_localised: EDString,
-    count: u64,
-    reward: u64,
+    pub name_localised: EDString,
+    pub count: u64,
+    pub reward: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
