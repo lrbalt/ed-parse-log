@@ -8,6 +8,7 @@ use crate::{
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
+use strum::Display;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
@@ -258,16 +259,50 @@ pub struct EDLogTechnologyBroker {
     pub materials: Vec<BrokerMaterial>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, PartialEq, Eq, Display)]
+pub enum VehicleType {
+    #[serde(rename = "testbuggy")]
+    #[strum(to_string = "SRV Scarab")]
+    Scarab,
+    #[serde(rename = "combat_multicrew_srv_01")]
+    #[strum(to_string = "SRV Scorpion")]
+    Scorpion,
+    #[serde(rename = "independent_fighter")]
+    #[strum(to_string = "Taipan")]
+    Taipan,
+    #[serde(rename = "gdn_hybrid_fighter_v1")]
+    #[strum(to_string = "Guardian Hybrid Fighter V1")]
+    GuardianHybridFighterV1,
+    #[serde(rename = "gdn_hybrid_fighter_v2")]
+    #[strum(to_string = "Guardian Hybrid Fighter V2")]
+    Javelin,
+    #[serde(rename = "gdn_hybrid_fighter_v3")]
+    #[strum(to_string = "Guardian Hybrid Fighter V3")]
+    GuardianHybridFighterV3,
+    #[serde(rename = "federation_fighter")]
+    #[strum(to_string = "F63 Condor")]
+    F63Condor,
+    #[serde(rename = "empire_fighter")]
+    #[strum(to_string = "Gu-97")]
+    Gu97,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2023-07-10T17:53:22Z", "event":"RestockVehicle", "Type":"independent_fighter", 
+    "Type_Localised":"Taipan", "Loadout":"three", "ID":22, "Cost":15270, "Count":1 })]
+#[testcase({"timestamp":"2025-02-08T07:42:44Z","event":"RestockVehicle","Type":"gdn_hybrid_fighter_v3",
+    "Loadout":"one","Cost":4120,"Count":4})]
+#[testcase({"timestamp":"2025-02-02T06:50:33Z","event":"RestockVehicle","Type":"gdn_hybrid_fighter_v2",
+    "Type_Localised":"Javelin","Loadout":"one","ID":42,"Cost":13400,"Count":1})]
 pub struct EDLogRestockVehicle {
     #[serde(rename = "Type")]
-    vehicle_type: EDString,
+    pub vehicle_type: VehicleType,
     #[serde(rename = "Type_Localised")]
-    vehicle_type_localised: Option<EDString>,
-    loadout: EDString,
+    pub vehicle_type_localised: Option<EDString>,
+    pub loadout: EDString,
     #[serde(rename = "ID")]
-    id: Option<u64>,
-    cost: Credits,
-    count: u64,
+    pub id: Option<u64>,
+    pub cost: Credits,
+    pub count: u64,
 }

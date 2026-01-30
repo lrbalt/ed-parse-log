@@ -1,8 +1,8 @@
 use crate::{
     EDString,
     common_types::{
-        CodexBodyInformation, Credits, FSSSignalType, LuminosityType, MaterialCategory, ScanType,
-        ShipScanType, SignalType, StarClass, Unknown,
+        Credits, FSSSignalType, LuminosityType, MaterialCategory, ScanType, ShipScanType,
+        SignalType, StarClass, Unknown,
     },
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
@@ -330,31 +330,6 @@ pub struct EDLogScanOrganic {
     pub system_address: u64,
     pub body: u64,
     pub was_logged: Option<bool>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCodexEntry {
-    #[serde(rename = "EntryID")]
-    entry_id: u64,
-    name: EDString,
-    #[serde(rename = "Name_Localised")]
-    name_localised: EDString,
-    sub_category: EDString,
-    #[serde(rename = "SubCategory_Localised")]
-    sub_category_localised: EDString,
-    category: EDString,
-    #[serde(rename = "Category_Localised")]
-    category_localised: EDString,
-    region: EDString,
-    #[serde(rename = "Region_Localised")]
-    region_localised: EDString,
-    system: EDString,
-    system_address: u64,
-    #[serde(flatten)]
-    body_information: Option<CodexBodyInformation>,
-    is_new_entry: Option<bool>,
-    voucher_amount: Option<u32>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

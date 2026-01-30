@@ -1,3 +1,4 @@
+pub mod codex;
 pub mod commander;
 pub mod common_types;
 pub mod community_goal;

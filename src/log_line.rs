@@ -1,5 +1,6 @@
 use crate::{
     EDString,
+    codex::EDLogCodexEntry,
     commander::{
         EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommander, EDLogCommitCrime,
         EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
@@ -26,13 +27,12 @@ use crate::{
     drone::{EDLogBuyDrones, EDLogLaunchDrone, EDLogRepairDrone, EDLogSellDrones},
     engineers::{EDLogEngineerContribution, EDLogEngineerCraft, EDLogEngineerProgress},
     exploration::{
-        EDLogAsteroidCracked, EDLogBuyExplorationData, EDLogCodexEntry, EDLogDataScanned,
-        EDLogDatalinkScan, EDLogDiscoveryScan, EDLogFSSAllBodiesFound, EDLogFSSBodySignals,
-        EDLogFSSDiscoveryScan, EDLogFSSSignalDiscovered, EDLogMaterialDiscovered,
-        EDLogMiningRefined, EDLogMultiSellExplorationData, EDLogNavBeaconScan,
-        EDLogProspectedAsteroid, EDLogSAAScanComplete, EDLogSAASignalsFound, EDLogScan,
-        EDLogScanBaryCentre, EDLogScanOrganic, EDLogScanned, EDLogSellExplorationData,
-        EDLogStationBernalSphere,
+        EDLogAsteroidCracked, EDLogBuyExplorationData, EDLogDataScanned, EDLogDatalinkScan,
+        EDLogDiscoveryScan, EDLogFSSAllBodiesFound, EDLogFSSBodySignals, EDLogFSSDiscoveryScan,
+        EDLogFSSSignalDiscovered, EDLogMaterialDiscovered, EDLogMiningRefined,
+        EDLogMultiSellExplorationData, EDLogNavBeaconScan, EDLogProspectedAsteroid,
+        EDLogSAAScanComplete, EDLogSAASignalsFound, EDLogScan, EDLogScanBaryCentre,
+        EDLogScanOrganic, EDLogScanned, EDLogSellExplorationData, EDLogStationBernalSphere,
     },
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCrewServices,
