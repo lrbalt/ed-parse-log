@@ -170,7 +170,7 @@ pub enum ShipType {
     TypeX2,
     #[serde(rename = "typex_3")]
     TypeX3,
-    #[serde(rename = "lakonminer")]
+    #[serde(rename = "lakonminer", alias = "LakonMiner")]
     Type11Prospector,
     #[serde(alias = "Viper")]
     Viper,

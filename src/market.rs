@@ -175,6 +175,7 @@ pub enum MarketItemType {
     Robotics,
     NaturalFabrics,
     ScientificResearch,
+    RestrictedIntel,
 
     Drones,
     #[serde(alias = "DamagedEscapePod")]

@@ -3,7 +3,7 @@ use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 use strum::Display;
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq)]
 pub enum CodexNames {
     //
     // Stars
@@ -779,7 +779,7 @@ pub enum CodexNames {
     ThargoidInterceptorBasilisk,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq)]
 pub enum CodexSubCategory {
     #[serde(rename = "$Codex_SubCategory_Stars;")]
     #[strum(to_string = "Stars")]
@@ -804,7 +804,7 @@ pub enum CodexSubCategory {
     GuardianObjects,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, Hash, PartialEq)]
 pub enum CodexCategory {
     #[serde(rename = "$Codex_Category_StellarBodies;")]
     #[strum(to_string = "Astronomical Bodies")]
@@ -817,7 +817,7 @@ pub enum CodexCategory {
     Xenological,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, PartialEq, Hash)]
 pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_1;")]
     #[strum(to_string = "Galactic Centre")]
