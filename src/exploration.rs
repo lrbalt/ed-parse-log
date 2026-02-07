@@ -550,6 +550,8 @@ pub enum GenusType {
     Fonticulua,
     #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
     Fumerola,
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
+    LuteolumAnemone,
     #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
     Frutexa,
     #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]

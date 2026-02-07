@@ -3,7 +3,9 @@ use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 use strum::Display;
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq)]
+#[derive(
+    Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq, Ord, PartialOrd,
+)]
 pub enum CodexNames {
     //
     // Stars
@@ -369,6 +371,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Bacterial_11_Tin_Name;")]
     #[strum(to_string = "Bacterium Omentum - Red")]
     BacteriumOmentumRed,
+    #[serde(rename = "$Codex_Ent_Bacterial_12_N_Name;")]
+    #[strum(to_string = "Bacterium Cerbrus - Indigo")]
+    BacteriumCerbrusIndigo,
     #[serde(rename = "$Codex_Ent_Bacterial_12_K_Name;")]
     #[strum(to_string = "Bacterium Cerbrus - Green")]
     BacteriumCerbrusGreen,
@@ -462,6 +467,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Conchas_03_K_Name;")]
     #[strum(to_string = "Concha Labiata - Red")]
     ConchaLabiataRed,
+    #[serde(rename = "$Codex_Ent_Clypeus_02_K_Name;")]
+    #[strum(to_string = "Clypeus Margaritus - Grey")]
+    ClypeusMargaritusGrey,
     #[serde(rename = "$Codex_Ent_Clypeus_01_G_Name;")]
     #[strum(to_string = "Clypeus Lacrimam - Amethyst")]
     ClypeusLacrimamAmethyst,
@@ -498,6 +506,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Fumerolas_02_Tin_Name;")]
     #[strum(to_string = "Fumerola Extremus - Peach")]
     FumerolaExtremusPeach,
+    #[serde(rename = "$Codex_Ent_Fumarole_SulphurDioxideMagma_Name;")]
+    #[strum(to_string = "Sulphur Dioxide Fumarole")]
+    SulphurDioxideFumarole,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Tin_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Red")]
+    FungoidaGelataRed,
     #[serde(rename = "$Codex_Ent_Fungoids_02_Cadmium_Name;")]
     #[strum(to_string = "Fungoida Stabitis - Blue")]
     FungoidaStabitisBlue,
@@ -525,9 +539,15 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Fungoids_01_Yttrium_Name;")]
     #[strum(to_string = "Fungoida Setisis - Orange")]
     FungoidaSetisisOrange,
+    #[serde(rename = "$Codex_Ent_Gas_Vents_SulphurDioxideMagma_Name;")]
+    #[strum(to_string = "Sulphur Dioxide Gas Vent")]
+    SulphurDioxideGasVent,
     #[serde(rename = "$Codex_Ent_Ingensradices_Unicus_Name;")]
     #[strum(to_string = "Radicoida Unica")]
     RadicoidaUnica,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Tin_Name;")]
+    #[strum(to_string = "Osseus Discus - Blue")]
+    OsseusDiscusBlue,
     #[serde(rename = "$Codex_Ent_Osseus_01_F_Name;")]
     #[strum(to_string = "Osseus Fractus - Turquoise")]
     OsseusFractusTurquoise,
@@ -585,6 +605,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Shrubs_01_G_Name;")]
     #[strum(to_string = "Frutexa Flabellum - Emerald")]
     FrutexaFlabellumEmerald,
+    #[serde(rename = "$Codex_Ent_Shrubs_03_M_Name;")]
+    #[strum(to_string = "Frutexa Metallicum - Grey")]
+    FrutexaMetallicumGrey,
     #[serde(rename = "$Codex_Ent_Shrubs_01_L_Name;")]
     #[strum(to_string = "Frutexa Flabellum - Teal")]
     FrutexaFlabellumTeal,
@@ -672,6 +695,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tubus_05_A_Name;")]
     #[strum(to_string = "Tubus Compagibus - Indigo")]
     TubusCompagibusIndigo,
+    #[serde(rename = "$Codex_Ent_Tussocks_06_K_Name;")]
+    #[strum(to_string = "Tussock Pennatis - Green")]
+    TussockPennatisGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_14_K_Name;")]
+    #[strum(to_string = "Tussock Virgam - Green")]
+    TussockVirgamGreen,
     #[serde(rename = "$Codex_Ent_Tussocks_14_L_Name;")]
     #[strum(to_string = "Tussock Virgam - Sage")]
     TussockVirgamSage,
@@ -756,6 +785,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tussocks_09_G_Name;")]
     #[strum(to_string = "Tussock Propagito - Lime")]
     TussockPropagitoLime,
+    #[serde(rename = "$Codex_Ent_Tussocks_15_M_Name;")]
+    #[strum(to_string = "Tussock Capillum - Emerald")]
+    TussockCapillumEmerald,
     //
     // Thargoid / Guadian
     //
@@ -779,7 +811,9 @@ pub enum CodexNames {
     ThargoidInterceptorBasilisk,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq)]
+#[derive(
+    Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq, Ord, PartialOrd,
+)]
 pub enum CodexSubCategory {
     #[serde(rename = "$Codex_SubCategory_Stars;")]
     #[strum(to_string = "Stars")]
@@ -804,7 +838,9 @@ pub enum CodexSubCategory {
     GuardianObjects,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, Hash, PartialEq)]
+#[derive(
+    Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, Hash, PartialEq, Ord, PartialOrd,
+)]
 pub enum CodexCategory {
     #[serde(rename = "$Codex_Category_StellarBodies;")]
     #[strum(to_string = "Astronomical Bodies")]
@@ -817,7 +853,9 @@ pub enum CodexCategory {
     Xenological,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, PartialEq, Hash)]
+#[derive(
+    Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, PartialEq, Hash, Ord, PartialOrd,
+)]
 pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_1;")]
     #[strum(to_string = "Galactic Centre")]
@@ -876,6 +914,9 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_40;")]
     #[strum(to_string = "The Abyss")]
     TheAbyss,
+    #[serde(rename = "$Codex_RegionName_41;")]
+    #[strum(to_string = "Kepler's Crest")]
+    KeplersCrest,
     #[serde(rename = "$Codex_RegionName_42;")]
     #[strum(to_string = "The Void")]
     TheVoid,

@@ -299,7 +299,7 @@ pub struct EDLogScreenshot {
 pub enum EDLogEvent {
     #[serde(rename = "Fileheader")]
     FileHeader(EDLogFileHeader),
-    LoadGame(EDLogLoadGame),
+    LoadGame(Box<EDLogLoadGame>),
     SystemsShutdown,
     Shutdown,
     Music(EDLogMusic),
@@ -340,7 +340,7 @@ pub enum EDLogEvent {
     CommunityGoalDiscard(EDLogCommunityGoalDiscard),
 
     // Locker
-    ShipLocker(EDLogShipLocker),
+    ShipLocker(Box<EDLogShipLocker>),
 
     // Materials
     Materials(EDLogMaterials),
@@ -352,7 +352,7 @@ pub enum EDLogEvent {
     // Engineers
     EngineerProgress(EDLogEngineerProgress),
     EngineerContribution(EDLogEngineerContribution),
-    EngineerCraft(EDLogEngineerCraft),
+    EngineerCraft(Box<EDLogEngineerCraft>),
 
     // Docking
     DockingRequested(EDLogDockingRequested),
@@ -393,7 +393,7 @@ pub enum EDLogEvent {
     FSDTarget(EDLogFSDTarget),
     FSDJump(Box<EDLogFSDJump>),
     FuelScoop(EDLogFuelScoop),
-    ApproachSettlement(EDLogApproachSettlement),
+    ApproachSettlement(Box<EDLogApproachSettlement>),
     ApproachBody(BodyInformation),
     LeaveBody(BodyInformation),
     Liftoff(EDLogLiftoff),
@@ -426,7 +426,7 @@ pub enum EDLogEvent {
     DatalinkScan(EDLogDatalinkScan),
     NavBeaconScan(EDLogNavBeaconScan),
     SellOrganicData(EDLogSellOrganicData),
-    CodexEntry(EDLogCodexEntry),
+    CodexEntry(Box<EDLogCodexEntry>),
     ProspectedAsteroid(EDLogProspectedAsteroid),
     MiningRefined(EDLogMiningRefined),
     AsteroidCracked(EDLogAsteroidCracked),
@@ -460,13 +460,13 @@ pub enum EDLogEvent {
 
     // Missions
     Missions(EDLogMissions),
-    MissionAccepted(EDLogMissionAccepted),
+    MissionAccepted(Box<EDLogMissionAccepted>),
     MissionRedirected(EDLogMissionRedirected),
     MissionCompleted(Box<EDLogMissionCompleted>),
     MissionFailed(EDLogMissionFailed),
     MissionAbandoned(EDLogMissionAbandoned),
     SearchAndRescue(EDLogSearchAndRescue),
-    Bounty(EDLogBounty),
+    Bounty(Box<EDLogBounty>),
     RedeemVoucher(EDLogRedeemVoucher),
     DatalinkVoucher(EDLogDatalinkVoucher),
     FactionKillBond(EDLogFactionKillBond),
@@ -502,7 +502,7 @@ pub enum EDLogEvent {
 
     // Suit and backpack
     SuitLoadout(EDLogSuitLoadout),
-    Backpack(EDLogBackpack),
+    Backpack(Box<EDLogBackpack>),
     SwitchSuitLoadout(EDLogSuitLoadout),
     BackpackChange(EDLogBackpackChange),
     UseConsumable(EDLogUseConsumable),
@@ -549,14 +549,14 @@ pub enum EDLogEvent {
     Location(Box<EDLogLocation>),
 
     // Loadout
-    Loadout(EDLogLoadout),
+    Loadout(Box<EDLogLoadout>),
 
     // Ship
     Cargo(EDLogCargo),
     ShieldState(EDLogShieldState),
     EjectCargo(EDLogEjectCargo),
     ReservoirReplenished(EDLogReservoirReplenished),
-    ShipTargeted(EDLogShipTargeted),
+    ShipTargeted(Box<EDLogShipTargeted>),
     Interdiction(EDLogInterdiction),
     Interdicted(EDLogInterdicted),
     EscapeInterdiction(EDLogEscapeInterdiction),
