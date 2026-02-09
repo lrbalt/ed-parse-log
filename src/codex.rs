@@ -632,6 +632,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Shrubs_06_G_Name;")]
     #[strum(to_string = "Frutexa Sponsae - Emerald")]
     FrutexaSponsaeEmerald,
+    #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
+    #[strum(to_string = "Rubeum Bioluminescent Anemone")]
+    RubeumBioluminescentAnemone,
     #[serde(rename = "$Codex_Ent_Fumerolas_01_Tungsten_Name;")]
     #[strum(to_string = "Fumerola Carbosis - Yellow")]
     FumerolaCarbosisYellow,
@@ -680,6 +683,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tubus_01_A_Name;")]
     #[strum(to_string = "Tubus Conifer - Indigo")]
     TubusConiferIndigo,
+    #[serde(rename = "$Codex_Ent_Tubus_02_K_Name;")]
+    #[strum(to_string = "Tubus Sororibus - Maroon")]
+    TubusSororibusMaroon,
     #[serde(rename = "$Codex_Ent_Tubus_04_L_Name;")]
     #[strum(to_string = "Tubus Rosarium - Turquoise")]
     TubusRosariumTurquoise,
@@ -725,6 +731,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tussocks_05_L_Name;")]
     #[strum(to_string = "Tussock Catena - Sage")]
     TussockCatenaSage,
+    #[serde(rename = "$Codex_Ent_Tussocks_06_L_Name;")]
+    #[strum(to_string = "Tussock Pennatis - Sage")]
+    TussockPennatisSage,
     #[serde(rename = "$Codex_Ent_Tussocks_08_F_Name;")]
     #[strum(to_string = "Tussock Albata - Yellow")]
     TussockAlbataYellow,
@@ -902,6 +911,9 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_26;")]
     #[strum(to_string = "Outer Scutum-Centaurus Arm")]
     OuterScutumCentaurusArm,
+    #[serde(rename = "$Codex_RegionName_31;")]
+    #[strum(to_string = "The Formidine Rift")]
+    TheFormidineRift,
     #[serde(rename = "$Codex_RegionName_33;")]
     #[strum(to_string = "Elysian Shore")]
     ElysianShore,

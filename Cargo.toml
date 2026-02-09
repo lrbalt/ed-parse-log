@@ -1,6 +1,6 @@
 [package]
 name = "ed-parse-log-files"
-version = "0.1.15"
+version = "0.1.16"
 edition = "2024"
 authors = ["Reinier Balt <lrbalt@gmail.com>"]
 description = "A library to read log files from Elite Dangerous"
