@@ -233,6 +233,12 @@ pub enum CodexNames {
     #[strum(to_string = "Solid Mineral Spheres")]
     SolidMineralSpheres,
 
+    #[serde(rename = "$Codex_Ent_Aleoids_03_K_Name;")]
+    #[strum(to_string = "Aleoida Spica - Turquoise")]
+    AleoidaSpicaTurquoise,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_F_Name;")]
+    #[strum(to_string = "Aleoida Spica - Teal")]
+    AleoidaSpicaTeal,
     #[serde(rename = "$Codex_Ent_Aleoids_01_F_Name;")]
     #[strum(to_string = "Aleoida Arcus - Teal")]
     AleoidaArcusTeal,
@@ -554,6 +560,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Osseus_01_G_Name;")]
     #[strum(to_string = "Osseus Fractus - Grey")]
     OsseusFractusGrey,
+    #[serde(rename = "$Codex_Ent_Osseus_03_T_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Emerald")]
+    OsseusSpiralisEmerald,
     #[serde(rename = "$Codex_Ent_Osseus_03_G_Name;")]
     #[strum(to_string = "Osseus Spiralis - Grey")]
     OsseusSpiralisGrey,
@@ -638,6 +647,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Fumerolas_01_Tungsten_Name;")]
     #[strum(to_string = "Fumerola Carbosis - Yellow")]
     FumerolaCarbosisYellow,
+    #[serde(rename = "$Codex_Ent_Stratum_07_T_Name;")]
+    #[strum(to_string = "Stratum Tectonicas - Grey")]
+    StratumTectonicasGrey,
     #[serde(rename = "$Codex_Ent_Stratum_01_F_Name;")]
     #[strum(to_string = "Stratum Excutitus - Emerald")]
     StratumExcutitusEmerald,
@@ -686,6 +698,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tubus_02_K_Name;")]
     #[strum(to_string = "Tubus Sororibus - Maroon")]
     TubusSororibusMaroon,
+    #[serde(rename = "$Codex_Ent_Tubus_04_K_Name;")]
+    #[strum(to_string = "Tubus Rosarium - Maroon")]
+    TubusRosariumMaroon,
     #[serde(rename = "$Codex_Ent_Tubus_04_L_Name;")]
     #[strum(to_string = "Tubus Rosarium - Turquoise")]
     TubusRosariumTurquoise,
@@ -701,6 +716,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tubus_05_A_Name;")]
     #[strum(to_string = "Tubus Compagibus - Indigo")]
     TubusCompagibusIndigo,
+    #[serde(rename = "$Codex_Ent_Tussocks_10_T_Name;")]
+    #[strum(to_string = "Tussock Divisa - Teal")]
+    TussockDivisaTeal,
     #[serde(rename = "$Codex_Ent_Tussocks_06_K_Name;")]
     #[strum(to_string = "Tussock Pennatis - Green")]
     TussockPennatisGreen,
@@ -746,6 +764,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tussocks_09_K_Name;")]
     #[strum(to_string = "Tussock Propagito - Green")]
     TussockPropagitoGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_10_F_Name;")]
+    #[strum(to_string = "Tussock Divisa - Yellow")]
+    TussockDivisaYellow,
     #[serde(rename = "$Codex_Ent_Tussocks_10_K_Name;")]
     #[strum(to_string = "Tussock Divisa - Green")]
     TussockDivisaGreen,
