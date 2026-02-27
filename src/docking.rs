@@ -274,11 +274,11 @@ pub enum VehicleType {
     #[strum(to_string = "Guardian Hybrid Fighter V1")]
     GuardianHybridFighterV1,
     #[serde(rename = "gdn_hybrid_fighter_v2")]
-    #[strum(to_string = "Guardian Hybrid Fighter V2")]
+    #[strum(to_string = "Javelin")]
     Javelin,
     #[serde(rename = "gdn_hybrid_fighter_v3")]
-    #[strum(to_string = "Guardian Hybrid Fighter V3")]
-    GuardianHybridFighterV3,
+    #[strum(to_string = "Lance")]
+    Lance,
     #[serde(rename = "federation_fighter")]
     #[strum(to_string = "F63 Condor")]
     F63Condor,

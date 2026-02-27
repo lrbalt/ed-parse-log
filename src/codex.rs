@@ -34,6 +34,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_B_TypeGiant_Name;")]
     #[strum(to_string = "B Type Giant")]
     BTypeGiant,
+    #[serde(rename = "$Codex_Ent_C_TypeGiant_Name;")]
+    #[strum(to_string = "C Type Giant")]
+    CTypeGiant,
     #[serde(rename = "$Codex_Ent_D_Type_Name;")]
     #[strum(to_string = "D Type Star")]
     DTypeStar,
@@ -82,6 +85,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_L_Type_Name;")]
     #[strum(to_string = "L Type Star")]
     LTypeStar,
+    #[serde(rename = "$Codex_Ent_M_TypeGiant_Name;")]
+    #[strum(to_string = "M Type Giant")]
+    MTypeGiant,
     #[serde(rename = "$Codex_Ent_M_Type_Name;")]
     #[strum(to_string = "M Type Star")]
     MTypeStar,
@@ -97,6 +103,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_T_Type_Name;")]
     #[strum(to_string = "T Type Star")]
     TTypeStar,
+    #[serde(rename = "$Codex_Ent_W_Type_Name;")]
+    #[strum(to_string = "W Type Star")]
+    WTypeStar,
     #[serde(rename = "$Codex_Ent_Y_Type_Name;")]
     #[strum(to_string = "Y Type Star")]
     YTypeStar,
@@ -232,13 +241,71 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_SPOI_Ball_Name;")]
     #[strum(to_string = "Solid Mineral Spheres")]
     SolidMineralSpheres,
+    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
+    #[strum(to_string = "Crystalline Shards")]
+    CrystallineShards,
+    #[serde(rename = "$Codex_Ent_Gas_Vents_SilicateVapourGeysers_Name;")]
+    #[strum(to_string = "Silicate Vapour Gas Vent")]
+    SilicateVapourGasVent,
+    #[serde(rename = "$Codex_Ent_Lava_Spouts_SilicateMagma_Name;")]
+    #[strum(to_string = "Silicate Magma Lava Spout")]
+    SilicateMagmaLavaSpout,
+    #[serde(rename = "$Codex_Ent_IceGeysers_CarbonDioxideGeysers_Name;")]
+    #[strum(to_string = "Carbon Dioxide Ice Geyser")]
+    CarbonDioxideIceGeyser,
+    #[serde(rename = "$Codex_Ent_IceGeysers_WaterGeysers_Name;")]
+    #[strum(to_string = "Water Ice Geyser")]
+    WaterIceGeyser,
+    #[serde(rename = "$Codex_Ent_L_Seed_SdRt02_V3_Name;")]
+    #[strum(to_string = "Stolon Tree")]
+    StolonTree,
+    #[serde(rename = "$Codex_Ent_IceFumarole_WaterGeysers_Name;")]
+    #[strum(to_string = "Water Ice Fumarole")]
+    WaterIceFumarole,
+    #[serde(rename = "$Codex_Ent_IceGeysers_NitrogenGeysers_Name;")]
+    #[strum(to_string = "Nitrogen Ice Geyser")]
+    NitrogenIceGeyser,
+    #[serde(rename = "$Codex_Ent_Gas_Vents_SulphurDioxideMagma_Name;")]
+    #[strum(to_string = "Sulphur Dioxide Gas Vent")]
+    SulphurDioxideGasVent,
+    #[serde(rename = "$Codex_Ent_IceFumarole_CarbonDioxideGeysers_Name;")]
+    #[strum(to_string = "Carbon Dioxide Ice Fumarole")]
+    CarbonDioxideIceFumarole,
+    #[serde(rename = "$Codex_Ent_IceFumarole_MethaneGeysers_Name;")]
+    #[strum(to_string = "Methane Ice Fumarole")]
+    MethaneIceFumarole,
+    #[serde(rename = "$Codex_Ent_IceFumarole_NitrogenGeysers_Name;")]
+    #[strum(to_string = "Nitrogen Ice Fumarole")]
+    NitrogenIceFumarole,
+    #[serde(rename = "$Codex_Ent_IceGeysers_MethaneGeysers_Name;")]
+    #[strum(to_string = "Methane Ice Geyser")]
+    MethaneIceGeyser,
+    #[serde(rename = "$Codex_Ent_IceGeysers_AmmoniaGeysers_Name;")]
+    #[strum(to_string = "Ammonia Ice Geyser")]
+    AmmoniaIceGeyser,
+    #[serde(rename = "$Codex_Ent_Lava_Spouts_IronMagma_Name;")]
+    #[strum(to_string = "Iron Magma Lava Spout")]
+    IronMagmaLavaSpout,
+    #[serde(rename = "$Codex_Ent_IceFumarole_AmmoniaGeysers_Name;")]
+    #[strum(to_string = "Ammonia Ice Fumarole")]
+    AmmoniaIceFumarole,
 
-    #[serde(rename = "$Codex_Ent_Aleoids_03_K_Name;")]
-    #[strum(to_string = "Aleoida Spica - Turquoise")]
-    AleoidaSpicaTurquoise,
-    #[serde(rename = "$Codex_Ent_Aleoids_03_F_Name;")]
-    #[strum(to_string = "Aleoida Spica - Teal")]
-    AleoidaSpicaTeal,
+    // Aleoids
+    #[serde(rename = "$Codex_Ent_Aleoids_03_L_Name;")]
+    #[strum(to_string = "Aleoida Spica - Lime")]
+    AleoidaSpicaLime,
+    #[serde(rename = "$Codex_Ent_Aleoids_02_L_Name;")]
+    #[strum(to_string = "Aleoida Coronamus - Lime")]
+    AleoidaCoronamusLime,
+    #[serde(rename = "$Codex_Ent_Aleoids_05_A_Name;")]
+    #[strum(to_string = "Aleoida Gravis - Green")]
+    AleoidaGravisGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_02_A_Name;")]
+    #[strum(to_string = "Aleoida Coronamus - Green")]
+    AleoidaCoronamusGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_M_Name;")]
+    #[strum(to_string = "Aleoida Spica - Emerald")]
+    AleoidaSpicaEmerald,
     #[serde(rename = "$Codex_Ent_Aleoids_01_F_Name;")]
     #[strum(to_string = "Aleoida Arcus - Teal")]
     AleoidaArcusTeal,
@@ -248,27 +315,91 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Aleoids_03_A_Name;")]
     #[strum(to_string = "Aleoida Spica - Green")]
     AleoidaSpicaGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_F_Name;")]
+    #[strum(to_string = "Aleoida Spica - Teal")]
+    AleoidaSpicaTeal,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_K_Name;")]
+    #[strum(to_string = "Aleoida Spica - Turquoise")]
+    AleoidaSpicaTurquoise,
     #[serde(rename = "$Codex_Ent_Aleoids_04_K_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Turquoise")]
     AleoidaLaminiaeTurquoise,
     #[serde(rename = "$Codex_Ent_Aleoids_04_L_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Lime")]
     AleoidaLaminiaeLime,
-    #[serde(rename = "$Codex_Ent_Aleoids_05_F_Name;")]
-    #[strum(to_string = "Aleoida Gravis - Teal")]
-    AleoidaGravisTeal,
-    #[serde(rename = "$Codex_Ent_Aleoids_02_K_Name;")]
-    #[strum(to_string = "Aleoida Coronamus - Turquoise")]
-    AleoidaCoronamusTurquoise,
     #[serde(rename = "$Codex_Ent_Aleoids_01_A_Name;")]
     #[strum(to_string = "Aleoida Arcus - Green")]
     AleoidaArcusGreen,
     #[serde(rename = "$Codex_Ent_Aleoids_02_F_Name;")]
     #[strum(to_string = "Aleoida Coronamus - Teal")]
     AleoidaCoronamusTeal,
+    #[serde(rename = "$Codex_Ent_Aleoids_02_K_Name;")]
+    #[strum(to_string = "Aleoida Coronamus - Turquoise")]
+    AleoidaCoronamusTurquoise,
     #[serde(rename = "$Codex_Ent_Aleoids_04_A_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Green")]
     AleoidaLaminiaeGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_05_K_Name;")]
+    #[strum(to_string = "Aleoida Gravis - Turquoise")]
+    AleoidaGravisTurquoise,
+    #[serde(rename = "$Codex_Ent_Aleoids_05_F_Name;")]
+    #[strum(to_string = "Aleoida Gravis - Teal")]
+    AleoidaGravisTeal,
+    // Bacterium
+    #[serde(rename = "$Codex_Ent_Bacterial_01_N_Name;")]
+    #[strum(to_string = "Bacterium Aurasus - Indigo")]
+    BacteriumAurasusIndigo,
+    #[serde(rename = "$Codex_Ent_Bacterial_01_L_Name;")]
+    #[strum(to_string = "Bacterium Aurasus - Sage")]
+    BacteriumAurasusSage,
+    #[serde(rename = "$Codex_Ent_Bacterial_06_N_Name;")]
+    #[strum(to_string = "Bacterium Alcyoneum - Indigo")]
+    BacteriumAlcyoneumIndigo,
+    #[serde(rename = "$Codex_Ent_Bacterial_09_Tellurium_Name;")]
+    #[strum(to_string = "Bacterium Volu - Cyan")]
+    BacteriumVoluCyan,
+    #[serde(rename = "$Codex_Ent_Bacterial_10_Polonium_Name;")]
+    #[strum(to_string = "Bacterium Bullaris - Yellow")]
+    BacteriumBullarisYellow,
+    #[serde(rename = "$Codex_Ent_Bacterial_11_Cadmium_Name;")]
+    #[strum(to_string = "Bacterium Omentum - Lime")]
+    BacteriumOmentumLime,
+    #[serde(rename = "$Codex_Ent_Bacterial_11_Tungsten_Name;")]
+    #[strum(to_string = "Bacterium Omentum - Blue")]
+    BacteriumOmentumBlue,
+    #[serde(rename = "$Codex_Ent_Bacterial_13_Tin_Name;")]
+    #[strum(to_string = "Bacterium Verrata - Blue")]
+    BacteriumVerrataBlue,
+    #[serde(rename = "$Codex_Ent_Bacterial_12_T_Name;")]
+    #[strum(to_string = "Bacterium Cerbrus - Red")]
+    BacteriumCerbrusRed,
+    #[serde(rename = "$Codex_Ent_Bacterial_01_T_Name;")]
+    #[strum(to_string = "Bacterium Aurasus - Red")]
+    BacteriumAurasusRed,
+    #[serde(rename = "$Codex_Ent_Bacterial_06_T_Name;")]
+    #[strum(to_string = "Bacterium Alcyoneum - Red")]
+    BacteriumAlcyoneumRed,
+    #[serde(rename = "$Codex_Ent_Bacterial_07_Niobium_Name;")]
+    #[strum(to_string = "Bacterium Tela - Magenta")]
+    BacteriumTelaMagenta,
+    #[serde(rename = "$Codex_Ent_Bacterial_03_Tin_Name;")]
+    #[strum(to_string = "Bacterium Scopulum - Mulberry")]
+    BacteriumScopulumMulberry,
+    #[serde(rename = "$Codex_Ent_Bacterial_08_Technetium_Name;")]
+    #[strum(to_string = "Bacterium Informem - Aquamarine")]
+    BacteriumInformemAquamarine,
+    #[serde(rename = "$Codex_Ent_Bacterial_08_Polonium_Name;")]
+    #[strum(to_string = "Bacterium Informem - Lime")]
+    BacteriumInformemLime,
+    #[serde(rename = "$Codex_Ent_Bacterial_09_Ruthenium_Name;")]
+    #[strum(to_string = "Bacterium Volu - Cobalt")]
+    BacteriumVoluCobalt,
+    #[serde(rename = "$Codex_Ent_Bacterial_10_Technetium_Name;")]
+    #[strum(to_string = "Bacterium Bullaris - Gold")]
+    BacteriumBullarisGold,
+    #[serde(rename = "$Codex_Ent_Bacterial_12_A_Name;")]
+    #[strum(to_string = "Bacterium Cerbrus - Yellow")]
+    BacteriumCerbrusYellow,
     #[serde(rename = "$Codex_Ent_Bacterial_04_Polonium_Name;")]
     #[strum(to_string = "Bacterium Acies - Magenta")]
     BacteriumAciesMagenta,
@@ -302,6 +433,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Bacterial_07_Cadmium_Name;")]
     #[strum(to_string = "Bacterium Tela - Gold")]
     BacteriumTelaGold,
+    #[serde(rename = "$Codex_Ent_Bacterial_08_Antimony_Name;")]
+    #[strum(to_string = "Bacterium Informem - Red")]
+    BacteriumInformemRed,
+    #[serde(rename = "$Codex_Ent_Bacterial_09_Antimony_Name;")]
+    #[strum(to_string = "Bacterium Volu - Red")]
+    BacteriumVoluRed,
     #[serde(rename = "$Codex_Ent_Bacterial_08_Ruthenium_Name;")]
     #[strum(to_string = "Bacterium Informem - Gold")]
     BacteriumInformemGold,
@@ -398,6 +535,7 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Bacterial_12_L_Name;")]
     #[strum(to_string = "Bacterium Cerbrus - Sage")]
     BacteriumCerbrusSage,
+    // Brain Trees
     #[serde(rename = "$Codex_Ent_Seed_Name;")]
     #[strum(to_string = "Roseum Brain Tree")]
     RoseumBrainTree,
@@ -407,27 +545,25 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_SeedEFGH_Name;")]
     #[strum(to_string = "Lividum Brain Tree")]
     LividumBrainTree,
+    // Cactoids
+    #[serde(rename = "$Codex_Ent_Cactoid_05_N_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Sage")]
+    CactoidaPeperatisSage,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_F_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Yellow")]
+    CactoidaPeperatisYellow,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_A_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Green")]
+    CactoidaPeperatisGreen,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_T_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Orange")]
+    CactoidaPeperatisOrange,
+    #[serde(rename = "$Codex_Ent_Cactoid_04_A_Name;")]
+    #[strum(to_string = "Cactoida Pullulanta - Green")]
+    CactoidaPullulantaGreen,
     #[serde(rename = "$Codex_Ent_Cactoid_01_G_Name;")]
     #[strum(to_string = "Cactoida Cortexum - Teal")]
     CactoidaCortexumTeal,
-    #[serde(rename = "$Codex_Ent_Cactoid_02_G_Name;")]
-    #[strum(to_string = "Cactoida Lapis - Teal")]
-    CactoidaLapisTeal,
-    #[serde(rename = "$Codex_Ent_Cactoid_02_L_Name;")]
-    #[strum(to_string = "Cactoida Lapis - Mauve")]
-    CactoidaLapisMauve,
-    #[serde(rename = "$Codex_Ent_Cactoid_03_G_Name;")]
-    #[strum(to_string = "Cactoida Vermis - Teal")]
-    CactoidaVermisTeal,
-    #[serde(rename = "$Codex_Ent_Cactoid_04_F_Name;")]
-    #[strum(to_string = "Cactoida Pullulanta - Yellow")]
-    CactoidaPullulantaYellow,
-    #[serde(rename = "$Codex_Ent_Cactoid_05_G_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Teal")]
-    CactoidaPeperatisTeal,
-    #[serde(rename = "$Codex_Ent_Cactoid_05_L_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Mauve")]
-    CactoidaPeperatisMauve,
     #[serde(rename = "$Codex_Ent_Cactoid_01_F_Name;")]
     #[strum(to_string = "Cactoida Cortexum - Yellow")]
     CactoidaCortexumYellow,
@@ -440,9 +576,49 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Cactoid_02_F_Name;")]
     #[strum(to_string = "Cactoida Lapis - Yellow")]
     CactoidaLapisYellow,
+    #[serde(rename = "$Codex_Ent_Cactoid_02_G_Name;")]
+    #[strum(to_string = "Cactoida Lapis - Teal")]
+    CactoidaLapisTeal,
+    #[serde(rename = "$Codex_Ent_Cactoid_02_L_Name;")]
+    #[strum(to_string = "Cactoida Lapis - Mauve")]
+    CactoidaLapisMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_02_T_Name;")]
+    #[strum(to_string = "Cactoida Lapis - Orange")]
+    CactoidaLapisOrange,
+    #[serde(rename = "$Codex_Ent_Cactoid_03_G_Name;")]
+    #[strum(to_string = "Cactoida Vermis - Teal")]
+    CactoidaVermisTeal,
     #[serde(rename = "$Codex_Ent_Cactoid_03_L_Name;")]
     #[strum(to_string = "Cactoida Vermis - Mauve")]
     CactoidaVermisMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_04_F_Name;")]
+    #[strum(to_string = "Cactoida Pullulanta - Yellow")]
+    CactoidaPullulantaYellow,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_G_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Teal")]
+    CactoidaPeperatisTeal,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_L_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Mauve")]
+    CactoidaPeperatisMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_M_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Amethyst")]
+    CactoidaPeperatisAmethyst,
+    // Conchas
+    #[serde(rename = "$Codex_Ent_Conchas_02_A_Name;")]
+    #[strum(to_string = "Concha Aureolas - Teal")]
+    ConchaAureolasTeal,
+    #[serde(rename = "$Codex_Ent_Conchas_02_K_Name;")]
+    #[strum(to_string = "Concha Aureolas - Red")]
+    ConchaAureolasRed,
+    #[serde(rename = "$Codex_Ent_Conchas_02_F_Name;")]
+    #[strum(to_string = "Concha Aureolas - Grey")]
+    ConchaAureolasGrey,
+    #[serde(rename = "$Codex_Ent_Conchas_01_Mercury_Name;")]
+    #[strum(to_string = "Concha Renibus - Mulberry")]
+    ConchaRenibusMulberry,
+    #[serde(rename = "$Codex_Ent_Conchas_03_F_Name;")]
+    #[strum(to_string = "Concha Labiata - Grey")]
+    ConchaLabiataGrey,
     #[serde(rename = "$Codex_Ent_Conchas_01_Cadmium_Name;")]
     #[strum(to_string = "Concha Renibus - Red")]
     ConchaRenibusRed,
@@ -473,9 +649,25 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Conchas_03_K_Name;")]
     #[strum(to_string = "Concha Labiata - Red")]
     ConchaLabiataRed,
+    // Clypeus
+    #[serde(rename = "$Codex_Ent_Clypeus_01_K_Name;")]
+    #[strum(to_string = "Clypeus Lacrimam - Grey")]
+    ClypeusLacrimamGrey,
+    #[serde(rename = "$Codex_Ent_Clypeus_02_A_Name;")]
+    #[strum(to_string = "Clypeus Margaritus - Orange")]
+    ClypeusMargaritusOrange,
+    #[serde(rename = "$Codex_Ent_Clypeus_02_F_Name;")]
+    #[strum(to_string = "Clypeus Margaritus - Mauve")]
+    ClypeusMargaritusMauve,
+    #[serde(rename = "$Codex_Ent_Clypeus_02_M_Name;")]
+    #[strum(to_string = "Clypeus Margaritus - Turquoise")]
+    ClypeusMargaritusTurquoise,
     #[serde(rename = "$Codex_Ent_Clypeus_02_K_Name;")]
     #[strum(to_string = "Clypeus Margaritus - Grey")]
     ClypeusMargaritusGrey,
+    #[serde(rename = "$Codex_Ent_Clypeus_01_M_Name;")]
+    #[strum(to_string = "Clypeus Lacrimam - Turquoise")]
+    ClypeusLacrimamTurquoise,
     #[serde(rename = "$Codex_Ent_Clypeus_01_G_Name;")]
     #[strum(to_string = "Clypeus Lacrimam - Amethyst")]
     ClypeusLacrimamAmethyst,
@@ -491,105 +683,65 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Clypeus_02_G_Name;")]
     #[strum(to_string = "Clypeus Margaritus - Amethyst")]
     ClypeusMargaritusAmethyst,
+    // Electricae
+    #[serde(rename = "$Codex_Ent_Electricae_02_Antimony_Name;")]
+    #[strum(to_string = "Electricae Radialem - Cyan")]
+    ElectricaeRadialemCyan,
+    #[serde(rename = "$Codex_Ent_Electricae_01_Yttrium_Name;")]
+    #[strum(to_string = "Electricae Pluma - Mulberry")]
+    ElectricaePlumaMulberry,
+    #[serde(rename = "$Codex_Ent_Electricae_01_Polonium_Name;")]
+    #[strum(to_string = "Electricae Pluma - Cyan")]
+    ElectricaePlumaCyan,
     #[serde(rename = "$Codex_Ent_Electricae_02_Tellurium_Name;")]
     #[strum(to_string = "Electricae Radialem - Magenta")]
     ElectricaeRadialemMagenta,
+    // Fonticulus
+    #[serde(rename = "$Codex_Ent_Fonticulus_01_K_Name;")]
+    #[strum(to_string = "Fonticulua Segmentatus - Emerald")]
+    FonticuluaSegmentatusEmerald,
+    #[serde(rename = "$Codex_Ent_Fonticulus_03_M_Name;")]
+    #[strum(to_string = "Fonticulua Upupam - Amethyst")]
+    FonticuluaUpupamAmethyst,
+    #[serde(rename = "$Codex_Ent_Fonticulus_06_L_Name;")]
+    #[strum(to_string = "Fonticulua Digitos - Mauve")]
+    FonticuluaDigitosMauve,
+    #[serde(rename = "$Codex_Ent_Fonticulus_04_G_Name;")]
+    #[strum(to_string = "Fonticulua Lapida - Teal")]
+    FonticuluaLapidaTeal,
+    #[serde(rename = "$Codex_Ent_Fonticulus_04_L_Name;")]
+    #[strum(to_string = "Fonticulua Lapida - Mauve")]
+    FonticuluaLapidaMauve,
+    #[serde(rename = "$Codex_Ent_Fonticulus_04_TTS_Name;")]
+    #[strum(to_string = "Fonticulua Lapida - Red")]
+    FonticuluaLapidaRed,
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_L_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Mauve")]
+    FonticuluaCampestrisMauve,
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_A_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Green")]
+    FonticuluaCampestrisGreen,
     #[serde(rename = "$Codex_Ent_Fonticulus_06_K_Name;")]
     #[strum(to_string = "Fonticulua Digitos - Emerald")]
     FonticuluaDigitosEmerald,
     #[serde(rename = "$Codex_Ent_Fonticulus_01_M_Name;")]
     #[strum(to_string = "Fonticulua Segmentatus - Amethyst")]
     FonticuluaSegmentatusAmethyst,
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_F_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Yellow")]
+    FonticuluaCampestrisYellow,
     #[serde(rename = "$Codex_Ent_Fonticulus_02_K_Name;")]
     #[strum(to_string = "Fonticulua Campestris - Emerald")]
     FonticuluaCampestrisEmerald,
     #[serde(rename = "$Codex_Ent_Fonticulus_03_G_Name;")]
     #[strum(to_string = "Fonticulua Upupam - Teal")]
     FonticuluaUpupamTeal,
-    #[serde(rename = "$Codex_Ent_Fumerolas_01_Cadmium_Name;")]
-    #[strum(to_string = "Fumerola Carbosis - Orange")]
-    FumerolaCarbosisOrange,
-    #[serde(rename = "$Codex_Ent_Fumerolas_02_Tin_Name;")]
-    #[strum(to_string = "Fumerola Extremus - Peach")]
-    FumerolaExtremusPeach,
-    #[serde(rename = "$Codex_Ent_Fumarole_SulphurDioxideMagma_Name;")]
-    #[strum(to_string = "Sulphur Dioxide Fumarole")]
-    SulphurDioxideFumarole,
-    #[serde(rename = "$Codex_Ent_Fungoids_04_Tin_Name;")]
-    #[strum(to_string = "Fungoida Gelata - Red")]
-    FungoidaGelataRed,
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Cadmium_Name;")]
-    #[strum(to_string = "Fungoida Stabitis - Blue")]
-    FungoidaStabitisBlue,
-    #[serde(rename = "$Codex_Ent_Fungoids_01_Technetium_Name;")]
-    #[strum(to_string = "Fungoida Setisis - Lime")]
-    FungoidaSetisisLime,
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Mercury_Name;")]
-    #[strum(to_string = "Fungoida Stabitis - Green")]
-    FungoidaStabitisGreen,
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Tin_Name;")]
-    #[strum(to_string = "Fungoida Stabitis - Orange")]
-    FungoidaStabitisOrange,
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Tungsten_Name;")]
-    #[strum(to_string = "Fungoida Stabitis - Peach")]
-    FungoidaStabitisPeach,
-    #[serde(rename = "$Codex_Ent_Fungoids_01_Ruthenium_Name;")]
-    #[strum(to_string = "Fungoida Setisis - Gold")]
-    FungoidaSetisisGold,
-    #[serde(rename = "$Codex_Ent_Fungoids_01_Tellurium_Name;")]
-    #[strum(to_string = "Fungoida Setisis - Yellow")]
-    FungoidaSetisisYellow,
-    #[serde(rename = "$Codex_Ent_Fungoids_02_Molybdenum_Name;")]
-    #[strum(to_string = "Fungoida Stabitis - Magenta")]
-    FungoidaStabitisMagenta,
-    #[serde(rename = "$Codex_Ent_Fungoids_01_Yttrium_Name;")]
-    #[strum(to_string = "Fungoida Setisis - Orange")]
-    FungoidaSetisisOrange,
-    #[serde(rename = "$Codex_Ent_Gas_Vents_SulphurDioxideMagma_Name;")]
-    #[strum(to_string = "Sulphur Dioxide Gas Vent")]
-    SulphurDioxideGasVent,
-    #[serde(rename = "$Codex_Ent_Ingensradices_Unicus_Name;")]
-    #[strum(to_string = "Radicoida Unica")]
-    RadicoidaUnica,
-    #[serde(rename = "$Codex_Ent_Osseus_02_Tin_Name;")]
-    #[strum(to_string = "Osseus Discus - Blue")]
-    OsseusDiscusBlue,
-    #[serde(rename = "$Codex_Ent_Osseus_01_F_Name;")]
-    #[strum(to_string = "Osseus Fractus - Turquoise")]
-    OsseusFractusTurquoise,
-    #[serde(rename = "$Codex_Ent_Osseus_01_G_Name;")]
-    #[strum(to_string = "Osseus Fractus - Grey")]
-    OsseusFractusGrey,
-    #[serde(rename = "$Codex_Ent_Osseus_03_T_Name;")]
-    #[strum(to_string = "Osseus Spiralis - Emerald")]
-    OsseusSpiralisEmerald,
-    #[serde(rename = "$Codex_Ent_Osseus_03_G_Name;")]
-    #[strum(to_string = "Osseus Spiralis - Grey")]
-    OsseusSpiralisGrey,
-    #[serde(rename = "$Codex_Ent_Osseus_03_K_Name;")]
-    #[strum(to_string = "Osseus Spiralis - Indigo")]
-    OsseusSpiralisIndigo,
-    #[serde(rename = "$Codex_Ent_Osseus_03_F_Name;")]
-    #[strum(to_string = "Osseus Spiralis - Turquoise")]
-    OsseusSpiralisTurquoise,
-    #[serde(rename = "$Codex_Ent_Osseus_06_F_Name;")]
-    #[strum(to_string = "Osseus Pellebantus - Turquoise")]
-    OsseusPellebantusTurquoise,
-    #[serde(rename = "$Codex_Ent_Osseus_02_Tungsten_Name;")]
-    #[strum(to_string = "Osseus Discus - Red")]
-    OsseusDiscusRed,
-    #[serde(rename = "$Codex_Ent_Osseus_02_Mercury_Name;")]
-    #[strum(to_string = "Osseus Discus - Lime")]
-    OsseusDiscusLime,
-    #[serde(rename = "$Codex_Ent_Osseus_02_Molybdenum_Name;")]
-    #[strum(to_string = "Osseus Discus - Peach")]
-    OsseusDiscusPeach,
-    #[serde(rename = "$Codex_Ent_Osseus_03_A_Name;")]
-    #[strum(to_string = "Osseus Spiralis - Lime")]
-    OsseusSpiralisLime,
-    #[serde(rename = "$Codex_Ent_Osseus_06_G_Name;")]
-    #[strum(to_string = "Osseus Pellebantus - Grey")]
-    OsseusPellebantusGrey,
+    #[serde(rename = "$Codex_Ent_Fonticulus_03_K_Name;")]
+    #[strum(to_string = "Fonticulua Upupam - Emerald")]
+    FonticuluaUpupamEmerald,
+    #[serde(rename = "$Codex_Ent_Fonticulus_03_F_Name;")]
+    #[strum(to_string = "Fonticulua Upupam - Yellow")]
+    FonticuluaUpupamYellow,
     #[serde(rename = "$Codex_Ent_Fonticulus_02_G_Name;")]
     #[strum(to_string = "Fonticulua Campestris - Teal")]
     FonticuluaCampestrisTeal,
@@ -611,6 +763,121 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Fonticulus_06_M_Name;")]
     #[strum(to_string = "Fonticulua Digitos - Amethyst")]
     FonticuluaDigitosAmethyst,
+    // Fumerolas
+    #[serde(rename = "$Codex_Ent_Fumerolas_01_Cadmium_Name;")]
+    #[strum(to_string = "Fumerola Carbosis - Orange")]
+    FumerolaCarbosisOrange,
+    #[serde(rename = "$Codex_Ent_Fumerolas_01_Tungsten_Name;")]
+    #[strum(to_string = "Fumerola Carbosis - Yellow")]
+    FumerolaCarbosisYellow,
+    #[serde(rename = "$Codex_Ent_Fumerolas_02_Tin_Name;")]
+    #[strum(to_string = "Fumerola Extremus - Peach")]
+    FumerolaExtremusPeach,
+    #[serde(rename = "$Codex_Ent_Fumerolas_03_Niobium_Name;")]
+    #[strum(to_string = "Fumerola Nitris - Red")]
+    FumerolaNitrisRed,
+    // Fumaroles
+    #[serde(rename = "$Codex_Ent_Fumarole_SilicateVapourGeysers_Name;")]
+    #[strum(to_string = "Silicate Vapour Fumarole")]
+    FumaroleSilicateVapour,
+    #[serde(rename = "$Codex_Ent_Fumarole_SulphurDioxideMagma_Name;")]
+    #[strum(to_string = "Sulphur Dioxide Fumarole")]
+    FumaroleSulphurDioxide,
+    #[serde(rename = "$Codex_Ent_Fumerolas_02_Niobium_Name;")]
+    #[strum(to_string = "Fumerola Extremus - White")]
+    FumerolaExtremusWhite,
+    #[serde(rename = "$Codex_Ent_Fumerolas_03_Mercury_Name;")]
+    #[strum(to_string = "Fumerola Nitris - Peach")]
+    FumerolaNitrisPeach,
+    #[serde(rename = "$Codex_Ent_Fumerolas_01_Niobium_Name;")]
+    #[strum(to_string = "Fumerola Carbosis - Cobalt")]
+    FumerolaCarbosisCobalt,
+    #[serde(rename = "$Codex_Ent_Fumerolas_04_Tungsten_Name;")]
+    #[strum(to_string = "Fumerola Aquatis - Cobalt")]
+    FumerolaAquatisCobalt,
+    // Fungoids
+    #[serde(rename = "$Codex_Ent_Fungoids_03_Antimony_Name;")]
+    #[strum(to_string = "Fungoida Bullarum - Red")]
+    FungoidaBullarumRed,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Niobium_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Green")]
+    FungoidaGelataGreen,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Polonium_Name;")]
+    #[strum(to_string = "Fungoida Setisis - White")]
+    FungoidaSetisisWhite,
+    #[serde(rename = "$Codex_Ent_Fungoids_03_Yttrium_Name;")]
+    #[strum(to_string = "Fungoida Bullarum - Orange")]
+    FungoidaBullarumOrange,
+    #[serde(rename = "$Codex_Ent_Fungoids_03_Polonium_Name;")]
+    #[strum(to_string = "Fungoida Bullarum - Mulberry")]
+    FungoidaBullarumMulberry,
+    #[serde(rename = "$Codex_Ent_Fungoids_03_Ruthenium_Name;")]
+    #[strum(to_string = "Fungoida Bullarum - Magenta")]
+    FungoidaBullarumMagenta,
+    #[serde(rename = "$Codex_Ent_Fungoids_03_Tellurium_Name;")]
+    #[strum(to_string = "Fungoida Bullarum - Gold")]
+    FungoidaBullarumGold,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Mercury_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Lime")]
+    FungoidaGelataLime,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Tungsten_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Orange")]
+    FungoidaGelataOrange,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Molybdenum_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Mulberry")]
+    FungoidaGelataMulberry,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Niobium_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - White")]
+    FungoidaStabitisWhite,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Cadmium_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Cyan")]
+    FungoidaGelataCyan,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Antimony_Name;")]
+    #[strum(to_string = "Fungoida Setisis - Peach")]
+    FungoidaSetisisPeach,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Technetium_Name;")]
+    #[strum(to_string = "Fungoida Setisis - Lime")]
+    FungoidaSetisisLime,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Ruthenium_Name;")]
+    #[strum(to_string = "Fungoida Setisis - Gold")]
+    FungoidaSetisisGold,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Tellurium_Name;")]
+    #[strum(to_string = "Fungoida Setisis - Yellow")]
+    FungoidaSetisisYellow,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Molybdenum_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - Magenta")]
+    FungoidaStabitisMagenta,
+    #[serde(rename = "$Codex_Ent_Fungoids_01_Yttrium_Name;")]
+    #[strum(to_string = "Fungoida Setisis - Orange")]
+    FungoidaSetisisOrange,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Cadmium_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - Blue")]
+    FungoidaStabitisBlue,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Mercury_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - Green")]
+    FungoidaStabitisGreen,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Tin_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - Orange")]
+    FungoidaStabitisOrange,
+    #[serde(rename = "$Codex_Ent_Fungoids_02_Tungsten_Name;")]
+    #[strum(to_string = "Fungoida Stabitis - Peach")]
+    FungoidaStabitisPeach,
+    #[serde(rename = "$Codex_Ent_Fungoids_04_Tin_Name;")]
+    #[strum(to_string = "Fungoida Gelata - Red")]
+    FungoidaGelataRed,
+    // Frutexa
+    #[serde(rename = "$Codex_Ent_Shrubs_03_N_Name;")]
+    #[strum(to_string = "Frutexa Metallicum - Red")]
+    FrutexaMetallicumRed,
+    #[serde(rename = "$Codex_Ent_Shrubs_04_M_Name;")]
+    #[strum(to_string = "Frutexa Flammasis - Grey")]
+    FrutexaFlammasisGrey,
+    #[serde(rename = "$Codex_Ent_Shrubs_04_F_Name;")]
+    #[strum(to_string = "Frutexa Flammasis - Green")]
+    FrutexaFlammasisGreen,
+    #[serde(rename = "$Codex_Ent_Shrubs_03_G_Name;")]
+    #[strum(to_string = "Frutexa Metallicum - Emerald")]
+    FrutexaMetallicumEmerald,
     #[serde(rename = "$Codex_Ent_Shrubs_01_G_Name;")]
     #[strum(to_string = "Frutexa Flabellum - Emerald")]
     FrutexaFlabellumEmerald,
@@ -641,12 +908,134 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Shrubs_06_G_Name;")]
     #[strum(to_string = "Frutexa Sponsae - Emerald")]
     FrutexaSponsaeEmerald,
+    // Osseus
+    #[serde(rename = "$Codex_Ent_Osseus_01_A_Name;")]
+    #[strum(to_string = "Osseus Fractus - Lime")]
+    OsseusFractusLime,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Niobium_Name;")]
+    #[strum(to_string = "Osseus Discus - Aquamarine")]
+    OsseusDiscusAquamarine,
+    #[serde(rename = "$Codex_Ent_Osseus_06_K_Name;")]
+    #[strum(to_string = "Osseus Pellebantus - Indigo")]
+    OsseusPellebantusIndigo,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Cadmium_Name;")]
+    #[strum(to_string = "Osseus Discus - White")]
+    OsseusDiscusWhite,
+    #[serde(rename = "$Codex_Ent_Osseus_04_Antimony_Name;")]
+    #[strum(to_string = "Osseus Pumice - White")]
+    OsseusPumiceWhite,
+    #[serde(rename = "$Codex_Ent_Osseus_04_Tellurium_Name;")]
+    #[strum(to_string = "Osseus Pumice - Green")]
+    OsseusPumiceGreen,
+    #[serde(rename = "$Codex_Ent_Osseus_04_Ruthenium_Name;")]
+    #[strum(to_string = "Osseus Pumice - Gold")]
+    OsseusPumiceGold,
+    #[serde(rename = "$Codex_Ent_Osseus_01_T_Name;")]
+    #[strum(to_string = "Osseus Fractus - Emerald")]
+    OsseusFractusEmerald,
+    #[serde(rename = "$Codex_Ent_Osseus_01_F_Name;")]
+    #[strum(to_string = "Osseus Fractus - Turquoise")]
+    OsseusFractusTurquoise,
+    #[serde(rename = "$Codex_Ent_Osseus_01_G_Name;")]
+    #[strum(to_string = "Osseus Fractus - Grey")]
+    OsseusFractusGrey,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Tin_Name;")]
+    #[strum(to_string = "Osseus Discus - Blue")]
+    OsseusDiscusBlue,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Tungsten_Name;")]
+    #[strum(to_string = "Osseus Discus - Red")]
+    OsseusDiscusRed,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Mercury_Name;")]
+    #[strum(to_string = "Osseus Discus - Lime")]
+    OsseusDiscusLime,
+    #[serde(rename = "$Codex_Ent_Osseus_02_Molybdenum_Name;")]
+    #[strum(to_string = "Osseus Discus - Peach")]
+    OsseusDiscusPeach,
+    #[serde(rename = "$Codex_Ent_Osseus_03_A_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Lime")]
+    OsseusSpiralisLime,
+    #[serde(rename = "$Codex_Ent_Osseus_03_T_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Emerald")]
+    OsseusSpiralisEmerald,
+    #[serde(rename = "$Codex_Ent_Osseus_03_G_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Grey")]
+    OsseusSpiralisGrey,
+    #[serde(rename = "$Codex_Ent_Osseus_03_K_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Indigo")]
+    OsseusSpiralisIndigo,
+    #[serde(rename = "$Codex_Ent_Osseus_03_F_Name;")]
+    #[strum(to_string = "Osseus Spiralis - Turquoise")]
+    OsseusSpiralisTurquoise,
+    #[serde(rename = "$Codex_Ent_Osseus_01_K_Name;")]
+    #[strum(to_string = "Osseus Fractus - Indigo")]
+    OsseusFractusIndigo,
+    #[serde(rename = "$Codex_Ent_Osseus_04_Technetium_Name;")]
+    #[strum(to_string = "Osseus Pumice - Lime")]
+    OsseusPumiceLime,
+    #[serde(rename = "$Codex_Ent_Osseus_04_Yttrium_Name;")]
+    #[strum(to_string = "Osseus Pumice - Yellow")]
+    OsseusPumiceYellow,
+    #[serde(rename = "$Codex_Ent_Osseus_05_A_Name;")]
+    #[strum(to_string = "Osseus Cornibus - Lime")]
+    OsseusCornibusLime,
+    #[serde(rename = "$Codex_Ent_Osseus_05_F_Name;")]
+    #[strum(to_string = "Osseus Cornibus - Turquoise")]
+    OsseusCornibusTurquoise,
+    #[serde(rename = "$Codex_Ent_Osseus_06_F_Name;")]
+    #[strum(to_string = "Osseus Pellebantus - Turquoise")]
+    OsseusPellebantusTurquoise,
+    #[serde(rename = "$Codex_Ent_Osseus_06_G_Name;")]
+    #[strum(to_string = "Osseus Pellebantus - Grey")]
+    OsseusPellebantusGrey,
+    // Recepta
+    #[serde(rename = "$Codex_Ent_Recepta_01_M_Name;")]
+    #[strum(to_string = "Recepta Umbrux - Maroon")]
+    ReceptaUmbruxMaroon,
+    #[serde(rename = "$Codex_Ent_Recepta_02_Tin_Name;")]
+    #[strum(to_string = "Recepta Deltahedronix - Orange")]
+    ReceptaDeltahedronixOrange,
+    #[serde(rename = "$Codex_Ent_Recepta_01_K_Name;")]
+    #[strum(to_string = "Recepta Umbrux - Red")]
+    ReceptaUmbruxRed,
+    #[serde(rename = "$Codex_Ent_Recepta_03_Antimony_Name;")]
+    #[strum(to_string = "Recepta Conditivus - Lime")]
+    ReceptaConditivusLime,
+    #[serde(rename = "$Codex_Ent_Recepta_01_F_Name;")]
+    #[strum(to_string = "Recepta Umbrux - Mauve")]
+    ReceptaUmbruxMauve,
+    #[serde(rename = "$Codex_Ent_Recepta_01_TTS_Name;")]
+    #[strum(to_string = "Recepta Umbrux - Sage")]
+    ReceptaUmbruxSage,
+    #[serde(rename = "$Codex_Ent_Recepta_03_Technetium_Name;")]
+    #[strum(to_string = "Recepta Conditivus - Aquamarine")]
+    ReceptaConditivusAquamarine,
+    #[serde(rename = "$Codex_Ent_Recepta_03_Yttrium_Name;")]
+    #[strum(to_string = "Recepta Conditivus - Green")]
+    ReceptaConditivusGreen,
+    // Radicoida
+    #[serde(rename = "$Codex_Ent_Ingensradices_Unicus_Name;")]
+    #[strum(to_string = "Radicoida Unica")]
+    RadicoidaUnica,
+    // Rubeum
     #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
     #[strum(to_string = "Rubeum Bioluminescent Anemone")]
     RubeumBioluminescentAnemone,
-    #[serde(rename = "$Codex_Ent_Fumerolas_01_Tungsten_Name;")]
-    #[strum(to_string = "Fumerola Carbosis - Yellow")]
-    FumerolaCarbosisYellow,
+    // Stratum
+    #[serde(rename = "$Codex_Ent_Stratum_05_K_Name;")]
+    #[strum(to_string = "Stratum Limaxus - Lime")]
+    StratumLimaxusLime,
+    #[serde(rename = "$Codex_Ent_Stratum_05_M_Name;")]
+    #[strum(to_string = "Stratum Limaxus - Green")]
+    StratumLimaxusGreen,
+    #[serde(rename = "$Codex_Ent_Stratum_08_F_Name;")]
+    #[strum(to_string = "Stratum Frigus - Emerald")]
+    StratumFrigusEmerald,
+    #[serde(rename = "$Codex_Ent_Stratum_04_F_Name;")]
+    #[strum(to_string = "Stratum Araneamus - Emerald")]
+    StratumAraneamusEmerald,
+    #[serde(rename = "$Codex_Ent_Stratum_08_M_Name;")]
+    #[strum(to_string = "Stratum Frigus - Green")]
+    StratumFrigusGreen,
     #[serde(rename = "$Codex_Ent_Stratum_07_T_Name;")]
     #[strum(to_string = "Stratum Tectonicas - Grey")]
     StratumTectonicasGrey,
@@ -692,12 +1081,49 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Stratum_05_F_Name;")]
     #[strum(to_string = "Stratum Limaxus - Emerald")]
     StratumLimaxusEmerald,
+    // Tubus
+    #[serde(rename = "$Codex_Ent_Tubus_02_T_Name;")]
+    #[strum(to_string = "Tubus Sororibus - Mauve")]
+    TubusSororibusMauve,
+    #[serde(rename = "$Codex_Ent_Tubus_02_M_Name;")]
+    #[strum(to_string = "Tubus Sororibus - Teal")]
+    TubusSororibusTeal,
+    #[serde(rename = "$Codex_Ent_Tubus_04_A_Name;")]
+    #[strum(to_string = "Tubus Rosarium - Indigo")]
+    TubusRosariumIndigo,
+    #[serde(rename = "$Codex_Ent_Tubus_03_F_Name;")]
+    #[strum(to_string = "Tubus Cavas - Grey")]
+    TubusCavasGrey,
+    #[serde(rename = "$Codex_Ent_Tubus_03_K_Name;")]
+    #[strum(to_string = "Tubus Cavas - Maroon")]
+    TubusCavasMaroon,
+    #[serde(rename = "$Codex_Ent_Tubus_04_G_Name;")]
+    #[strum(to_string = "Tubus Rosarium - Red")]
+    TubusRosariumRed,
+    #[serde(rename = "$Codex_Ent_Tubus_01_F_Name;")]
+    #[strum(to_string = "Tubus Conifer - Grey")]
+    TubusConiferGrey,
+    #[serde(rename = "$Codex_Ent_Tubus_01_G_Name;")]
+    #[strum(to_string = "Tubus Conifer - Red")]
+    TubusConiferRed,
     #[serde(rename = "$Codex_Ent_Tubus_01_A_Name;")]
     #[strum(to_string = "Tubus Conifer - Indigo")]
     TubusConiferIndigo,
+    #[serde(rename = "$Codex_Ent_Tubus_01_M_Name;")]
+    #[strum(to_string = "Tubus Conifer - Teal")]
+    TubusConiferTeal,
     #[serde(rename = "$Codex_Ent_Tubus_02_K_Name;")]
     #[strum(to_string = "Tubus Sororibus - Maroon")]
     TubusSororibusMaroon,
+    #[serde(rename = "$Codex_Ent_Tubus_03_A_Name;")]
+    #[strum(to_string = "Tubus Cavas - Indigo")]
+    TubusCavasIndigo,
+    #[serde(rename = "$Codex_Ent_Tubus_03_G_Name;")]
+    #[strum(to_string = "Tubus Cavas - Red")]
+    TubusCavasRed,
+    #[serde(rename = "$Codex_Ent_Tubus_04_F_Name;")]
+    #[strum(to_string = "Tubus Rosarium - Grey")]
+    TubusRosariumGrey,
     #[serde(rename = "$Codex_Ent_Tubus_04_K_Name;")]
     #[strum(to_string = "Tubus Rosarium - Maroon")]
     TubusRosariumMaroon,
@@ -716,6 +1142,58 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Tubus_05_A_Name;")]
     #[strum(to_string = "Tubus Compagibus - Indigo")]
     TubusCompagibusIndigo,
+    // Tussocks
+    #[serde(rename = "$Codex_Ent_Tussocks_09_T_Name;")]
+    #[strum(to_string = "Tussock Propagito - Teal")]
+    TussockPropagitoTeal,
+    #[serde(rename = "$Codex_Ent_Tussocks_02_K_Name;")]
+    #[strum(to_string = "Tussock Ventusa - Green")]
+    TussockVentusaGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_07_G_Name;")]
+    #[strum(to_string = "Tussock Serrati - Lime")]
+    TussockSerratiLime,
+    #[serde(rename = "$Codex_Ent_Tussocks_09_L_Name;")]
+    #[strum(to_string = "Tussock Propagito - Sage")]
+    TussockPropagitoSage,
+    #[serde(rename = "$Codex_Ent_Tussocks_15_K_Name;")]
+    #[strum(to_string = "Tussock Capillum - Green")]
+    TussockCapillumGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_05_T_Name;")]
+    #[strum(to_string = "Tussock Catena - Teal")]
+    TussockCatenaTeal,
+    #[serde(rename = "$Codex_Ent_Tussocks_09_M_Name;")]
+    #[strum(to_string = "Tussock Propagito - Emerald")]
+    TussockPropagitoEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_15_G_Name;")]
+    #[strum(to_string = "Tussock Capillum - Lime")]
+    TussockCapillumLime,
+    #[serde(rename = "$Codex_Ent_Tussocks_05_F_Name;")]
+    #[strum(to_string = "Tussock Catena - Yellow")]
+    TussockCatenaYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_01_F_Name;")]
+    #[strum(to_string = "Tussock Pennata - Yellow")]
+    TussockPennataYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_04_M_Name;")]
+    #[strum(to_string = "Tussock Cultro - Emerald")]
+    TussockCultroEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_05_M_Name;")]
+    #[strum(to_string = "Tussock Catena - Emerald")]
+    TussockCatenaEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_05_K_Name;")]
+    #[strum(to_string = "Tussock Catena - Green")]
+    TussockCatenaGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_07_F_Name;")]
+    #[strum(to_string = "Tussock Serrati - Yellow")]
+    TussockSerratiYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_13_F_Name;")]
+    #[strum(to_string = "Tussock Stigmasis - Yellow")]
+    TussockStigmasisYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_14_M_Name;")]
+    #[strum(to_string = "Tussock Virgam - Emerald")]
+    TussockVirgamEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_15_F_Name;")]
+    #[strum(to_string = "Tussock Capillum - Yellow")]
+    TussockCapillumYellow,
     #[serde(rename = "$Codex_Ent_Tussocks_10_T_Name;")]
     #[strum(to_string = "Tussock Divisa - Teal")]
     TussockDivisaTeal,
