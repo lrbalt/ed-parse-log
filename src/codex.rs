@@ -1380,6 +1380,9 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_5;")]
     #[strum(to_string = "Norma Arm")]
     NormaArm,
+    #[serde(rename = "$Codex_RegionName_6;")]
+    #[strum(to_string = "Arcadian Stream")]
+    ArcadianStream,
     #[serde(rename = "$Codex_RegionName_7;")]
     #[strum(to_string = "Izanami")]
     Izanami,
@@ -1392,27 +1395,72 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_10;")]
     #[strum(to_string = "Norma Expanse")]
     NormaExpanse,
+    #[serde(rename = "$Codex_RegionName_11;")]
+    #[strum(to_string = "Trojan Belt")]
+    TrojanBelt,
+    #[serde(rename = "$Codex_RegionName_12;")]
+    #[strum(to_string = "The Veils")]
+    TheVeils,
     #[serde(rename = "$Codex_RegionName_13;")]
     #[strum(to_string = "Newton's Vault")]
     NewtonsVault,
     #[serde(rename = "$Codex_RegionName_14;")]
     #[strum(to_string = "The Conduit")]
     TheConduit,
+    #[serde(rename = "$Codex_RegionName_15;")]
+    #[strum(to_string = "Outer Orion-Perseus Conflux")]
+    OuterOrionPerseusConflux,
+    #[serde(rename = "$Codex_RegionName_16;")]
+    #[strum(to_string = "Orion-Cygnus Arm")]
+    OrionCygnusArm,
+    #[serde(rename = "$Codex_RegionName_17;")]
+    #[strum(to_string = "Temple")]
+    Temple,
     #[serde(rename = "$Codex_RegionName_18;")]
     #[strum(to_string = "Inner Orion Spur")]
     InnerOrionSpur,
     #[serde(rename = "$Codex_RegionName_19;")]
     #[strum(to_string = "Hawking's Gap")]
     HawkingsGap,
+    #[serde(rename = "$Codex_RegionName_20;")]
+    #[strum(to_string = "Dryman’s Point")]
+    DrymansPoint,
+    #[serde(rename = "$Codex_RegionName_21;")]
+    #[strum(to_string = "Sagittarius-Carina Arm")]
+    SagittariusCarinaArm,
+    #[serde(rename = "$Codex_RegionName_22;")]
+    #[strum(to_string = "Mare Somnia")]
+    MareSomnia,
+    #[serde(rename = "$Codex_RegionName_23;")]
+    #[strum(to_string = "Acheron")]
+    Acheron,
     #[serde(rename = "$Codex_RegionName_24;")]
     #[strum(to_string = "Formorian Frontier")]
     FormorianFrontier,
+    #[serde(rename = "$Codex_RegionName_25;")]
+    #[strum(to_string = "Hieronymus Delta")]
+    HieronymusDelta,
     #[serde(rename = "$Codex_RegionName_26;")]
     #[strum(to_string = "Outer Scutum-Centaurus Arm")]
     OuterScutumCentaurusArm,
+    #[serde(rename = "$Codex_RegionName_27;")]
+    #[strum(to_string = "Outer Arm")]
+    OuterArm,
+    #[serde(rename = "$Codex_RegionName_28;")]
+    #[strum(to_string = "Aquila’s Halo")]
+    AquilasHalo,
+    #[serde(rename = "$Codex_RegionName_29;")]
+    #[strum(to_string = "Errant Marches")]
+    ErrantMarches,
+    #[serde(rename = "$Codex_RegionName_30;")]
+    #[strum(to_string = "Perseus Arm")]
+    PerseusArm,
     #[serde(rename = "$Codex_RegionName_31;")]
     #[strum(to_string = "The Formidine Rift")]
     TheFormidineRift,
+    #[serde(rename = "$Codex_RegionName_32;")]
+    #[strum(to_string = "Vulcan Gate")]
+    VulcanGate,
     #[serde(rename = "$Codex_RegionName_33;")]
     #[strum(to_string = "Elysian Shore")]
     ElysianShore,
@@ -1422,6 +1470,18 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_35;")]
     #[strum(to_string = "Outer Orion Spur")]
     OuterOrionSpur,
+    #[serde(rename = "$Codex_RegionName_36;")]
+    #[strum(to_string = "Achilles’s Altar")]
+    AchillessAltar,
+    #[serde(rename = "$Codex_RegionName_37;")]
+    #[strum(to_string = "Xibalba")]
+    Xibalba,
+    #[serde(rename = "$Codex_RegionName_38;")]
+    #[strum(to_string = "Lyra’s Song")]
+    LyrasSong,
+    #[serde(rename = "$Codex_RegionName_39;")]
+    #[strum(to_string = "Tenebrae")]
+    Tenebrae,
     #[serde(rename = "$Codex_RegionName_40;")]
     #[strum(to_string = "The Abyss")]
     TheAbyss,
