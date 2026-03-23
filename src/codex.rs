@@ -684,6 +684,9 @@ pub enum CodexNames {
     #[strum(to_string = "Clypeus Margaritus - Amethyst")]
     ClypeusMargaritusAmethyst,
     // Electricae
+    #[serde(rename = "$Codex_Ent_Electricae_01_Ruthenium_Name;")]
+    #[strum(to_string = "Electricae Pluma - Blue")]
+    ElectricaePlumaBlue,
     #[serde(rename = "$Codex_Ent_Electricae_02_Antimony_Name;")]
     #[strum(to_string = "Electricae Radialem - Cyan")]
     ElectricaeRadialemCyan,
@@ -697,6 +700,9 @@ pub enum CodexNames {
     #[strum(to_string = "Electricae Radialem - Magenta")]
     ElectricaeRadialemMagenta,
     // Fonticulus
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_N_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Sage")]
+    FonticuluaCampestrisSage,
     #[serde(rename = "$Codex_Ent_Fonticulus_01_K_Name;")]
     #[strum(to_string = "Fonticulua Segmentatus - Emerald")]
     FonticuluaSegmentatusEmerald,
