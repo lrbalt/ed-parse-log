@@ -1027,6 +1027,9 @@ pub enum CodexNames {
     #[strum(to_string = "Rubeum Bioluminescent Anemone")]
     RubeumBioluminescentAnemone,
     // Stratum
+    #[serde(rename = "$Codex_Ent_Stratum_03_K_Name;")]
+    #[strum(to_string = "Stratum Laminamus - Lime")]
+    StratumLaminamusLime,
     #[serde(rename = "$Codex_Ent_Stratum_05_K_Name;")]
     #[strum(to_string = "Stratum Limaxus - Lime")]
     StratumLimaxusLime,
@@ -1149,6 +1152,9 @@ pub enum CodexNames {
     #[strum(to_string = "Tubus Compagibus - Indigo")]
     TubusCompagibusIndigo,
     // Tussocks
+    #[serde(rename = "$Codex_Ent_Tussocks_08_M_Name;")]
+    #[strum(to_string = "Tussock Albata - Emerald")]
+    TussockAlbataEmerald,
     #[serde(rename = "$Codex_Ent_Tussocks_09_T_Name;")]
     #[strum(to_string = "Tussock Propagito - Teal")]
     TussockPropagitoTeal,
