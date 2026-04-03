@@ -5,7 +5,7 @@ use crate::{
         SignalType, StarClass, Unknown,
     },
 };
-use ed_parse_log_files_macros::{Extractable, testcase};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use strum::Display;
 
@@ -85,6 +85,7 @@ pub struct BodyComposition {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "StarType":"MS", "Subclass":4, "StellarMass":1.046875, "AbsoluteMagnitude":0.467133, "Age_MY":10286, "SurfaceTemperature":2853.000000, "Luminosity":"IIIb"})]
 pub struct ScannedStarDetails {
     star_type: Option<StarClass>,
     subclass: u64,
@@ -262,6 +263,12 @@ pub enum ReserveLevel {
     "StarSystem":"Wepe ZE-A g415", "SystemAddress":27871541846, "DistanceFromArrivalLS":0.000000, "StarType":"O", "Subclass":0, 
     "StellarMass":18.582031, "Radius":4406219776.000000, "AbsoluteMagnitude":-6.894470, "Age_MY":8, "SurfaceTemperature":34124.000000, 
     "Luminosity":"Vz", "RotationPeriod":185024.686578, "AxialTilt":0.000000, "WasDiscovered":false, "WasMapped":false, "WasFootfalled":false })]
+#[testcase({ "timestamp":"2026-03-30T07:21:02Z", "event":"Scan", "ScanType":"AutoScan", "BodyName":"Crookeou PZ-D d13-0 A", "BodyID":1, 
+    "Parents":[ {"Null":0} ], "StarSystem":"Crookeou PZ-D d13-0", "SystemAddress":8279789171, "DistanceFromArrivalLS":0.000000, "StarType":"MS", 
+    "Subclass":4, "StellarMass":1.046875, "Radius":21262647296.000000, "AbsoluteMagnitude":0.467133, "Age_MY":10286, "SurfaceTemperature":2853.000000, 
+    "Luminosity":"IIIb", "SemiMajorAxis":4346273362636.566406, "Eccentricity":0.116731, "OrbitalInclination":-4.121931, "Periapsis":311.650187, 
+    "OrbitalPeriod":19800743460.655212, "AscendingNode":-91.362499, "MeanAnomaly":10.587886, "RotationPeriod":10780308.587214, "AxialTilt":0.000000, 
+    "WasDiscovered":true, "WasMapped":false, "WasFootfalled":false } )]
 pub struct EDLogScan {
     pub scan_type: Option<ScanType>,
     pub body_name: EDString,

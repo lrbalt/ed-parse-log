@@ -460,6 +460,7 @@ pub enum StarClass {
     KOrangeGiant,
     L,
     M,
+    MS,
     #[serde(rename = "M_RedGiant")]
     MRedGiant,
     N,
@@ -469,6 +470,7 @@ pub enum StarClass {
     T,
     TTS,
     W,
+    WO,
     Y,
 }
 
@@ -480,6 +482,8 @@ pub enum LuminosityType {
     One,
     #[serde(rename = "III")]
     Three,
+    #[serde(rename = "IIIb")]
+    ThreeB,
     #[serde(rename = "IV")]
     Four,
     #[serde(rename = "VII")]

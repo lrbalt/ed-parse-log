@@ -91,6 +91,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_M_Type_Name;")]
     #[strum(to_string = "M Type Star")]
     MTypeStar,
+    #[serde(rename = "$Codex_Ent_MS_TypeGiant_Name;")]
+    #[strum(to_string = "MS Type Giant")]
+    MSTypeGiant,
     #[serde(rename = "$Codex_Ent_O_Type_Name;")]
     #[strum(to_string = "O Type Stars")]
     OTypeStars,
@@ -106,6 +109,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_W_Type_Name;")]
     #[strum(to_string = "W Type Star")]
     WTypeStar,
+    #[serde(rename = "$Codex_Ent_WO_Type_Name;")]
+    #[strum(to_string = "WO Type Star")]
+    WOTypeStar,
     #[serde(rename = "$Codex_Ent_Y_Type_Name;")]
     #[strum(to_string = "Y Type Star")]
     YTypeStar,
