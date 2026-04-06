@@ -338,6 +338,9 @@ pub enum OnFootItem {
     WeaponInventory,
     WeaponTestData,
     XenoDefenceProtocols,
+
+    #[serde(rename = "nm_seed")]
+    NMSeed,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -753,6 +756,14 @@ pub struct CodexBodyInformation {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"StationName":"Exogene Sciences", "StationType":"AsteroidBase", "MarketID":129038712, 
+    "StationFaction":{ "Name":"October Consortium" }, "StationGovernment":"$government_Corporate;", 
+    "StationGovernment_Localised":"Corporate", "StationServices":[ "dock", "autodock", "commodities", 
+    "contacts", "exploration", "initiatives", "missions", "outfitting", "crewlounge", "rearm", "refuel", 
+    "repair", "shipyard", "engineer", "facilitator", "flightcontroller", "stationoperations", "searchrescue", 
+    "stationMenu", "livery", "socialspace", "bartender", "vistagenomics", "pioneersupplies", "apexinterstellar" ], 
+    "StationEconomy":"$economy_Service;", "StationEconomy_Localised":"Service", "StationEconomies":[ 
+    { "Name":"$economy_Service;", "Name_Localised":"Service", "Proportion":1.000000 } ] })]
 pub struct StationInformation {
     pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
@@ -840,6 +851,7 @@ pub enum StationService {
     Refinery,
     #[serde(rename = "squadronBank")]
     SquadronBank,
+    Initiatives,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

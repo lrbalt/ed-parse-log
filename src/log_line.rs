@@ -55,7 +55,7 @@ use crate::{
         EDLogBounty, EDLogCapitalShipBond, EDLogDatalinkVoucher, EDLogFactionKillBond,
         EDLogMissionAbandoned, EDLogMissionAccepted, EDLogMissionCompleted, EDLogMissionFailed,
         EDLogMissionRedirected, EDLogMissions, EDLogPVPKill, EDLogPassengers, EDLogRedeemVoucher,
-        EDLogSearchAndRescue,
+        EDLogScientificResearch, EDLogSearchAndRescue,
     },
     modules::{
         EDLogFetchRemoteModule, EDLogMassModuleStore, EDLogModuleBuy, EDLogModuleBuyAndStore,
@@ -474,6 +474,7 @@ pub enum EDLogEvent {
     CapitalShipBond(EDLogCapitalShipBond),
     PVPKill(EDLogPVPKill),
     Passengers(EDLogPassengers),
+    ScientificResearch(EDLogScientificResearch),
 
     // Market
     Market(EDLogMarket),

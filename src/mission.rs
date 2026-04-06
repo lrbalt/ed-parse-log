@@ -330,6 +330,20 @@ pub struct Passenger {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-04-04T18:51:10Z", "event":"ScientificResearch", "MarketID":129038712, 
+    "Name":"nm_seed", "Name_Localised":"Unica Seed", "Category":"Item", "Count":384 })]
+pub struct EDLogScientificResearch {
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+    pub name: EDString,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: EDString,
+    pub category: EDString,
+    pub count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPassengers {
     manifest: Vec<Passenger>,
 }
