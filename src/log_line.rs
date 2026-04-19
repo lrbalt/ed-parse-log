@@ -64,8 +64,8 @@ use crate::{
     },
     navigation::{
         EDLogApproachSettlement, EDLogDockSRV, EDLogFSDJump, EDLogFSDTarget, EDLogFuelScoop,
-        EDLogJetConeBoost, EDLogLaunchSRV, EDLogLiftoff, EDLogSRVDestroyed, EDLogStartJump,
-        EDLogTouchdown,
+        EDLogJetConeBoost, EDLogJetConeDamage, EDLogLaunchSRV, EDLogLiftoff, EDLogSRVDestroyed,
+        EDLogStartJump, EDLogTouchdown,
     },
     powerplay::{
         EDLogHoloscreenHacked, EDLogPowerplay, EDLogPowerplayCollect, EDLogPowerplayDefect,
@@ -403,6 +403,7 @@ pub enum EDLogEvent {
     Touchdown(EDLogTouchdown),
     StartJump(EDLogStartJump),
     JetConeBoost(EDLogJetConeBoost),
+    JetConeDamage(EDLogJetConeDamage),
 
     // Supercruise
     SupercruiseEntry(EDLogSupercruiseEntry),

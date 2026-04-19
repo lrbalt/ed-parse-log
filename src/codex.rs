@@ -542,6 +542,9 @@ pub enum CodexNames {
     #[strum(to_string = "Bacterium Cerbrus - Sage")]
     BacteriumCerbrusSage,
     // Brain Trees
+    #[serde(rename = "$Codex_Ent_SeedEFGH_01_Name;")]
+    #[strum(to_string = "Aureum Brain Tree")]
+    AureumBrainTree,
     #[serde(rename = "$Codex_Ent_Seed_Name;")]
     #[strum(to_string = "Roseum Brain Tree")]
     RoseumBrainTree,

@@ -195,6 +195,15 @@ pub struct EDLogJetConeBoost {
     boost_value: f64,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-04-07T17:14:53Z", "event":"JetConeDamage", "Module":"$modularcargobaydoor_name;", "Module_Localised":"Cargo Hatch" })]
+pub struct EDLogJetConeDamage {
+    module: EDString,
+    #[serde(rename = "Module_Localised")]
+    module_localised: Option<EDString>,
+}
+
 #[test]
 fn test_jsd_jump() {
     let json = r#"{ "timestamp":"2024-10-13T17:51:23Z", "event":"FSDJump", "Taxi":false, "Multicrew":false, 

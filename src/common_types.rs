@@ -986,6 +986,8 @@ pub enum GovernmentType {
     Engineer,
     #[serde(alias = "$government_Feudal;")]
     Feudal,
+    #[serde(alias = "$government_Megaconstruction;")]
+    Megaconstruction,
     // Imperial,
     #[serde(alias = "$government_Patronage;")]
     Patronage,
