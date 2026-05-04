@@ -127,6 +127,7 @@ pub enum MarketItemType {
     HazardousEnvironmentSuits,
     ComputerComponents,
     ModularTerminals,
+    #[serde(alias = "Pesticides")]
     Pesticides,
     RadiationBaffle,
     NeofabricInsulation,
@@ -176,6 +177,8 @@ pub enum MarketItemType {
     NaturalFabrics,
     ScientificResearch,
     RestrictedIntel,
+    TacticalData,
+    MilitaryIntelligence,
 
     Drones,
     #[serde(alias = "DamagedEscapePod")]

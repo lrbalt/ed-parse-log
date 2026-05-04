@@ -496,6 +496,8 @@ pub enum BodySignalType {
     Other,
     #[serde(rename = "$SAA_SignalType_Thargoid;")]
     Thargoid,
+    #[serde(rename = "$SAA_SignalType_PlanetAnomaly;")]
+    PlanetAnomaly,
 
     Alexandrite,
     Benitoite,

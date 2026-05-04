@@ -99,6 +99,7 @@ pub enum DockingDeniedReason {
 pub enum StationState {
     UnderAttack,
     Damaged,
+    DamagedHuman,
     Construction,
 }
 

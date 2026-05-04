@@ -154,6 +154,8 @@ pub enum ShipType {
     PythonNX,
     #[serde(alias = "SideWinder")]
     Sidewinder,
+    #[serde(alias = "mediumtransport01", alias = "MediumTransport01")]
+    LynxHighliner,
     #[serde(alias = "Type6")]
     Type6,
     #[serde(alias = "Type7")]
