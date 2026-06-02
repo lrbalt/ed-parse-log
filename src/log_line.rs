@@ -445,7 +445,7 @@ pub enum EDLogEvent {
     SystemsShutdown,
     Shutdown,
     Music(EDLogMusic),
-    Status(EDLogStatus),
+    Status(Box<EDLogStatus>),
 
     // Commander
     Commander(EDLogCommander),

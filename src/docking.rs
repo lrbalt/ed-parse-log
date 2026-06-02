@@ -159,6 +159,15 @@ pub struct EDLogUndocked {
     multicrew: Option<bool>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct ModuleOutfitting {
+    #[serde(rename = "id")]
+    id: u64,
+    name: EDString,
+    buy_price: Credits,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2022-09-17T13:01:22Z", "event":"Outfitting", "MarketID":3223506432, "StationName":"Coleman Ring", "StarSystem":"BZ Ceti" })]
@@ -166,6 +175,8 @@ pub struct EDLogOutfitting {
     #[serde(flatten)]
     pub station_identification: StationIdentification,
     star_system: EDString,
+    horizons: Option<bool>,
+    items: Option<Vec<ModuleOutfitting>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

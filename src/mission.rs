@@ -152,11 +152,11 @@ pub struct FactionEffect {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-12-15T09:36:49Z", "event":"MissionCompleted", "Faction":"CdE Corporation", "Name":"Mission_Sightseeing_name", 
     "LocalisedName":"Christina Wood Seeks Sightseeing Adventure", "MissionID":12341234, "Commodity":"$ConsumerTechnology_Name;", 
-    "Commodity_Localised":"Consumer Technology", "Count":1, "DestinationSystem":"Sothis", "Reward":1818345, "FactionEffects":[ 
-        { 
-            "Faction":"CdE Corporation", "Effects":[ { "Effect":"$MISSIONUTIL_Interaction_Summary_SP_up;", "Effect_Localised":"The security status of $#MinorFaction; has improved in the $#System; system.", "Trend":"UpGood" } ], 
-            "Influence":[ { "SystemAddress":9463020987689, "Trend":"UpGood", "Influence":"++" } ], 
-            "ReputationTrend":"UpGood", "Reputation":"++" } 
+    "Commodity_Localised":"Consumer Technology", "Count":1, "DestinationSystem":"Sothis", "Reward":1818345, 
+    "FactionEffects":[
+        {"Faction":"CdE Corporation", "Effects":[ { "Effect":"$MISSIONUTIL_Interaction_Summary_SP_up;", "Effect_Localised":"The security status of $#MinorFaction; has improved in the $#System; system.", "Trend":"UpGood" } ], 
+         "Influence":[ { "SystemAddress":9463020987689, "Trend":"UpGood", "Influence":"++" } ], 
+         "ReputationTrend":"UpGood", "Reputation":"++"}
     ]})]
 #[testcase({ "timestamp":"2025-11-11T19:10:37Z", "event":"MissionCompleted", "Faction":"Kamadhenu Citizens' Forum", 
     "Name":"Mission_AltruismCredits_name", "LocalisedName":"Donate 1,000,000 Cr to the cause", 

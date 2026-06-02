@@ -65,6 +65,17 @@ pub struct EDLogShipyardNew {
     new_ship_id: u64,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogShipyardPriceListItem {
+    #[serde(rename = "id")]
+    id: u64,
+    ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    ship_type_localised: Option<EDString>,
+    ship_price: Credits,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyard {
@@ -72,6 +83,10 @@ pub struct EDLogShipyard {
     market_id: u64,
     station_name: EDString,
     star_system: EDString,
+    horizons: Option<bool>,
+    #[serde(rename = "AllowCobraMkIV")]
+    allow_cobra_mk_iv: Option<bool>,
+    price_list: Option<Vec<EDLogShipyardPriceListItem>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
