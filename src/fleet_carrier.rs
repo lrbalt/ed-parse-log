@@ -4,6 +4,7 @@ use crate::{
         Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
         PowerplayState, StationInformation, ThargoidWar,
     },
+    market::MarketItemType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -331,6 +332,19 @@ pub struct EDLogCarrierStats {
     pub module_packs: Vec<ModulePack>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FCMaterials {
+    #[serde(rename = "id")]
+    pub id: u64,
+    pub name: MarketItemType,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: Option<EDString>,
+    pub price: Credits,
+    pub stock: u64,
+    pub demand: u64,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFCMaterials {
@@ -339,6 +353,7 @@ pub struct EDLogFCMaterials {
     pub carrier_name: EDString,
     #[serde(rename = "CarrierID")]
     pub carrier_id: EDString,
+    pub items: Option<Vec<FCMaterials>>,
 }
 
 #[test]
