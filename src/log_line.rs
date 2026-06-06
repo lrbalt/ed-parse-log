@@ -283,7 +283,7 @@ pub struct EDLogStatus {
     longitude: Option<f64>,
     heading: Option<u64>,
     altitude: Option<f64>,
-    cargo: Option<u64>,
+    cargo: Option<f64>,
     legal_state: Option<LegalState>,
     balance: Option<Credits>,
     oxigen: Option<f64>,
