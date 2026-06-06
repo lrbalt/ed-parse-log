@@ -188,7 +188,7 @@ pub enum MarketItemType {
     HydrogenPeroxide,
     #[serde(alias = "$personalgifts_name;")]
     PersonalGifts,
-    #[serde(alias = "$personalandweapons_name;")]
+    #[serde(alias = "$personalweapons_name;")]
     PersonalWeapons,
     #[serde(alias = "PersonalEffects")]
     PersonalEffects,
@@ -691,7 +691,11 @@ pub enum MarketItemType {
     ThargoidCystSpecimen,
     #[serde(alias = "ThargoidPod", alias = "$thargoidpod_name;")]
     ThargoidPod,
-    #[serde(alias = "unknownartifact", alias = "$unknownartifact_name;", alias="UnknownArtifact")]
+    #[serde(
+        alias = "unknownartifact",
+        alias = "$unknownartifact_name;",
+        alias = "UnknownArtifact"
+    )]
     ThargoidSensor,
     #[serde(alias = "ThargoidOrganSample", alias = "$thargoidorgansample_name;")]
     ThargoidOrganSample,
@@ -765,7 +769,12 @@ pub enum MarketItemType {
     TitanMawPartialTissueSample,
     #[serde(alias = "ThargoidHeart", alias = "$thargoidheart_name;")]
     ThargoidHeart,
-    #[serde(alias = "Thargoid Resin", alias = "$unknownresin_name;", alias="UnknownResin", alias="unknownresin")]
+    #[serde(
+        alias = "Thargoid Resin",
+        alias = "$unknownresin_name;",
+        alias = "UnknownResin",
+        alias = "unknownresin"
+    )]
     ThargoidResin,
     #[serde(alias = "$unknownbiologicalmatter_name;")]
     ThargoidBiologicalMatter,
@@ -777,7 +786,11 @@ pub enum MarketItemType {
     ThargoidLink,
     #[serde(alias = "MetaAlloys", alias = "$metaalloys_name;")]
     MetaAlloys,
-    #[serde(alias = "$unknownsack_name;", alias = "unknownsack", alias="UnknownSack")]
+    #[serde(
+        alias = "$unknownsack_name;",
+        alias = "unknownsack",
+        alias = "UnknownSack"
+    )]
     ProtectiveMembraneScrap,
     #[serde(alias = "$unknownmineral_name;")]
     ImpureSpireMineral,
