@@ -272,6 +272,10 @@ Guifocus
     "Fuel":{ "FuelMain":15.146626, "FuelReservoir":0.382796 }, "GuiFocus":0, "Latitude":-28.584963,
     "Longitude":6.826313, "Heading":109, "Altitude": 404 })]
 #[testcase({ "timestamp":"2026-05-15T12:51:43Z", "event":"Status", "Flags":0 })]
+#[testcase({ "timestamp":"2026-06-06T13:01:47Z", "event":"Status", "Flags":151060485, "Flags2":0, "Pips":[2,8,2], 
+    "FireGroup":0, "GuiFocus":0, "Fuel":{ "FuelMain":128.000000, "FuelReservoir":1.110000 }, "Cargo":1324.000000, 
+    "LegalState":"Hostile", "Balance":28304956592, "Destination":{ "System":2869441275273, "Body":33, 
+    "Name":"Val-rasha Starport" } })]
 pub struct EDLogStatus {
     flags: u64,
     flags2: Option<u64>,

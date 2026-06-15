@@ -1,7 +1,7 @@
 use crate::{
     EDString,
     common_types::{Credits, ModuleEngineeringModifiers},
-    ship::ShipType,
+    ship::{ShipModule, ShipType},
 };
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
@@ -36,7 +36,7 @@ pub struct ModuleEngineering {
 #[testcase_struct({ "Slot":"LargeHardpoint1", "Item":"hpt_slugshot_fixed_large_range", "On":true, "Priority":0, "AmmoInClip":3, "AmmoInHopper":180, "Health":1.000000, "Value":1536538})]
 pub struct Module {
     slot: EDString,
-    item: EDString,
+    item: ShipModule,
     on: bool,
     priority: u64,
     ammo_in_clip: Option<u64>,

@@ -330,6 +330,8 @@ pub enum MarketItemType {
     RockforthFertiliser,
     #[serde(alias = "$harmasilversearum_name;")]
     HarmasilverAurum,
+    #[serde(alias = "$alliancetradeagreements_name;")]
+    AllianceTradeAgreements,
 
     Drones,
     #[serde(alias = "DamagedEscapePod")]
