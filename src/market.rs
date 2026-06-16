@@ -653,6 +653,16 @@ pub enum MarketItemType {
     PlatinumAloy,
     #[serde(alias = "$rhodplumsite_name;")]
     Rhodplumsite,
+    #[serde(alias = "$lyraeweed_name;")]
+    LyraeWeed,
+    #[serde(alias = "$holvaduellingblades_name;")]
+    HolvaDuellingBlades,
+    #[serde(alias = "$kamorinhistoricweapons_name;")]
+    KamorinHistoricWeapons,
+    #[serde(alias = "$gilyasignatureweapons_name;")]
+    GilyaSignatureWeapons,
+    #[serde(alias = "$pavoniseargrubs_name;")]
+    PavoniseArgrubs,
 
     #[serde(alias = "OccupiedCryoPod")]
     OccupiedCryoPod,

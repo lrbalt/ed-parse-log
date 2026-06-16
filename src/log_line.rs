@@ -102,7 +102,7 @@ use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumDiscriminants, EnumIter};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
 pub enum GameMode {
     Group,
     Solo,
@@ -112,6 +112,7 @@ pub enum GameMode {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase_struct({"Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1"})]
+#[testcase_struct({"Ship":"Combat_Multicrew_SRV_01", "Ship_Localised":"SRV Scorpion", "ShipID":49, "ShipName":"", "ShipIdent":"", "FuelLevel":0.000000, "FuelCapacity":0.000000})]
 pub struct LoadGameShip {
     pub ship: ShipType,
     #[serde(rename = "Ship_Localised")]
@@ -125,21 +126,25 @@ pub struct LoadGameShip {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase")]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"LoadGame", "Commander":"JournalServer", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Open", "Credits":766731, "Loan":0 })]
 #[testcase({ "timestamp":"2022-11-10T18:50:06Z", "event":"LoadGame", "FID":"F1234567", "Commander":"Myself", "Horizons":true, "Odyssey":true, "Credits":1234431, "Loan":0, "language":"English/UK", "gameversion":"4.0.0.1450", "build":"r286858/r0 " })]
 #[testcase({ "timestamp":"2022-09-12T18:45:38Z", "event":"LoadGame", "FID":"F1234567", "Commander":"MySelf", "Horizons":true, "Ship":"FerDeLance", "Ship_Localised":"Fer-de-Lance", "ShipID":34, "ShipName":"", "ShipIdent":"", "FuelLevel":7.689338, "FuelCapacity":8.000000, "GameMode":"Group", "Group":"REINIER", "Credits":123321, "Loan":0 })]
 #[testcase({ "timestamp":"2025-11-30T20:10:08Z", "event":"LoadGame", "FID":"F1234567", "Commander":"MySelf", "Horizons":true, "Odyssey":true, "Ship":"Python_NX", "Ship_Localised":"Python Mk II", "ShipID":12, "ShipName":"MyName", "ShipIdent":"IDENT1", "FuelLevel":16.000000, "FuelCapacity":16.000000, "GameMode":"Solo", "Credits":12341234, "Loan":0, "language":"English/UK", "gameversion":"4.2.2.1", "build":"r321306/r0 " })]
+#[testcase({ "timestamp":"2022-11-08T19:15:39Z", "event":"LoadGame", "FID":"F9900129", "Commander":"MySelf", "Horizons":true, "Ship":"TestBuggy", "Ship_Localised":"SRV Scarab", "ShipID":10, "ShipName":"", "ShipIdent":"", "FuelLevel":0.000000, "FuelCapacity":0.000000, "GameMode":"Solo", "Credits":95073937, "Loan":0 })]
 pub struct EDLogLoadGame {
     #[serde(rename = "FID")]
     pub fid: Option<EDString>,
     pub commander: EDString,
+    pub name: Option<EDString>, // not in ed-journal-schemas
     pub horizons: Option<bool>,
     pub odyssey: Option<bool>,
     #[serde(flatten)]
     pub ship: Option<LoadGameShip>,
     pub credits: Credits,
     pub loan: Credits,
+    pub start_landed: Option<bool>,
+    pub start_dead: Option<bool>,
     #[serde(rename = "language")]
     pub language: Option<EDString>,
     #[serde(rename = "gameversion")]

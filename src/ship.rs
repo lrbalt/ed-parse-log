@@ -77,7 +77,7 @@ pub struct TargetedSubsystem {
     pub subsystem_health: f64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipType {
     #[strum(to_string = "Adder")]
@@ -181,6 +181,9 @@ pub enum ShipType {
     #[strum(to_string = "Krait Mk II")]
     #[serde(rename = "krait_mkii", alias = "Krait_MkII")]
     KraitMkII,
+    #[strum(to_string = "Lynx Highliner")]
+    #[serde(alias = "mediumtransport01", alias = "MediumTransport01")]
+    LynxHighliner,
     #[serde(alias = "Mamba")]
     Mamba,
     #[serde(alias = "Mandalay")]
@@ -196,8 +199,6 @@ pub enum ShipType {
     PythonNX,
     #[serde(alias = "SideWinder")]
     Sidewinder,
-    #[serde(alias = "mediumtransport01", alias = "MediumTransport01")]
-    LynxHighliner,
     #[strum(to_string = "Type-6 Transporter")]
     #[serde(alias = "Type6")]
     Type6,
@@ -222,7 +223,7 @@ pub enum ShipType {
     #[strum(to_string = "Alliance Challenger")]
     #[serde(rename = "typex_3")]
     TypeX3,
-    #[strum(to_string = "Lakon Minder")]
+    #[strum(to_string = "Type-11 Prospector")]
     #[serde(rename = "lakonminer", alias = "LakonMiner")]
     Type11Prospector,
     #[strum(to_string = "Viper Mk III")]
@@ -240,6 +241,60 @@ pub enum ShipType {
     #[strum(to_string = "$VULTURE_NAME;")]
     #[serde(rename = "vulture_taxi")]
     VultureTaxi,
+    #[strum(to_string = "SRV Scorpion")]
+    #[serde(rename = "Combat_Multicrew_SRV_01")]
+    SRVScorpion,
+    #[strum(to_string = "SRV Scarab")]
+    #[serde(rename = "TestBuggy")]
+    SRVScarab,
+    #[strum(to_string = "Flight Suit")]
+    #[serde(rename = "FlightSuit")]
+    FlightSuit,
+    #[strum(to_string = "Maverick Suit")]
+    #[serde(rename = "UtilitySuit_Class1")]
+    UtilitySuitClass1,
+    #[strum(to_string = "$UtilitySuit_Class1_Name;")]
+    #[serde(rename = "UtilitySuit_Class2")]
+    UtilitySuitClass2,
+    #[strum(to_string = "$UtilitySuit_Class1_Name;")]
+    #[serde(rename = "UtilitySuit_Class3")]
+    UtilitySuitClass3,
+    #[strum(to_string = "$UtilitySuit_Class1_Name;")]
+    #[serde(rename = "UtilitySuit_Class4")]
+    UtilitySuitClass4,
+    #[strum(to_string = "$UtilitySuit_Class1_Name;")]
+    #[serde(rename = "UtilitySuit_Class5")]
+    UtilitySuitClass5,
+    #[strum(to_string = "Artemis Suit")]
+    #[serde(rename = "ExplorationSuit_Class1")]
+    ExplorationSuitClass1,
+    #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
+    #[serde(rename = "ExplorationSuit_Class2")]
+    ExplorationSuitClass2,
+    #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
+    #[serde(rename = "ExplorationSuit_Class3")]
+    ExplorationSuitClass3,
+    #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
+    #[serde(rename = "ExplorationSuit_Class4")]
+    ExplorationSuitClass4,
+    #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
+    #[serde(rename = "ExplorationSuit_Class5")]
+    ExplorationSuitClass5,
+    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[serde(rename = "TacticalSuit_Class1")]
+    TacticalSuitClass1,
+    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[serde(rename = "TacticalSuit_Class2")]
+    TacticalSuitClass2,
+    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[serde(rename = "TacticalSuit_Class3")]
+    TacticalSuitClass3,
+    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[serde(rename = "TacticalSuit_Class4")]
+    TacticalSuitClass4,
+    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[serde(rename = "TacticalSuit_Class5")]
+    TacticalSuitClass5,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -3658,6 +3713,8 @@ pub enum ShipModule {
     PaintJobMandalay0202,
     #[serde(alias = "paintjob_mandalay_blackfriday_01")]
     PaintJobMandalayBlackFriday01,
+    #[serde(alias = "paintjob_panthermkii_01_11")]
+    PaintJobPantherMkII0111,
     #[serde(alias = "paintjob_panthermkii_03_01")]
     PaintJobPantherMkII0301,
     #[serde(alias = "paintjob_panthermkii_03_08")]
