@@ -133,6 +133,7 @@ checksum = "4c3cf4824e2d5f025c7b531afcb2325364084a16806f6d47fbc1f5fbd9960590"
 name = "ed-parse-log-files"
 version = "0.1.27"
 dependencies = [
+ "bitflags",
  "chrono",
  "ed-parse-log-files-macros",
  "itertools",
@@ -141,6 +142,7 @@ dependencies = [
  "rayon",
  "serde",
  "serde_json",
+ "serde_repr",
  "strum",
  "symbol_table",
  "thiserror 2.0.18",
@@ -543,6 +545,17 @@ dependencies = [
  "serde",
  "serde_core",
  "zmij",
+]
+
+[[package]]
+name = "serde_repr"
+version = "0.1.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "175ee3e80ae9982737ca543e96133087cbd9a485eecc3bc4de9c1a37b47ea59c"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

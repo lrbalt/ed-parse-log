@@ -103,6 +103,12 @@ impl Neg for Credits {
     }
 }
 
+impl PartialOrd for Credits {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.0.partial_cmp(&other.0)
+    }
+}
+
 impl Credits {
     pub fn to_human_readable_string(&self) -> String {
         crate::utils::to_human_readable_string(self.0)

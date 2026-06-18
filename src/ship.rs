@@ -4133,6 +4133,12 @@ pub enum ShipModule {
     ShieldCellBankS2C5,
     #[strum(to_string = "Shield Cell Bank")]
     #[serde(
+        alias = "$int_shieldcellbank_size3_class1_name;",
+        alias = "int_shieldcellbank_size3_class1"
+    )]
+    ShieldCellBankS3C1,
+    #[strum(to_string = "Shield Cell Bank")]
+    #[serde(
         alias = "$int_shieldcellbank_size3_class2_name;",
         alias = "int_shieldcellbank_size3_class2"
     )]
