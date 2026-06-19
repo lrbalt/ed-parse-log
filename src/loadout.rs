@@ -66,13 +66,13 @@ pub struct LoadOutStats {
     "HullValue": 349718, "ModulesValue": 6316388,"HullHealth": 1.000000, "UnladenMass": 222.577606, "CargoCapacity": 60, "MaxJumpRange": 39.726162,
     "FuelCapacity": {"Main": 16.000000,"Reserve": 0.490000},"Rebuy": 333307,"Modules": []})]
 pub struct EDLogLoadout {
-    ship: ShipType,
+    pub ship: ShipType,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    ship_name: EDString,
-    ship_ident: EDString,
-    hot: Option<bool>,
+    pub ship_id: u64,
+    pub ship_name: EDString,
+    pub ship_ident: EDString,
+    pub hot: Option<bool>,
     #[serde(flatten)]
-    loadout_stats: Option<LoadOutStats>,
-    modules: Vec<Module>,
+    pub loadout_stats: Option<LoadOutStats>,
+    pub modules: Vec<Module>,
 }

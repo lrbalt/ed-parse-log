@@ -261,10 +261,10 @@ pub struct CrewMember {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StationEmbarkOrDisembark {
-    station_name: EDString,
-    station_type: StationType,
+    pub station_name: EDString,
+    pub station_type: StationType,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
