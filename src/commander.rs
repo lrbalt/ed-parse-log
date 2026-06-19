@@ -1,6 +1,7 @@
 use crate::{
     EDString,
     common_types::{Credits, CrimeType, StationType},
+    log_line::{EDLogEvent, Extractable},
     market::MicroResource,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
@@ -270,21 +271,31 @@ pub struct StationEmbarkOrDisembark {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogEmbarkOrDisembark {
     #[serde(rename = "SRV")]
-    srv: bool,
-    taxi: bool,
-    multicrew: bool,
-    crew: Option<Vec<CrewMember>>,
+    pub srv: bool,
+    pub taxi: bool,
+    pub multicrew: bool,
+    pub crew: Option<Vec<CrewMember>>,
     #[serde(rename = "ID")]
-    id: Option<u64>,
-    star_system: EDString,
-    system_address: u64,
-    body: EDString,
+    pub id: Option<u64>,
+    pub star_system: EDString,
+    pub system_address: u64,
+    pub body: EDString,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    on_station: bool,
-    on_planet: bool,
+    pub body_id: u64,
+    pub on_station: bool,
+    pub on_planet: bool,
     #[serde(flatten)]
-    station: Option<StationEmbarkOrDisembark>,
+    pub station: Option<StationEmbarkOrDisembark>,
+}
+
+impl Extractable for EDLogEmbarkOrDisembark {
+    fn extract(event: &EDLogEvent) -> Option<&Self> {
+        match event {
+            EDLogEvent::Embark(info) => Some(&info),
+            EDLogEvent::Disembark(info) => Some(&info),
+            _ => None,
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
