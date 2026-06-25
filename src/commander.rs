@@ -291,8 +291,8 @@ pub struct EDLogEmbarkOrDisembark {
 impl Extractable for EDLogEmbarkOrDisembark {
     fn extract(event: &EDLogEvent) -> Option<&Self> {
         match event {
-            EDLogEvent::Embark(info) => Some(&info),
-            EDLogEvent::Disembark(info) => Some(&info),
+            EDLogEvent::Embark(info) => Some(info),
+            EDLogEvent::Disembark(info) => Some(info),
             _ => None,
         }
     }
