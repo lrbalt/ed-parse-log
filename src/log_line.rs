@@ -59,8 +59,8 @@ use crate::{
     },
     modules::{
         EDLogFetchRemoteModule, EDLogMassModuleStore, EDLogModuleBuy, EDLogModuleBuyAndStore,
-        EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote, EDLogModuleStore,
-        EDLogModuleSwap, EDLogStoredModules,
+        EDLogModuleInfo, EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote,
+        EDLogModuleStore, EDLogModuleSwap, EDLogStoredModules,
     },
     navigation::{
         EDLogApproachSettlement, EDLogDockSRV, EDLogFSDJump, EDLogFSDTarget, EDLogFuelScoop,
@@ -77,8 +77,9 @@ use crate::{
         EDLogEscapeInterdiction, EDLogFighterDestroyed, EDLogFighterRebuilt, EDLogHullDamage,
         EDLogInterdicted, EDLogInterdiction, EDLogLaunchFighter, EDLogRebootRepair,
         EDLogReservoirReplenished, EDLogSetUserShipName, EDLogShieldState, EDLogShipTargeted,
-        EDLogSynthesis, EDLogUnderAttack, ShipType,
+        EDLogSynthesis, EDLogUnderAttack,
     },
+    ship_type::ShipType,
     shipyard::{
         EDLogSellShipOnRebuy, EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew,
         EDLogShipyardRedeem, EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer,
@@ -591,7 +592,7 @@ pub enum EDLogEvent {
     ModuleSell(EDLogModuleSell),
     ModuleSellRemote(EDLogModuleSellRemote),
     ModuleSwap(EDLogModuleSwap),
-    ModuleInfo,
+    ModuleInfo(EDLogModuleInfo),
     FetchRemoteModule(EDLogFetchRemoteModule),
 
     // Navigation

@@ -18,6 +18,8 @@ pub mod modules;
 pub mod navigation;
 pub mod powerplay;
 pub mod ship;
+pub mod ship_module;
+pub mod ship_type;
 pub mod shipyard;
 pub mod statistics;
 pub mod suits;

@@ -1,7 +1,7 @@
 use crate::{
     EDString,
     common_types::{Credits, StarSystemData},
-    ship::ShipType,
+    ship_type::ShipType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -10,16 +10,16 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct Ship {
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    ship_type: ShipType,
+    pub ship_id: u64,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
-    name: Option<EDString>,
+    pub ship_type_localised: Option<EDString>,
+    pub name: Option<EDString>,
     #[serde(flatten)]
-    start_system_data: Option<StarSystemData>,
-    in_transit: Option<bool>,
-    value: Credits,
-    hot: bool,
+    pub start_system_data: Option<StarSystemData>,
+    pub in_transit: Option<bool>,
+    pub value: Credits,
+    pub hot: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
