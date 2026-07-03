@@ -1008,6 +1008,10 @@ pub struct MarketItem {
 }
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogMarketID {}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarket {
     #[serde(rename = "MarketID")]
     pub market_id: u64,

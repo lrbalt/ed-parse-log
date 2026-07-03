@@ -1,6 +1,27 @@
-use crate::{EDString, common_types::Credits};
+use crate::{
+    EDString,
+    common_types::{Credits, MercCoins},
+};
 use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
+#[testcase_struct({ "MercCoins_Current": 31, "MercCoins_Total_Earned": 31,
+        "MercCoins_Total_Spent": 0, "MercCoins_Spent_On_MercGear": 0,
+        "MercCoins_Spent_On_Engineering": 0 })]
+pub struct StatisticsMercCoins {
+    #[serde(rename = "MercCoins_Current")]
+    pub current: MercCoins,
+    #[serde(rename = "MercCoins_Total_Earned")]
+    pub total_earned: MercCoins,
+    #[serde(rename = "MercCoins_Total_Spent")]
+    pub total_spent: MercCoins,
+    #[serde(rename = "MercCoins_Spent_On_MercGear")]
+    pub spent_on_mercgear: MercCoins,
+    #[serde(rename = "MercCoins_Spent_On_Engineering")]
+    pub spent_on_engineering: MercCoins,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
@@ -49,6 +70,8 @@ pub struct StatisticsBankAccount {
     pub owned_ship_count: u64,
     #[serde(flatten)]
     pub onfoot_statistics: Option<StatisticsBankAccountOnFoot>,
+    #[serde(flatten)]
+    pub merc_coins: Option<StatisticsMercCoins>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -308,21 +331,62 @@ pub struct StatisticsExploration {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
+pub struct PassengerMissionsDetails {
+    #[serde(rename = "Passengers_Missions_Refugee_bulk_delivered")]
+    pub refugees_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Tourist_vip_delivered")]
+    pub tourists_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Tourist_bulk_delivered")]
+    pub tourists_bulk_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Criminal_vip_delivered")]
+    pub criminals_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Businessmen_vip_delivered")]
+    pub businessmen_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_FreedomFighters_vip_delivered")]
+    pub freedomfighters_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_ScienceTeams_vip_delivered")]
+    pub scienceteams_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Soldiers_vip_delivered")]
+    pub soldiers_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Medical_vip_delivered")]
+    pub medical_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Explorers_vip_delivered")]
+    pub explorers_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Celebrities_vip_delivered")]
+    pub celebrities_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Politicians_bulk_delivered")]
+    pub politicians_bulk_delivered: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
 #[testcase_struct({ "Passengers_Missions_Accepted":13, "Passengers_Missions_Bulk":6, "Passengers_Missions_VIP":104, 
     "Passengers_Missions_Delivered":110, "Passengers_Missions_Ejected":0 })]
+#[testcase_struct({
+        "Passengers_Missions_Accepted": 130, "Passengers_Missions_Refugee_bulk_delivered": 6,
+        "Passengers_Missions_Tourist_vip_delivered": 523, "Passengers_Missions_Tourist_bulk_delivered": 792,
+        "Passengers_Missions_Criminal_vip_delivered": 310, "Passengers_Missions_Businessmen_vip_delivered": 61,
+        "Passengers_Missions_FreedomFighters_vip_delivered": 10, "Passengers_Missions_ScienceTeams_vip_delivered": 25,
+        "Passengers_Missions_Soldiers_vip_delivered": 5, "Passengers_Missions_Medical_vip_delivered": 16,
+        "Passengers_Missions_Explorers_vip_delivered": 53, "Passengers_Missions_Celebrities_vip_delivered": 11,
+        "Passengers_Missions_Politicians_bulk_delivered": 977, "Passengers_Missions_Bulk": 1775,
+        "Passengers_Missions_VIP": 1014, "Passengers_Missions_Delivered": 2789, "Passengers_Missions_Ejected": 0
+    })]
 pub struct StatisticsPassengers {
     #[serde(rename = "Passengers_Missions_Accepted")]
-    pub passengers_missions_accepted: Option<u64>,
+    pub accepted: Option<u64>,
+    #[serde(flatten)]
+    pub passenger_missions_details: Option<PassengerMissionsDetails>,
     #[serde(rename = "Passengers_Missions_Bulk")]
-    pub passengers_missions_bulk: u64,
+    pub bulk: u64,
     #[serde(rename = "Passengers_Missions_VIP")]
-    pub passengers_missions_vip: u64,
+    pub vip: u64,
     #[serde(rename = "Passengers_Missions_Delivered")]
-    pub passengers_missions_delivered: u64,
+    pub delivered: u64,
     #[serde(rename = "Passengers_Missions_Ejected")]
-    pub passengers_missions_ejected: u64,
+    pub ejected: u64,
     #[serde(rename = "Passengers_Missions_Disgruntled")]
-    pub passengers_missions_disgruntled: Option<u64>,
+    pub disgruntled: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -373,56 +437,58 @@ pub struct StatisticSearchAndRescue {
     "Squadron_Leaderboard_combat_highestcontribution":0, "Squadron_Leaderboard_cqc_highestcontribution":0, 
     "Squadron_Leaderboard_exploration_highestcontribution":0, "Squadron_Leaderboard_mining_highestcontribution":0, 
     "Squadron_Leaderboard_powerplay_highestcontribution":0, "Squadron_Leaderboard_trade_highestcontribution":0, 
-    "Squadron_Leaderboard_trade_illicit_highestcontribution":0, "Squadron_Leaderboard_podiums":0 })]
+    "Squadron_Leaderboard_trade_illicit_highestcontribution":0, "Squadron_Leaderboard_podiums":0, "Squadron_Leaderboard_operationscore_highestcontribution": 0 })]
 pub struct StatisticsSquadron {
     #[serde(rename = "Squadron_Bank_Credits_Deposited")]
-    pub squadron_bank_credits_deposited: Credits,
+    pub bank_credits_deposited: Credits,
     #[serde(rename = "Squadron_Bank_Credits_Withdrawn")]
-    pub squadron_bank_credits_withdrawn: Credits,
+    pub bank_credits_withdrawn: Credits,
     #[serde(rename = "Squadron_Bank_Commodities_Deposited_Num")]
-    pub squadron_bank_commodities_deposited_num: u64,
+    pub bank_commodities_deposited_num: u64,
     #[serde(rename = "Squadron_Bank_Commodities_Deposited_Value")]
-    pub squadron_bank_commodities_deposited_value: Credits,
+    pub bank_commodities_deposited_value: Credits,
     #[serde(rename = "Squadron_Bank_Commodities_Withdrawn_Num")]
-    pub squadron_bank_commodities_withdrawn_num: u64,
+    pub bank_commodities_withdrawn_num: u64,
     #[serde(rename = "Squadron_Bank_Commodities_Withdrawn_Value")]
-    pub squadron_bank_commodities_withdrawn_value: Credits,
+    pub bank_commodities_withdrawn_value: Credits,
     #[serde(rename = "Squadron_Bank_PersonalAssets_Deposited_Num")]
-    pub squadron_bank_personal_assets_deposited_num: u64,
+    pub bank_personal_assets_deposited_num: u64,
     #[serde(rename = "Squadron_Bank_PersonalAssets_Deposited_Value")]
-    pub squadron_bank_personal_assets_deposited_value: Credits,
+    pub bank_personal_assets_deposited_value: Credits,
     #[serde(rename = "Squadron_Bank_PersonalAssets_Withdrawn_Num")]
-    pub squadron_bank_personal_assets_withdrawn_num: u64,
+    pub bank_personal_assets_withdrawn_num: u64,
     #[serde(rename = "Squadron_Bank_PersonalAssets_Withdrawn_Value")]
-    pub squadron_bank_personal_assets_withdrawn_value: Credits,
+    pub bank_personal_assets_withdrawn_value: Credits,
     #[serde(rename = "Squadron_Bank_Ships_Deposited_Num")]
-    pub squadron_bank_ships_deposited_num: u64,
+    pub bank_ships_deposited_num: u64,
     #[serde(rename = "Squadron_Bank_Ships_Deposited_Value")]
-    pub squadron_bank_ships_deposited_value: Credits,
+    pub bank_ships_deposited_value: Credits,
     #[serde(rename = "Squadron_Leaderboard_aegis_highestcontribution")]
-    pub squadron_leaderboard_aegis_highestcontribution: u64,
+    pub leaderboard_aegis_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_bgs_highestcontribution")]
-    pub squadron_leaderboard_bgs_highestcontribution: u64,
+    pub leaderboard_bgs_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_bounty_highestcontribution")]
-    pub squadron_leaderboard_bounty_highestcontribution: u64,
+    pub leaderboard_bounty_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_colonisation_contribution_highestcontribution")]
-    pub squadron_leaderboard_colonisation_contribution_highestcontribution: u64,
+    pub leaderboard_colonisation_contribution_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_combat_highestcontribution")]
-    pub squadron_leaderboard_combat_highestcontribution: u64,
+    pub leaderboard_combat_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_cqc_highestcontribution")]
-    pub squadron_leaderboard_cqc_highestcontribution: u64,
+    pub leaderboard_cqc_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_exploration_highestcontribution")]
-    pub squadron_leaderboard_exploration_highestcontribution: u64,
+    pub leaderboard_exploration_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_mining_highestcontribution")]
-    pub squadron_leaderboard_mining_highestcontribution: u64,
+    pub leaderboard_mining_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_powerplay_highestcontribution")]
-    pub squadron_leaderboard_powerplay_highestcontribution: u64,
+    pub leaderboard_powerplay_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_trade_highestcontribution")]
-    pub squadron_leaderboard_trade_highestcontribution: u64,
+    pub leaderboard_trade_highestcontribution: u64,
     #[serde(rename = "Squadron_Leaderboard_trade_illicit_highestcontribution")]
-    pub squadron_leaderboard_trade_illicit_highestcontribution: u64,
+    pub leaderboard_trade_illicit_highestcontribution: u64,
+    #[serde(rename = "Squadron_Leaderboard_operationscore_highestcontribution")]
+    pub leaderboard_operationscore_highestcontribution: Option<u64>,
     #[serde(rename = "Squadron_Leaderboard_podiums")]
-    pub squadron_leaderboard_podiums: u64,
+    pub leaderboard_podiums: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

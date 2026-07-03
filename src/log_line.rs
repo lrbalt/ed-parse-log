@@ -47,8 +47,9 @@ use crate::{
     market::{
         EDLogBuyMicroResources, EDLogBuyTradeData, EDLogCargoDepot,
         EDLogColonisationConstructionDepot, EDLogColonisationContribution,
-        EDLogDeliverPowerMicroResources, EDLogMarket, EDLogMarketBuy, EDLogMarketSell,
-        EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources, MarketItemType,
+        EDLogDeliverPowerMicroResources, EDLogMarket, EDLogMarketBuy, EDLogMarketID,
+        EDLogMarketSell, EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources,
+        MarketItemType,
     },
     materials::EDLogMaterials,
     mission::{
@@ -687,6 +688,7 @@ pub enum EDLogEvent {
 
     // Market
     Market(EDLogMarket),
+    MarketID(EDLogMarketID),
     MarketBuy(EDLogMarketBuy),
     MarketSell(EDLogMarketSell),
     SellMicroResources(EDLogSellMicroResources),

@@ -37,6 +37,15 @@ impl Display for Merits {
 }
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Default)]
+pub struct MercCoins(pub i64);
+
+impl Display for MercCoins {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Default)]
 pub struct Credits(pub i64);
 
 impl Display for Credits {
@@ -344,6 +353,7 @@ pub enum OnFootItem {
     WeaponInventory,
     WeaponTestData,
     XenoDefenceProtocols,
+    OperationsStrikeData,
 
     #[serde(rename = "nm_seed")]
     NMSeed,
@@ -627,6 +637,7 @@ pub enum Allegiance {
     Guardian,
     Thargoid,
     Alliance,
+    FrontlineSolutions,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -936,6 +947,8 @@ pub struct StationEconomy {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct FactionName {
     pub name: EDString,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: Option<EDString>,
     pub faction_state: Option<FactionState>,
 }
 
@@ -945,6 +958,7 @@ impl FromStr for FactionName {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(FactionName {
             name: s.into(),
+            name_localised: None,
             faction_state: None,
         })
     }
