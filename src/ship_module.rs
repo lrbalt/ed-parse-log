@@ -153,17 +153,26 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
-                    "guardianfsdbooster" if parts.len() > 2 => {
-                        // int_guardianfsdbooster_size5
-                        let module: ShipModuleInternal =
-                            deserialize_enum_from_str::<_, D::Error>(parts[1], "ship module name")?;
-                        let module_size: ShipModuleSize =
-                            deserialize_enum_from_str::<_, D::Error>(parts[2], "ship module size")?;
-                        return Ok(ShipModule::Internal(
-                            module,
-                            module_size,
-                            ShipModuleClass::None,
-                        ));
+                    "guardianfsdbooster" | "guardianpowerplant" => {
+                        if parts.len() > 2 {
+                            // int_guardianfsdbooster_size5
+                            // int_guardianpowerplant_size2
+                            let module: ShipModuleInternal =
+                                deserialize_enum_from_str::<_, D::Error>(
+                                    parts[1],
+                                    "ship module name",
+                                )?;
+                            let module_size: ShipModuleSize =
+                                deserialize_enum_from_str::<_, D::Error>(
+                                    parts[2],
+                                    "ship module size",
+                                )?;
+                            return Ok(ShipModule::Internal(
+                                module,
+                                module_size,
+                                ShipModuleClass::None,
+                            ));
+                        }
                     }
                     "detailedsurfacescanner" if parts.len() > 2 => {
                         // $int_detailedsurfacescanner_tiny_name;
@@ -274,6 +283,7 @@ pub mod serde_ship_module {
                     }
                     "xenoscanner" | "xenoscannermk2" if parts.len() > 3 => {
                         // hpt_xenoscanner_basic_tiny | hpt_xenoscannermk2_basic_tiny
+                        // hpt_xenoscanner_advanced_tiny_name
                         let module: ShipModuleInternal = deserialize_enum_from_str::<_, D::Error>(
                             (parts[1].to_string() + "_" + parts[2]).as_str(),
                             "ship module name",
@@ -317,12 +327,6 @@ pub mod serde_ship_module {
                     _ => { /* continue */ }
                 }
 
-                if parts.len() < 4 {
-                    return Err(serde::de::Error::custom(format!(
-                        "Error parsing {s}: expected four parts"
-                    )));
-                }
-
                 // optional internal with hpt prefix
                 if let Ok(module) = deserialize_enum_from_str::<ShipModuleInternal, D::Error>(
                     parts[1],
@@ -335,7 +339,8 @@ pub mod serde_ship_module {
                             | ShipModuleInternal::MRAScanner
                             | ShipModuleInternal::CrimeScanner
                             | ShipModuleInternal::CargoScanner
-                    ) {
+                    ) && parts.len() > 3
+                    {
                         // hpt_cloudscanner_size0_class4 or hpt_mrascanner_size0_class5
                         let module_size: ShipModuleSize =
                             deserialize_enum_from_str::<_, D::Error>(parts[2], "ship module size")?;
@@ -360,6 +365,12 @@ pub mod serde_ship_module {
                     }
                 }
 
+                if parts.len() < 4 {
+                    return Err(serde::de::Error::custom(format!(
+                        "Error parsing {s}: expected four parts"
+                    )));
+                }
+
                 // $hpt_name_connection_size_name;
 
                 let mut module = deserialize_enum_from_str::<ShipModuleHardpoint, D::Error>(
@@ -375,23 +386,35 @@ pub mod serde_ship_module {
                 let module_size: HardpointSize =
                     deserialize_enum_from_str::<_, D::Error>(parts[3], "ship hardpoint size")?;
 
-                // check for range in $hpt_slugshot_fixed_large_range_name;
-                // check for burst in $hpt_railgun_fixed_medium_burst_name;
-                // check for scatter in $hpt_pulselaserburst_fixed_small_scatter_name;
-                // check for v2 in $hpt_atmulticannon_turret_medium_v2_name;
                 if parts.len() > 4 {
                     match module {
+                        // check for range in $hpt_slugshot_fixed_large_range_name;
                         ShipModuleHardpoint::Slugshot if parts[4] == "range" => {
                             module = ShipModuleHardpoint::SlugshotRange;
                         }
+                        // check for burst in $hpt_railgun_fixed_medium_burst_name;
                         ShipModuleHardpoint::RailGun if parts[4] == "burst" => {
                             module = ShipModuleHardpoint::TheHammer;
                         }
+                        // check for scatter in $hpt_pulselaserburst_fixed_small_scatter_name;
                         ShipModuleHardpoint::PulseLaserBurst if parts[4] == "scatter" => {
                             module = ShipModuleHardpoint::Cytoscrambler;
                         }
+                        // check for v2 in $hpt_atmulticannon_turret_medium_v2_name;
                         ShipModuleHardpoint::ATMultiCannon if parts[4] == "v2" => {
                             module = ShipModuleHardpoint::ATMultiCannonV2;
+                        }
+                        // check for heat in hpt_beamlaser_fixed_small_heat
+                        ShipModuleHardpoint::BeamLaser if parts[4] == "heat" => {
+                            module = ShipModuleHardpoint::Retributor;
+                        }
+                        // check for lasso in hpt_dumbfiremissilerack_fixed_medium_lasso_name
+                        ShipModuleHardpoint::DumbFireMissileRack if parts[4] == "lasso" => {
+                            module = ShipModuleHardpoint::ContainmentMissile;
+                        }
+                        // check for advanced in hpt_plasmaaccelerator_fixed_large_advanced_name
+                        ShipModuleHardpoint::PlasmaAccelerator if parts[4] == "advanced" => {
+                            module = ShipModuleHardpoint::AdvandedPlasmaAccelerator;
                         }
                         _ => { /* continue */ }
                     }
@@ -400,14 +423,15 @@ pub mod serde_ship_module {
                 Ok(ShipModule::Hardpoint(module, module_conn, module_size))
             }
             "ext" => {
-                if parts.len() < 4 {
+                if parts.len() < 3 {
                     return Err(serde::de::Error::custom(format!(
-                        "Error parsing {s}: expected four parts"
+                        "Error parsing {s}: expected at least three parts"
                     )));
                 }
 
                 // $ext_drive_class3_cob_name;
                 // $ext_drive_krait_light_name;
+                // ext_drive_indfighter
                 let module: ShipModuleExternal = deserialize_enum_from_str::<_, D::Error>(
                     parts[1],
                     "ship external module name",
@@ -415,7 +439,11 @@ pub mod serde_ship_module {
                 if let Ok(module_class) =
                     deserialize_enum_from_str::<_, D::Error>(parts[2], "ship external module class")
                 {
-                    let rest = parts[3..].join("_");
+                    let rest = if parts.len() > 3 {
+                        parts[3..].join("_")
+                    } else {
+                        String::from("")
+                    };
                     return Ok(ShipModule::External(module, module_class, rest.into()));
                 }
                 Ok(ShipModule::External(
@@ -545,6 +573,7 @@ pub enum ShipModuleSlot {
     FrameShiftDrive,
     FuelTank,
     HugeHardpoint1,
+    HugeHardpoint2,
     LargeHardpoint1,
     LargeHardpoint2,
     LargeHardpoint3,
@@ -590,6 +619,7 @@ pub enum ShipModuleSlot {
     SmallHardpoint6,
     SmallMiningHardpoint1,
     SmallMiningHardpoint2,
+    StringLights,
     TinyHardpoint1,
     TinyHardpoint2,
     TinyHardpoint3,
@@ -718,6 +748,8 @@ pub enum ShipModuleSlot {
     Slot11Size1,
     #[serde(rename = "Slot11_Size2")]
     Slot11Size2,
+    #[serde(rename = "Slot11_Size3")]
+    Slot11Size3,
     #[serde(rename = "Slot12_Size1")]
     Slot12Size1,
     #[serde(rename = "Slot13_Size1")]
@@ -863,6 +895,8 @@ pub enum ShipModuleInternal {
     GuardianHullReinforcement,
     #[strum(to_string = "Guardian Module Reinforcement")]
     GuardianModuleReinforcement,
+    #[strum(to_string = "Guardian Power Plant")]
+    GuardianPowerPlant,
     #[strum(to_string = "Guardian Shield Reinforcement")]
     GuardianShieldReinforcement,
     #[strum(to_string = "Heatsink")]
@@ -877,7 +911,7 @@ pub enum ShipModuleInternal {
     ModuleReinforcement,
     #[strum(to_string = "Pulse Wave")]
     MRAScanner,
-    #[strum(to_string = "Rescue Limpet Controller")]
+    #[strum(to_string = "Rescue Multi-Limpet Controller")]
     #[serde(alias = "multidronecontrol_rescue")]
     MultiDroneControlRescue,
     #[strum(to_string = "Mining Multi-Limpet Controller")]
@@ -909,7 +943,7 @@ pub enum ShipModuleInternal {
     Refinery,
     #[strum(to_string = "AFM Unit")]
     Repairer,
-    #[strum(to_string = "Advanced Planetary Approach Suite")]
+    #[strum(to_string = "Adv. Planetary Approach Suite")]
     PlanetApproachSuiteAdvanced,
     #[strum(to_string = "Planetary Approach Suite")]
     PlanetApproachSuite,
@@ -923,6 +957,9 @@ pub enum ShipModuleInternal {
     ShieldGenerator,
     #[strum(to_string = "Supercruise Assist")]
     SupercruiseAssist,
+    #[strum(to_string = "P. Wave Xeno Scanner")]
+    #[serde(alias = "xenoscanner_advanced")]
+    XenoScannerAdvanced,
     #[strum(to_string = "Xeno Scanner")]
     #[serde(alias = "xenoscanner_basic")]
     XenoScannerBasic,
@@ -934,7 +971,10 @@ pub enum ShipModuleInternal {
 #[derive(Clone, Debug, Display, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleHardpoint {
-    #[strum(to_string = "Advanced Torpedo Pylon")]
+    #[strum(to_string = "Advanced Accelerator")]
+    AdvandedPlasmaAccelerator,
+    #[strum(to_string = "Torpedo Pylon")]
+    #[serde(alias = "advancedtorppylon")]
     AdvancedTorpedoPylon,
     #[strum(to_string = "Enhanced AX Missile Rack")]
     ATDumbFireMissile,
@@ -954,6 +994,8 @@ pub enum ShipModuleHardpoint {
     Cannon,
     #[strum(to_string = "Caustic Sink Launcher")]
     CausticSinkLauncher,
+    #[strum(to_string = "Containment Missile")]
+    ContainmentMissile,
     #[strum(to_string = "Cytoscrambler")]
     Cytoscrambler,
     #[strum(to_string = "Pack-Hound")]
@@ -964,7 +1006,7 @@ pub enum ShipModuleHardpoint {
     EnhancedAXMultiCannon,
     #[strum(to_string = "Remote Flak")]
     FlakMortar,
-    #[strum(to_string = "Flechette Launcher")]
+    #[strum(to_string = "Remote Flechette")]
     FlechetteLauncher,
     #[strum(to_string = "Gauss Cannon")]
     GaussCannon,
@@ -997,6 +1039,8 @@ pub enum ShipModuleHardpoint {
     PulseLaser,
     #[strum(to_string = "Burst Laser")]
     PulseLaserBurst,
+    #[strum(to_string = "Retributor")]
+    Retributor,
     #[strum(to_string = "Rail Gun")]
     RailGun,
     #[strum(to_string = "Remote Flak")]
@@ -1072,7 +1116,7 @@ impl Display for ShipModule {
         match self {
             ShipModule::Armour(_, grade) => match grade {
                 ShipArmourGrade::Grade1 => write!(f, "Lightweight Alloy"),
-                ShipArmourGrade::Grade2 => write!(f, "Reinforced Alloys"),
+                ShipArmourGrade::Grade2 => write!(f, "Reinforced Alloy"),
                 ShipArmourGrade::Grade3 => write!(f, "Military Grade Composite"),
                 ShipArmourGrade::Grade4 => write!(f, "Armour Grade 4"),
                 ShipArmourGrade::Grade5 => write!(f, "Armour Grade 5"),
