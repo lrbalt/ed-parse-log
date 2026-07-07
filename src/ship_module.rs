@@ -142,12 +142,16 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
-                    "colonisation"
-                    | "supercruiseassist"
-                    | "codexscanner"
-                    | "stellarbodydiscoveryscanner" => {
+                    "colonisation" | "codexscanner" | "stellarbodydiscoveryscanner" => {
                         return Ok(ShipModule::CoreInternal(
                             core_internal::<D>(parts[1])?,
+                            ShipModuleSize::None,
+                            ShipModuleClass::None,
+                        ));
+                    }
+                    "supercruiseassist" => {
+                        return Ok(ShipModule::OptionalInternal(
+                            optional_internal::<D>(parts[1])?,
                             ShipModuleSize::None,
                             ShipModuleClass::None,
                         ));
@@ -323,6 +327,14 @@ pub mod serde_ship_module {
                         // hpt_electroniccountermeasure_tiny
                         //
                         // for now we ignore the tiny-part
+                        return Ok(ShipModule::UtilityMount(
+                            utility_mount::<D>(parts[1])?,
+                            ShipModuleSize::None,
+                            ShipModuleClass::None,
+                        ));
+                    }
+                    "shipdatalinkscanner" => {
+                        // hpt_shipdatalinkscanner
                         return Ok(ShipModule::UtilityMount(
                             utility_mount::<D>(parts[1])?,
                             ShipModuleSize::None,
@@ -787,8 +799,6 @@ impl ShipModuleClass {
 #[derive(Clone, Debug, Display, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleCoreInternal {
-    #[strum(to_string = "DataLinkScanner")]
-    ShipDataLinkScanner,
     #[strum(to_string = "DiscoveryScanner")]
     StellarBodyDiscoveryScanner,
     #[strum(to_string = "ColonisationSuite")]
@@ -951,6 +961,8 @@ pub enum ShipModuleUtilityMount {
     MRAScanner,
     #[strum(to_string = "Shield Booster")]
     ShieldBooster,
+    #[strum(to_string = "DataLinkScanner")]
+    ShipDataLinkScanner,
     #[strum(to_string = "P. Wave Xeno Scanner")]
     #[serde(alias = "xenoscanner_advanced")]
     XenoScannerAdvanced,
