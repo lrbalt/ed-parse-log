@@ -161,7 +161,7 @@ pub struct InstalledModule {
     pub slot: ShipModuleSlot,
     #[serde(with = "serde_ship_module")]
     pub item: ShipModule,
-    pub power: f64,
+    pub power: Option<f64>,
     pub priority: Option<u64>,
 }
 

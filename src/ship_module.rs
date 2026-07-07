@@ -823,8 +823,10 @@ pub enum ShipModuleInternal {
     EngineMkIIAgileBoost,
     #[strum(to_string = "Experimental Weapon Stabiliser")]
     ExpModuleStabiliser,
-    #[strum(to_string = "Fighter Hangar")]
+    #[strum(to_string = "Vessel Hangar")]
     FighterBay,
+    #[strum(to_string = "Vessel Hangar Mk II")]
+    FighterBayMk2,
     #[strum(to_string = "FSD Interdictor")]
     FSDInterdictor,
     #[strum(to_string = "FSD")]

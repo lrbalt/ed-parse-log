@@ -61,6 +61,7 @@ pub struct EDLogReservoirReplenished {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum LegalStatus {
     Unknown,
+    None,
     Clean,
     Wanted,
     WantedEnemy,

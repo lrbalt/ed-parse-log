@@ -1,12 +1,12 @@
 use crate::{
     EDString,
     common_types::{
-        Allegiance, Credits, FactionName, MaterialCategory, StationEconomy, StationService,
-        StationType, TechBrokerType, TraderType,
+        Allegiance, Credits, FactionName, MaterialCategory, MercCoins, StationEconomy,
+        StationService, StationType, TechBrokerType, TraderType,
     },
     utils::string_or_struct,
 };
-use ed_parse_log_files_macros::{Extractable, testcase};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use strum::Display;
 
@@ -86,6 +86,8 @@ pub struct EDLogDockingGranted {
 pub enum DockingDeniedReason {
     Distance,
     DockOffline,
+    #[serde(rename = "DockingUnavliable")]
+    DockingUnavailable,
     Hostile,
     JumpImminent,
     NoReason,
@@ -161,11 +163,16 @@ pub struct EDLogUndocked {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"id": 129045436, "Name": "hpt_basicmissilerack_fixed_medium",
+    "BuyPrice": 0, "BuyMercCoinsPrice": 800 })]
+#[testcase_struct({"id": 128049431, "Name": "hpt_beamlaser_fixed_huge",
+    "BuyPrice": 2336256 })]
 pub struct ModuleOutfitting {
     #[serde(rename = "id")]
     id: u64,
     name: EDString,
     buy_price: Credits,
+    buy_merc_coins_price: Option<MercCoins>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -297,6 +304,9 @@ pub enum VehicleType {
     #[serde(rename = "empire_fighter")]
     #[strum(to_string = "Gu-97")]
     Gu97,
+    #[serde(rename = "lander01")]
+    #[strum(to_string = "Nomad")]
+    Nomad,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

@@ -1104,6 +1104,8 @@ pub struct EngineerModification {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ModifierValue {
+    #[serde(rename = "Label_Localised")]
+    label_localised: Option<EDString>,
     value: f64,
     original_value: f64,
     less_is_good: u64,
@@ -1121,6 +1123,7 @@ pub struct ModifierDescription {
 #[serde(tag = "Label")]
 #[testcase_struct({ "Label":"DamagePerSecond", "Value":367.200012, "OriginalValue":216.000000, "LessIsGood":0 })]
 #[testcase_struct({ "Label":"DamageType", "ValueStr":"$Thermic;", "ValueStr_Localised":"Thermal" })]
+#[testcase_struct({"Label": "$Kinetic;", "Label_Localised": "Kinetic", "Value": 0.000000, "OriginalValue": 100.000000, "LessIsGood": 0 })]
 pub enum ModuleEngineeringModifiers {
     AmmoClipSize(ModifierValue),
     AmmoMaximum(ModifierValue),
@@ -1155,6 +1158,8 @@ pub enum ModuleEngineeringModifiers {
     HeatEfficiency(ModifierValue),
     Integrity(ModifierValue),
     Jitter(ModifierValue),
+    #[serde(rename = "$Kinetic;")]
+    Kinetic(ModifierValue),
     KineticResistance(ModifierValue),
     Mass(ModifierValue),
     MaxAngle(ModifierValue),
@@ -1179,6 +1184,8 @@ pub enum ModuleEngineeringModifiers {
     SystemsCapacity(ModifierValue),
     SystemsRecharge(ModifierValue),
     ThermalLoad(ModifierValue),
+    #[serde(rename = "$Thermic;")]
+    Thermic(ModifierValue),
     ThermicResistance(ModifierValue),
     WeaponsCapacity(ModifierValue),
     WeaponsRecharge(ModifierValue),
