@@ -259,10 +259,12 @@ fn test_serde_ship_module() {
             ShipArmourGrade::*,
             ShipModule::*,
             ShipModuleClass::{self, *},
+            ShipModuleCoreInternal::*,
             ShipModuleExternal::*,
             ShipModuleHardpoint::*,
-            ShipModuleInternal::*,
+            ShipModuleOptionalInternal::*,
             ShipModuleSize::{self, *},
+            ShipModuleUtilityMount::*,
         },
         ship_type::ShipType::*,
     };
@@ -298,7 +300,7 @@ fn test_serde_ship_module() {
     test("$explorer_nx_cockpit_name;", Cockpit(CaspianExplorer));
     test(
         "$int_dockingcomputer_advanced_name;",
-        Internal(
+        OptionalInternal(
             DockingComputerAdvanced,
             ShipModuleSize::None,
             ShipModuleClass::None,
@@ -306,7 +308,7 @@ fn test_serde_ship_module() {
     );
     test(
         "$int_engine_size7_class5_gravityoptimised_mkii_name;",
-        Internal(EngineGravityOptimisedMkII, Size7, Class5),
+        CoreInternal(EngineGravityOptimisedMkII, Size7, Class5),
     );
     test(
         "paintjob_asp_halloween01_01",
@@ -326,7 +328,7 @@ fn test_serde_ship_module() {
     );
     test(
         "$int_shieldgenerator_size3_class5_strong_name;",
-        Internal(PrismaticShieldGenerator, Size3, Class5),
+        OptionalInternal(PrismaticShieldGenerator, Size3, Class5),
     );
     test("smallcombat01_nx_cockpit", Cockpit(SmallCombat01NX));
     test("$asp_armour_grade1;", Armour(Asp, Grade1));
@@ -336,31 +338,31 @@ fn test_serde_ship_module() {
     );
     test(
         "$int_hyperdrive_size5_class5_name;",
-        Internal(Hyperdrive, Size5, Class5),
+        CoreInternal(Hyperdrive, Size5, Class5),
     );
     test(
         "$int_hyperdrive_overcharge_size5_class5;",
-        Internal(HyperdriveOvercharge, Size5, Class5),
+        CoreInternal(HyperdriveOvercharge, Size5, Class5),
     );
     test(
         "$int_powerdistributor_size5_class3_name;",
-        Internal(PowerDistributor, Size5, Class3),
+        CoreInternal(PowerDistributor, Size5, Class3),
     );
     test(
         "$int_mkiiagileboost_engine_size5_class5_name;",
-        Internal(EngineMkIIAgileBoost, Size5, Class5),
+        CoreInternal(EngineMkIIAgileBoost, Size5, Class5),
     );
     test(
         "$int_dronecontrol_fueltransfer_size1_class5_name;",
-        Internal(DroneControlFuelTransfer, Size1, Class5),
+        OptionalInternal(DroneControlFuelTransfer, Size1, Class5),
     );
     test(
         "$int_multidronecontrol_xeno_size3_class3_name;",
-        Internal(MultiDroneControlXeno, Size3, Class3),
+        OptionalInternal(MultiDroneControlXeno, Size3, Class3),
     );
     test(
         "$int_mkii_passengercabin_size2_class1_name;",
-        Internal(PassengerCabinMkII, Size2, Class1),
+        OptionalInternal(PassengerCabinMkII, Size2, Class1),
     );
     test(
         "$hpt_mining_subsurfdispmisle_fixed_medium_name;",
@@ -377,23 +379,35 @@ fn test_serde_ship_module() {
     );
     test(
         "hpt_shieldbooster_size0_class5",
-        OptionalInternalSized(ShieldBooster, Size0, Class5),
+        UtilityMount(ShieldBooster, Size0, Class5),
     );
     test(
         "hpt_xenoscanner_basic_tiny",
-        OptionalInternalHptSized(XenoScannerBasic, Tiny),
+        UtilityMount(
+            XenoScannerBasic,
+            ShipModuleSize::None,
+            ShipModuleClass::None,
+        ),
     );
     test(
         "hpt_antiunknownshutdown_tiny_v2",
-        OptionalInternalHptSized(AntiUnknownShutdownV2, Tiny),
+        UtilityMount(
+            AntiUnknownShutdownV2,
+            ShipModuleSize::None,
+            ShipModuleClass::None,
+        ),
     );
     test(
         "int_detailedsurfacescanner_tiny_name",
-        OptionalInternalHptSized(DetailedSurfaceScanner, Tiny),
+        OptionalInternal(
+            DetailedSurfaceScanner,
+            ShipModuleSize::None,
+            ShipModuleClass::None,
+        ),
     );
     test(
         "int_dronecontrol_unkvesselresearch",
-        Internal(
+        OptionalInternal(
             DroneControlResearch,
             ShipModuleSize::None,
             ShipModuleClass::None,
