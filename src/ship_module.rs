@@ -67,7 +67,7 @@ pub mod serde_ship_module {
                 match parts[1] {
                     "dockingcomputer" => {
                         // handle $int_dockingcomputer_advanced_name;
-                        let module = if parts[2] == "advanced" {
+                        let module = if parts.len() > 2 && parts[2] == "advanced" {
                             ShipModuleInternal::DockingComputerAdvanced
                         } else {
                             ShipModuleInternal::DockingComputer
@@ -103,7 +103,7 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
-                    "mkii" => {
+                    "mkii" if parts.len() > 4 => {
                         // int_mkii_passengercabin_size2_class1_name
                         let module = ShipModuleInternal::PassengerCabinMkII;
                         let module_size: ShipModuleSize =
@@ -115,7 +115,7 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::Internal(module, module_size, module_class));
                     }
-                    "mkiiagileboost" => {
+                    "mkiiagileboost" if parts.len() > 4 => {
                         // handle "$int_mkiiagileboost_engine_size5_class5_name;"
                         let module = ShipModuleInternal::EngineMkIIAgileBoost;
                         let module_size: ShipModuleSize =
@@ -141,9 +141,8 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::Internal(module, module_size, module_class));
                     }
-                    "dronecontrol" if parts.len() == 3 || parts.len() == 4 => {
+                    "dronecontrol" if parts.len() > 2 => {
                         // int_dronecontrol_unkvesselresearch
-                        // $int_dronecontrol_unkvesselresearch_name;
                         let module: ShipModuleInternal = deserialize_enum_from_str::<_, D::Error>(
                             (parts[1].to_string() + "_" + parts[2]).as_str(),
                             "ship module size",
@@ -154,7 +153,7 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
-                    "guardianfsdbooster" => {
+                    "guardianfsdbooster" if parts.len() > 2 => {
                         // int_guardianfsdbooster_size5
                         let module: ShipModuleInternal =
                             deserialize_enum_from_str::<_, D::Error>(parts[1], "ship module name")?;
@@ -166,7 +165,7 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
-                    "detailedsurfacescanner" => {
+                    "detailedsurfacescanner" if parts.len() > 2 => {
                         // $int_detailedsurfacescanner_tiny_name;
                         let module: ShipModuleInternal =
                             deserialize_enum_from_str::<_, D::Error>(parts[1], "ship module name")?;
@@ -176,7 +175,7 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::OptionalInternalHptSized(module, module_size));
                     }
-                    "hyperdrive" => {
+                    "hyperdrive" if parts.len() > 4 => {
                         // int_hyperdrive_size5_class5
                         if parts[2] == "overcharge" {
                             // int_hyperdrive_overcharge_size5_class5
@@ -273,7 +272,7 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::Hardpoint(module, module_conn, module_size));
                     }
-                    "xenoscanner" | "xenoscannermk2" => {
+                    "xenoscanner" | "xenoscannermk2" if parts.len() > 3 => {
                         // hpt_xenoscanner_basic_tiny | hpt_xenoscannermk2_basic_tiny
                         let module: ShipModuleInternal = deserialize_enum_from_str::<_, D::Error>(
                             (parts[1].to_string() + "_" + parts[2]).as_str(),
@@ -285,7 +284,7 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::OptionalInternalHptSized(module, module_size));
                     }
-                    "electroniccountermeasure" | "chafflauncher" => {
+                    "electroniccountermeasure" | "chafflauncher" if parts.len() > 2 => {
                         // hpt_electroniccountermeasure_tiny
                         let module: ShipModuleInternal =
                             deserialize_enum_from_str::<_, D::Error>(parts[1], "ship module name")?;
@@ -295,7 +294,7 @@ pub mod serde_ship_module {
                         )?;
                         return Ok(ShipModule::OptionalInternalHptSized(module, module_size));
                     }
-                    "antiunknownshutdown" => {
+                    "antiunknownshutdown" if parts.len() > 2 => {
                         // hpt_antiunknownshutdown_tiny_v2
                         // hpt_antiunknownshutdown_tiny
 
@@ -318,7 +317,13 @@ pub mod serde_ship_module {
                     _ => { /* continue */ }
                 }
 
-                // optional internal had hpt prefix
+                if parts.len() < 4 {
+                    return Err(serde::de::Error::custom(format!(
+                        "Error parsing {s}: expected four parts"
+                    )));
+                }
+
+                // optional internal with hpt prefix
                 if let Ok(module) = deserialize_enum_from_str::<ShipModuleInternal, D::Error>(
                     parts[1],
                     "ship optional internal name",
@@ -395,6 +400,12 @@ pub mod serde_ship_module {
                 Ok(ShipModule::Hardpoint(module, module_conn, module_size))
             }
             "ext" => {
+                if parts.len() < 4 {
+                    return Err(serde::de::Error::custom(format!(
+                        "Error parsing {s}: expected four parts"
+                    )));
+                }
+
                 // $ext_drive_class3_cob_name;
                 // $ext_drive_krait_light_name;
                 let module: ShipModuleExternal = deserialize_enum_from_str::<_, D::Error>(
@@ -418,6 +429,11 @@ pub mod serde_ship_module {
                 Ok(ShipModule::ModularCargoBayDoorFDL)
             }
             "paintjob" => {
+                if parts.len() < 3 {
+                    return Err(serde::de::Error::custom(format!(
+                        "Error parsing {s}: expected at least three parts"
+                    )));
+                }
                 // paintjob_asp_halloween01_01
                 // paintjob_smallcombat01_nx_03_01
                 let (i, ship_type) = deserialize_enum_from_str(parts[1], "ship type")
@@ -429,17 +445,19 @@ pub mod serde_ship_module {
                 let paintjob_name = parts[i..].join("_");
                 Ok(ShipModule::Paintjob(ship_type, paintjob_name.into()))
             }
-            "voicepack" => Ok(ShipModule::VoicePack(parts[1].into())),
-            "decal" => Ok(ShipModule::Decal(parts[1..].join("_").into())),
-            "weaponcustomisation" => {
+            "voicepack" if parts.len() > 1 => Ok(ShipModule::VoicePack(parts[1].into())),
+            "decal" if parts.len() > 1 => Ok(ShipModule::Decal(parts[1..].join("_").into())),
+            "weaponcustomisation" if parts.len() > 1 => {
                 Ok(ShipModule::WeaponCustomisation(parts[1..].join("_").into()))
             }
-            "enginecustomisation" => {
+            "enginecustomisation" if parts.len() > 1 => {
                 Ok(ShipModule::EngineCustomisation(parts[1..].join("_").into()))
             }
-            "nameplate" => Ok(ShipModule::NamePlate(parts[1..].join("_").into())),
-            "bobble" => Ok(ShipModule::Bobble(parts[1..].join("_").into())),
-            "string" => Ok(ShipModule::String(parts[1..].join("_").into())),
+            "nameplate" if parts.len() > 1 => {
+                Ok(ShipModule::NamePlate(parts[1..].join("_").into()))
+            }
+            "bobble" if parts.len() > 1 => Ok(ShipModule::Bobble(parts[1..].join("_").into())),
+            "string" if parts.len() > 1 => Ok(ShipModule::String(parts[1..].join("_").into())),
             unknown => {
                 // check on cockpit module that follows $shipname_cockpit_name; pattern
                 if let Some(index) = s.rfind("cockpit") {
@@ -1065,14 +1083,20 @@ impl Display for ShipModule {
                     write!(
                         f,
                         "{}Passenger Cabin",
-                        class.passenger_cabin_abbr().unwrap_or("").to_owned() + " "
+                        class
+                            .passenger_cabin_abbr()
+                            .map(|a| a.to_owned() + " ")
+                            .unwrap_or("".to_owned())
                     )
                 }
                 ShipModuleInternal::PassengerCabinMkII => {
                     write!(
                         f,
                         "Mk II {}Passenger Cabin",
-                        class.passenger_cabin_abbr().unwrap_or("").to_owned() + " "
+                        class
+                            .passenger_cabin_abbr()
+                            .map(|a| a.to_owned() + " ")
+                            .unwrap_or("".to_owned())
                     )
                 }
                 _ => write!(f, "{module}"),
