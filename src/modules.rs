@@ -1,6 +1,6 @@
 use crate::{
     EDString,
-    common_types::{Credits, EngineerModification},
+    common_types::{Credits, EngineerModification, MercCoins},
     ship_module::{ShipModule, ShipModuleSlot, serde_ship_module},
     ship_type::ShipType,
 };
@@ -38,6 +38,7 @@ pub struct StoredModule {
     #[serde(flatten)]
     pub intransit: Option<IntransitModule>,
     pub buy_price: Credits,
+    pub buy_merc_coins_price: Option<MercCoins>,
     pub hot: bool,
 }
 
@@ -119,6 +120,7 @@ pub struct EDLogModuleBuy {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub buy_price: Credits,
+    pub buy_merc_coins_price: Option<MercCoins>,
     pub ship: ShipType,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
@@ -249,6 +251,7 @@ pub struct EDLogModuleBuyAndStore {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub buy_price: Credits,
+    pub buy_merc_coins_price: Option<MercCoins>,
     pub ship: ShipType,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
