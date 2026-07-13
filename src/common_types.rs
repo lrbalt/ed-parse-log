@@ -354,6 +354,7 @@ pub enum OnFootItem {
     WeaponTestData,
     XenoDefenceProtocols,
     OperationsStrikeData,
+    OperationsCounterAttackData,
 
     #[serde(rename = "nm_seed")]
     NMSeed,
@@ -1149,6 +1150,8 @@ pub enum ModuleEngineeringModifiers {
     EngineOptPerformance(ModifierValue),
     EnginesCapacity(ModifierValue),
     EnginesRecharge(ModifierValue),
+    #[serde(rename = "$Explosive;")]
+    Explosive(ModifierValue),
     ExplosiveResistance(ModifierValue),
     FSDHeatRate(ModifierValue),
     FSDInterdictorRange(ModifierValue),

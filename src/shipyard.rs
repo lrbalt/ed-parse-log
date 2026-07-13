@@ -25,16 +25,16 @@ pub struct Ship {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogShipyardSwap {
-    ship_type: ShipType,
+    pub ship_type: ShipType,
     #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
+    pub ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
-    ship_id: u64,
-    store_old_ship: ShipType,
+    pub ship_id: u64,
+    pub store_old_ship: ShipType,
     #[serde(rename = "StoreShipID")]
-    store_ship_id: u64,
+    pub store_ship_id: u64,
     #[serde(rename = "MarketID")]
-    market_id: u64,
+    pub market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

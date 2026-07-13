@@ -2,7 +2,7 @@ use crate::{
     EDString,
     common_types::{Credits, OnFootItem},
 };
-use ed_parse_log_files_macros::Extractable;
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -192,6 +192,33 @@ pub struct EDLogCreateSuitLoadout {
     loadout_id: u64,
     loadout_name: EDString,
     modules: Vec<SuitModule>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({"timestamp": "2026-07-07T18:14:15Z","event": "LoadoutRemoveModule",
+    "LoadoutName": "K en A - rifles","SuitID": 1758014072486724,"SuitName": "tacticalsuit_class5",
+    "SuitName_Localised": "$TacticalSuit_Class1_Name;","LoadoutID": 4293000008,
+    "SlotName": "PrimaryWeapon2","ModuleName": "wpn_m_assaultrifle_kinetic_fauto",
+    "ModuleName_Localised": "Karma AR-50","Class": 5,"SuitModuleID": 1757340617280755,
+    "WeaponMods": ["weapon_clipsize","weapon_backpackreloading","weapon_range","weapon_handling"]})]
+pub struct EDLogLoadoutRemoveModule {
+    loadout_name: EDString,
+    #[serde(rename = "SuitID")]
+    suit_id: u64,
+    suit_name: EDString,
+    #[serde(rename = "SuitName_Localised")]
+    suit_name_localised: EDString,
+    #[serde(rename = "LoadoutID")]
+    loadout_id: u64,
+    slot_name: EDString,
+    module_name: EDString,
+    #[serde(rename = "ModuleName_Localised")]
+    module_name_localised: EDString,
+    class: u64,
+    #[serde(rename = "SuitModuleID")]
+    suit_module_id: u64,
+    weapon_mods: Vec<WeaponMod>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

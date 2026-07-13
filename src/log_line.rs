@@ -90,8 +90,8 @@ use crate::{
     suits::{
         EDLogBackpack, EDLogBackpackChange, EDLogBuySuit, EDLogBuyWeapon, EDLogCollectItems,
         EDLogCreateSuitLoadout, EDLogDeleteSuitLoadout, EDLogDropItems, EDLogLoadoutEquipModule,
-        EDLogRenameSuitLoadout, EDLogSellSuit, EDLogSellWeapon, EDLogSuitLoadout, EDLogUpgradeSuit,
-        EDLogUpgradeWeapon, EDLogUseConsumable,
+        EDLogLoadoutRemoveModule, EDLogRenameSuitLoadout, EDLogSellSuit, EDLogSellWeapon,
+        EDLogSuitLoadout, EDLogUpgradeSuit, EDLogUpgradeWeapon, EDLogUseConsumable,
     },
     supercruise::{EDLogSupercruiseDestinationDrop, EDLogSupercruiseEntry, EDLogSupercruiseExit},
     transport::{
@@ -712,7 +712,7 @@ pub enum EDLogEvent {
     ShipRedeemed(EDLogShipRedeemed),
     SellShipOnRebuy(EDLogSellShipOnRebuy),
 
-    // Suit and backpack
+    // Suits and backpack
     SuitLoadout(EDLogSuitLoadout),
     Backpack(Box<EDLogBackpack>),
     SwitchSuitLoadout(EDLogSuitLoadout),
@@ -726,6 +726,7 @@ pub enum EDLogEvent {
     CreateSuitLoadout(EDLogCreateSuitLoadout),
     RenameSuitLoadout(EDLogRenameSuitLoadout),
     DeleteSuitLoadout(EDLogDeleteSuitLoadout),
+    LoadoutRemoveModule(EDLogLoadoutRemoveModule),
     LoadoutEquipModule(EDLogLoadoutEquipModule),
     UpgradeSuit(EDLogUpgradeSuit),
     DropItems(EDLogDropItems),
