@@ -354,7 +354,7 @@ pub struct Module {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct LoadOutStats {
-    pub hull_value: Credits,
+    pub hull_value: Option<Credits>,
     pub modules_value: Credits,
     pub hull_health: f64,
     pub unladen_mass: f64,
@@ -366,10 +366,16 @@ pub struct LoadOutStats {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2017-10-15T04:34:40Z", "event":"Loadout", "Ship":"CobraMkIII", "ShipID":1, "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "Modules":[  ] })]
-#[testcase({ "timestamp": "2024-01-14T18:13:22Z", "event": "Loadout", "Ship": "cobramkiii", "ShipID": 23, "ShipName": "HMS SCAVENGER", "ShipIdent": "LRB-C3", 
-    "HullValue": 349718, "ModulesValue": 6316388,"HullHealth": 1.000000, "UnladenMass": 222.577606, "CargoCapacity": 60, "MaxJumpRange": 39.726162,
+#[testcase({ "timestamp":"2017-10-15T04:34:40Z", "event":"Loadout", "Ship":"CobraMkIII", "ShipID":1, 
+    "ShipName":"Flat Head", "ShipIdent":"UNSC-1", "Modules":[  ] })]
+#[testcase({ "timestamp": "2024-01-14T18:13:22Z", "event": "Loadout", "Ship": "cobramkiii", "ShipID": 23, 
+    "ShipName": "SCAVENGER", "ShipIdent": "LRB-C3", "HullValue": 349718, "ModulesValue": 6316388,
+    "HullHealth": 1.000000, "UnladenMass": 222.577606, "CargoCapacity": 60, "MaxJumpRange": 39.726162,
     "FuelCapacity": {"Main": 16.000000,"Reserve": 0.490000},"Rebuy": 333307,"Modules": []})]
+#[testcase({"timestamp": "2026-07-12T19:02:58Z","event": "Loadout", "Ship": "explorer_nx",
+    "ShipID": 46, "ShipName": "my-caspian", "ShipIdent": "lrb-ce", "ModulesValue": 5585370,
+    "HullHealth": 1.000000, "UnladenMass": 1480.151978, "CargoCapacity": 24, "MaxJumpRange": 76.526161, 
+    "FuelCapacity": {"Main": 128.000000,"Reserve": 1.140000},"Rebuy": 279269,"Modules": []})]
 pub struct EDLogLoadout {
     pub ship: ShipType,
     #[serde(rename = "ShipID")]
@@ -380,4 +386,33 @@ pub struct EDLogLoadout {
     #[serde(flatten)]
     pub loadout_stats: Option<LoadOutStats>,
     pub modules: Vec<Module>,
+}
+
+#[test]
+fn test_loadoput() {
+    let json = r#"{ "timestamp":"2026-07-12T19:02:58Z", "event":"Loadout", "Ship":"explorer_nx", "ShipID":46, 
+        "ShipName":"my-caspian", "ShipIdent":"lrb-ce", "ModulesValue":5585370, "HullHealth":1.000000, 
+        "UnladenMass":1480.151978, "CargoCapacity":24, "MaxJumpRange":76.526161, "FuelCapacity":{ "Main":128.000000, 
+        "Reserve":1.140000 }, "Rebuy":279269, "Modules":[ ] }"#;
+    let line: crate::log_line::EDLogLine = serde_json::from_str(json).expect("Should parse");
+
+    assert!(matches!(
+        line.event(),
+        crate::log_line::EDLogEvent::Loadout(_)
+    ));
+
+    let loadout = line
+        .event()
+        .extract::<EDLogLoadout>()
+        .expect("should be loadout inside");
+
+    assert_eq!(loadout.ship_id, 46);
+    assert_eq!(
+        loadout
+            .loadout_stats
+            .as_ref()
+            .expect("it to be there")
+            .cargo_capacity,
+        24
+    );
 }
