@@ -19,12 +19,6 @@ pub struct AvailableStoredModule {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct IntransitModule {
-    in_transit: bool,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct StoredModule {
     #[serde(with = "serde_ship_module")]
     pub name: ShipModule,
@@ -35,8 +29,7 @@ pub struct StoredModule {
     pub available: Option<AvailableStoredModule>,
     #[serde(flatten)]
     pub engineer_modification: Option<EngineerModification>,
-    #[serde(flatten)]
-    pub intransit: Option<IntransitModule>,
+    pub in_transit: Option<bool>,
     pub buy_price: Credits,
     pub buy_merc_coins_price: Option<MercCoins>,
     pub hot: bool,
@@ -66,7 +59,7 @@ pub struct SwapOutItem {
 pub struct EDLogModuleRetrieve {
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
-    pub slot: EDString,
+    pub slot: ShipModuleSlot,
     #[serde(with = "serde_ship_module")]
     pub retrieved_item: ShipModule,
     #[serde(rename = "RetrievedItem_Localised")]
@@ -107,7 +100,7 @@ pub struct StoreItem {
     "BuyItem":"$int_sensors_size4_class5_name;", "BuyItem_Localised":"Sensors", "MarketID":3223365120,
     "BuyPrice":376829, "Ship":"ferdelance", "ShipID":6 })]
 pub struct EDLogModuleBuy {
-    pub slot: EDString,
+    pub slot: ShipModuleSlot,
     #[serde(flatten)]
     pub store_item: Option<StoreItem>,
     #[serde(with = "serde_ship_module")]

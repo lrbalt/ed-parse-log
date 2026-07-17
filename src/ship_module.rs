@@ -8,7 +8,10 @@ pub mod serde_ship_module {
         ship_module::{
             HardpointConnection, HardpointSize, ShipArmourGrade, ShipModule, ShipModuleClass,
             ShipModuleCoreInternal, ShipModuleExternal, ShipModuleHardpoint,
-            ShipModuleOptionalInternal, ShipModuleSize, ShipModuleUtilityMount,
+            ShipModuleOptionalInternal, ShipModuleSize,
+            ShipModuleUtilityMount::{
+                self, CausticSinkLauncher, HeatsinkLauncher, PlasmaPointDefence,
+            },
         },
         ship_type::ShipType,
     };
@@ -359,6 +362,30 @@ pub mod serde_ship_module {
                             ShipModuleClass::None,
                         ));
                     }
+                    "heatsinklauncher" => {
+                        // hpt_heatsinklauncher_turret_tiny, ignore turret_tiny
+                        return Ok(ShipModule::UtilityMount(
+                            HeatsinkLauncher,
+                            ShipModuleSize::Size0,
+                            ShipModuleClass::Class1,
+                        ));
+                    }
+                    "plasmapointdefence" => {
+                        // hpt_heatsinklauncher_turret_tiny, ignore turret_tiny
+                        return Ok(ShipModule::UtilityMount(
+                            PlasmaPointDefence,
+                            ShipModuleSize::Size0,
+                            ShipModuleClass::Class1,
+                        ));
+                    }
+                    "causticsinklauncher" => {
+                        // hpt_heatsinklauncher_turret_tiny, ignore turret_tiny
+                        return Ok(ShipModule::UtilityMount(
+                            CausticSinkLauncher,
+                            ShipModuleSize::Size0,
+                            ShipModuleClass::Class1,
+                        ));
+                    }
                     _ => { /* continue */ }
                 }
 
@@ -530,18 +557,23 @@ pub mod serde_ship_module {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Display)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipArmourGrade {
+    #[strum(to_string = "Grade 1")]
     Grade1,
+    #[strum(to_string = "Grade 2")]
     Grade2,
+    #[strum(to_string = "Grade 3")]
     Grade3,
+    #[strum(to_string = "Grade 4")]
     Grade4,
+    #[strum(to_string = "Grade 5")]
     Grade5,
     Reactive,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 pub enum ShipModuleSlot {
     Armour,
     Bobble01,
@@ -760,14 +792,23 @@ pub enum ShipModuleSlot {
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleSize {
     None,
+    #[strum(to_string = "0")]
     Size0,
+    #[strum(to_string = "1")]
     Size1,
+    #[strum(to_string = "2")]
     Size2,
+    #[strum(to_string = "3")]
     Size3,
+    #[strum(to_string = "4")]
     Size4,
+    #[strum(to_string = "5")]
     Size5,
+    #[strum(to_string = "6")]
     Size6,
+    #[strum(to_string = "7")]
     Size7,
+    #[strum(to_string = "8")]
     Size8,
 }
 
@@ -775,13 +816,21 @@ pub enum ShipModuleSize {
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleClass {
     None,
+    #[strum(to_string = "F")]
     Class0,
+    #[strum(to_string = "E")]
     Class1,
+    #[strum(to_string = "D")]
     Class2,
+    #[strum(to_string = "C")]
     Class3,
+    #[strum(to_string = "B")]
     Class4,
+    #[strum(to_string = "A")]
     Class5,
+    #[strum(to_string = "Class 6")]
     Class6,
+    #[strum(to_string = "Class 7")]
     Class7,
 }
 
@@ -799,11 +848,11 @@ impl ShipModuleClass {
 #[derive(Clone, Debug, Display, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleCoreInternal {
-    #[strum(to_string = "DiscoveryScanner")]
+    #[strum(to_string = "Discovery Scanner")]
     StellarBodyDiscoveryScanner,
-    #[strum(to_string = "ColonisationSuite")]
+    #[strum(to_string = "Colonisation Suite")]
     Colonisation,
-    #[strum(to_string = "CodexScanner")]
+    #[strum(to_string = "Codex Scanner")]
     CodexScanner,
     #[strum(to_string = "Thrusters")]
     Engine,
@@ -939,6 +988,8 @@ pub enum ShipModuleOptionalInternal {
 #[derive(Clone, Debug, Display, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum ShipModuleUtilityMount {
+    #[strum(to_string = "Caustic Sink Launcher")]
+    CausticSinkLauncher,
     #[strum(to_string = "Shutdown Field Neutraliser")]
     #[serde(alias = "antiunknownshutdown")]
     AntiUnknownShutdown,
@@ -959,6 +1010,8 @@ pub enum ShipModuleUtilityMount {
     HeatsinkLauncher,
     #[strum(to_string = "Pulse Wave")]
     MRAScanner,
+    #[strum(to_string = "Point Defence Turret")]
+    PlasmaPointDefence,
     #[strum(to_string = "Shield Booster")]
     ShieldBooster,
     #[strum(to_string = "DataLinkScanner")]
@@ -998,8 +1051,6 @@ pub enum ShipModuleHardpoint {
     BeamLaser,
     #[strum(to_string = "Cannon")]
     Cannon,
-    #[strum(to_string = "Caustic Sink Launcher")]
-    CausticSinkLauncher,
     #[strum(to_string = "Containment Missile")]
     ContainmentMissile,
     #[strum(to_string = "Cytoscrambler")]
@@ -1025,8 +1076,6 @@ pub enum ShipModuleHardpoint {
     #[strum(to_string = "Gauss Cannon")]
     #[serde(alias = "guardian_gausscannon")]
     GuardianGaussCannon,
-    #[strum(to_string = "Heatsink")]
-    HeatSinkLauncher,
     #[strum(to_string = "Mine Launcher")]
     MineLauncher,
     #[strum(to_string = "Mining Volley Repeater")]
@@ -1039,8 +1088,6 @@ pub enum ShipModuleHardpoint {
     MultiCannon,
     #[strum(to_string = "Plasma Acc")]
     PlasmaAccelerator,
-    #[strum(to_string = "Point Defence Turret")]
-    PlasmaPointDefence,
     #[strum(to_string = "Pulse Laser")]
     PulseLaser,
     #[strum(to_string = "Burst Laser")]
