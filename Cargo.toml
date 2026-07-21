@@ -14,8 +14,8 @@ default = ["interning"]
 interning = ["symbol_table"]
 
 [dependencies]
-serde = { version = "1.0.228", features = ["derive"] }
-serde_repr = { version = "0.1.20" }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_repr = { version = "0.1.21" }
 chrono = { version = "0.4.45", features = ["serde"] }
 ed-parse-log-files-macros = { path = "ed-parse-log-files-macros" }
 strum = { version = "0.28.0", features = ["derive"] }
@@ -27,8 +27,8 @@ bitflags = { version = "2.13.0" }
 
 [dev-dependencies]
 rayon = { version = "1.12.0" }
-thiserror = { version = "2.0.18" }
+thiserror = { version = "2.0.19" }
 numfmt = { version = "1.2.0" }
 prettytable-rs = { version = "0.10.0", default-features = false }
 itertools = { version = "0.15.0" }
-serde_json = { version = "1.0.150" }
+serde_json = { version = "1.0.151" }
