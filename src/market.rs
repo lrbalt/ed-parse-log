@@ -4,8 +4,9 @@ use crate::{
 };
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
+use strum::Display;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 #[serde(rename_all = "lowercase")]
 pub enum MarketItemType {
     #[serde(alias = "$alexandrite_name;")]
@@ -333,6 +334,8 @@ pub enum MarketItemType {
     #[serde(alias = "$alliancetradeagreements_name;")]
     AllianceTradeAgreements,
 
+    #[strum(to_string = "Limpet")]
+    #[serde(alias = "Drones")]
     Drones,
     #[serde(alias = "DamagedEscapePod")]
     DamagedEscapePod,
@@ -345,7 +348,6 @@ pub enum MarketItemType {
     AislingPromotionalMaterials,
     RepublicanFieldSupplies,
     RepublicanGarisonSupplies,
-    ImperialSlaves,
 
     #[serde(alias = "$kamitracigars_name;")]
     KamitraCigars,
@@ -663,6 +665,20 @@ pub enum MarketItemType {
     GilyaSignatureWeapons,
     #[serde(alias = "$pavoniseargrubs_name;")]
     PavoniseArgrubs,
+    #[serde(alias = "$tarachtorspice_name;")]
+    TarachtorSpice,
+    #[serde(alias = "$wolf1301fesh_name;")]
+    Wolf1301Fesh,
+    #[serde(alias = "$motronaexperiencejelly_name;")]
+    MotronaExperienceJelly,
+    #[serde(alias = "$imperialslaves_name;")]
+    ImperialSlaves,
+    #[serde(alias = "$masterchefs_name;")]
+    MasterChefs,
+    #[serde(alias = "$animaleffigies_name;")]
+    AnimalEffigies,
+    #[serde(alias = "$curatedcommodity_name;")]
+    CuratedCommodityPackage,
 
     #[serde(alias = "OccupiedCryoPod")]
     OccupiedCryoPod,
@@ -949,7 +965,7 @@ pub struct EDLogDeliverPowerMicroResources {
     market_id: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub enum MarketItemCategory {
     #[serde(alias = "$MARKET_category_chemicals;")]
@@ -972,6 +988,8 @@ pub enum MarketItemCategory {
     Minerals,
     #[serde(alias = "$MARKET_category_salvage;")]
     Salvage,
+    #[serde(alias = "$MARKET_category_slaves;")]
+    Slaves,
     #[serde(alias = "$MARKET_category_technology;")]
     Technology,
     #[serde(alias = "$MARKET_category_textiles;")]
@@ -1006,6 +1024,7 @@ pub struct MarketItem {
     producer: bool,
     rare: bool,
 }
+
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMarketID {}
@@ -1103,4 +1122,120 @@ pub struct EDLogSellOrganicData {
     #[serde(rename = "MarketID")]
     pub market_id: u64,
     pub bio_data: Vec<SoldBioData>,
+}
+
+#[test]
+fn test_location() {
+    let json = include_str!("../testdata/Market - rare goods.json");
+
+    let line: Result<crate::log_line::EDLogLine, _> = serde_json::from_str(json);
+
+    if let Ok(line) = line {
+        assert!(matches!(
+            line.event(),
+            crate::log_line::EDLogEvent::Market(_)
+        ));
+    } else {
+        use chrono::{DateTime, Utc};
+
+        // create untyped struct to parse market data using strings
+
+        #[derive(Deserialize, Debug)]
+        #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+        #[allow(unused)]
+        pub struct SimpleEDLogMarket {
+            #[serde(rename = "MarketID")]
+            pub market_id: u64,
+            pub station_name: String,
+            pub station_type: StationType,
+            pub carrier_docking_access: Option<CarrierDockingAccess>,
+            pub star_system: String,
+            pub items: Option<Vec<SimpleMarketItem>>,
+        }
+
+        #[derive(Deserialize, Debug)]
+        #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+        #[allow(unused)]
+        pub struct SimpleMarketItem {
+            #[serde(rename = "id")]
+            id: u64,
+            #[serde(rename = "Name")]
+            pub market_item_name: String,
+            #[serde(rename = "Name_Localised")]
+            pub market_item_name_localised: Option<String>,
+            pub category: String,
+            #[serde(rename = "Category_Localised")]
+            pub category_localised: Option<String>,
+            buy_price: Credits,
+            sell_price: Credits,
+            mean_price: Credits,
+            stock_bracket: u64,
+            demand_bracket: u64,
+            stock: u64,
+            demand: u64,
+            consumer: bool,
+            producer: bool,
+            rare: bool,
+        }
+
+        #[derive(Deserialize, Debug)]
+        #[allow(unused)]
+        pub struct SimpleEDLogLine {
+            timestamp: DateTime<Utc>,
+            #[serde(flatten)]
+            event: SimpleEDLogEvent,
+        }
+
+        #[derive(Deserialize, Debug)]
+        #[serde(tag = "event", deny_unknown_fields)]
+        pub enum SimpleEDLogEvent {
+            Market(SimpleEDLogMarket),
+        }
+
+        // parse market data into simple structs
+
+        let line: SimpleEDLogLine =
+            serde_json::from_str(json).expect("Simple variant of datastructure should parse");
+        let SimpleEDLogEvent::Market(data) = line.event;
+        let mut err = false;
+
+        // check all items in the simple market data and try to parse into market_item_type
+        for item in data.items.expect("testdata should contain market_items") {
+            let name: Result<MarketItemType, _> =
+                serde_json::from_str(&format!("\"{}\"", item.market_item_name));
+            let name_loc = item.market_item_name_localised.clone();
+
+            if name.is_err()
+                || (item.market_item_name_localised.is_some()
+                    && name.unwrap().to_string() != name_loc.unwrap())
+            {
+                err = true;
+                println!(
+                    "#[serde(alias = \"{}\")]{},",
+                    &item.market_item_name,
+                    item.market_item_name_localised
+                        .as_ref()
+                        .unwrap_or(&item.market_item_name)
+                );
+            }
+
+            let cat: Result<MarketItemCategory, _> =
+                serde_json::from_str(&format!("\"{}\"", item.category));
+            let cat_loc = item.category_localised.clone();
+
+            if cat.is_err()
+                || (item.category_localised.is_some()
+                    && cat.unwrap().to_string() != cat_loc.unwrap())
+            {
+                err = true;
+                println!(
+                    "#[serde(alias = \"{}\")]{},",
+                    &item.category,
+                    item.category_localised.as_ref().unwrap_or(&item.category)
+                );
+            }
+        }
+
+        assert!(!err);
+    }
 }

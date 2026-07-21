@@ -75,6 +75,9 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "GuardianModule_Sturdy")]
     #[strum(to_string = "Sturdy")]
     GuardianModuleSturdy,
+    #[serde(rename = "HeatSinkLauncher_LightWeight")]
+    #[strum(to_string = "Lightweight")]
+    HeatSinkLauncherLightWeight,
     #[serde(rename = "HullReinforcement_Advanced")]
     #[strum(to_string = "Lightweight")]
     HullReinforcementAdvanced,
@@ -141,12 +144,18 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "Sensor_FastScan")]
     #[strum(to_string = "Fast Scan")]
     SensorFastScan,
+    #[serde(rename = "Sensor_Sensor_LightWeight")]
+    #[strum(to_string = "Lightweight")]
+    SensorSensorLightWeight,
     #[serde(rename = "Sensor_LightWeight")]
     #[strum(to_string = "Lightweight")]
     SensorLightWeight,
     #[serde(rename = "Sensor_LongRange")]
     #[strum(to_string = "Long Range")]
     SensorLongRange,
+    #[serde(rename = "Sensor_Sensor_LongRange")]
+    #[strum(to_string = "Long Range")]
+    SensorSensorLongRange,
     #[serde(rename = "Sensor_WideAngle")]
     #[strum(to_string = "Wide Angle")]
     SensorWideAngle,
@@ -189,9 +198,9 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "Weapon_Efficient")]
     #[strum(to_string = "Efficient")]
     WeaponEfficient,
-    #[serde(rename = "Weapon_Focussed")]
+    #[serde(rename = "Weapon_Focused")]
     #[strum(to_string = "Focused")]
-    WeaponFocussed,
+    WeaponFocused,
     #[serde(rename = "Weapon_HighCapacity")]
     #[strum(to_string = "High Capacity")]
     WeaponHighCapacity,
@@ -226,6 +235,8 @@ pub enum EngineeringExperimentalEffect {
     SpecialAutoLoader,
     #[strum[to_string = "Corrosive Shell"]]
     SpecialCorrosiveShell,
+    #[strum[to_string = "Concordant Sequence"]]
+    SpecialConcordantSequence,
     #[strum[to_string = "Dispersal Field"]]
     SpecialDispersalField,
     #[strum[to_string = "Drag Munitions"]]
@@ -234,6 +245,8 @@ pub enum EngineeringExperimentalEffect {
     SpecialEmissiveMunitions,
     #[strum[to_string = "Thermal Spread"]]
     SpecialEngineCooled,
+    #[strum[to_string = "Drive Distributors"]]
+    SpecialEngineHaulage,
     #[strum[to_string = "Stripped Down"]]
     SpecialEngineLightweight,
     #[strum[to_string = "Drag Drives"]]
@@ -252,10 +265,16 @@ pub enum EngineeringExperimentalEffect {
     SpecialHighYieldShell,
     #[strum[to_string = "Deep Plating"]]
     SpecialHullreinforcementChunky,
+    #[strum[to_string = "Reflective Plating"]]
+    SpecialHullreinforcementThermic,
+    #[strum[to_string = "Angled Plating"]]
+    SpecialHullreinforcementKinetic,
     #[strum[to_string = "Incendiary Rounds"]]
     SpecialIncendiaryRounds,
     #[strum(to_string = "Overload Munitions")]
     SpecialOverloadMunitions,
+    #[strum(to_string = "Penetrator Munitions")]
+    SpecialPenetratorMunitions,
     #[strum(to_string = "Phasing Sequence")]
     SpecialPhasingSequence,
     #[strum[to_string = "$special_plasma_slug_name;"]]
@@ -264,6 +283,8 @@ pub enum EngineeringExperimentalEffect {
     SpecialPowerdistributorFast,
     #[strum[to_string = "Cluster Capacitors"]]
     SpecialPowerdistributorCapacity,
+    #[strum[to_string = "Flow Control"]]
+    SpecialPowerdistributorEfficient,
     #[strum[to_string = "Stripped Down"]]
     SpecialPowerdistributorLightweight,
     #[strum[to_string = "Thermal Spread"]]
@@ -272,6 +293,10 @@ pub enum EngineeringExperimentalEffect {
     SpecialPowerplantHighcharge,
     #[strum[to_string = "Stripped Down"]]
     SpecialPowerplantLightweight,
+    #[strum[to_string = "Double Braced"]]
+    SpecialPowerplantToughened,
+    #[strum[to_string = "Regeneration Sequence"]]
+    SpecialRegenerationSequence,
     #[strum[to_string = "Scramble Spectrum"]]
     SpecialScrambleSpectrum,
     #[strum(to_string = "Screening Shell")]
@@ -284,14 +309,16 @@ pub enum EngineeringExperimentalEffect {
     SpecialShieldboosterKinetic,
     #[strum(to_string = "Thermo Block")]
     SpecialShieldboosterThermic,
+    #[strum(to_string = "Recycling Cell")]
+    SpecialShieldcellGradual,
     #[strum(to_string = "Boss Cells")]
     SpecialShieldcellOversized,
     #[strum(to_string = "Hi-Cap")]
     SpecialShieldHealth,
+    #[strum(to_string = "Force Block")]
+    SpecialShieldKinetic,
     #[strum(to_string = "Stripped Down")]
     SpecialShieldLightweight,
-    #[strum(to_string = "Penetrator Munitions")]
-    SpecialPenetratorMunitions,
     #[strum(to_string = "Lo-draw")]
     SpecialShieldEfficient,
     #[strum(to_string = "Fast Charge")]
@@ -304,6 +331,9 @@ pub enum EngineeringExperimentalEffect {
     SpecialThermalCascade,
     #[strum(to_string = "Thermal Conduit")]
     SpecialThermalConduit,
+    #[strum(to_string = "Thermal Shock")]
+    #[serde(rename = "special_thermalshock")]
+    SpecialThermalShock,
     #[strum(to_string = "Thermal Vent")]
     SpecialThermalVent,
     #[strum(to_string = "Oversized")]

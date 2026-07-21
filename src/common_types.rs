@@ -45,6 +45,80 @@ impl Display for MercCoins {
     }
 }
 
+impl MercCoins {
+    pub fn to_human_readable_string(&self) -> String {
+        crate::utils::to_human_readable_string(self.0)
+    }
+
+    pub fn value(&self) -> i64 {
+        self.0
+    }
+}
+
+impl Add for MercCoins {
+    type Output = MercCoins;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        MercCoins(self.0 + rhs.0)
+    }
+}
+
+impl AddAssign for MercCoins {
+    fn add_assign(&mut self, rhs: Self) {
+        self.0 += rhs.0;
+    }
+}
+
+impl Sub for MercCoins {
+    type Output = MercCoins;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        MercCoins(self.0 - rhs.0)
+    }
+}
+
+impl SubAssign for MercCoins {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.0 -= rhs.0;
+    }
+}
+
+impl Sum for MercCoins {
+    fn sum<I: Iterator<Item = MercCoins>>(iter: I) -> Self {
+        iter.fold(MercCoins(0), |acc, x| acc + x)
+    }
+}
+
+impl Mul<i64> for MercCoins {
+    type Output = MercCoins;
+
+    fn mul(self, rhs: i64) -> Self::Output {
+        MercCoins(rhs * self.0)
+    }
+}
+
+impl Mul<u64> for MercCoins {
+    type Output = MercCoins;
+
+    fn mul(self, rhs: u64) -> Self::Output {
+        self * (rhs as i64)
+    }
+}
+
+impl Neg for MercCoins {
+    type Output = MercCoins;
+
+    fn neg(self) -> Self::Output {
+        MercCoins(-self.0)
+    }
+}
+
+impl PartialOrd for MercCoins {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.0.partial_cmp(&other.0)
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Default)]
 pub struct Credits(pub i64);
 
@@ -760,16 +834,16 @@ impl Extractable for BodyInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CodexBodyInformation {
-    system: EDString,
-    system_address: u64,
+    pub system: EDString,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    nearest_destination: EDString,
+    pub body_id: u64,
+    pub nearest_destination: EDString,
     #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<EDString>,
-    traits: Vec<EDString>,
-    latitude: Option<f64>,
-    longitude: Option<f64>,
+    pub nearest_destination_localised: Option<EDString>,
+    pub traits: Vec<EDString>,
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

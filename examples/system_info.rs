@@ -115,12 +115,12 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
             EDLogEvent::ScanOrganic(d) => Some((line, d.system_address)),
             EDLogEvent::FSSDiscoveryScan(d) => Some((line, d.system_address)),
             EDLogEvent::Location(d) => d.system_address.map(|a| (line, a)),
-            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::FSDJump(d) => Some((line, d.system_address)),
             EDLogEvent::ApproachSettlement(d) => d
                 .body_information
                 .as_ref()
                 .map(|b| (line, b.system_address)),
-            EDLogEvent::Docked(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::Docked(d) => Some((line, d.system_address)),
             EDLogEvent::FSSSignalDiscovered(d) => Some((line, d.system_address)),
             _ => None,
         })
@@ -151,7 +151,7 @@ fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<
                 .and_then(|a| d.star_system.as_ref().map(|s| (a, s.as_str()))),
             EDLogEvent::FSSDiscoveryScan(d) => Some((d.system_address, d.system_name.as_str())),
             EDLogEvent::Location(d) => d.system_address.map(|a| (a, d.star_system.as_str())),
-            EDLogEvent::FSDJump(d) => d.system_address.map(|a| (a, d.star_system.as_str())),
+            EDLogEvent::FSDJump(d) => Some((d.system_address, d.star_system.as_str())),
             _ => None,
         };
         if let Some((id, name)) = found_id

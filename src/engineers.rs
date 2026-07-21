@@ -168,7 +168,7 @@ pub struct EngineerCraftIngredient {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct ExperimentalEffect {
-    apply_experimental_effect: EDString,
+    apply_experimental_effect: EngineeringExperimentalEffect,
     experimental_effect: EngineeringExperimentalEffect,
     #[serde(rename = "ExperimentalEffect_Localised")]
     experimental_effect_localised: EDString,

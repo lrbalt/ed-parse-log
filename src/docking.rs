@@ -131,7 +131,7 @@ pub struct EDLogDocked {
     pub faction_state: Option<EDString>,
     pub station_state: Option<StationState>,
     pub star_system: EDString,
-    pub system_address: Option<u64>,
+    pub system_address: u64,
     #[serde(deserialize_with = "string_or_struct")]
     pub station_faction: FactionName,
     pub station_government: EDString,

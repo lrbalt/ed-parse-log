@@ -80,7 +80,7 @@ pub struct EDLogFSDJump {
     pub taxi: Option<bool>,
     pub multicrew: Option<bool>,
     pub star_system: EDString,
-    pub system_address: Option<u64>,
+    pub system_address: u64,
     pub star_pos: [f64; 3],
     pub system_allegiance: Allegiance,
     pub system_economy: SystemEconomy,

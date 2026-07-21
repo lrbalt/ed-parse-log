@@ -7,25 +7,25 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseDestinationDrop {
     #[serde(rename = "Type")]
-    dest_type: EDString,
+    pub dest_type: EDString,
     #[serde(rename = "Type_Localised")]
-    dest_type_localised: Option<EDString>,
-    threat: u64,
+    pub dest_type_localised: Option<EDString>,
+    pub threat: u64,
     #[serde(rename = "MarketID")]
-    market_id: Option<u64>,
+    pub market_id: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseExit {
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
-    star_system: EDString,
-    system_address: Option<u64>,
-    body: EDString,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
+    pub star_system: EDString,
+    pub system_address: Option<u64>,
+    pub body: EDString,
     #[serde(rename = "BodyID")]
-    body_id: Option<u64>,
-    body_type: BodyType,
+    pub body_id: Option<u64>,
+    pub body_type: BodyType,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
