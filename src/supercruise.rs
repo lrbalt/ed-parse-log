@@ -31,8 +31,8 @@ pub struct EDLogSupercruiseExit {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogSupercruiseEntry {
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
-    star_system: EDString,
-    system_address: Option<u64>,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
+    pub star_system: EDString,
+    pub system_address: Option<u64>,
 }
