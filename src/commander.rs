@@ -112,6 +112,24 @@ pub const EXOBIOLOGIST_RANK: [&str; 14] = [
     "Elite V",
 ];
 
+pub const CQC_RANK: [&str; 15] = [
+    "None",
+    "Helpless",
+    "Mostly Helpless",
+    "Amateur",
+    "Semi Professional",
+    "Professional",
+    "Champion",
+    "Hero",
+    "Legend",
+    "Elite",
+    "Elite I",
+    "Elite II",
+    "Elite III",
+    "Elite IV",
+    "Elite V",
+];
+
 pub const EMPIRE_RANK: [&str; 15] = [
     "None", "Outsider", "Serf", "Master", "Squire", "Knight", "Lord", "Baron", "Viscount", "Count",
     "Earl", "Marquis", "Duke", "Prince", "King",
