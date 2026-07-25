@@ -1212,7 +1212,7 @@ fn test_location() {
                 err = true;
                 println!(
                     "#[serde(alias = \"{}\")]{},",
-                    &item.market_item_name,
+                    item.market_item_name,
                     item.market_item_name_localised
                         .as_ref()
                         .unwrap_or(&item.market_item_name)
@@ -1230,7 +1230,7 @@ fn test_location() {
                 err = true;
                 println!(
                     "#[serde(alias = \"{}\")]{},",
-                    &item.category,
+                    item.category,
                     item.category_localised.as_ref().unwrap_or(&item.category)
                 );
             }

@@ -13,7 +13,7 @@ use std::{
 };
 use strum::Display;
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Default)]
 pub struct Merits(u64);
 
 impl Merits {
