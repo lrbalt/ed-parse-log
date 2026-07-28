@@ -536,6 +536,8 @@ pub enum StarClass {
     A,
     B,
     C,
+    CJ,
+    CN,
     D,
     DA,
     DAB,
@@ -564,7 +566,9 @@ pub enum StarClass {
     T,
     TTS,
     W,
+    WC,
     WO,
+    WN,
     Y,
 }
 
