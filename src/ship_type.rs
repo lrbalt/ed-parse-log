@@ -105,6 +105,8 @@ pub enum ShipType {
     #[strum(to_string = "Krait Mk II")]
     #[serde(rename = "krait_mkii", alias = "Krait_MkII")]
     KraitMkII,
+    #[serde(alias = "lander01", alias = "Lander01")]
+    Nomad,
     #[strum(to_string = "Lynx Highliner")]
     #[serde(alias = "mediumtransport01", alias = "MediumTransport01")]
     LynxHighliner,
