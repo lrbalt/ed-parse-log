@@ -67,10 +67,10 @@ pub struct EDLogApproachSettlement {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogFSDTarget {
-    name: EDString,
-    system_address: u64,
-    star_class: StarClass,
-    remaining_jumps_in_route: Option<u64>,
+    pub name: EDString,
+    pub system_address: u64,
+    pub star_class: StarClass,
+    pub remaining_jumps_in_route: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
