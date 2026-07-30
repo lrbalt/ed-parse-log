@@ -528,7 +528,7 @@ pub enum CarrierDockingAccess {
     None,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 #[serde(rename_all = "PascalCase")]
 pub enum StarClass {
     #[serde(rename = "AeBe")]
@@ -553,15 +553,18 @@ pub enum StarClass {
     H,
     K,
     #[serde(rename = "K_OrangeGiant")]
+    #[strum(to_string = "K Orange Giant")]
     KOrangeGiant,
     L,
     M,
     MS,
     #[serde(rename = "M_RedGiant")]
+    #[strum(to_string = "M Red Giant")]
     MRedGiant,
     N,
     O,
     S,
+    #[strum(to_string = "Supermassive Blackhole")]
     SupermassiveBlackHole,
     T,
     TTS,
@@ -572,19 +575,34 @@ pub enum StarClass {
     Y,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 pub enum LuminosityType {
-    Va,
-    V,
     #[serde(rename = "I")]
+    #[strum(to_string = "I")]
     One,
+    #[serde(rename = "II")]
+    #[strum(to_string = "II")]
+    Two,
     #[serde(rename = "III")]
+    #[strum(to_string = "III")]
     Three,
     #[serde(rename = "IIIb")]
+    #[strum(to_string = "IIIB")]
     ThreeB,
     #[serde(rename = "IV")]
+    #[strum(to_string = "IV")]
     Four,
+    #[serde(rename = "V")]
+    #[strum(to_string = "V")]
+    Five,
+    #[serde(rename = "Va")]
+    #[strum(to_string = "Va")]
+    FiveA,
+    #[serde(rename = "VI")]
+    #[strum(to_string = "VI")]
+    Six,
     #[serde(rename = "VII")]
+    #[strum(to_string = "V")]
     Seven,
 }
 
@@ -833,21 +851,6 @@ impl Extractable for BodyInformation {
             _ => None,
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct CodexBodyInformation {
-    pub system: EDString,
-    pub system_address: u64,
-    #[serde(rename = "BodyID")]
-    pub body_id: u64,
-    pub nearest_destination: EDString,
-    #[serde(rename = "NearestDestination_Localised")]
-    pub nearest_destination_localised: Option<EDString>,
-    pub traits: Vec<EDString>,
-    pub latitude: Option<f64>,
-    pub longitude: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

@@ -1,4 +1,4 @@
-use crate::{EDString, common_types::CodexBodyInformation};
+use crate::EDString;
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 use strum::Display;
@@ -37,6 +37,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_C_TypeGiant_Name;")]
     #[strum(to_string = "C Type Giant")]
     CTypeGiant,
+    #[serde(rename = "$Codex_Ent_CN_TypeGiant_Name;")]
+    #[strum(to_string = "CN Type Giant")]
+    CNTypeGiant,
+    #[serde(rename = "$Codex_Ent_CJ_TypeGiant_Name;")]
+    #[strum(to_string = "CJ Type Giant")]
+    CJTypeGiant,
     #[serde(rename = "$Codex_Ent_D_Type_Name;")]
     #[strum(to_string = "D Type Star")]
     DTypeStar,
@@ -1524,6 +1530,12 @@ pub enum CodexRegion {
     "Name_Localised":"T Tauri Star", "SubCategory":"$Codex_SubCategory_Stars;", "SubCategory_Localised":"Stars", 
     "Category":"$Codex_Category_StellarBodies;", "Category_Localised":"Astronomical Bodies", "Region":"$Codex_RegionName_10;", 
     "Region_Localised":"Norma Expanse", "System":"Skauduae QM-T c17-4", "SystemAddress":1185175214746, "BodyID":0, "IsNewEntry":true })]
+#[testcase({ "timestamp":"2026-07-28T18:33:32Z", "event":"CodexEntry", "EntryID":2320605, "Name":"$Codex_Ent_Bacterial_06_G_Name;", 
+    "Name_Localised":"Bacterium Alcyoneum - Emerald", "SubCategory":"$Codex_SubCategory_Organic_Structures;", 
+    "SubCategory_Localised":"Organic structures", "Category":"$Codex_Category_Biology;", 
+    "Category_Localised":"Biological and Geological", "Region":"$Codex_RegionName_4;", "Region_Localised":"Odin's Hold", 
+    "System":"Dryooe Prou GG-Y f961", "SystemAddress":516065576045, "BodyID":21, "NearestDestination":"", "Latitude":16.642124, 
+    "Longitude":-108.395966, "IsNewEntry":true })]
 pub struct EDLogCodexEntry {
     #[serde(rename = "EntryID")]
     pub entry_id: u64,
@@ -1541,8 +1553,14 @@ pub struct EDLogCodexEntry {
     pub region_localised: EDString,
     pub system: EDString,
     pub system_address: u64,
-    #[serde(flatten)]
-    pub body_information: Option<CodexBodyInformation>,
+    #[serde(rename = "BodyID")]
+    pub body_id: Option<u64>,
+    pub nearest_destination: Option<EDString>,
+    #[serde(rename = "NearestDestination_Localised")]
+    pub nearest_destination_localised: Option<EDString>,
+    pub traits: Option<Vec<EDString>>,
+    pub latitude: Option<f64>,
+    pub longitude: Option<f64>,
     pub is_new_entry: Option<bool>,
     pub voucher_amount: Option<u32>,
 }

@@ -87,14 +87,14 @@ pub struct BodyComposition {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase_struct({ "StarType":"MS", "Subclass":4, "StellarMass":1.046875, "AbsoluteMagnitude":0.467133, "Age_MY":10286, "SurfaceTemperature":2853.000000, "Luminosity":"IIIb"})]
 pub struct ScannedStarDetails {
-    star_type: Option<StarClass>,
-    subclass: u64,
-    stellar_mass: f64,
-    absolute_magnitude: f64,
+    pub star_type: Option<StarClass>,
+    pub subclass: u64,
+    pub stellar_mass: f64,
+    pub absolute_magnitude: f64,
     #[serde(rename = "Age_MY")]
-    age_my: u64,
-    surface_temperature: f64,
-    luminosity: LuminosityType,
+    pub age_my: u64,
+    pub surface_temperature: f64,
+    pub luminosity: LuminosityType,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
