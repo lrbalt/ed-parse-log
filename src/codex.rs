@@ -711,6 +711,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Electricae_01_Polonium_Name;")]
     #[strum(to_string = "Electricae Pluma - Cyan")]
     ElectricaePlumaCyan,
+    #[serde(rename = "$Codex_Ent_Electricae_02_Ruthenium_Name;")]
+    #[strum(to_string = "Electricae Radialem - Blue")]
+    ElectricaeRadialemBlue,
+    #[serde(rename = "$Codex_Ent_Electricae_02_Technetium_Name;")]
+    #[strum(to_string = "Electricae Radialem - Aquamarine")]
+    ElectricaeRadialemAquamarine,
     #[serde(rename = "$Codex_Ent_Electricae_02_Tellurium_Name;")]
     #[strum(to_string = "Electricae Radialem - Magenta")]
     ElectricaeRadialemMagenta,
@@ -724,6 +730,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Fonticulus_03_M_Name;")]
     #[strum(to_string = "Fonticulua Upupam - Amethyst")]
     FonticuluaUpupamAmethyst,
+    #[serde(rename = "$Codex_Ent_Fonticulus_03_T_Name;")]
+    #[strum(to_string = "Fonticulua Upupam - Orange")]
+    FonticuluaUpupamOrange,
     #[serde(rename = "$Codex_Ent_Fonticulus_06_L_Name;")]
     #[strum(to_string = "Fonticulua Digitos - Mauve")]
     FonticuluaDigitosMauve,
