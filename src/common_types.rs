@@ -462,62 +462,67 @@ pub enum FactionState {
 
 #[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
 pub enum BodyType {
+    #[strum(to_string = "Bary Centre")]
+    Null,
+    Planet,
     Star,
     Station,
-    Planet,
     #[strum(to_string = "Planetary Ring")]
     PlanetaryRing,
     #[strum(to_string = "Stellar Ring")]
     StellarRing,
     #[strum(to_string = "Asteroid Cluster")]
     AsteroidCluster,
-    #[strum(to_string = "Unknown")]
-    Null,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub enum CrimeType {
-    CollidedAtSpeedInNoFireZone,
-    DockingMajorBlockingLandingPad,
-    DockingMinorBlockingAirlock,
-    FireInNoFireZone,
-    DumpingNearStation,
-    StationTamperingMinor,
     Assault,
-    DockingMinorBlockingLandingPad,
-    DockingMinorTresspass,
-    Murder,
-    DumpingDangerous,
-    RecklessWeaponsDischarge,
-    DockingMajorTresspass,
-    Interdiction,
-    #[serde(rename = "onFoot_damagingDefences")]
-    OnFootDamagingDefences,
-    #[serde(rename = "onFoot_detectionOfWeapon")]
-    OnFootDetectionOfWeapeon,
-    #[serde(rename = "onFoot_murder")]
-    OnFootMurder,
-    #[serde(rename = "onFoot_trespass")]
-    OnFootTrespass,
-    #[serde(rename = "onFoot_dataTransfer")]
-    OnFootDataTransfer,
-    #[serde(rename = "onFoot_propertyTheft")]
-    OnFootPropertyTheft,
-    #[serde(rename = "onFoot_arcCutterUse")]
-    OnFootArcCutterUse,
-    #[serde(rename = "onFoot_failureToSubmitToPolice")]
-    OnFootFailureToSubmitToPolice,
-    #[serde(rename = "onFoot_carryingIllegalGoods")]
-    OnFootCarryingIllegalGoods,
-    #[serde(rename = "onFoot_recklessEndangerment")]
-    OnFootRecklessEndangerment,
-    #[serde(rename = "onFoot_identityTheft")]
-    OnFootIdentityTheft,
-    #[serde(rename = "onFoot_profileCloningIntent")]
-    OnFootCloningIntent,
+    CollidedAtSpeedInNoFireZone,
     #[serde(rename = "collidedAtSpeedInNoFireZone_hulldamage")]
     CollidedAtSpeedInNoFireZoneHulldamage,
+    DisobayPolice,
+    DockingMajorBlockingAirlock,
+    DockingMajorBlockingLandingPad,
+    DockingMajorTresspass,
+    DockingMinorBlockingAirlock,
+    DockingMinorBlockingLandingPad,
+    DockingMinorTresspass,
+    DumpingDangerous,
+    DumpingNearStation,
+    FireInNoFireZone,
+    FireInStation,
+    IllegalCargo,
+    Interdiction,
+    Murder,
+    Piracy,
+    RecklessWeaponsDischarge,
+    StationTamperingMinor,
+    #[serde(rename = "onFoot_arcCutterUse")]
+    OnFootArcCutterUse,
+    #[serde(rename = "onFoot_carryingIllegalGoods")]
+    OnFootCarryingIllegalGoods,
+    #[serde(rename = "onFoot_damagingDefences")]
+    OnFootDamagingDefences,
+    #[serde(rename = "onFoot_dataTransfer")]
+    OnFootDataTransfer,
+    #[serde(rename = "onFoot_detectionOfWeapon")]
+    OnFootDetectionOfWeapon,
+    #[serde(rename = "onFoot_failureToSubmitToPolice")]
+    OnFootFailureToSubmitToPolice,
+    #[serde(rename = "onFoot_identityTheft")]
+    OnFootIdentityTheft,
+    #[serde(rename = "onFoot_murder")]
+    OnFootMurder,
+    #[serde(rename = "onFoot_profileCloningIntent")]
+    OnFootCloningIntent,
+    #[serde(rename = "onFoot_propertyTheft")]
+    OnFootPropertyTheft,
+    #[serde(rename = "onFoot_recklessEndangerment")]
+    OnFootRecklessEndangerment,
+    #[serde(rename = "onFoot_trespass")]
+    OnFootTrespass,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -531,24 +536,35 @@ pub enum CarrierDockingAccess {
 #[derive(Serialize, Deserialize, Clone, Debug, Display)]
 #[serde(rename_all = "PascalCase")]
 pub enum StarClass {
-    #[serde(rename = "AeBe")]
-    Aebe,
+    AeBe,
     A,
+    #[serde(rename = "A_BlueWhiteSupergiant")]
+    ABlueWhiteSupergiant,
     B,
     C,
+    CS,
     CJ,
     CN,
+    CH,
+    CHd,
     D,
     DA,
     DAB,
+    DAO,
     DAV,
     DAZ,
     DB,
     DBV,
+    DBZ,
     DC,
     DCV,
+    DO,
+    DOV,
     DQ,
+    DX,
     F,
+    #[serde(rename = "F_WhiteSupergiant")]
+    FWhiteSupergiant,
     G,
     H,
     K,
@@ -561,9 +577,15 @@ pub enum StarClass {
     #[serde(rename = "M_RedGiant")]
     #[strum(to_string = "M Red Giant")]
     MRedGiant,
+    #[serde(rename = "M_RedASuperGiant")]
+    #[strum(to_string = "M Red Super Giant")]
+    MRedSuperGiant,
     N,
+    Nebula,
     O,
+    RoguePlanet,
     S,
+    StellarRemnantNebula,
     #[strum(to_string = "Supermassive Blackhole")]
     SupermassiveBlackHole,
     T,
@@ -572,32 +594,82 @@ pub enum StarClass {
     WC,
     WO,
     WN,
+    WNC,
+    X,
     Y,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Display)]
 pub enum LuminosityType {
+    #[serde(rename = "0")]
+    #[strum(to_string = "0")]
+    Zero,
     #[serde(rename = "I")]
     #[strum(to_string = "I")]
     One,
+    #[serde(rename = "Ia0")]
+    #[strum(to_string = "Ia0")]
+    OneAZero,
+    #[serde(rename = "Ia")]
+    #[strum(to_string = "Ia")]
+    OneA,
+    #[serde(rename = "Ib")]
+    #[strum(to_string = "Ib")]
+    OneB,
+    #[serde(rename = "Iab")]
+    #[strum(to_string = "Iab")]
+    OneAB,
     #[serde(rename = "II")]
     #[strum(to_string = "II")]
     Two,
+    #[serde(rename = "IIa")]
+    #[strum(to_string = "IIa")]
+    TwoA,
+    #[serde(rename = "IIab")]
+    #[strum(to_string = "IIab")]
+    TwoAB,
+    #[serde(rename = "IIb")]
+    #[strum(to_string = "IIb")]
+    TwoB,
     #[serde(rename = "III")]
     #[strum(to_string = "III")]
     Three,
+    #[serde(rename = "IIIa")]
+    #[strum(to_string = "IIIa")]
+    ThreeA,
+    #[serde(rename = "IIIab")]
+    #[strum(to_string = "IIIab")]
+    ThreeAB,
     #[serde(rename = "IIIb")]
-    #[strum(to_string = "IIIB")]
+    #[strum(to_string = "IIIb")]
     ThreeB,
     #[serde(rename = "IV")]
     #[strum(to_string = "IV")]
     Four,
+    #[serde(rename = "IVa")]
+    #[strum(to_string = "IVa")]
+    FourA,
+    #[serde(rename = "IVab")]
+    #[strum(to_string = "IVab")]
+    FourAB,
+    #[serde(rename = "IVb")]
+    #[strum(to_string = "IVb")]
+    FourB,
     #[serde(rename = "V")]
     #[strum(to_string = "V")]
     Five,
     #[serde(rename = "Va")]
     #[strum(to_string = "Va")]
     FiveA,
+    #[serde(rename = "Vab")]
+    #[strum(to_string = "Vab")]
+    FiveAB,
+    #[serde(rename = "Vb")]
+    #[strum(to_string = "Vb")]
+    FiveB,
+    #[serde(rename = "Vz")]
+    #[strum(to_string = "Vz")]
+    FiveZ,
     #[serde(rename = "VI")]
     #[strum(to_string = "VI")]
     Six,
