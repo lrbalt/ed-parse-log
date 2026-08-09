@@ -220,6 +220,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Gas_Clds_Red_Name;")]
     #[strum(to_string = "Rubicundum Lagrange Cloud")]
     RubicundumLagrangeCloud,
+    #[serde(rename = "$Codex_Ent_Gas_Clds_Green_Name;")]
+    #[strum(to_string = "Viride Lagrange Cloud")]
+    VirideLagrangeCloud,
     #[serde(rename = "$Codex_Ent_Gas_Clds_Pink_Name;")]
     #[strum(to_string = "Roseum Lagrange Cloud")]
     RoseumLagrangeCloud,
@@ -333,6 +336,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Aleoids_03_K_Name;")]
     #[strum(to_string = "Aleoida Spica - Turquoise")]
     AleoidaSpicaTurquoise,
+    #[serde(rename = "$Codex_Ent_Aleoids_04_F_Name;")]
+    #[strum(to_string = "Aleoida Laminiae - Teal")]
+    AleoidaLaminiaeTeal,
     #[serde(rename = "$Codex_Ent_Aleoids_04_K_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Turquoise")]
     AleoidaLaminiaeTurquoise,
