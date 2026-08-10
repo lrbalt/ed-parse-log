@@ -304,6 +304,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_IceFumarole_AmmoniaGeysers_Name;")]
     #[strum(to_string = "Ammonia Ice Fumarole")]
     AmmoniaIceFumarole,
+    #[serde(rename = "$Codex_Ent_Gas_Vents_WaterGeysers_Name;")]
+    #[strum(to_string = "Water Gas Vent")]
+    WaterGasVent,
 
     // Aleoids
     #[serde(rename = "$Codex_Ent_Aleoids_03_L_Name;")]
