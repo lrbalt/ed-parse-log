@@ -541,6 +541,8 @@ pub enum StarClass {
     #[serde(rename = "A_BlueWhiteSupergiant")]
     ABlueWhiteSupergiant,
     B,
+    #[serde(rename = "B_BlueWhiteSuperGiant")]
+    BBlueWhiteSuperGiant,
     C,
     CS,
     CJ,

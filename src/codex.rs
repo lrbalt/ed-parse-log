@@ -34,6 +34,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_B_TypeGiant_Name;")]
     #[strum(to_string = "B Type Giant")]
     BTypeGiant,
+    #[serde(rename = "$Codex_Ent_B_TypeSuperGiant_Name;")]
+    #[strum(to_string = "B Type Supergiants")]
+    BTypeSuperGiant,
     #[serde(rename = "$Codex_Ent_C_TypeGiant_Name;")]
     #[strum(to_string = "C Type Giant")]
     CTypeGiant,
@@ -115,6 +118,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_W_Type_Name;")]
     #[strum(to_string = "W Type Star")]
     WTypeStar,
+    #[serde(rename = "$Codex_Ent_WC_Type_Name;")]
+    #[strum(to_string = "WC Type Star")]
+    WCTypeStar,
+    #[serde(rename = "$Codex_Ent_WN_Type_Name;")]
+    #[strum(to_string = "WN Type Star")]
+    WNTypeStar,
     #[serde(rename = "$Codex_Ent_WO_Type_Name;")]
     #[strum(to_string = "WO Type Star")]
     WOTypeStar,
@@ -309,27 +318,18 @@ pub enum CodexNames {
     WaterGasVent,
 
     // Aleoids
-    #[serde(rename = "$Codex_Ent_Aleoids_03_L_Name;")]
-    #[strum(to_string = "Aleoida Spica - Lime")]
-    AleoidaSpicaLime,
-    #[serde(rename = "$Codex_Ent_Aleoids_02_L_Name;")]
-    #[strum(to_string = "Aleoida Coronamus - Lime")]
-    AleoidaCoronamusLime,
-    #[serde(rename = "$Codex_Ent_Aleoids_05_A_Name;")]
-    #[strum(to_string = "Aleoida Gravis - Green")]
-    AleoidaGravisGreen,
-    #[serde(rename = "$Codex_Ent_Aleoids_02_A_Name;")]
-    #[strum(to_string = "Aleoida Coronamus - Green")]
-    AleoidaCoronamusGreen,
-    #[serde(rename = "$Codex_Ent_Aleoids_03_M_Name;")]
-    #[strum(to_string = "Aleoida Spica - Emerald")]
-    AleoidaSpicaEmerald,
     #[serde(rename = "$Codex_Ent_Aleoids_01_F_Name;")]
     #[strum(to_string = "Aleoida Arcus - Teal")]
     AleoidaArcusTeal,
     #[serde(rename = "$Codex_Ent_Aleoids_01_K_Name;")]
     #[strum(to_string = "Aleoida Arcus - Turquoise")]
     AleoidaArcusTurquoise,
+    #[serde(rename = "$Codex_Ent_Aleoids_02_A_Name;")]
+    #[strum(to_string = "Aleoida Coronamus - Green")]
+    AleoidaCoronamusGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_02_L_Name;")]
+    #[strum(to_string = "Aleoida Coronamus - Lime")]
+    AleoidaCoronamusLime,
     #[serde(rename = "$Codex_Ent_Aleoids_03_A_Name;")]
     #[strum(to_string = "Aleoida Spica - Green")]
     AleoidaSpicaGreen,
@@ -339,6 +339,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Aleoids_03_K_Name;")]
     #[strum(to_string = "Aleoida Spica - Turquoise")]
     AleoidaSpicaTurquoise,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_L_Name;")]
+    #[strum(to_string = "Aleoida Spica - Lime")]
+    AleoidaSpicaLime,
+    #[serde(rename = "$Codex_Ent_Aleoids_03_M_Name;")]
+    #[strum(to_string = "Aleoida Spica - Emerald")]
+    AleoidaSpicaEmerald,
     #[serde(rename = "$Codex_Ent_Aleoids_04_F_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Teal")]
     AleoidaLaminiaeTeal,
@@ -348,6 +354,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Aleoids_04_L_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Lime")]
     AleoidaLaminiaeLime,
+    #[serde(rename = "$Codex_Ent_Aleoids_04_N_Name;")]
+    #[strum(to_string = "Aleoida Laminiae - Ocher")]
+    AleoidaLaminiaeOcher,
+    #[serde(rename = "$Codex_Ent_Aleoids_05_A_Name;")]
+    #[strum(to_string = "Aleoida Gravis - Green")]
+    AleoidaGravisGreen,
     #[serde(rename = "$Codex_Ent_Aleoids_01_A_Name;")]
     #[strum(to_string = "Aleoida Arcus - Green")]
     AleoidaArcusGreen,
@@ -634,6 +646,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Conchas_02_K_Name;")]
     #[strum(to_string = "Concha Aureolas - Red")]
     ConchaAureolasRed,
+    #[serde(rename = "$Codex_Ent_Conchas_02_N_Name;")]
+    #[strum(to_string = "Concha Aureolas - Emerald")]
+    ConchaAureolasEmerald,
     #[serde(rename = "$Codex_Ent_Conchas_02_F_Name;")]
     #[strum(to_string = "Concha Aureolas - Grey")]
     ConchaAureolasGrey,
@@ -908,12 +923,15 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Shrubs_03_N_Name;")]
     #[strum(to_string = "Frutexa Metallicum - Red")]
     FrutexaMetallicumRed,
-    #[serde(rename = "$Codex_Ent_Shrubs_04_M_Name;")]
-    #[strum(to_string = "Frutexa Flammasis - Grey")]
-    FrutexaFlammasisGrey,
     #[serde(rename = "$Codex_Ent_Shrubs_04_F_Name;")]
     #[strum(to_string = "Frutexa Flammasis - Green")]
     FrutexaFlammasisGreen,
+    #[serde(rename = "$Codex_Ent_Shrubs_04_M_Name;")]
+    #[strum(to_string = "Frutexa Flammasis - Grey")]
+    FrutexaFlammasisGrey,
+    #[serde(rename = "$Codex_Ent_Shrubs_04_N_Name;")]
+    #[strum(to_string = "Frutexa Flammasis - Red")]
+    FrutexaFlammasisRed,
     #[serde(rename = "$Codex_Ent_Shrubs_03_G_Name;")]
     #[strum(to_string = "Frutexa Metallicum - Emerald")]
     FrutexaMetallicumEmerald,
@@ -1059,6 +1077,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_SphereEFGH_01_Name;")]
     #[strum(to_string = "Rubeum Bioluminescent Anemone")]
     RubeumBioluminescentAnemone,
+    #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
+    #[strum(to_string = "Blatteum Bioluminescent Anemone")]
+    BlatteumBioluminescentAnemone,
     // Stratum
     #[serde(rename = "$Codex_Ent_Stratum_03_K_Name;")]
     #[strum(to_string = "Stratum Laminamus - Lime")]
