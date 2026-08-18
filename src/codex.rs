@@ -582,27 +582,12 @@ pub enum CodexNames {
     #[strum(to_string = "Lividum Brain Tree")]
     LividumBrainTree,
     // Cactoids
-    #[serde(rename = "$Codex_Ent_Cactoid_05_N_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Sage")]
-    CactoidaPeperatisSage,
-    #[serde(rename = "$Codex_Ent_Cactoid_05_F_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Yellow")]
-    CactoidaPeperatisYellow,
-    #[serde(rename = "$Codex_Ent_Cactoid_05_A_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Green")]
-    CactoidaPeperatisGreen,
-    #[serde(rename = "$Codex_Ent_Cactoid_05_T_Name;")]
-    #[strum(to_string = "Cactoida Peperatis - Orange")]
-    CactoidaPeperatisOrange,
-    #[serde(rename = "$Codex_Ent_Cactoid_04_A_Name;")]
-    #[strum(to_string = "Cactoida Pullulanta - Green")]
-    CactoidaPullulantaGreen,
-    #[serde(rename = "$Codex_Ent_Cactoid_01_G_Name;")]
-    #[strum(to_string = "Cactoida Cortexum - Teal")]
-    CactoidaCortexumTeal,
     #[serde(rename = "$Codex_Ent_Cactoid_01_F_Name;")]
     #[strum(to_string = "Cactoida Cortexum - Yellow")]
     CactoidaCortexumYellow,
+    #[serde(rename = "$Codex_Ent_Cactoid_01_G_Name;")]
+    #[strum(to_string = "Cactoida Cortexum - Teal")]
+    CactoidaCortexumTeal,
     #[serde(rename = "$Codex_Ent_Cactoid_01_L_Name;")]
     #[strum(to_string = "Cactoida Cortexum - Mauve")]
     CactoidaCortexumMauve,
@@ -618,6 +603,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Cactoid_02_L_Name;")]
     #[strum(to_string = "Cactoida Lapis - Mauve")]
     CactoidaLapisMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_02_M_Name;")]
+    #[strum(to_string = "Cactoida Lapis - Amethyst")]
+    CactoidaLapisAmethyst,
     #[serde(rename = "$Codex_Ent_Cactoid_02_T_Name;")]
     #[strum(to_string = "Cactoida Lapis - Orange")]
     CactoidaLapisOrange,
@@ -627,9 +615,18 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Cactoid_03_L_Name;")]
     #[strum(to_string = "Cactoida Vermis - Mauve")]
     CactoidaVermisMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_04_A_Name;")]
+    #[strum(to_string = "Cactoida Pullulanta - Green")]
+    CactoidaPullulantaGreen,
     #[serde(rename = "$Codex_Ent_Cactoid_04_F_Name;")]
     #[strum(to_string = "Cactoida Pullulanta - Yellow")]
     CactoidaPullulantaYellow,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_A_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Green")]
+    CactoidaPeperatisGreen,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_F_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Yellow")]
+    CactoidaPeperatisYellow,
     #[serde(rename = "$Codex_Ent_Cactoid_05_G_Name;")]
     #[strum(to_string = "Cactoida Peperatis - Teal")]
     CactoidaPeperatisTeal,
@@ -639,6 +636,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_Cactoid_05_M_Name;")]
     #[strum(to_string = "Cactoida Peperatis - Amethyst")]
     CactoidaPeperatisAmethyst,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_N_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Sage")]
+    CactoidaPeperatisSage,
+    #[serde(rename = "$Codex_Ent_Cactoid_05_T_Name;")]
+    #[strum(to_string = "Cactoida Peperatis - Orange")]
+    CactoidaPeperatisOrange,
     // Conchas
     #[serde(rename = "$Codex_Ent_Conchas_02_A_Name;")]
     #[strum(to_string = "Concha Aureolas - Teal")]
