@@ -233,12 +233,12 @@ pub struct EDLogCarrierDockingPermission {
     "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
 pub struct EDLogCarrierLocation {
     #[serde(rename = "CarrierID")]
-    carrier_id: u64,
-    carrier_type: Option<CarrierType>,
-    star_system: EDString,
-    system_address: u64,
+    pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
+    pub star_system: EDString,
+    pub system_address: u64,
     #[serde(rename = "BodyID")]
-    body_id: u64,
+    pub body_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
