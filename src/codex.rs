@@ -46,6 +46,15 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_CJ_TypeGiant_Name;")]
     #[strum(to_string = "CJ Type Giant")]
     CJTypeGiant,
+    #[serde(rename = "$Codex_Ent_CS_TypeGiant_Name;")]
+    #[strum(to_string = "CS Type Giant")]
+    CSTypeGiant,
+    #[serde(rename = "$Codex_Ent_CH_TypeGiant_Name;")]
+    #[strum(to_string = "CH Type Giant")]
+    CHTypeGiant,
+    #[serde(rename = "$Codex_Ent_CHD_TypeGiant_Name;")]
+    #[strum(to_string = "CHD Type Giant")]
+    CHDTypeGiant,
     #[serde(rename = "$Codex_Ent_D_Type_Name;")]
     #[strum(to_string = "D Type Star")]
     DTypeStar,
@@ -55,6 +64,12 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_DAB_Type_Name;")]
     #[strum(to_string = "DAB Type Star")]
     DABTypeStar,
+    #[serde(rename = "$Codex_Ent_DAO_Type_Name;")]
+    #[strum(to_string = "DAO Type Star")]
+    DAOTypeStar,
+    #[serde(rename = "$Codex_Ent_DAV_Type_Name;")]
+    #[strum(to_string = "DAV Type Star")]
+    DAVTypeStar,
     #[serde(rename = "$Codex_Ent_DAZ_Type_Name;")]
     #[strum(to_string = "DAZ Type Star")]
     DAZTypeStar,
@@ -64,6 +79,15 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_DBV_Type_Name;")]
     #[strum(to_string = "DBV Type Star")]
     DBVTypeStar,
+    #[serde(rename = "$Codex_Ent_DBZ_Type_Name;")]
+    #[strum(to_string = "DBZ Type Star")]
+    DBZTypeStar,
+    #[serde(rename = "$Codex_Ent_DO_Type_Name;")]
+    #[strum(to_string = "DO Type Star")]
+    DOTypeStar,
+    #[serde(rename = "$Codex_Ent_DOVType_Name;")]
+    #[strum(to_string = "DOVType Star")]
+    DOVTypeStar,
     #[serde(rename = "$Codex_Ent_DC_Type_Name;")]
     #[strum(to_string = "DC Type Star")]
     DCTypeStar,
@@ -73,6 +97,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_DQ_Type_Name;")]
     #[strum(to_string = "DQ Type Star")]
     DQTypeStar,
+    #[serde(rename = "$Codex_Ent_DX_Type_Name;")]
+    #[strum(to_string = "DX Type Star")]
+    DXTypeStar,
     #[serde(rename = "$Codex_Ent_F_TypeGiant_Name;")]
     #[strum(to_string = "F Type Giant")]
     FTypeGiant,
@@ -124,6 +151,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_WN_Type_Name;")]
     #[strum(to_string = "WN Type Star")]
     WNTypeStar,
+    #[serde(rename = "$Codex_Ent_WNC_Type_Name;")]
+    #[strum(to_string = "WNC Type Star")]
+    WNCTypeStar,
     #[serde(rename = "$Codex_Ent_WO_Type_Name;")]
     #[strum(to_string = "WO Type Star")]
     WOTypeStar,
@@ -748,12 +778,15 @@ pub enum CodexNames {
     #[strum(to_string = "Electricae Radialem - Magenta")]
     ElectricaeRadialemMagenta,
     // Fonticulus
-    #[serde(rename = "$Codex_Ent_Fonticulus_02_N_Name;")]
-    #[strum(to_string = "Fonticulua Campestris - Sage")]
-    FonticuluaCampestrisSage,
     #[serde(rename = "$Codex_Ent_Fonticulus_01_K_Name;")]
     #[strum(to_string = "Fonticulua Segmentatus - Emerald")]
     FonticuluaSegmentatusEmerald,
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_D_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Turquoise")]
+    FonticuluaCampestrisTurquoise,
+    #[serde(rename = "$Codex_Ent_Fonticulus_02_N_Name;")]
+    #[strum(to_string = "Fonticulua Campestris - Sage")]
+    FonticuluaCampestrisSage,
     #[serde(rename = "$Codex_Ent_Fonticulus_03_M_Name;")]
     #[strum(to_string = "Fonticulua Upupam - Amethyst")]
     FonticuluaUpupamAmethyst,
