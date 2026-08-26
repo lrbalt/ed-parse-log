@@ -1,10 +1,21 @@
 use crate::EDString;
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
-use strum::Display;
+use strum::{Display, EnumIter};
 
 #[derive(
-    Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq, Ord, PartialOrd,
+    Serialize,
+    Deserialize,
+    Clone,
+    Debug,
+    Copy,
+    Display,
+    Hash,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    EnumIter,
 )]
 pub enum CodexNames {
     //
@@ -86,7 +97,7 @@ pub enum CodexNames {
     #[strum(to_string = "DO Type Star")]
     DOTypeStar,
     #[serde(rename = "$Codex_Ent_DOVType_Name;")]
-    #[strum(to_string = "DOVType Star")]
+    #[strum(to_string = "DOV Type Star")]
     DOVTypeStar,
     #[serde(rename = "$Codex_Ent_DC_Type_Name;")]
     #[strum(to_string = "DC Type Star")]
@@ -1116,6 +1127,9 @@ pub enum CodexNames {
     #[serde(rename = "$Codex_Ent_SphereEFGH_Name;")]
     #[strum(to_string = "Blatteum Bioluminescent Anemone")]
     BlatteumBioluminescentAnemone,
+    #[serde(rename = "$Codex_Ent_SphereEFGH_02_Name;")]
+    #[strum(to_string = "Prasinum Bioluminescent Anemone")]
+    PrasinumBioluminescentAnemone,
     // Stratum
     #[serde(rename = "$Codex_Ent_Stratum_03_K_Name;")]
     #[strum(to_string = "Stratum Laminamus - Lime")]
@@ -1422,7 +1436,18 @@ pub enum CodexNames {
 }
 
 #[derive(
-    Serialize, Deserialize, Clone, Debug, Copy, Display, Hash, Eq, PartialEq, Ord, PartialOrd,
+    Serialize,
+    Deserialize,
+    Clone,
+    Debug,
+    Copy,
+    Display,
+    Hash,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    EnumIter,
 )]
 pub enum CodexSubCategory {
     #[serde(rename = "$Codex_SubCategory_Stars;")]
@@ -1449,7 +1474,18 @@ pub enum CodexSubCategory {
 }
 
 #[derive(
-    Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, Hash, PartialEq, Ord, PartialOrd,
+    Serialize,
+    Deserialize,
+    Clone,
+    Debug,
+    Copy,
+    Display,
+    Eq,
+    Hash,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    EnumIter,
 )]
 pub enum CodexCategory {
     #[serde(rename = "$Codex_Category_StellarBodies;")]
@@ -1464,7 +1500,18 @@ pub enum CodexCategory {
 }
 
 #[derive(
-    Serialize, Deserialize, Clone, Debug, Copy, Display, Eq, PartialEq, Hash, Ord, PartialOrd,
+    Serialize,
+    Deserialize,
+    Clone,
+    Debug,
+    Copy,
+    Display,
+    Eq,
+    PartialEq,
+    Hash,
+    Ord,
+    PartialOrd,
+    EnumIter,
 )]
 pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_1;")]
