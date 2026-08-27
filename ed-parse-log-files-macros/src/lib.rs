@@ -91,3 +91,86 @@ pub fn extractable_derive(input: TokenStream) -> TokenStream {
     };
     generated.into()
 }
+
+#[proc_macro_derive(CodexCategorize, attributes(CodexCategory))]
+pub fn codex_categorize_derive(input: TokenStream) -> TokenStream {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let ty_name = &ast.ident;
+
+    let variants = match &ast.data {
+        syn::Data::Enum(data) => &data.variants,
+        _ => {
+            return syn::Error::new_spanned(
+                &ast.ident,
+                "CodexCategorize can only be derived for enums",
+            )
+            .to_compile_error()
+            .into();
+        }
+    };
+
+    let parsed = variants.iter().map(|variant| {
+        let mut category = None;
+        let mut sub_category = None;
+
+        let attr = variant
+            .attrs
+            .iter()
+            .find(|attr| attr.path().is_ident("CodexCategory"))
+            .ok_or_else(|| {
+                syn::Error::new_spanned(
+                    variant,
+                    "each variant needs #[CodexCategory(category = ..., sub_category = ...)]",
+                )
+            })?;
+
+        attr.parse_nested_meta(|meta| {
+            if meta.path.is_ident("category") {
+                category = Some(meta.value()?.parse::<syn::Expr>()?);
+                Ok(())
+            } else if meta.path.is_ident("sub_category") {
+                sub_category = Some(meta.value()?.parse::<syn::Expr>()?);
+                Ok(())
+            } else {
+                Err(meta.error("expected `category` or `sub_category`"))
+            }
+        })?;
+
+        Ok::<_, syn::Error>((
+            &variant.ident,
+            category.ok_or_else(|| syn::Error::new_spanned(variant, "missing `category`"))?,
+            sub_category
+                .ok_or_else(|| syn::Error::new_spanned(variant, "missing `sub_category`"))?,
+        ))
+    });
+
+    let parsed = match parsed.collect::<Result<Vec<_>, _>>() {
+        Ok(parsed) => parsed,
+        Err(err) => return err.to_compile_error().into(),
+    };
+
+    let category_arms = parsed.iter().map(|(name, category, _)| {
+        quote! { Self::#name => #category, }
+    });
+
+    let sub_category_arms = parsed.iter().map(|(name, _, sub_category)| {
+        quote! { Self::#name => #sub_category, }
+    });
+
+    quote! {
+        impl #ty_name {
+            pub fn category(&self) -> CodexCategory {
+                match self {
+                    #(#category_arms)*
+                }
+            }
+
+            pub fn sub_category(&self) -> CodexSubCategory {
+                match self {
+                    #(#sub_category_arms)*
+                }
+            }
+        }
+    }
+    .into()
+}
