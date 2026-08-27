@@ -1,6 +1,8 @@
-use crate::{EDString, common_types::Merits, utils::duration_as_secs};
-use chrono::Duration;
-use ed_parse_log_files_macros::Extractable;
+use crate::{
+    EDString,
+    common_types::{Merits, Power},
+};
+use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
 pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
@@ -16,25 +18,17 @@ pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogPowerplay {
-    pub power: EDString,
-    pub rank: u64,
-    pub merits: Merits,
-    pub votes: Option<u64>,
-    #[serde(with = "duration_as_secs")]
-    pub time_pledged: Duration,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-01-16T18:30:30Z", "event":"PowerplayJoin", "Power":"Jerome Archer" })]
 pub struct EDLogPowerplayJoin {
-    power: EDString,
+    power: Power,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-03-23T14:29:05Z", "event":"PowerplayCollect", "Power":"Jerome Archer", 
+    "Type":"republicanfieldsupplies", "Type_Localised":"Archer's Field Supplies", "Count":16 })]
 pub struct EDLogPowerplayCollect {
-    power: EDString,
+    power: Power,
     #[serde(rename = "Type")]
     power_type: EDString,
     #[serde(rename = "Type_Localised")]
@@ -44,8 +38,10 @@ pub struct EDLogPowerplayCollect {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-04-15T18:12:47Z", "event":"PowerplayDeliver", "Power":"Jerome Archer", 
+    "Type":"poweremployeedata", "Type_Localised":"Power Association Data", "Count":3 })]
 pub struct EDLogPowerplayDeliver {
-    power: EDString,
+    power: Power,
     #[serde(rename = "Type")]
     power_type: EDString,
     #[serde(rename = "Type_Localised")]
@@ -55,48 +51,52 @@ pub struct EDLogPowerplayDeliver {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-08-09T13:16:28Z", "event":"PowerplayMerits", "Power":"Jerome Archer", "MeritsGained":345, "TotalMerits":1231231 })]
 pub struct EDLogPowerplayMerits {
-    pub power: EDString,
+    pub power: Power,
     pub merits_gained: Merits,
     pub total_merits: Merits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-02-09T17:53:18Z", "event":"PowerplayFastTrack", "Power":"Aisling Duval", "Cost":150000 })]
 pub struct EDLogPowerplayFastTrack {
-    power: EDString,
+    power: Power,
     cost: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayDefect {
-    from_power: EDString,
-    to_power: EDString,
+    from_power: Power,
+    to_power: Power,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayLeave {
-    power: EDString,
+    power: Power,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayRank {
-    pub power: EDString,
+    pub power: Power,
     pub rank: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-10-17T17:53:31Z", "event":"PowerplaySalary", "Power":"Aisling Duval", "Amount":1000 })]
 pub struct EDLogPowerplaySalary {
-    power: EDString,
+    power: Power,
     amount: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-27T20:19:04Z", "event":"HoloscreenHacked", "PowerBefore":"Edmund Mahon", "PowerAfter":"Jerome Archer" })]
 pub struct EDLogHoloscreenHacked {
     power_before: Option<EDString>,
     power_after: EDString,

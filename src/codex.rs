@@ -1716,38 +1716,14 @@ pub enum CodexNames {
     #[strum(to_string = "Tussock Catena - Green")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     TussockCatenaGreen,
-    #[serde(rename = "$Codex_Ent_Tussocks_07_F_Name;")]
-    #[strum(to_string = "Tussock Serrati - Yellow")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockSerratiYellow,
-    #[serde(rename = "$Codex_Ent_Tussocks_13_F_Name;")]
-    #[strum(to_string = "Tussock Stigmasis - Yellow")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockStigmasisYellow,
-    #[serde(rename = "$Codex_Ent_Tussocks_14_M_Name;")]
-    #[strum(to_string = "Tussock Virgam - Emerald")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockVirgamEmerald,
-    #[serde(rename = "$Codex_Ent_Tussocks_15_F_Name;")]
-    #[strum(to_string = "Tussock Capillum - Yellow")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockCapillumYellow,
-    #[serde(rename = "$Codex_Ent_Tussocks_10_T_Name;")]
-    #[strum(to_string = "Tussock Divisa - Teal")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockDivisaTeal,
     #[serde(rename = "$Codex_Ent_Tussocks_06_K_Name;")]
     #[strum(to_string = "Tussock Pennatis - Green")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     TussockPennatisGreen,
-    #[serde(rename = "$Codex_Ent_Tussocks_14_K_Name;")]
-    #[strum(to_string = "Tussock Virgam - Green")]
+    #[serde(rename = "$Codex_Ent_Tussocks_07_F_Name;")]
+    #[strum(to_string = "Tussock Serrati - Yellow")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockVirgamGreen,
-    #[serde(rename = "$Codex_Ent_Tussocks_14_L_Name;")]
-    #[strum(to_string = "Tussock Virgam - Sage")]
-    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
-    TussockVirgamSage,
+    TussockSerratiYellow,
     #[serde(rename = "$Codex_Ent_Tussocks_02_F_Name;")]
     #[strum(to_string = "Tussock Ventusa - Yellow")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
@@ -1808,6 +1784,34 @@ pub enum CodexNames {
     #[strum(to_string = "Tussock Divisa - Emerald")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     TussockDivisaEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_10_T_Name;")]
+    #[strum(to_string = "Tussock Divisa - Teal")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockDivisaTeal,
+    #[serde(rename = "$Codex_Ent_Tussocks_10_G_Name;")]
+    #[strum(to_string = "Tussock Divisa - Lime")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockDivisaLime,
+    #[serde(rename = "$Codex_Ent_Tussocks_13_F_Name;")]
+    #[strum(to_string = "Tussock Stigmasis - Yellow")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockStigmasisYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_14_M_Name;")]
+    #[strum(to_string = "Tussock Virgam - Emerald")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockVirgamEmerald,
+    #[serde(rename = "$Codex_Ent_Tussocks_15_F_Name;")]
+    #[strum(to_string = "Tussock Capillum - Yellow")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockCapillumYellow,
+    #[serde(rename = "$Codex_Ent_Tussocks_14_K_Name;")]
+    #[strum(to_string = "Tussock Virgam - Green")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockVirgamGreen,
+    #[serde(rename = "$Codex_Ent_Tussocks_14_L_Name;")]
+    #[strum(to_string = "Tussock Virgam - Sage")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockVirgamSage,
     #[serde(rename = "$Codex_Ent_Tussocks_11_G_Name;")]
     #[strum(to_string = "Tussock Caputus - Lime")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]

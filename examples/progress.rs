@@ -1,13 +1,16 @@
 use chrono::{DateTime, Duration, Utc};
 use ed_parse_log_files::{
     commander::{
-        COMBAT_RANK, CQCRank, CombatRank, EDLogRank, EDLogReputation, EMPIRE_RANK,
-        EXOBIOLOGIST_RANK, EXPLORE_RANK, EmpireRank, ExobiologistRank, ExploreRank,
-        FEDERATION_RANK, FederationRank, SOLDIER_RANK, SoldierRank, TRADE_RANK, TradeRank,
+        COMBAT_RANK, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK,
+        TRADE_RANK,
     },
     common_types::{Credits, Merits},
     log_line::{EDLogEvent, EDLogLine},
-    powerplay::{EDLogPowerplay, power_play_rank_range},
+    powerplay::power_play_rank_range,
+    startup::{
+        CQCRank, CombatRank, EDLogPowerplay, EDLogRank, EDLogReputation, EmpireRank,
+        ExobiologistRank, ExploreRank, FederationRank, SoldierRank, TradeRank,
+    },
 };
 use prettytable::{Table, cell, row};
 use rayon::prelude::*;
@@ -232,6 +235,17 @@ pub struct Reputation {
 
 impl From<&EDLogReputation> for Reputation {
     fn from(value: &EDLogReputation) -> Self {
+        Reputation {
+            federation: value.federation.unwrap_or(0.0),
+            empire: value.empire.unwrap_or(0.0),
+            independent: value.independent.unwrap_or(0.0),
+            alliance: value.alliance.unwrap_or(0.0),
+        }
+    }
+}
+
+impl From<&Box<EDLogReputation>> for Reputation {
+    fn from(value: &Box<EDLogReputation>) -> Self {
         Reputation {
             federation: value.federation.unwrap_or(0.0),
             empire: value.empire.unwrap_or(0.0),

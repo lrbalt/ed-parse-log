@@ -1,13 +1,13 @@
 use ed_parse_log_files::{
     common_types::StationType,
-    docking::{EDLogDocked, EDLogTechnologyBroker},
+    docking::EDLogTechnologyBroker,
     fleet_carrier::EDLogFCMaterials,
-    location::EDLogLocation,
     log_line::{EDLogEvent, EDLogLine},
     market::{EDLogColonisationConstructionDepot, EDLogMarket},
     modules::EDLogStoredModules,
     navigation::EDLogApproachSettlement,
     shipyard::EDLogStoredShips,
+    travel::{EDLogDocked, EDLogLocation},
 };
 use numfmt::{Formatter, Precision, Scales};
 use prettytable::{Table, cell, format, row};

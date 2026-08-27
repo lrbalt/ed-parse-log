@@ -1,10 +1,11 @@
 use crate::{
     EDString,
-    common_types::{Credits, EngineerModification, MercCoins},
+    common_types::{Credits, EngineerModification, MercCoins, ModuleEngineeringModifiers},
+    engineers::{Engineer, EngineeringBlueprint, EngineeringExperimentalEffect},
     ship_module::{ShipModule, ShipModuleSlot, serde_ship_module},
     ship_type::ShipType,
 };
-use ed_parse_log_files_macros::{Extractable, testcase};
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -264,6 +265,42 @@ pub struct EDLogFetchRemoteModule {
     pub ship: ShipType,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"Engineer":"Zacariah Nemo", "EngineerID":300050, "BlueprintID":128673459, "BlueprintName":"Weapon_Overcharged", 
+    "Level":5, "Quality":1.000000, "ExperimentalEffect":"special_drag_munitions", "ExperimentalEffect_Localised":"Drag Munitions", "Modifiers":[]})]
+pub struct ModuleEngineering {
+    pub engineer: Option<Engineer>,
+    #[serde(rename = "EngineerID")]
+    pub engineer_id: u64,
+    #[serde(rename = "BlueprintID")]
+    pub blueprint_id: u64,
+    pub blueprint_name: EngineeringBlueprint,
+    pub level: u64,
+    pub quality: f64,
+    pub experimental_effect: Option<EngineeringExperimentalEffect>,
+    #[serde(rename = "ExperimentalEffect_Localised")]
+    pub experimental_effect_localised: Option<EDString>,
+    pub modifiers: Vec<ModuleEngineeringModifiers>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Slot":"LargeHardpoint1", "Item":"hpt_slugshot_fixed_large_range", "On":true, "Priority":0, "AmmoInClip":3, "AmmoInHopper":180, "Health":1.000000, "Value":1536538})]
+pub struct Module {
+    pub slot: ShipModuleSlot,
+    #[serde(with = "serde_ship_module")]
+    pub item: ShipModule,
+    pub on: bool,
+    pub priority: u64,
+    pub health: f64,
+    pub value: Option<Credits>,
+    // For a passenger cabin, AmmoInClip holds the number of places in the cabin
+    pub ammo_in_clip: Option<u64>,
+    pub ammo_in_hopper: Option<u64>,
+    pub engineering: Option<ModuleEngineering>,
 }
 
 #[test]

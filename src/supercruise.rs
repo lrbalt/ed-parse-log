@@ -1,4 +1,4 @@
-use crate::{EDString, common_types::BodyType};
+use crate::EDString;
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 
@@ -13,26 +13,4 @@ pub struct EDLogSupercruiseDestinationDrop {
     pub threat: u64,
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSupercruiseExit {
-    pub taxi: Option<bool>,
-    pub multicrew: Option<bool>,
-    pub star_system: EDString,
-    pub system_address: Option<u64>,
-    pub body: EDString,
-    #[serde(rename = "BodyID")]
-    pub body_id: Option<u64>,
-    pub body_type: BodyType,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSupercruiseEntry {
-    pub taxi: Option<bool>,
-    pub multicrew: Option<bool>,
-    pub star_system: EDString,
-    pub system_address: Option<u64>,
 }

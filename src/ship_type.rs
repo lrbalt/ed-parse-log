@@ -125,6 +125,17 @@ pub enum ShipType {
     PythonNX,
     #[serde(alias = "SideWinder")]
     Sidewinder,
+    #[serde(alias = "Skimmer")]
+    Skimmer,
+    #[serde(alias = "skimmerdrone")]
+    #[strum(to_string = "Sentry Skimmer")]
+    SkimmerDrone,
+    #[serde(alias = "bombskimmerdrone")]
+    #[strum(to_string = "Stinger")]
+    BombSkimmerDrone,
+    #[serde(alias = "missileskimmer")]
+    #[strum(to_string = "Warden")]
+    MissileSkimmer,
     #[strum(to_string = "Kestrel Mk II")]
     #[serde(alias = "smallcombat01_nx", alias = "SmallCombat01_NX")]
     SmallCombat01NX,
@@ -172,10 +183,34 @@ pub enum ShipType {
     VultureTaxi,
     #[strum(to_string = "SRV Scorpion")]
     #[serde(rename = "Combat_Multicrew_SRV_01")]
+    #[serde(alias = "combat_multicrew_srv_01")]
     SRVScorpion,
     #[strum(to_string = "SRV Scarab")]
     #[serde(rename = "TestBuggy")]
+    #[serde(alias = "testbuggy")]
     SRVScarab,
+
+    #[serde(alias = "unknownsaucer")]
+    UnknownSaucer,
+    #[serde(alias = "unknownsaucer_e")]
+    UnknownSaucerE,
+    #[serde(alias = "unknownsaucer_f")]
+    UnknownSaucerF,
+    #[serde(alias = "unknownsaucer_h")]
+    UnknownSaucerH,
+    #[serde(alias = "scout_nq")]
+    ThargoidScoutNQ,
+    #[serde(alias = "scout_hq")]
+    ThargoidScoutHQ,
+    #[serde(alias = "scout_q")]
+    ThargoidScoutQ,
+    #[serde(alias = "scout")]
+    ThargoidScout,
+    #[serde(alias = "thargonswarm")]
+    ThargonSwarm,
+    #[serde(alias = "glaive")]
+    Glaive,
+
     #[strum(to_string = "Flight Suit")]
     #[serde(rename = "FlightSuit")]
     FlightSuit,
@@ -224,4 +259,89 @@ pub enum ShipType {
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class5")]
     TacticalSuitClass5,
+
+    #[serde(rename = "assaultsuitai_class1")]
+    #[strum(to_string = "Commando")]
+    AIAssaultSuitClass1,
+    #[serde(rename = "assaultsuitai_class2")]
+    #[strum(to_string = "Commando")]
+    AIAssaultSuitClass2,
+    #[serde(rename = "assaultsuitai_class3")]
+    #[strum(to_string = "Commando")]
+    AIAssaultSuitClass3,
+    #[serde(rename = "assaultsuitai_class4")]
+    #[strum(to_string = "Commando")]
+    AIAssaultSuitClass4,
+    #[serde(rename = "assaultsuitai_class5")]
+    #[strum(to_string = "Commando")]
+    AIAssaultSuitClass5,
+    #[serde(rename = "rangedsuitai_class1")]
+    #[strum(to_string = "Sharpshooter")]
+    AIRangedSuitClass1,
+    #[serde(rename = "rangedsuitai_class2")]
+    #[strum(to_string = "Sharpshooter")]
+    AIRangedSuitClass2,
+    #[serde(rename = "rangedsuitai_class3")]
+    #[strum(to_string = "Sharpshooter")]
+    AIRangedSuitClass3,
+    #[serde(rename = "rangedsuitai_class4")]
+    #[strum(to_string = "Sharpshooter")]
+    AIRangedSuitClass4,
+    #[serde(rename = "rangedsuitai_class5")]
+    #[strum(to_string = "Sharpshooter")]
+    AIRangedSuitClass5,
+    #[serde(rename = "lightassaultsuitai_class1")]
+    #[strum(to_string = "Scout")]
+    AILightAssaultSuitClass1,
+    #[serde(rename = "lightassaultsuitai_class2")]
+    #[strum(to_string = "Scout")]
+    AILightAssaultSuitClass2,
+    #[serde(rename = "lightassaultsuitai_class3")]
+    #[strum(to_string = "Scout")]
+    AILightAssaultSuitClass3,
+    #[serde(rename = "lightassaultsuitai_class4")]
+    #[strum(to_string = "Scout")]
+    AILightAssaultSuitClass4,
+    #[serde(rename = "lightassaultsuitai_class5")]
+    #[strum(to_string = "Scout")]
+    AILightAssaultSuitClass5,
+    #[serde(rename = "closesuitai_class1")]
+    #[strum(to_string = "Striker")]
+    AICloseSuitClass1,
+    #[serde(rename = "closesuitai_class2")]
+    #[strum(to_string = "Striker")]
+    AICloseSuitClass2,
+    #[serde(rename = "closesuitai_class3")]
+    #[strum(to_string = "Striker")]
+    AICloseSuitClass3,
+    #[serde(rename = "closesuitai_class4")]
+    #[strum(to_string = "Striker")]
+    AICloseSuitClass4,
+    #[serde(rename = "closesuitai_class5")]
+    #[strum(to_string = "Striker")]
+    AICloseSuitClass5,
+    #[serde(rename = "heavysuitai_class1")]
+    #[strum(to_string = "Enforcer")]
+    AIHeavySuitClass1,
+    #[serde(rename = "heavysuitai_class2")]
+    #[strum(to_string = "Enforcer")]
+    AIHeavySuitClass2,
+    #[serde(rename = "heavysuitai_class3")]
+    #[strum(to_string = "Enforcer")]
+    AIHeavySuitClass3,
+    #[serde(rename = "heavysuitai_class4")]
+    #[strum(to_string = "Enforcer")]
+    AIHeavySuitClass4,
+    #[serde(rename = "heavysuitai_class5")]
+    #[strum(to_string = "Enforcer")]
+    AIHeavySuitClass5,
+    #[serde(rename = "citizensuitai_admin")]
+    #[strum(to_string = "Administrator")]
+    AICitizenSuitAdmin,
+    #[serde(rename = "citizensuitai_scientific")]
+    #[strum(to_string = "Researcher")]
+    AICitizenSuitScientific,
+    #[serde(rename = "citizensuitai_industrial")]
+    #[strum(to_string = "Technician")]
+    AICitizenSuitIndustrial,
 }

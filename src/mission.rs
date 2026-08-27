@@ -1,5 +1,6 @@
-use crate::{EDString, common_types::Credits};
-use ed_parse_log_files_macros::{Extractable, testcase};
+use crate::{EDString, common_types::Credits, utils::duration_as_secs};
+use chrono::Duration;
+use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -11,15 +12,9 @@ pub struct Mission {
     #[serde(rename = "Name_Localised")]
     name_localised: Option<EDString>,
     passenger_mission: bool,
-    expires: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogMissions {
-    active: Vec<Mission>,
-    failed: Vec<Mission>,
-    complete: Vec<Mission>,
+    // time left in seconds
+    #[serde(with = "duration_as_secs")]
+    expires: Duration,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -236,6 +231,7 @@ pub struct EDLogSearchAndRescue {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Faction":"Imperial Grey Wolves", "Reward":50160 })]
 pub struct BountyReward {
     pub faction: EDString,
     pub reward: Credits,
@@ -243,27 +239,11 @@ pub struct BountyReward {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"PilotName":"$npc_name_decorate:#name=Florian Poprat;", "PilotName_Localised":"Florian Poprat"})]
 pub struct BountyPilot {
     pilot_name: EDString,
     #[serde(rename = "PilotName_Localised")]
     pilot_name_localised: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogBounty {
-    pub rewards: Option<Vec<BountyReward>>,
-    pub reward: Option<f64>,
-    #[serde(flatten)]
-    pub pilot: Option<BountyPilot>,
-    pub target: EDString,
-    #[serde(rename = "Target_Localised")]
-    pub target_localised: Option<EDString>,
-    pub total_reward: Option<Credits>,
-    pub victim_faction: EDString,
-    #[serde(rename = "VictimFaction_Localised")]
-    pub victim_faction_localised: Option<EDString>,
-    pub shared_with_others: Option<u64>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -309,27 +289,6 @@ pub struct EDLogDatalinkVoucher {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCapitalShipBond {
-    reward: Credits,
-    awarding_faction: EDString,
-    victim_faction: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct Passenger {
-    #[serde(rename = "MissionID")]
-    mission_id: u64,
-    #[serde(rename = "Type")]
-    mission_type: EDString, // TODO: use enum
-    wanted: bool,
-    #[serde(rename = "VIP")]
-    vip: bool,
-    count: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-04-04T18:51:10Z", "event":"ScientificResearch", "MarketID":129038712, 
     "Name":"nm_seed", "Name_Localised":"Unica Seed", "Category":"Item", "Count":384 })]
 pub struct EDLogScientificResearch {
@@ -340,31 +299,4 @@ pub struct EDLogScientificResearch {
     pub name_localised: EDString,
     pub category: EDString,
     pub count: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogPassengers {
-    manifest: Vec<Passenger>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogPVPKill {
-    victim: EDString,
-    combat_rank: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2026-01-05T20:04:31Z", "event":"FactionKillBond", "Reward":52500, 
-    "AwardingFaction":"Sirius Inc", "VictimFaction":"Race Marshalls" })]
-pub struct EDLogFactionKillBond {
-    reward: Credits,
-    awarding_faction: EDString,
-    #[serde(rename = "AwardingFaction_Localised")]
-    awarding_faction_localised: Option<EDString>,
-    victim_faction: EDString,
-    #[serde(rename = "VictimFaction_Localised")]
-    victim_faction_localised: Option<EDString>,
 }

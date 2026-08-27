@@ -2,7 +2,7 @@ use crate::{
     EDString,
     common_types::{Credits, MercCoins},
 };
-use ed_parse_log_files_macros::{Extractable, testcase_struct};
+use ed_parse_log_files_macros::testcase_struct;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug)]
@@ -720,33 +720,4 @@ pub struct StatisticsExobiology {
     pub organic_genus: u64,
     #[serde(rename = "Organic_Species")]
     pub organic_species: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogStatistics {
-    #[serde(rename = "Bank_Account")]
-    pub bank_account: StatisticsBankAccount,
-    pub combat: StatisticsCombat,
-    pub crime: StatisticsCrime,
-    pub smuggling: StatisticsSmuggling,
-    pub trading: StatisticsTrading,
-    pub mining: StatisticsMining,
-    pub exploration: StatisticsExploration,
-    pub passengers: StatisticsPassengers,
-    #[serde(rename = "Search_And_Rescue")]
-    pub search_and_rescue: StatisticSearchAndRescue,
-    pub squadron: Option<StatisticsSquadron>,
-    #[serde(rename = "TG_ENCOUNTERS")]
-    pub tg_encounters: Option<StatisticsTgEncounters>,
-    pub crafting: StatisticsCrafting,
-    pub crew: StatisticsCrew,
-    pub multicrew: StatisticsMulticrew,
-    #[serde(rename = "Material_Trader_Stats")]
-    pub material_trader_stats: StatisticsMaterialTraderStats,
-    #[serde(rename = "CQC")]
-    pub cqc_stats: Option<StatisticsCQCStats>,
-    #[serde(rename = "FLEETCARRIER")]
-    pub fleetcarrier: Option<StatisticsFleetcarrier>,
-    pub exobiology: Option<StatisticsExobiology>,
 }

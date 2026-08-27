@@ -3,29 +3,10 @@ use crate::{
     common_types::{Credits, CrimeType, StationType},
     log_line::{EDLogEvent, Extractable},
     market::MicroResource,
+    startup::CombatRank,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(deny_unknown_fields)]
-pub struct EDLogCommander {
-    #[serde(rename = "FID")]
-    fid: EDString,
-    #[serde(rename = "Name")]
-    name: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(deny_unknown_fields)]
-pub struct EDLogNewCommander {
-    #[serde(rename = "FID")]
-    fid: EDString,
-    #[serde(rename = "Name")]
-    name: EDString,
-    #[serde(rename = "Package")]
-    package: EDString,
-}
 
 pub const COMBAT_RANK: [&str; 14] = [
     "Harmless",
@@ -153,30 +134,6 @@ pub const FEDERATION_RANK: [&str; 15] = [
     "Admiral",
 ];
 
-pub type CombatRank = u8;
-pub type TradeRank = u8;
-pub type ExploreRank = u8;
-pub type SoldierRank = u8;
-pub type ExobiologistRank = u8;
-pub type EmpireRank = u8;
-pub type FederationRank = u8;
-pub type CQCRank = u8;
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-09-13T18:29:43Z", "event":"Rank", "Combat":9, "Trade":12, "Explore":9, "Soldier":8, "Exobiologist":8, "Empire":12, "Federation":12, "CQC":0 })]
-pub struct EDLogRank {
-    pub combat: CombatRank,
-    pub trade: TradeRank,
-    pub explore: ExploreRank,
-    pub soldier: Option<SoldierRank>,
-    pub exobiologist: Option<ExobiologistRank>,
-    pub empire: EmpireRank,
-    pub federation: FederationRank,
-    #[serde(rename = "CQC")]
-    pub cqc: CQCRank,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPromotion {
@@ -188,36 +145,6 @@ pub struct EDLogPromotion {
     pub empire: Option<u8>,
     pub federation: Option<u8>,
     pub cqc: Option<u8>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogReputation {
-    pub federation: Option<f64>,
-    pub empire: Option<f64>,
-    pub independent: Option<f64>,
-    pub alliance: Option<f64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct Killer {
-    pub name: EDString,
-    pub ship: EDString,
-    pub rank: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2024-12-16T17:30:36Z", "event":"Died", "KillerName":"$UNKNOWN;", "KillerName_Localised":"Unknown", "KillerShip":"unknownsaucer", "KillerRank":"Elite" })]
-#[testcase({ "timestamp":"2024-03-03T10:57:41Z", "event":"Died", "Killers":[ { "Name":"Cmdr ilovetogank", "Ship":"krait_mkii", "Rank":"Dangerous" }, { "Name":"Cmdr ganker2", "Ship":"cutter", "Rank":"Elite" } ] })]
-pub struct EDLogDied {
-    pub killers: Option<Vec<Killer>>,
-    pub killer_name: Option<EDString>,
-    #[serde(rename = "KillerName_Localised")]
-    pub killer_name_localised: Option<EDString>,
-    pub killer_ship: Option<EDString>,
-    pub killer_rank: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

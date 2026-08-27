@@ -1,10 +1,6 @@
 use crate::{
     EDString,
-    common_types::{
-        Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionState, GovernmentType,
-        Powers, StarClass, StationInformation, SystemEconomy, SystemSecurity, ThargoidWar,
-    },
-    location::SystemFactionName,
+    common_types::{StarClass, StationInformation},
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -14,23 +10,6 @@ use serde::{Deserialize, Serialize};
 pub struct EDLogFuelScoop {
     scooped: f64,
     total: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogLiftoff {
-    player_controlled: bool,
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
-    #[serde(flatten)]
-    start_system_info: Option<BodyInformation>,
-    on_station: Option<bool>,
-    on_planet: Option<bool>,
-    latitude: Option<f64>,
-    longitude: Option<f64>,
-    nearest_destination: Option<EDString>,
-    #[serde(rename = "NearestDestination_Localised")]
-    nearest_destination_localised: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -66,56 +45,6 @@ pub struct EDLogApproachSettlement {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogFSDTarget {
-    pub name: EDString,
-    pub system_address: u64,
-    pub star_class: StarClass,
-    pub remaining_jumps_in_route: Option<u64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-// todo: refactor with location->edloglocation
-pub struct EDLogFSDJump {
-    pub taxi: Option<bool>,
-    pub multicrew: Option<bool>,
-    pub star_system: EDString,
-    pub system_address: u64,
-    pub star_pos: [f64; 3],
-    pub system_allegiance: Allegiance,
-    pub system_economy: SystemEconomy,
-    #[serde(rename = "SystemEconomy_Localised")]
-    pub system_economy_localised: EDString,
-    pub system_second_economy: Option<SystemEconomy>,
-    #[serde(rename = "SystemSecondEconomy_Localised")]
-    pub system_second_economy_localised: Option<EDString>,
-    pub system_government: GovernmentType,
-    #[serde(rename = "SystemGovernment_Localised")]
-    pub system_government_localised: EDString,
-    pub system_security: SystemSecurity,
-    #[serde(rename = "SystemSecurity_Localised")]
-    pub system_security_localised: EDString,
-    pub population: u64,
-    pub body: Option<EDString>,
-    #[serde(rename = "BodyID")]
-    pub body_id: Option<u64>,
-    pub body_type: Option<BodyType>,
-    #[serde(flatten)]
-    pub powerplay: Option<Powers>,
-    pub thargoid_war: Option<ThargoidWar>,
-    pub jump_dist: f64,
-    pub fuel_used: f64,
-    pub fuel_level: f64,
-    pub boost_used: Option<u64>,
-    pub factions: Option<Vec<Faction>>,
-    #[serde(flatten)]
-    pub system_faction_name: Option<SystemFactionName>,
-    pub faction_state: Option<FactionState>,
-    pub conflicts: Option<Vec<Conflict>>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDockSRV {
     #[serde(rename = "SRVType")]
     srvtype: Option<EDString>,
@@ -138,34 +67,6 @@ pub struct EDLogLaunchSRV {
     player_controlled: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSRVDestroyed {
-    #[serde(rename = "ID")]
-    id: u64,
-    #[serde(rename = "SRVType")]
-    srv_type: EDString,
-    #[serde(rename = "SRVType_Localised")]
-    srv_type_localised: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogTouchdown {
-    pub player_controlled: bool,
-    pub taxi: Option<bool>,
-    pub multicrew: Option<bool>,
-    #[serde(flatten)]
-    pub body_information: Option<BodyInformation>,
-    pub on_station: Option<bool>,
-    pub on_planet: Option<bool>,
-    pub latitude: Option<f64>,
-    pub longitude: Option<f64>,
-    pub nearest_destination: Option<EDString>,
-    #[serde(rename = "NearestDestination_Localised")]
-    pub nearest_destination_localised: Option<EDString>,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum JumpType {
     Hyperspace,
@@ -174,19 +75,11 @@ pub enum JumpType {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct JumpToStarsystem {
+pub struct JumpToStarSystem {
     star_system: EDString,
     system_address: u64,
     star_class: StarClass,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogStartJump {
-    jump_type: JumpType,
-    taxi: Option<bool>,
-    #[serde(flatten)]
-    star_system: Option<JumpToStarsystem>,
+    star_pos: Option<[f64; 3]>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

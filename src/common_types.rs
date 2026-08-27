@@ -1,8 +1,10 @@
 use crate::{
     EDString,
-    commander::CombatRank,
     log_line::{EDLogEvent, Extractable},
+    startup::CombatRank,
+    utils::{parse_number_of_days, string_or_struct},
 };
+use chrono::Duration;
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
@@ -963,12 +965,16 @@ pub enum StationService {
     Dock,
     #[serde(alias = "Autodock")]
     Autodock,
+    #[serde(alias = "BlackMarket")]
+    BlackMarket,
     #[serde(alias = "Commodities")]
     Commodities,
     #[serde(alias = "Contacts")]
     Contacts,
     #[serde(alias = "Exploration")]
     Exploration,
+    #[serde(alias = "Initiatives")]
+    Initiatives,
     #[serde(alias = "Missions")]
     Missions,
     #[serde(alias = "Outfitting")]
@@ -981,50 +987,61 @@ pub enum StationService {
     Refuel,
     #[serde(alias = "Repair")]
     Repair,
-    Engineer,
-    #[serde(alias = "MissionsGenerated")]
-    MissionsGenerated,
-    #[serde(alias = "Facilitator")]
-    Facilitator,
-    #[serde(alias = "FlightController")]
-    FlightController,
-    #[serde(alias = "StationOperations")]
-    StationOperations,
-    #[serde(alias = "Powerplay")]
-    Powerplay,
-    #[serde(alias = "SearchAndRescue")]
-    SearchRescue,
-    #[serde(rename = "stationMenu")]
-    StationMenu,
-    Livery,
-    SocialSpace,
-    Bartender,
-    PioneerSupplies,
-    ApexInterstellar,
-    #[serde(alias = "BlackMarket")]
-    BlackMarket,
     #[serde(alias = "Shipyard")]
     Shipyard,
     #[serde(alias = "Tuning")]
     Tuning,
+    #[serde(alias = "Workshop")]
+    Workshop,
+    #[serde(alias = "MissionsGenerated")]
+    MissionsGenerated,
+    #[serde(alias = "Facilitator")]
+    Facilitator,
+    #[serde(alias = "Research")]
+    Research,
+    #[serde(alias = "FlightController")]
+    FlightController,
+    #[serde(alias = "StationOperations")]
+    StationOperations,
+    #[serde(alias = "OnDockMission")]
+    OnDockMission,
+    #[serde(alias = "Powerplay")]
+    Powerplay,
+    #[serde(alias = "SearchAndRescue")]
+    SearchRescue,
+    #[serde(alias = "Engineer")]
+    Engineer,
+    #[serde(alias = "Shop")]
     Shop,
-    VistaGenomics,
-    FrontlineSolutions,
+    #[serde(alias = "CarrierManagement")]
+    CarrierManagement,
+    #[serde(alias = "CarrierFuel")]
+    CarrierFuel,
+    #[serde(alias = "CarrierVendor")]
+    CarrierVendor,
+    #[serde(alias = "Livery")]
+    Livery,
+    #[serde(alias = "ModulePacks")]
+    ModulePacks,
+    #[serde(alias = "VoucherRedemption")]
+    VoucherRedemption,
+    // following found in logs, but not in manual
+    #[serde(rename = "stationMenu")]
+    StationMenu,
     #[serde(rename = "techBroker")]
     TechBroker,
-    CarrierManagement,
-    CarrierFuel,
-    VoucherRedemption,
+    #[serde(rename = "squadronBank")]
+    SquadronBank,
+    SocialSpace,
+    Bartender,
+    PioneerSupplies,
+    ApexInterstellar,
+    VistaGenomics,
+    FrontlineSolutions,
     MaterialTrader,
-    ModulePacks,
-    OnDockMission,
-    CarrierVendor,
     RegisteringColonisation,
     ColonisationContribution,
     Refinery,
-    #[serde(rename = "squadronBank")]
-    SquadronBank,
-    Initiatives,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1080,6 +1097,15 @@ pub enum ThargoidWarState {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct RemainingTime {
+    #[serde(with = "parse_number_of_days")]
+    estimated_remaining_time: Duration,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({"CurrentState": "Thargoid_Recovery","NextStateSuccess": "","NextStateFailure": "Thargoid_Recovery",
+        "SuccessStateReached": false,"WarProgress": 0.000000,"RemainingPorts": 16,"EstimatedRemainingTime": "19 Days"})]
 pub struct ThargoidWar {
     current_state: ThargoidWarState,
     next_state_success: ThargoidWarState,
@@ -1087,7 +1113,8 @@ pub struct ThargoidWar {
     success_state_reached: bool,
     war_progress: f64,
     remaining_ports: u64,
-    estimated_remaining_time: Option<EDString>,
+    #[serde(flatten)]
+    estimated_remaining_time: Option<RemainingTime>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1145,6 +1172,7 @@ pub enum GovernmentType {
     #[serde(alias = "$government_Anarchy;")]
     Anarchy,
     #[serde(alias = "$government_Communism;")]
+    #[strum(to_string = "Communist")]
     Communism,
     #[serde(alias = "$government_Confederacy;")]
     Confederacy,
@@ -1168,8 +1196,10 @@ pub enum GovernmentType {
     #[serde(alias = "$government_Patronage;")]
     Patronage,
     #[serde(alias = "$government_Prison;")]
+    #[strum(to_string = "Detention Centre")]
     Prison,
     #[serde(alias = "$government_PrisonColony;")]
+    #[strum(to_string = "Prison colony")]
     PrisonColony,
     #[serde(alias = "$government_Theocracy;")]
     Theocracy,
@@ -1177,7 +1207,7 @@ pub enum GovernmentType {
     None,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
 pub enum SystemEconomy {
     #[serde(alias = "$economy_Agri;")]
     Agriculture,
@@ -1192,6 +1222,7 @@ pub enum SystemEconomy {
     #[serde(alias = "$economy_Extraction;")]
     Extraction,
     #[serde(alias = "$economy_HighTech;")]
+    #[strum(to_string = "High Tech")]
     HighTech,
     #[serde(alias = "$economy_Industrial;")]
     Industrial,
@@ -1210,21 +1241,41 @@ pub enum SystemEconomy {
     #[serde(alias = "$economy_Tourism;")]
     Tourism,
     #[serde(alias = "$economy_Undefined;")]
+    #[strum(to_string = "Unknown")]
     Undefined,
     #[serde(alias = "$economy_None;")]
     None,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
 pub enum SystemSecurity {
     #[serde(alias = "$SYSTEM_SECURITY_high;")]
+    #[strum(to_string = "High Security")]
     High,
     #[serde(alias = "$SYSTEM_SECURITY_medium;")]
+    #[strum(to_string = "Medium Security")]
     Medium,
     #[serde(alias = "$SYSTEM_SECURITY_low;")]
+    #[strum(to_string = "Low Security")]
     Low,
     #[serde(alias = "$GAlAXY_MAP_INFO_state_anarchy;")]
     Anarchy,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
+pub enum HappinessValue {
+    #[serde(rename = "")]
+    None,
+    #[serde(rename = "$Faction_HappinessBand1;")]
+    Elated,
+    #[serde(rename = "$Faction_HappinessBand2;")]
+    Happy,
+    #[serde(rename = "$Faction_HappinessBand3;")]
+    Discontented,
+    #[serde(rename = "$Faction_HappinessBand4;")]
+    Unhappy,
+    #[serde(rename = "$Faction_HappinessBand5;")]
+    Despondent,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1237,16 +1288,18 @@ pub struct Faction {
     pub name: EDString,
     pub faction_state: FactionState,
     pub government: GovernmentType,
-    pub influence: f64,
     pub allegiance: EDString,
-    pub happiness: Option<EDString>,
+    pub influence: f64,
+    pub happiness: Option<HappinessValue>,
     #[serde(rename = "Happiness_Localised")]
     pub happiness_localised: Option<EDString>,
-    pub squadron_faction: Option<bool>,
     pub my_reputation: Option<f64>,
+    pub pending_states: Option<Vec<FactionPendingState>>,
     pub recovering_states: Option<Vec<FactionRecoveringState>>,
     pub active_states: Option<Vec<FactionActiveState>>,
-    pub pending_states: Option<Vec<FactionPendingState>>,
+    pub squadron_faction: Option<bool>,
+    pub happiest_system: Option<bool>,
+    pub home_system: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1412,6 +1465,43 @@ pub struct EDLogNpcCrewPaidWage {
     npc_crew_name: EDString,
     npc_crew_id: u64,
     amount: Credits,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FuelCapacity {
+    pub main: f64,
+    pub reserve: f64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct RawMaterial {
+    name: EDString,
+    count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Name":"decodedemissiondata", "Count":9 })]
+pub struct NonRawMaterial {
+    name: EDString,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<EDString>,
+    count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(deny_unknown_fields)]
+pub struct Trend {
+    trend: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct SystemFactionName {
+    #[serde(deserialize_with = "string_or_struct")]
+    pub system_faction: FactionName,
 }
 
 #[test]

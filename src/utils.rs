@@ -28,6 +28,50 @@ pub mod duration_as_secs {
     }
 }
 
+pub mod parse_number_of_days {
+    use chrono::Duration;
+    use serde::{self, Deserialize, Deserializer, Serializer, de::Error};
+
+    pub fn serialize<S>(duration: &Duration, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let days = duration.num_days();
+        serializer.serialize_str(&format!("{days} Days"))
+    }
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Duration, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let to_string = String::deserialize(deserializer)?;
+        let parts = to_string.split(' ').collect::<Vec<_>>();
+
+        if parts.len() != 2 {
+            return Err(D::Error::custom(format!(
+                "Expect format 'xx Days', but found more than 2 parts in '{to_string}'"
+            )));
+        }
+
+        if parts[1] != "Days" {
+            return Err(D::Error::custom(format!(
+                "Expect format 'xx Days', but part 2 is not Days in '{to_string}'"
+            )));
+        }
+
+        if let Ok(days) = parts[0].parse()
+            && let Some(duration) = Duration::try_days(days)
+        {
+            Ok(duration)
+        } else {
+            Err(D::Error::custom(format!(
+                "Cannot parse duration from days in '{}'",
+                parts[0],
+            )))
+        }
+    }
+}
+
 pub fn string_or_struct<'de, T, D>(deserializer: D) -> Result<T, D::Error>
 where
     T: Deserialize<'de> + FromStr<Err = ()>,

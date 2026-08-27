@@ -1,10 +1,6 @@
 use crate::{
     EDString,
-    common_types::{
-        Allegiance, Credits, FactionName, MaterialCategory, MercCoins, StationEconomy,
-        StationService, StationType, TechBrokerType, TraderType,
-    },
-    utils::string_or_struct,
+    common_types::{Credits, MaterialCategory, MercCoins, StationType, TechBrokerType, TraderType},
 };
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
@@ -59,106 +55,32 @@ pub struct StationIdentification {
     pub station_type: Option<StationType>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingRequested {
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-    pub landing_pads: Option<LandingPads>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingCancelled {
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingGranted {
-    pub landing_pad: u64,
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum DockingDeniedReason {
+    NoSpace,
+    TooLarge,
+    Hostile,
+    Offences,
     Distance,
+    ActiveFighter,
+    NoReason,
+    // following found in logs, but not in manual
     DockOffline,
     #[serde(rename = "DockingUnavliable")]
     DockingUnavailable,
-    Hostile,
     JumpImminent,
-    NoReason,
-    NoSpace,
-    Offences,
     RestrictedAccess,
-    TooLarge,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum StationState {
-    UnderAttack,
+    UnderRepairs,
     Damaged,
+    Abandoned,
+    UnderAttack,
+    // following found in logs, but not in manual
     DamagedHuman,
     Construction,
-}
-
-#[testcase({ "timestamp":"2025-06-30T12:38:07Z", "event":"DockingDenied", "Reason":"DockOffline", "MarketID":3906562304, "StationName":"Joshi Military Complex", "StationType":"OnFootSettlement" })]
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingDenied {
-    reason: DockingDeniedReason,
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockingTimeout {
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDocked {
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-    pub taxi: Option<bool>,
-    pub multicrew: Option<bool>,
-    pub faction_state: Option<EDString>,
-    pub station_state: Option<StationState>,
-    pub star_system: EDString,
-    pub system_address: u64,
-    #[serde(deserialize_with = "string_or_struct")]
-    pub station_faction: FactionName,
-    pub station_government: EDString,
-    #[serde(rename = "StationGovernment_Localised")]
-    pub station_government_localised: EDString,
-    pub station_allegiance: Option<Allegiance>,
-    pub station_services: Vec<StationService>,
-    pub station_economy: EDString,
-    #[serde(rename = "StationEconomy_Localised")]
-    pub station_economy_localised: EDString,
-    pub station_economies: Option<Vec<StationEconomy>>,
-    #[serde(rename = "DistFromStarLS")]
-    pub dist_from_star_ls: f64,
-    pub cockpit_breach: Option<bool>,
-    pub wanted: Option<bool>,
-    pub active_fine: Option<bool>,
-    pub landing_pads: Option<LandingPads>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2017-10-17T01:49:26Z", "event":"Undocked", "StationName":"Verrazzano's Inheritance", "StationType":"SurfaceStation" })]
-pub struct EDLogUndocked {
-    #[serde(flatten)]
-    pub station_identification: StationIdentification,
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

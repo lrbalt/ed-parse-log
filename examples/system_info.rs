@@ -1,11 +1,9 @@
 use chrono::{DateTime, Utc};
 use ed_parse_log_files::{
     common_types::{Allegiance, FSSSignalType, Powers},
-    docking::EDLogDocked,
     exploration::EDLogFSSSignalDiscovered,
-    location::EDLogLocation,
     log_line::{EDLogEvent, EDLogLine},
-    navigation::EDLogFSDJump,
+    travel::{EDLogDocked, EDLogFSDJump, EDLogLocation},
 };
 use itertools::Itertools;
 use prettytable::{Table, cell, format, row};
