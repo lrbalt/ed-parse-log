@@ -107,9 +107,9 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
         .unwrap()
         .par_iter()
         .map(|line| match line.event() {
-            EDLogEvent::Scan(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::Scan(d) => d.star_details.as_ref().map(|a| (line, a.system_address)),
             EDLogEvent::DiscoveryScan(d) => Some((line, d.system_address)),
-            EDLogEvent::NavBeaconScan(d) => d.system_address.map(|a| (line, a)),
+            EDLogEvent::NavBeaconScan(d) => Some((line, d.system_address)),
             EDLogEvent::ScanOrganic(d) => Some((line, d.system_address)),
             EDLogEvent::FSSDiscoveryScan(d) => Some((line, d.system_address)),
             EDLogEvent::Location(d) => d.system_address.map(|a| (line, a)),
@@ -144,9 +144,11 @@ fn filter_loglines(db: Mutex<Vec<EDLogLine>>, system_id: u64) -> Result<Vec<EDLo
 fn find_system_address(db: &Mutex<Vec<EDLogLine>>, system_name: &str) -> Option<u64> {
     for line in db.lock().unwrap().iter() {
         let found_id = match line.event() {
-            EDLogEvent::Scan(d) => d
-                .system_address
-                .and_then(|a| d.star_system.as_ref().map(|s| (a, s.as_str()))),
+            EDLogEvent::Scan(d) => d.star_details.as_ref().and_then(|a| {
+                d.star_details
+                    .as_ref()
+                    .map(|s| (a.system_address, s.star_system.as_str()))
+            }),
             EDLogEvent::FSSDiscoveryScan(d) => Some((d.system_address, d.system_name.as_str())),
             EDLogEvent::Location(d) => d.system_address.map(|a| (a, d.star_system.as_str())),
             EDLogEvent::FSDJump(d) => Some((d.system_address, d.star_system.as_str())),

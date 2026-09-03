@@ -1,5 +1,5 @@
 use crate::{
-    EDString, common_types::{Credits, FuelCapacity, Merits, NonRawMaterial, Power, RawMaterial}, log_line::{GameMode, LoadGameShip}, mission::Mission, modules::Module, ship::Inventory, ship_type::ShipType, statistics::{
+    EDString, common_types::{Credits, FuelCapacity, Merits, Power,}, log_line::{GameMode, LoadGameShip}, material::{EncodedMaterial, ManufacturedMaterial, RawMaterial}, mission::Mission, modules::Module, ship::Inventory, ship_type::ShipType, statistics::{
         StatisticSearchAndRescue, StatisticsBankAccount, StatisticsCQCStats, StatisticsCombat,
         StatisticsCrafting, StatisticsCrew, StatisticsCrime, StatisticsExobiology,
         StatisticsExploration, StatisticsFleetcarrier, StatisticsMaterialTraderStats,
@@ -91,11 +91,10 @@ pub struct EDLogLoadout {
         { "Name":"shieldsoakanalysis", "Name_Localised":"Inconsistent Shield Soak Analysis", "Count":244 }, 
         { "Name":"consumerfirmware", "Name_Localised":"Modified Consumer Firmware", "Count":241 }
     ] })]
-// TODO: Enum for Materials
 pub struct EDLogMaterials {
     pub raw: Vec<RawMaterial>,
-    pub manufactured: Vec<NonRawMaterial>,
-    pub encoded: Vec<NonRawMaterial>,
+    pub manufactured: Vec<ManufacturedMaterial>,
+    pub encoded: Vec<EncodedMaterial>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

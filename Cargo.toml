@@ -23,7 +23,7 @@ symbol_table = { version = "0.5.0", features = [
     "global",
     "serde"
 ], optional = true }
-bitflags = { version = "2.13.0" }
+bitflags = { version = "2.13.1" }
 
 [dev-dependencies]
 rayon = { version = "1.12.0" }

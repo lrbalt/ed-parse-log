@@ -1,6 +1,7 @@
 use crate::{
     EDString,
     common_types::{StarClass, StationInformation},
+    ship_type::ShipType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -60,6 +61,20 @@ pub struct EDLogLaunchSRV {
     #[serde(rename = "SRVType")]
     srvtype: Option<EDString>,
     #[serde(rename = "SRVType_Localised")]
+    srvtype_localised: Option<EDString>,
+    loadout: EDString,
+    #[serde(rename = "ID")]
+    id: u64,
+    player_controlled: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-09-02T19:26:27Z", "event":"LaunchVessel", "VesselType":"lander01", 
+    "VesselType_Localised":"Nomad", "Loadout":"base", "ID":55, "PlayerControlled":true })]
+pub struct EDLogLaunchVessel {
+    vessel_type: ShipType,
+    #[serde(rename = "VesselType_Localised")]
     srvtype_localised: Option<EDString>,
     loadout: EDString,
     #[serde(rename = "ID")]

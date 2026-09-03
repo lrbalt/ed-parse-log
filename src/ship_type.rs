@@ -246,18 +246,23 @@ pub enum ShipType {
     ExplorationSuitClass5,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class1")]
+    #[serde(alias = "tacticalsuit_class1")]
     TacticalSuitClass1,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class2")]
+    #[serde(alias = "tacticalsuit_class2")]
     TacticalSuitClass2,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class3")]
+    #[serde(alias = "tacticalsuit_class3")]
     TacticalSuitClass3,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class4")]
+    #[serde(alias = "tacticalsuit_class4")]
     TacticalSuitClass4,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
     #[serde(rename = "TacticalSuit_Class5")]
+    #[serde(alias = "tacticalsuit_class5")]
     TacticalSuitClass5,
 
     #[serde(rename = "assaultsuitai_class1")]

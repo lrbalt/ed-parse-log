@@ -130,16 +130,6 @@ pub struct EDLogMaterialTrade {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogMaterialCollected {
-    category: MaterialCategory,
-    name: EDString,
-    #[serde(rename = "Name_Localised")]
-    name_localised: Option<EDString>,
-    count: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPayBounties {
     pub amount: Credits,
     pub all_fines: Option<bool>,

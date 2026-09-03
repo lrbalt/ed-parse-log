@@ -1,5 +1,4 @@
-use crate::EDString;
-use ed_parse_log_files_macros::{CodexCategorize, Extractable, testcase};
+use ed_parse_log_files_macros::CodexCategorize;
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumIter};
 
@@ -2106,51 +2105,6 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_42;")]
     #[strum(to_string = "The Void")]
     TheVoid,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2022-08-26T19:09:04Z", "event":"CodexEntry", "EntryID":1100502, "Name":"$Codex_Ent_G_TypeGiant_Name;", 
-    "Name_Localised":"G Type Giant", "SubCategory":"$Codex_SubCategory_Stars;", "SubCategory_Localised":"Stars", 
-    "Category":"$Codex_Category_StellarBodies;", "Category_Localised":"Astronomical Bodies", "Region":"$Codex_RegionName_18;", 
-    "Region_Localised":"Inner Orion Spur", "System":"HIP 759", "SystemAddress":10460563811, "IsNewEntry":true })]
-#[testcase({ "timestamp":"2026-01-26T15:45:23Z", "event":"CodexEntry", "EntryID":1101001, "Name":"$Codex_Ent_TTS_Type_Name;", 
-    "Name_Localised":"T Tauri Star", "SubCategory":"$Codex_SubCategory_Stars;", "SubCategory_Localised":"Stars", 
-    "Category":"$Codex_Category_StellarBodies;", "Category_Localised":"Astronomical Bodies", "Region":"$Codex_RegionName_10;", 
-    "Region_Localised":"Norma Expanse", "System":"Skauduae QM-T c17-4", "SystemAddress":1185175214746, "BodyID":0, "IsNewEntry":true })]
-#[testcase({ "timestamp":"2026-07-28T18:33:32Z", "event":"CodexEntry", "EntryID":2320605, "Name":"$Codex_Ent_Bacterial_06_G_Name;", 
-    "Name_Localised":"Bacterium Alcyoneum - Emerald", "SubCategory":"$Codex_SubCategory_Organic_Structures;", 
-    "SubCategory_Localised":"Organic structures", "Category":"$Codex_Category_Biology;", 
-    "Category_Localised":"Biological and Geological", "Region":"$Codex_RegionName_4;", "Region_Localised":"Odin's Hold", 
-    "System":"Dryooe Prou GG-Y f961", "SystemAddress":516065576045, "BodyID":21, "NearestDestination":"", "Latitude":16.642124, 
-    "Longitude":-108.395966, "IsNewEntry":true })]
-pub struct EDLogCodexEntry {
-    #[serde(rename = "EntryID")]
-    pub entry_id: u64,
-    pub name: CodexNames,
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: EDString,
-    pub sub_category: CodexSubCategory,
-    #[serde(rename = "SubCategory_Localised")]
-    pub sub_category_localised: EDString,
-    pub category: CodexCategory,
-    #[serde(rename = "Category_Localised")]
-    pub category_localised: EDString,
-    pub region: CodexRegion,
-    #[serde(rename = "Region_Localised")]
-    pub region_localised: EDString,
-    pub system: EDString,
-    pub system_address: u64,
-    #[serde(rename = "BodyID")]
-    pub body_id: Option<u64>,
-    pub nearest_destination: Option<EDString>,
-    #[serde(rename = "NearestDestination_Localised")]
-    pub nearest_destination_localised: Option<EDString>,
-    pub traits: Option<Vec<EDString>>,
-    pub latitude: Option<f64>,
-    pub longitude: Option<f64>,
-    pub is_new_entry: Option<bool>,
-    pub voucher_amount: Option<u32>,
 }
 
 #[test]

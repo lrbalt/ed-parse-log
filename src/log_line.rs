@@ -1,6 +1,5 @@
 use crate::{
     EDString,
-    codex::EDLogCodexEntry,
     combat::{
         EDLogBounty, EDLogCapitalShipBond, EDLogDied, EDLogEscapeInterdiction,
         EDLogFactionKillBond, EDLogFighterDestroyed, EDLogHullDamage, EDLogInterdicted,
@@ -24,19 +23,22 @@ use crate::{
         EDLogCommunityGoalReward,
     },
     docking::{
-        EDLogBuyAmmo, EDLogMaterialCollected, EDLogMaterialTrade, EDLogOutfitting,
-        EDLogPayBounties, EDLogPayFines, EDLogRefuelAll, EDLogRepair, EDLogRepairAll,
-        EDLogRestockVehicle, EDLogTechnologyBroker,
+        EDLogBuyAmmo, EDLogMaterialTrade, EDLogOutfitting, EDLogPayBounties, EDLogPayFines,
+        EDLogRefuelAll, EDLogRepair, EDLogRepairAll, EDLogRestockVehicle, EDLogTechnologyBroker,
     },
     drone::{EDLogBuyDrones, EDLogLaunchDrone, EDLogRepairDrone, EDLogSellDrones},
     engineers::{EDLogEngineerContribution, EDLogEngineerCraft, EDLogEngineerProgress},
     exploration::{
-        EDLogAsteroidCracked, EDLogBuyExplorationData, EDLogDataScanned, EDLogDatalinkScan,
-        EDLogDiscoveryScan, EDLogFSSAllBodiesFound, EDLogFSSBodySignals, EDLogFSSDiscoveryScan,
-        EDLogFSSSignalDiscovered, EDLogMaterialDiscovered, EDLogMiningRefined,
-        EDLogMultiSellExplorationData, EDLogNavBeaconScan, EDLogProspectedAsteroid,
-        EDLogSAAScanComplete, EDLogSAASignalsFound, EDLogScan, EDLogScanBaryCentre,
-        EDLogScanOrganic, EDLogScanned, EDLogSellExplorationData, EDLogStationBernalSphere,
+        EDLogBuyExplorationData, EDLogCodexEntry, EDLogDiscoveryScan, EDLogFSSAllBodiesFound,
+        EDLogFSSBodySignals, EDLogFSSDiscoveryScan, EDLogFSSSignalDiscovered,
+        EDLogMaterialCollected, EDLogMaterialDiscarded, EDLogMaterialDiscovered,
+        EDLogMultiSellExplorationData, EDLogNavBeaconScan, EDLogSAAScanComplete,
+        EDLogSAASignalsFound, EDLogScan, EDLogScanBaryCentre, EDLogScreenshot,
+        EDLogSellExplorationData,
+    },
+    exploration_old::{
+        EDLogAsteroidCracked, EDLogDataScanned, EDLogDatalinkScan, EDLogMiningRefined,
+        EDLogProspectedAsteroid, EDLogScanOrganic, EDLogScanned, EDLogStationBernalSphere,
     },
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCrewServices,
@@ -65,7 +67,7 @@ use crate::{
     },
     navigation::{
         EDLogApproachSettlement, EDLogDockSRV, EDLogFuelScoop, EDLogJetConeBoost,
-        EDLogJetConeDamage, EDLogLaunchSRV,
+        EDLogJetConeDamage, EDLogLaunchSRV, EDLogLaunchVessel,
     },
     powerplay::{
         EDLogHoloscreenHacked, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver,
@@ -117,6 +119,7 @@ pub enum GameMode {
     Group,
     Solo,
     Open,
+    MainGame,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -139,6 +142,13 @@ pub struct LoadGameShip {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogMusic {
     music_track: EDString,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-09-02T18:51:13Z", "event":"GameModeChange", "GameMode":"MainGame" })]
+pub struct EDLogGameModeChange {
+    game_mode: GameMode,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -457,27 +467,6 @@ pub struct EDLogCargoTransfer {
     transfers: Vec<CargoTransfer>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct LocationOnBody {
-    latitude: f64,
-    longitude: f64,
-    heading: u64,
-    altitude: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogScreenshot {
-    filename: EDString,
-    width: u64,
-    height: u64,
-    system: Option<EDString>,
-    body: Option<EDString>,
-    #[serde(flatten)]
-    location_on_body: Option<LocationOnBody>,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug, Display, EnumDiscriminants)]
 #[serde(tag = "event", deny_unknown_fields)]
 #[strum_discriminants(derive(EnumIter, Display))]
@@ -542,10 +531,31 @@ pub enum EDLogEvent {
     SRVDestroyed(EDLogSRVDestroyed),
     UnderAttack(EDLogUnderAttack),
 
+    // Exploration
+    CodexEntry(Box<EDLogCodexEntry>),
+    DiscoveryScan(EDLogDiscoveryScan),
+    Scan(Box<EDLogScan>),
+    FSSAllBodiesFound(EDLogFSSAllBodiesFound),
+    FSSBodySignals(EDLogFSSBodySignals),
+    FSSDiscoveryScan(EDLogFSSDiscoveryScan),
+    FSSSignalDiscovered(Box<EDLogFSSSignalDiscovered>),
+    MaterialCollected(EDLogMaterialCollected),
+    MaterialDiscarded(EDLogMaterialDiscarded),
+    MaterialDiscovered(EDLogMaterialDiscovered),
+    MultiSellExplorationData(EDLogMultiSellExplorationData),
+    NavBeaconScan(EDLogNavBeaconScan),
+    BuyExplorationData(EDLogBuyExplorationData),
+    SAAScanComplete(EDLogSAAScanComplete),
+    SAASignalsFound(Box<EDLogSAASignalsFound>),
+    ScanBaryCentre(Box<EDLogScanBaryCentre>),
+    SellExplorationData(Box<EDLogSellExplorationData>),
+    Screenshot(Box<EDLogScreenshot>),
+
     SystemsShutdown,
     Shutdown,
     Music(EDLogMusic),
     Status(Box<EDLogStatus>),
+    GameModeChange(EDLogGameModeChange),
 
     // Commander
     Promotion(EDLogPromotion),
@@ -590,7 +600,6 @@ pub enum EDLogEvent {
     RepairAll(EDLogRepairAll),
     Outfitting(EDLogOutfitting),
     MaterialTrade(EDLogMaterialTrade),
-    MaterialCollected(EDLogMaterialCollected),
     PayBounties(EDLogPayBounties),
     PayFines(EDLogPayFines),
     TechnologyBroker(EDLogTechnologyBroker),
@@ -613,6 +622,7 @@ pub enum EDLogEvent {
     FuelScoop(EDLogFuelScoop),
     ApproachSettlement(Box<EDLogApproachSettlement>),
     LaunchSRV(EDLogLaunchSRV),
+    LaunchVessel(EDLogLaunchVessel),
     DockSRV(EDLogDockSRV),
     JetConeBoost(EDLogJetConeBoost),
     JetConeDamage(EDLogJetConeDamage),
@@ -620,31 +630,16 @@ pub enum EDLogEvent {
     // Supercruise
     SupercruiseDestinationDrop(EDLogSupercruiseDestinationDrop),
 
-    // Exploration
-    FSSSignalDiscovered(EDLogFSSSignalDiscovered),
-    FSSDiscoveryScan(EDLogFSSDiscoveryScan),
-    FSSAllBodiesFound(EDLogFSSAllBodiesFound),
-    FSSBodySignals(EDLogFSSBodySignals),
-    SAAScanComplete(EDLogSAAScanComplete),
-    SAASignalsFound(EDLogSAASignalsFound),
-    ScanBaryCentre(EDLogScanBaryCentre),
+    // Exploration (old)
     StationBernalSphere(EDLogStationBernalSphere),
-    MultiSellExplorationData(EDLogMultiSellExplorationData),
-    Scan(Box<EDLogScan>),
     Scanned(EDLogScanned),
-    DiscoveryScan(EDLogDiscoveryScan),
     ScanOrganic(EDLogScanOrganic),
     DatalinkScan(EDLogDatalinkScan),
-    NavBeaconScan(EDLogNavBeaconScan),
     SellOrganicData(EDLogSellOrganicData),
-    CodexEntry(Box<EDLogCodexEntry>),
     ProspectedAsteroid(EDLogProspectedAsteroid),
     MiningRefined(EDLogMiningRefined),
     AsteroidCracked(EDLogAsteroidCracked),
-    MaterialDiscovered(EDLogMaterialDiscovered),
     DataScanned(EDLogDataScanned),
-    BuyExplorationData(EDLogBuyExplorationData),
-    SellExplorationData(EDLogSellExplorationData),
 
     // FleetCarrier
     CarrierStats(Box<EDLogCarrierStats>),
@@ -767,7 +762,6 @@ pub enum EDLogEvent {
     DockFighter(EDLogDockFighter),
     FighterRebuilt(EDLogFighterRebuilt),
 
-    Screenshot(EDLogScreenshot),
     ReceiveText(EDLogReceiveText),
     SendText(EDLogSendText),
     USSDrop(EDLogUSSDrop),

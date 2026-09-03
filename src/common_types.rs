@@ -436,6 +436,207 @@ pub enum OnFootItem {
     NMSeed,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum TerraformState {
+    #[serde(rename = "")]
+    None,
+    Terraformable,
+    Terraforming,
+    Terraformed,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
+pub enum PlanetClass {
+    #[serde(rename = "Ammonia world")]
+    #[strum(to_string = "Ammonia world")]
+    AmmoniaWorld,
+    #[serde(rename = "Earthlike body")]
+    #[strum(to_string = "Earthlike body")]
+    EarthlikeBody,
+    #[serde(rename = "Gas giant with ammonia based life")]
+    #[strum(to_string = "Gas giant with ammonia based life")]
+    GasGiantWithAmmoniaBasedLife,
+    #[serde(rename = "Gas giant with water based life")]
+    #[strum(to_string = "Gas giant with water based life")]
+    GasGiantWithWaterBasedLife,
+    #[serde(rename = "High metal content body")]
+    #[strum(to_string = "High metal content body")]
+    HighMetalContentBody,
+    #[serde(rename = "Helium rich gas giant")]
+    #[strum(to_string = "Helium rich gas giant")]
+    HeliumRichGasGiant,
+    #[serde(rename = "Icy body")]
+    #[strum(to_string = "Icy body")]
+    IcyBody,
+    #[serde(rename = "Metal rich body")]
+    #[strum(to_string = "Metal rich body")]
+    MetalRichBody,
+    #[serde(rename = "Rocky ice body")]
+    #[strum(to_string = "Rocky ice body")]
+    RockyIceBody,
+    #[serde(rename = "Rocky body")]
+    #[strum(to_string = "Rocky body")]
+    RockyBody,
+    #[serde(rename = "Sudarsky class I gas giant")]
+    #[strum(to_string = "Sudarsky class I gas giant")]
+    SudarskyClassIGasGiant,
+    #[serde(rename = "Sudarsky class II gas giant")]
+    #[strum(to_string = "Sudarsky class II gas giant")]
+    SudarskyClassIIGasGiant,
+    #[serde(rename = "Sudarsky class III gas giant")]
+    #[strum(to_string = "Sudarsky class III gas giant")]
+    SudarskyClassIIIGasGiant,
+    #[serde(rename = "Sudarsky class IV gas giant")]
+    #[strum(to_string = "Sudarsky class IV gas giant")]
+    SudarskyClassIVGasGiant,
+    #[serde(rename = "Sudarsky class V gas giant")]
+    #[strum(to_string = "Sudarsky class V gas giant")]
+    SudarskyClassVGasGiant,
+    #[serde(rename = "Water giant")]
+    #[strum(to_string = "Water giant")]
+    WaterGiant,
+    #[serde(rename = "Water world")]
+    #[strum(to_string = "Water world")]
+    WaterWorld,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy)]
+pub enum AtmosphereType {
+    None,
+
+    Ammonia,
+    AmmoniaOxygen,
+    AmmoniaRich,
+    Argon,
+    ArgonRich,
+    CarbonDioxide,
+    CarbonDioxideRich,
+    EarthLike,
+    Hydrogen,
+    Helium,
+    Iron,
+    MetallicVapour,
+    Methane,
+    MethaneRich,
+    Neon,
+    NeonRich,
+    Nitrogen,
+    Oxygen,
+    Silicates,
+    SilicateVapour,
+    SulphurDioxide,
+    Water,
+    WaterRich,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
+pub enum BodySignalType {
+    #[serde(rename = "$SAA_SignalType_Biological;")]
+    Biological,
+    #[serde(rename = "$SAA_SignalType_Geological;")]
+    Geological,
+    #[serde(rename = "$SAA_SignalType_Guardian;")]
+    Guardian,
+    #[serde(rename = "$SAA_SignalType_Human;")]
+    Human,
+    #[serde(rename = "$SAA_SignalType_Other;")]
+    Other,
+    #[serde(rename = "$SAA_SignalType_Thargoid;")]
+    Thargoid,
+    #[serde(rename = "$SAA_SignalType_PlanetAnomaly;")]
+    #[strum(to_string = "Major Anomaly")]
+    PlanetAnomaly,
+    #[serde(rename = "$PlanetaryMiningLocation_Name;")]
+    #[strum(to_string = "Planetary Mining Location")]
+    PlanetaryMiningLocation,
+
+    Alexandrite,
+    Benitoite,
+    Bromellite,
+    Grandidierite,
+    #[strum(to_string = "Low Temp. Diamonds")]
+    LowTemperatureDiamond,
+    Monazite,
+    Musgravite,
+    #[strum(to_string = "Void Opal")]
+    Opal,
+    Painite,
+    Platinum,
+    Rhodplumsite,
+    Serendibite,
+    #[serde(alias = "tritium")]
+    Tritium,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum ReserveLevel {
+    #[serde(rename = "MajorResources")]
+    Major,
+    #[serde(rename = "PristineResources")]
+    Pristine,
+    #[serde(rename = "LowResources")]
+    Low,
+    #[serde(rename = "CommonResources")]
+    Common,
+    #[serde(rename = "DepletedResources")]
+    Depleted,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum RingClass {
+    #[serde(rename = "eRingClass_Rocky")]
+    Rocky,
+    #[serde(rename = "eRingClass_Icy")]
+    Icy,
+    #[serde(rename = "eRingClass_MetalRich")]
+    MetalRich,
+    #[serde(rename = "eRingClass_Metalic")]
+    Metalic,
+}
+
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
+pub enum GenusType {
+    #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
+    Aleoida,
+    #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
+    Bacterium,
+    #[serde(rename = "$Codex_Ent_Brancae_Name;")]
+    #[strum(to_string = "Brain Trees")]
+    BrainTrees,
+    #[serde(rename = "$Codex_Ent_Cactoid_Genus_Name;")]
+    Cactoida,
+    #[serde(rename = "$Codex_Ent_Clypeus_Genus_Name;")]
+    Clypeus,
+    #[serde(rename = "$Codex_Ent_Conchas_Genus_Name;")]
+    Concha,
+    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
+    #[strum(to_string = "Crystalline Shards")]
+    CrystallineShards,
+    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
+    Electricae,
+    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
+    Fonticulua,
+    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
+    Fumerola,
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
+    #[strum(to_string = "Luteolum Anemone")]
+    LuteolumAnemone,
+    #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
+    Frutexa,
+    #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]
+    Fungoida,
+    #[serde(rename = "$Codex_Ent_Osseus_Genus_Name;")]
+    Osseus,
+    #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
+    Recepta,
+    #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
+    Stratum,
+    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
+    Tubus,
+    #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
+    Tussock,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FactionState {
     None,
@@ -708,8 +909,9 @@ pub enum ScanType {
     Detailed,
     Basic,
     Log,     // Organic
-    Sample,  //Organic
+    Sample,  // Organic
     Analyse, // Organic
+    NavBeacon,
     NavBeaconDetail,
 }
 
@@ -1475,20 +1677,101 @@ pub struct FuelCapacity {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct RawMaterial {
-    name: EDString,
-    count: u64,
-}
+pub enum VulcanismType {
+    #[serde(rename = "")]
+    None,
+    #[serde(rename = "ammonia magma volcanism")]
+    AmmoniaMagmaVolcanism,
+    #[serde(rename = "minor ammonia magma volcanism")]
+    MinorAmmoniaMagmaVolcanism,
+    #[serde(rename = "major ammonia magma volcanism")]
+    MajorAmmoniaMagmaVolcanism,
+    #[serde(rename = "methane magma volcanism")]
+    MethaneMagmaVolcanism,
+    #[serde(rename = "major methane magma volcanism")]
+    MajorMethaneMagmaVolcanism,
+    #[serde(rename = "minor methane magma volcanism")]
+    MinorMethaneMagmaVolcanism,
+    #[serde(rename = "sulphur dioxide magma volcanism")]
+    SulphurDioxideMagmaVolcanism,
+    #[serde(rename = "minor sulphur dioxide magma volcanism")]
+    MinorSulphurDioxideMagmaVolcanism,
+    #[serde(rename = "major sulphur dioxide magma volcanism")]
+    MajorSulphurDioxideMagmaVolcanism,
+    #[serde(rename = "nitrogen magma volcanism")]
+    NitrogenMagmaVolcanism,
+    #[serde(rename = "minor nitrogen magma volcanism")]
+    MinorNitrogenMagmaVolcanism,
+    #[serde(rename = "major nitrogen magma volcanism")]
+    MajorNitrogenMagmaVolcanism,
+    #[serde(rename = "silicate magma volcanism")]
+    SilicateMagmaVolcanism,
+    #[serde(rename = "major silicate magma volcanism")]
+    MajorSilicateMagmaVolcanism,
+    #[serde(rename = "minor silicate magma volcanism")]
+    MinorSilicateMagmaVolcanism,
+    #[serde(rename = "metallic magma volcanism")]
+    MetallicMagmaVolcanism,
+    #[serde(rename = "major metallic magma volcanism")]
+    MajorMetallicMagmaVolcanism,
+    #[serde(rename = "minor metallic magma volcanism")]
+    MinorMetallicMagmaVolcanism,
+    #[serde(rename = "water magma volcanism")]
+    WaterMagmaVolcanism,
+    #[serde(rename = "major water magma volcanism")]
+    MajorWaterMagmaVolcanism,
+    #[serde(rename = "minor water magma volcanism")]
+    MinorWaterMagmaVolcanism,
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase_struct({ "Name":"decodedemissiondata", "Count":9 })]
-pub struct NonRawMaterial {
-    name: EDString,
-    #[serde(rename = "Name_Localised")]
-    name_localised: Option<EDString>,
-    count: u64,
+    #[serde(rename = "ammonia geysers volcanism")]
+    AmmoniaGeyserVolcanism,
+    #[serde(rename = "minor ammonia geysers volcanism")]
+    MinorAmmoniaGeyserVolcanism,
+    #[serde(rename = "major ammonia geysers volcanism")]
+    MajorAmmoniaGeyserVolcanism,
+    #[serde(rename = "carbon dioxide geysers volcanism")]
+    CarbonDioxideGeyserVolcanism,
+    #[serde(rename = "minor carbon dioxide geysers volcanism")]
+    MinorCarbonDioxideGeyserVolcanism,
+    #[serde(rename = "major carbon dioxide geysers volcanism")]
+    MajorCarbonDioxideGeyserVolcanism,
+    #[serde(rename = "helium geysers volcanism")]
+    HeliumGeyserVolcanism,
+    #[serde(rename = "major helium geysers volcanism")]
+    MajorHeliumGeyserVolcanism,
+    #[serde(rename = "minor helium geysers volcanism")]
+    MinorHeliumGeyserVolcanism,
+    #[serde(rename = "methane geysers volcanism")]
+    MethaneGeyserVolcanism,
+    #[serde(rename = "major methane geysers volcanism")]
+    MajorMethaneGeyserVolcanism,
+    #[serde(rename = "minor methane geysers volcanism")]
+    MinorMethaneGeyserVolcanism,
+    #[serde(rename = "nitrogen geysers volcanism")]
+    NitrogenGeyserVolcanism,
+    #[serde(rename = "major nitrogen geysers volcanism")]
+    MajorNitrogenGeyserVolcanism,
+    #[serde(rename = "minor nitrogen geysers volcanism")]
+    MinorNitrogenGeyserVolcanism,
+    #[serde(rename = "water geysers volcanism")]
+    WaterGeyserVolcanism,
+    #[serde(rename = "major water geysers volcanism")]
+    MajorWaterGeyserVolcanism,
+    #[serde(rename = "minor water geysers volcanism")]
+    MinorWaterGeyserVolcanism,
+    #[serde(rename = "silicate vapour geysers volcanism")]
+    SilicateVapourGeyserVolcanism,
+    #[serde(rename = "major silicate vapour geysers volcanism")]
+    MajorSilicateVapourGeyserVolcanism,
+    #[serde(rename = "minor silicate vapour geysers volcanism")]
+    MinorSilicateVapourGeyserVolcanism,
+    // not in manual, but found in logs
+    #[serde(rename = "rocky magma volcanism")]
+    RockyMagmaVolcanism,
+    #[serde(rename = "major rocky magma volcanism")]
+    MajorRockyMagmaVolcanism,
+    #[serde(rename = "minor rocky magma volcanism")]
+    MinorRockyMagmaVolcanism,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
