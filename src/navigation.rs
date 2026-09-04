@@ -1,6 +1,6 @@
 use crate::{
     EDString,
-    common_types::{StarClass, StationInformation},
+    common_types::{StarClass, StarPos, StationInformation},
     ship_type::ShipType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
@@ -94,7 +94,7 @@ pub struct JumpToStarSystem {
     star_system: EDString,
     system_address: u64,
     star_class: StarClass,
-    star_pos: Option<[f64; 3]>,
+    star_pos: Option<StarPos>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

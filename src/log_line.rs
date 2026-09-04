@@ -7,27 +7,17 @@ use crate::{
         EDLogUnderAttack,
     },
     commander::{
-        EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommitCrime, EDLogCrewAssign,
-        EDLogCrewFire, EDLogCrewHire, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
-        EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogEmbarkOrDisembark, EDLogEndCrewSession,
-        EDLogFriends, EDLogInvitedToSquadron, EDLogJoinACrew, EDLogPromotion, EDLogQuitACrew,
-        EDLogRequestPowerMicroResources, EDLogResurrect, EDLogSharedBookmarkToSquadron,
-        EDLogVehicleSwitch,
+        EDLogAppliedToSquadron, EDLogChangeCrewRole, EDLogCommitCrime, EDLogCrewMemberJoins,
+        EDLogCrewMemberQuits, EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogEmbarkOrDisembark,
+        EDLogEndCrewSession, EDLogFriends, EDLogInvitedToSquadron, EDLogJoinACrew, EDLogPromotion,
+        EDLogQuitACrew, EDLogRequestPowerMicroResources, EDLogResurrect,
+        EDLogSharedBookmarkToSquadron, EDLogVehicleSwitch,
     },
     common_types::{
         BodyInformation, Credits, EDLogLeftSquadron, EDLogName, EDLogNpcCrewPaidWage,
         EDLogNpcCrewRank, EDLogSquadronStartup,
     },
-    community_goal::{
-        EDLogCommunityGoal, EDLogCommunityGoalDiscard, EDLogCommunityGoalJoin,
-        EDLogCommunityGoalReward,
-    },
-    docking::{
-        EDLogBuyAmmo, EDLogMaterialTrade, EDLogOutfitting, EDLogPayBounties, EDLogPayFines,
-        EDLogRefuelAll, EDLogRepair, EDLogRepairAll, EDLogRestockVehicle, EDLogTechnologyBroker,
-    },
-    drone::{EDLogBuyDrones, EDLogLaunchDrone, EDLogRepairDrone, EDLogSellDrones},
-    engineers::{EDLogEngineerContribution, EDLogEngineerCraft, EDLogEngineerProgress},
+    drone::{EDLogLaunchDrone, EDLogRepairDrone},
     exploration::{
         EDLogBuyExplorationData, EDLogCodexEntry, EDLogDiscoveryScan, EDLogFSSAllBodiesFound,
         EDLogFSSBodySignals, EDLogFSSDiscoveryScan, EDLogFSSSignalDiscovered,
@@ -37,8 +27,8 @@ use crate::{
         EDLogSellExplorationData,
     },
     exploration_old::{
-        EDLogAsteroidCracked, EDLogDataScanned, EDLogDatalinkScan, EDLogMiningRefined,
-        EDLogProspectedAsteroid, EDLogScanOrganic, EDLogScanned, EDLogStationBernalSphere,
+        EDLogDataScanned, EDLogDatalinkScan, EDLogProspectedAsteroid, EDLogScanOrganic,
+        EDLogScanned, EDLogStationBernalSphere,
     },
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCrewServices,
@@ -49,22 +39,13 @@ use crate::{
     },
     locker::EDLogShipLocker,
     market::{
-        EDLogBuyMicroResources, EDLogBuyTradeData, EDLogCargoDepot,
-        EDLogColonisationConstructionDepot, EDLogColonisationContribution,
-        EDLogDeliverPowerMicroResources, EDLogMarket, EDLogMarketBuy, EDLogMarketID,
-        EDLogMarketSell, EDLogSellMicroResources, EDLogSellOrganicData, EDLogTradeMicroResources,
-        MarketItemType,
+        EDLogBuyMicroResources, EDLogColonisationConstructionDepot, EDLogColonisationContribution,
+        EDLogDeliverPowerMicroResources, EDLogMarketID, EDLogSellMicroResources,
+        EDLogSellOrganicData, EDLogTradeMicroResources,
     },
-    mission::{
-        EDLogDatalinkVoucher, EDLogMissionAbandoned, EDLogMissionAccepted, EDLogMissionCompleted,
-        EDLogMissionFailed, EDLogMissionRedirected, EDLogRedeemVoucher, EDLogScientificResearch,
-        EDLogSearchAndRescue,
-    },
-    modules::{
-        EDLogFetchRemoteModule, EDLogMassModuleStore, EDLogModuleBuy, EDLogModuleBuyAndStore,
-        EDLogModuleInfo, EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote,
-        EDLogModuleStore, EDLogModuleSwap, EDLogStoredModules,
-    },
+    market_item_type::MarketItemType,
+    mission::EDLogDatalinkVoucher,
+    modules::{EDLogModuleBuyAndStore, EDLogModuleInfo},
     navigation::{
         EDLogApproachSettlement, EDLogDockSRV, EDLogFuelScoop, EDLogJetConeBoost,
         EDLogJetConeDamage, EDLogLaunchSRV, EDLogLaunchVessel,
@@ -75,20 +56,30 @@ use crate::{
         EDLogPowerplayRank, EDLogPowerplaySalary,
     },
     ship::{
-        EDLogAfmuRepairs, EDLogClearImpound, EDLogDockFighter, EDLogEjectCargo,
-        EDLogFighterRebuilt, EDLogLaunchFighter, EDLogRebootRepair, EDLogReservoirReplenished,
-        EDLogSetUserShipName, EDLogSynthesis,
+        EDLogAfmuRepairs, EDLogDockFighter, EDLogFighterRebuilt, EDLogLaunchFighter,
+        EDLogRebootRepair, EDLogReservoirReplenished, EDLogSynthesis,
     },
     ship_type::ShipType,
-    shipyard::{
-        EDLogSellShipOnRebuy, EDLogShipRedeemed, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew,
-        EDLogShipyardRedeem, EDLogShipyardSell, EDLogShipyardSwap, EDLogShipyardTransfer,
-        EDLogStoredShips,
-    },
+    shipyard::{EDLogShipRedeemed, EDLogShipyardRedeem},
     startup::{
         EDLogCargo, EDLogClearSavedGame, EDLogCommander, EDLogLoadGame, EDLogLoadout,
         EDLogMaterials, EDLogMissions, EDLogNewCommander, EDLogPassengers, EDLogPowerplay,
         EDLogRank, EDLogReputation, EDLogStatistics,
+    },
+    station_services::{
+        EDLogBuyAmmo, EDLogBuyDrones, EDLogCargoDepot, EDLogClearImpound, EDLogCommunityGoal,
+        EDLogCommunityGoalDiscard, EDLogCommunityGoalJoin, EDLogCommunityGoalReward,
+        EDLogCrewAssign, EDLogCrewFire, EDLogCrewHire, EDLogEngineerContribution,
+        EDLogEngineerCraft, EDLogEngineerProgress, EDLogFetchRemoteModule, EDLogMarket,
+        EDLogMassModuleStore, EDLogMaterialTrade, EDLogMissionAbandoned, EDLogMissionAccepted,
+        EDLogMissionCompleted, EDLogMissionFailed, EDLogMissionRedirected, EDLogModuleBuy,
+        EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote, EDLogModuleStore,
+        EDLogModuleSwap, EDLogOutfitting, EDLogPayBounties, EDLogPayFines, EDLogRedeemVoucher,
+        EDLogRefuelAll, EDLogRefuelPartial, EDLogRepair, EDLogRepairAll, EDLogRestockVehicle,
+        EDLogScientificResearch, EDLogSearchAndRescue, EDLogSellDrones, EDLogSellShipOnRebuy,
+        EDLogSetUserShipName, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardSell,
+        EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredModules, EDLogStoredShips,
+        EDLogTechnologyBroker,
     },
     suits::{
         EDLogBackpack, EDLogBackpackChange, EDLogBuySuit, EDLogBuyWeapon, EDLogCollectItems,
@@ -97,6 +88,10 @@ use crate::{
         EDLogSuitLoadout, EDLogUpgradeSuit, EDLogUpgradeWeapon, EDLogUseConsumable,
     },
     supercruise::EDLogSupercruiseDestinationDrop,
+    trade::{
+        EDLogAsteroidCracked, EDLogBuyTradeData, EDLogCollectCargo, EDLogEjectCargo,
+        EDLogMarketBuy, EDLogMarketSell, EDLogMiningRefined,
+    },
     transport::{
         EDLogBookDropship, EDLogBookTaxi, EDLogCancelDropship, EDLogCancelTaxi, EDLogDropshipDeploy,
     },
@@ -437,19 +432,6 @@ pub struct EDLogUSSDrop {
     uss_threat: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(deny_unknown_fields)]
-pub struct EDLogCollectCargo {
-    #[serde(rename = "Type")]
-    cargo_type: MarketItemType,
-    #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<EDString>,
-    #[serde(rename = "Stolen")]
-    stolen: bool,
-    #[serde(rename = "MissionID")]
-    mission_id: Option<u64>,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CargoTransfer {
@@ -551,6 +533,69 @@ pub enum EDLogEvent {
     SellExplorationData(Box<EDLogSellExplorationData>),
     Screenshot(Box<EDLogScreenshot>),
 
+    // Trade
+    AsteroidCracked(EDLogAsteroidCracked),
+    BuyTradeData(EDLogBuyTradeData),
+    CollectCargo(EDLogCollectCargo),
+    EjectCargo(EDLogEjectCargo),
+    MarketBuy(EDLogMarketBuy),
+    MarketSell(Box<EDLogMarketSell>),
+    MiningRefined(EDLogMiningRefined),
+
+    // Station Services
+    BuyAmmo(EDLogBuyAmmo),
+    BuyDrones(EDLogBuyDrones),
+    CargoDepot(Box<EDLogCargoDepot>),
+    CommunityGoal(EDLogCommunityGoal),
+    CommunityGoalReward(EDLogCommunityGoalReward),
+    CommunityGoalJoin(EDLogCommunityGoalJoin),
+    CommunityGoalDiscard(EDLogCommunityGoalDiscard),
+    CrewHire(EDLogCrewHire),
+    CrewAssign(EDLogCrewAssign),
+    CrewFire(EDLogCrewFire),
+    EngineerContribution(Box<EDLogEngineerContribution>),
+    EngineerProgress(EDLogEngineerProgress),
+    EngineerCraft(Box<EDLogEngineerCraft>),
+    FetchRemoteModule(EDLogFetchRemoteModule),
+    Market(EDLogMarket),
+    MassModuleStore(EDLogMassModuleStore),
+    MaterialTrade(EDLogMaterialTrade),
+    MissionAbandoned(EDLogMissionAbandoned),
+    MissionAccepted(Box<EDLogMissionAccepted>),
+    MissionCompleted(Box<EDLogMissionCompleted>),
+    MissionRedirected(EDLogMissionRedirected),
+    MissionFailed(EDLogMissionFailed),
+    ModuleBuy(Box<EDLogModuleBuy>),
+    ModuleRetrieve(EDLogModuleRetrieve),
+    ModuleSell(EDLogModuleSell),
+    ModuleSellRemote(EDLogModuleSellRemote),
+    ModuleStore(EDLogModuleStore),
+    ModuleSwap(EDLogModuleSwap),
+    Outfitting(EDLogOutfitting),
+    PayBounties(EDLogPayBounties),
+    PayFines(EDLogPayFines),
+    RedeemVoucher(EDLogRedeemVoucher),
+    RefuelAll(EDLogRefuelAll),
+    RefuelPartial(EDLogRefuelPartial),
+    Repair(EDLogRepair),
+    RepairAll(EDLogRepairAll),
+    RestockVehicle(EDLogRestockVehicle),
+    ScientificResearch(EDLogScientificResearch),
+    SearchAndRescue(EDLogSearchAndRescue),
+    SellDrones(EDLogSellDrones),
+    SellShipOnRebuy(EDLogSellShipOnRebuy),
+    SetUserShipName(EDLogSetUserShipName),
+    ShipyardSwap(EDLogShipyardSwap),
+    ShipyardTransfer(EDLogShipyardTransfer),
+    ShipyardNew(EDLogShipyardNew),
+    Shipyard(EDLogShipyard),
+    ShipyardBuy(EDLogShipyardBuy),
+    ShipyardSell(EDLogShipyardSell),
+    StoredModules(EDLogStoredModules),
+    StoredShips(EDLogStoredShips),
+    TechnologyBroker(EDLogTechnologyBroker),
+    ClearImpound(EDLogClearImpound),
+
     SystemsShutdown,
     Shutdown,
     Music(EDLogMusic),
@@ -580,43 +625,13 @@ pub enum EDLogEvent {
     AppliedToSquadron(EDLogAppliedToSquadron),
     SharedBookmarkToSquadron(EDLogSharedBookmarkToSquadron),
     HoloscreenHacked(EDLogHoloscreenHacked),
-    CommunityGoal(EDLogCommunityGoal),
-    CommunityGoalReward(EDLogCommunityGoalReward),
-    CommunityGoalJoin(EDLogCommunityGoalJoin),
-    CommunityGoalDiscard(EDLogCommunityGoalDiscard),
 
     // Locker
     ShipLocker(Box<EDLogShipLocker>),
 
-    // Engineers
-    EngineerProgress(EDLogEngineerProgress),
-    EngineerContribution(EDLogEngineerContribution),
-    EngineerCraft(Box<EDLogEngineerCraft>),
-
-    // Docking
-    RefuelAll(EDLogRefuelAll),
-    BuyAmmo(EDLogBuyAmmo),
-    Repair(EDLogRepair),
-    RepairAll(EDLogRepairAll),
-    Outfitting(EDLogOutfitting),
-    MaterialTrade(EDLogMaterialTrade),
-    PayBounties(EDLogPayBounties),
-    PayFines(EDLogPayFines),
-    TechnologyBroker(EDLogTechnologyBroker),
-    RestockVehicle(EDLogRestockVehicle),
-
     // Modules
-    StoredModules(EDLogStoredModules),
     ModuleBuyAndStore(EDLogModuleBuyAndStore),
-    ModuleStore(EDLogModuleStore),
-    MassModuleStore(EDLogMassModuleStore),
-    ModuleRetrieve(EDLogModuleRetrieve),
-    ModuleBuy(EDLogModuleBuy),
-    ModuleSell(EDLogModuleSell),
-    ModuleSellRemote(EDLogModuleSellRemote),
-    ModuleSwap(EDLogModuleSwap),
     ModuleInfo(EDLogModuleInfo),
-    FetchRemoteModule(EDLogFetchRemoteModule),
 
     // Navigation
     FuelScoop(EDLogFuelScoop),
@@ -637,8 +652,6 @@ pub enum EDLogEvent {
     DatalinkScan(EDLogDatalinkScan),
     SellOrganicData(EDLogSellOrganicData),
     ProspectedAsteroid(EDLogProspectedAsteroid),
-    MiningRefined(EDLogMiningRefined),
-    AsteroidCracked(EDLogAsteroidCracked),
     DataScanned(EDLogDataScanned),
 
     // FleetCarrier
@@ -660,46 +673,23 @@ pub enum EDLogEvent {
 
     // Drone
     LaunchDrone(EDLogLaunchDrone),
-    SellDrones(EDLogSellDrones),
-    BuyDrones(EDLogBuyDrones),
     RepairDrone(EDLogRepairDrone),
 
     // Missions
-    MissionAccepted(Box<EDLogMissionAccepted>),
-    MissionRedirected(EDLogMissionRedirected),
-    MissionCompleted(Box<EDLogMissionCompleted>),
-    MissionFailed(EDLogMissionFailed),
-    MissionAbandoned(EDLogMissionAbandoned),
-    SearchAndRescue(EDLogSearchAndRescue),
-    RedeemVoucher(EDLogRedeemVoucher),
     DatalinkVoucher(EDLogDatalinkVoucher),
-    ScientificResearch(EDLogScientificResearch),
 
     // Market
-    Market(EDLogMarket),
     MarketID(EDLogMarketID),
-    MarketBuy(EDLogMarketBuy),
-    MarketSell(EDLogMarketSell),
     SellMicroResources(EDLogSellMicroResources),
     BuyMicroResources(EDLogBuyMicroResources),
     TradeMicroResources(EDLogTradeMicroResources),
     DeliverPowerMicroResources(EDLogDeliverPowerMicroResources),
-    CargoDepot(EDLogCargoDepot),
     ColonisationConstructionDepot(EDLogColonisationConstructionDepot),
     ColonisationContribution(EDLogColonisationContribution),
-    BuyTradeData(EDLogBuyTradeData),
 
     // Shipyard
-    ShipyardSwap(EDLogShipyardSwap),
-    ShipyardTransfer(EDLogShipyardTransfer),
-    ShipyardNew(EDLogShipyardNew),
-    Shipyard(EDLogShipyard),
-    ShipyardBuy(EDLogShipyardBuy),
-    ShipyardSell(EDLogShipyardSell),
-    StoredShips(EDLogStoredShips),
     ShipyardRedeem(EDLogShipyardRedeem),
     ShipRedeemed(EDLogShipRedeemed),
-    SellShipOnRebuy(EDLogSellShipOnRebuy),
 
     // Suits and backpack
     SuitLoadout(EDLogSuitLoadout),
@@ -736,19 +726,15 @@ pub enum EDLogEvent {
     LeftSquadron(EDLogLeftSquadron),
     NpcCrewPaidWage(EDLogNpcCrewPaidWage),
     NpcCrewRank(EDLogNpcCrewRank),
-    CrewHire(EDLogCrewHire),
     ChangeCrewRole(EDLogChangeCrewRole),
     CrewMemberRoleChange(EDLogCrewMemberRoleChange),
     CrewMemberJoins(EDLogCrewMemberJoins),
     EndCrewSession(EDLogEndCrewSession),
-    CrewAssign(EDLogCrewAssign),
-    CrewFire(EDLogCrewFire),
     JoinACrew(EDLogJoinACrew),
     QuitACrew(EDLogQuitACrew),
     CrewMemberQuits(EDLogCrewMemberQuits),
 
     // Ship
-    EjectCargo(EDLogEjectCargo),
     ReservoirReplenished(EDLogReservoirReplenished),
     RebootRepair(EDLogRebootRepair),
     SelfDestruct,
@@ -756,8 +742,6 @@ pub enum EDLogEvent {
     Resupply,
     Synthesis(EDLogSynthesis),
     AfmuRepairs(EDLogAfmuRepairs),
-    SetUserShipName(EDLogSetUserShipName),
-    ClearImpound(EDLogClearImpound),
     LaunchFighter(EDLogLaunchFighter),
     DockFighter(EDLogDockFighter),
     FighterRebuilt(EDLogFighterRebuilt),
@@ -766,7 +750,6 @@ pub enum EDLogEvent {
     SendText(EDLogSendText),
     USSDrop(EDLogUSSDrop),
     CollectItems(EDLogCollectItems),
-    CollectCargo(EDLogCollectCargo),
     CargoTransfer(EDLogCargoTransfer),
 }
 

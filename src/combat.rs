@@ -1,11 +1,10 @@
 use crate::{
     EDString,
-    common_types::{Credits, PilotRank, Power},
+    common_types::{CombatRank, Credits, PilotRank, Power},
     mission::{BountyPilot, BountyReward},
     ship::LegalStatus,
-    ship_module::{ShipModule, serde_ship_module},
+    ship_module::ShipModule,
     ship_type::ShipType,
-    startup::CombatRank,
 };
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
@@ -159,7 +158,6 @@ pub struct EDLogShieldState {
 #[testcase_struct({ "Subsystem":"$int_powerdistributor_size5_class3_name;", 
     "Subsystem_Localised":"Power Distributor", "SubsystemHealth":98.958328 })]
 pub struct TargetedSubsystem {
-    #[serde(with = "serde_ship_module")]
     pub subsystem: ShipModule,
     #[serde(rename = "Subsystem_Localised")]
     pub subsystem_localised: EDString,

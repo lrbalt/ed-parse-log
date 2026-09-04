@@ -2,9 +2,9 @@ use crate::{
     EDString,
     common_types::{
         Allegiance, BodyType, Conflict, Credits, Faction, FactionName, PowerplayConflictProgress,
-        PowerplayState, StationInformation, ThargoidWar,
+        PowerplayState, StarPos, StationInformation, ThargoidWar,
     },
-    market::MarketItemType,
+    market_item_type::MarketItemType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -87,45 +87,45 @@ pub struct EDLogCarrierJumpRequest {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogCarrierJump {
-    docked: bool,
-    on_foot: Option<bool>,
+    pub docked: bool,
+    pub on_foot: Option<bool>,
     #[serde(flatten)]
-    station_information: Option<StationInformation>,
-    taxi: Option<bool>,
-    multicrew: Option<bool>,
+    pub station_information: Option<StationInformation>,
+    pub taxi: Option<bool>,
+    pub multicrew: Option<bool>,
     // TODO: location has overlapping fields
-    star_system: EDString,
-    system_address: u64,
-    star_pos: [f64; 3],
-    system_allegiance: Allegiance,
-    system_economy: EDString,
+    pub star_system: EDString,
+    pub system_address: u64,
+    pub star_pos: StarPos,
+    pub system_allegiance: Allegiance,
+    pub system_economy: EDString,
     #[serde(rename = "SystemEconomy_Localised")]
-    system_economy_localised: EDString,
-    system_second_economy: EDString,
+    pub system_economy_localised: EDString,
+    pub system_second_economy: EDString,
     #[serde(rename = "SystemSecondEconomy_Localised")]
-    system_second_economy_localised: EDString,
-    system_government: EDString,
+    pub system_second_economy_localised: EDString,
+    pub system_government: EDString,
     #[serde(rename = "SystemGovernment_Localised")]
-    system_government_localised: EDString,
-    system_security: EDString,
+    pub system_government_localised: EDString,
+    pub system_security: EDString,
     #[serde(rename = "SystemSecurity_Localised")]
-    system_security_localised: EDString,
-    population: u64,
-    body: EDString,
+    pub system_security_localised: EDString,
+    pub population: u64,
+    pub body: EDString,
     #[serde(rename = "BodyID")]
-    body_id: u64,
-    body_type: BodyType,
-    controlling_power: Option<EDString>,
-    powers: Option<Vec<EDString>>, // TODO: use Powers struct here
-    powerplay_state: Option<PowerplayState>,
-    powerplay_state_control_progress: Option<f64>,
-    powerplay_state_reinforcement: Option<u64>,
-    powerplay_state_undermining: Option<u64>,
-    powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
-    thargoid_war: Option<ThargoidWar>,
-    factions: Option<Vec<Faction>>,
-    system_faction: Option<FactionName>,
-    conflicts: Option<Vec<Conflict>>,
+    pub body_id: u64,
+    pub body_type: BodyType,
+    pub controlling_power: Option<EDString>,
+    pub powers: Option<Vec<EDString>>, // TODO: use Powers struct here
+    pub powerplay_state: Option<PowerplayState>,
+    pub powerplay_state_control_progress: Option<f64>,
+    pub powerplay_state_reinforcement: Option<u64>,
+    pub powerplay_state_undermining: Option<u64>,
+    pub powerplay_conflict_progress: Option<Vec<PowerplayConflictProgress>>,
+    pub thargoid_war: Option<ThargoidWar>,
+    pub factions: Option<Vec<Faction>>,
+    pub system_faction: Option<FactionName>,
+    pub conflicts: Option<Vec<Conflict>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

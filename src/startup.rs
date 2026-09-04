@@ -1,5 +1,5 @@
 use crate::{
-    EDString, common_types::{Credits, FuelCapacity, Merits, Power,}, log_line::{GameMode, LoadGameShip}, material::{EncodedMaterial, ManufacturedMaterial, RawMaterial}, mission::Mission, modules::Module, ship::Inventory, ship_type::ShipType, statistics::{
+    EDString, common_types::{CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank, FuelCapacity, Merits, Power, SoldierRank, TradeRank,}, log_line::{GameMode, LoadGameShip}, material::{EncodedMaterial, ManufacturedMaterial, RawMaterial}, modules::Module, ship::Inventory, ship_type::ShipType, station_services::Mission, statistics::{
         StatisticSearchAndRescue, StatisticsBankAccount, StatisticsCQCStats, StatisticsCombat,
         StatisticsCrafting, StatisticsCrew, StatisticsCrime, StatisticsExobiology,
         StatisticsExploration, StatisticsFleetcarrier, StatisticsMaterialTraderStats,
@@ -193,15 +193,6 @@ pub struct EDLogPowerplay {
     #[serde(with = "duration_as_secs")]
     pub time_pledged: Duration,
 }
-
-pub type CombatRank = u8;
-pub type TradeRank = u8;
-pub type ExploreRank = u8;
-pub type SoldierRank = u8;
-pub type ExobiologistRank = u8;
-pub type EmpireRank = u8;
-pub type FederationRank = u8;
-pub type CQCRank = u8;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]

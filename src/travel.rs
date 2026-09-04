@@ -1,11 +1,11 @@
 use crate::{
     EDString,
     common_types::{
-        Allegiance, BodyInformation, BodyType, Conflict, Faction, FactionName, FactionState,
-        GovernmentType, Powers, StarClass, StationEconomy, StationInformation, StationService,
-        SystemEconomy, SystemFactionName, SystemSecurity, ThargoidWar,
+        Allegiance, BodyInformation, BodyType, Conflict, DockingDeniedReason, Faction, FactionName,
+        FactionState, GovernmentType, LandingPads, Powers, StarClass, StarPos, StationEconomy,
+        StationIdentification, StationInformation, StationService, StationState, SystemEconomy,
+        SystemFactionName, SystemSecurity, ThargoidWar,
     },
-    docking::{DockingDeniedReason, LandingPads, StationIdentification, StationState},
     navigation::{JumpToStarSystem, JumpType},
     utils::string_or_struct,
 };
@@ -110,8 +110,7 @@ pub struct EDLogFSDJump {
     pub multicrew: Option<bool>,
     pub star_system: EDString,
     pub system_address: u64,
-    // [x, y, z], in light years
-    pub star_pos: [f64; 3],
+    pub star_pos: StarPos,
     pub system_allegiance: Allegiance,
     pub system_economy: SystemEconomy,
     #[serde(rename = "SystemEconomy_Localised")]
@@ -194,7 +193,7 @@ pub struct EDLogLocation {
     pub on_foot: Option<bool>,
     pub star_system: EDString,
     pub system_address: Option<u64>,
-    pub star_pos: [f64; 3],
+    pub star_pos: StarPos,
     pub system_allegiance: Allegiance,
     pub system_economy: SystemEconomy,
     #[serde(rename = "SystemEconomy_Localised")]

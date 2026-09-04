@@ -62,21 +62,6 @@ pub struct EDLogProspectedAsteroid {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogAsteroidCracked {
-    body: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogMiningRefined {
-    #[serde(rename = "Type")]
-    material_type: EDString,
-    #[serde(rename = "Type_Localised")]
-    material_type_localised: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogDataScanned {
     #[serde(rename = "Type")]
     data_type: EDString,

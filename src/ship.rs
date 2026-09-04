@@ -1,7 +1,7 @@
 use crate::{
     EDString,
-    market::MarketItemType,
-    ship_module::{ShipModule, ShipModuleSlot, serde_ship_module},
+    market_item_type::MarketItemType,
+    ship_module::{ShipModule, ShipModuleSlot},
 };
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
@@ -17,20 +17,6 @@ pub struct Inventory {
     stolen: Option<u64>,
     #[serde(rename = "MissionID")]
     mission_id: Option<u64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-06-07T23:31:33Z", "event":"EjectCargo", "Type":"alliancetradeagreements", 
-             "Type_Localised":"Alliance Trade Agreements", "Count":2, "Abandoned":false, "PowerplayOrigin":"" })]
-pub struct EDLogEjectCargo {
-    #[serde(rename = "Type")]
-    cargo_type: MarketItemType,
-    #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<EDString>,
-    count: u64,
-    abandoned: bool,
-    powerplay_origin: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -81,37 +67,11 @@ pub struct EDLogSynthesis {
     "FullyRepaired":true, "Health":1.000000 })]
 #[testcase({ "timestamp":"2026-03-27T18:42:08Z", "event":"AfmuRepairs", "Module":"$int_dockingcomputer_advanced_name;", "Module_Localised":"Docking Computer", "FullyRepaired":true, "Health":1.000000 })]
 pub struct EDLogAfmuRepairs {
-    #[serde(with = "serde_ship_module")]
     pub module: ShipModule,
     #[serde(rename = "Module_Localised")]
     pub module_localised: Option<EDString>,
     pub fully_repaired: bool,
     pub health: f32,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSetUserShipName {
-    ship: EDString,
-    #[serde(rename = "ShipID")]
-    ship_id: u64,
-    user_ship_name: EDString,
-    user_ship_id: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogClearImpound {
-    ship_type: EDString,
-    #[serde(rename = "ShipType_Localised")]
-    ship_type_localised: Option<EDString>,
-    #[serde(rename = "ShipID")]
-    ship_id: u64,
-    system: Option<EDString>,
-    #[serde(rename = "ShipMarketID")]
-    ship_market_id: u64,
-    #[serde(rename = "MarketID")]
-    market_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -161,7 +121,6 @@ fn test_serde_ship_module() {
     fn test(name: &str, module: ShipModule) {
         #[derive(Deserialize, Debug)]
         struct Module {
-            #[serde(with = "serde_ship_module")]
             module: ShipModule,
         }
         let s = format!("{{\"module\": \"{name}\"}}");

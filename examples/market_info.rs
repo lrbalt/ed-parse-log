@@ -1,12 +1,10 @@
 use ed_parse_log_files::{
     common_types::StationType,
-    docking::EDLogTechnologyBroker,
     fleet_carrier::EDLogFCMaterials,
     log_line::{EDLogEvent, EDLogLine},
-    market::{EDLogColonisationConstructionDepot, EDLogMarket},
-    modules::EDLogStoredModules,
+    market::EDLogColonisationConstructionDepot,
     navigation::EDLogApproachSettlement,
-    shipyard::EDLogStoredShips,
+    station_services::{EDLogMarket, EDLogStoredModules, EDLogStoredShips, EDLogTechnologyBroker},
     travel::{EDLogDocked, EDLogLocation},
 };
 use numfmt::{Formatter, Precision, Scales};

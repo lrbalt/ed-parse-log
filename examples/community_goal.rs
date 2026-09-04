@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use ed_parse_log_files::{
-    community_goal::{CommunityGoal, EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
     log_line::{EDLogEvent, EDLogLine},
+    station_services::{CommunityGoal, EDLogCommunityGoalJoin, EDLogCommunityGoalReward},
 };
 use itertools::Itertools;
 use numfmt::{Formatter, Precision, Scales};
@@ -268,7 +268,8 @@ pub fn main() {
                 .unwrap_or("n/a"),
             goal.goal
                 .as_ref()
-                .and_then(|g| g.tier_reached.map(|s| s.as_str()))
+                .and_then(|g| g.tier_reached.as_ref())
+                .map(|s| s.tier_reached.as_str())
                 .unwrap_or("n/a"),
         );
         let reward = format!(
@@ -283,7 +284,8 @@ pub fn main() {
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.goal
                 .as_ref()
-                .and_then(|g| g.bonus.map(|b| dec_formatter.fmt2(b.0).to_string()))
+                .and_then(|g| g.tier_reached.as_ref())
+                .map(|t| dec_formatter.fmt2(t.bonus.0).to_string())
                 .unwrap_or_else(|| "n/a".to_string()),
             goal.reward
                 .as_ref()

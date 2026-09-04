@@ -1,9 +1,8 @@
 use crate::{
     EDString,
-    common_types::{Credits, CrimeType, StationType},
+    common_types::{Credits, CrewMemberRole, CrimeType, StationType},
     log_line::{EDLogEvent, Extractable},
     market::MicroResource,
-    startup::CombatRank,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -188,15 +187,6 @@ pub struct EDLogCrimeVictim {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-pub enum CrewMemberRole {
-    Active,
-    Helm,
-    OnShoreLeave,
-    OnFoot,
-    Idle,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct CrewMember {
     name: EDString,
@@ -308,35 +298,6 @@ pub struct EDLogQuitACrew {
 pub struct EDLogJoinACrew {
     captain: EDString,
     telepresence: bool,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCrewFire {
-    #[serde(rename = "Name")]
-    name: EDString,
-    #[serde(rename = "CrewID")]
-    crew_id: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCrewAssign {
-    name: EDString,
-    #[serde(rename = "CrewID")]
-    crew_id: u64,
-    role: CrewMemberRole,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCrewHire {
-    name: EDString,
-    #[serde(rename = "CrewID")]
-    crew_id: u64,
-    faction: EDString,
-    cost: Credits,
-    combat_rank: CombatRank,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

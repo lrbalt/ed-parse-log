@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use strum::Display;
 
-pub mod serde_ship_module {
+mod serde_ship_module {
     use crate::{
         ship_module::{
             HardpointConnection, HardpointSize, ShipArmourGrade, ShipModule, ShipModuleClass,
@@ -93,7 +93,7 @@ pub mod serde_ship_module {
     where
         D: Deserializer<'de>,
     {
-        let s = String::deserialize(deserializer)?;
+        let s = String::deserialize(deserializer)?.to_lowercase();
 
         let mut parts = s.split('_').collect::<Vec<_>>();
 
@@ -116,7 +116,7 @@ pub mod serde_ship_module {
         }
 
         match parts[0] {
-            "Null" => Ok(ShipModule::Null),
+            "null" => Ok(ShipModule::Null),
             "int" => {
                 // handle modules that do not have pattern $int_name_class_size_name;
                 match parts[1] {
@@ -514,6 +514,8 @@ pub mod serde_ship_module {
             }
             "bobble" if parts.len() > 1 => Ok(ShipModule::Bobble(parts[1..].join("_").into())),
             "string" if parts.len() > 1 => Ok(ShipModule::String(parts[1..].join("_").into())),
+            "paint" => Ok(ShipModule::Paint),
+            "wear" => Ok(ShipModule::Wear),
             unknown => {
                 // check on cockpit module that follows $shipname_cockpit_name; pattern
                 if let Some(index) = s.rfind("cockpit") {
@@ -571,6 +573,7 @@ pub enum ShipArmourGrade {
     #[strum(to_string = "Grade 5")]
     Grade5,
     Reactive,
+    Mirrored,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
@@ -1141,7 +1144,7 @@ pub enum ShipModuleExternal {
     Drive,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ShipModule {
     Armour(ShipType, ShipArmourGrade),
     Bobble(EDString), // bobble name
@@ -1161,7 +1164,9 @@ pub enum ShipModule {
     String(EDString),              // string name
     VoicePack(EDString),           // voicepack name
     WeaponCustomisation(EDString), // customisation name
-    Null,                          // when module is removed, the log shows string "Null"
+    Paint,
+    Wear,
+    Null, // when module is removed, the log shows string "Null"
 }
 
 impl Display for ShipModule {
@@ -1174,6 +1179,7 @@ impl Display for ShipModule {
                 ShipArmourGrade::Grade4 => write!(f, "Armour Grade 4"),
                 ShipArmourGrade::Grade5 => write!(f, "Armour Grade 5"),
                 ShipArmourGrade::Reactive => write!(f, "Reactive Surface Composite"),
+                ShipArmourGrade::Mirrored => write!(f, "Mirrored"),
             },
             ShipModule::OptionalInternal(module, _size, class) => match module {
                 ShipModuleOptionalInternal::PassengerCabin => {
@@ -1214,7 +1220,27 @@ impl Display for ShipModule {
             ShipModule::String(_) => write!(f, "String Customisation"),
             ShipModule::ShipKit(_, _) => write!(f, "Ship Kit"),
             ShipModule::External(_, _, _) => write!(f, "Drive"),
+            ShipModule::Paint => write!(f, "Paint"),
+            ShipModule::Wear => write!(f, "Wear"),
             ShipModule::Null => write!(f, "Null"),
         }
+    }
+}
+
+impl Serialize for ShipModule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serde_ship_module::serialize(self, serializer)
+    }
+}
+
+impl<'de> Deserialize<'de> for ShipModule {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        serde_ship_module::deserialize(deserializer)
     }
 }

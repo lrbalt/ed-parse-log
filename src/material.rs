@@ -1,10 +1,12 @@
+use crate::EDString;
 use ed_parse_log_files_macros::testcase_struct;
-use serde::{Deserialize, Serialize};
+use serde::{
+    Deserialize, Serialize,
+    de::{Error, value::StringDeserializer},
+};
 use strum::Display;
 
-use crate::EDString;
-
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 pub enum RawMaterialName {
     #[serde(alias = "antimony")]
     Antimony,
@@ -73,7 +75,7 @@ pub struct RawMaterial {
     pub count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 pub enum ManufacturedMaterialName {
     #[serde(alias = "basicconductors")]
     #[strum(to_string = "Basic Conductors")]
@@ -122,10 +124,10 @@ pub enum ManufacturedMaterialName {
     ExquisiteFocusCrystals,
     #[serde(alias = "fedcorecomposites")]
     #[strum(to_string = "Core Dynamics Composites")]
-    FEDCoreComposites,
+    FedCoreComposites,
     #[serde(alias = "fedproprietarycomposites")]
     #[strum(to_string = "Proprietary Composites")]
-    FEDProprietaryComposites,
+    FedProprietaryComposites,
     #[serde(alias = "filamentcomposites")]
     #[strum(to_string = "Filament Composites")]
     FilamentComposites,
@@ -294,7 +296,7 @@ pub struct ManufacturedMaterial {
     pub count: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 pub enum EncodedMaterialName {
     #[serde(alias = "adaptiveencryptors")]
     #[strum(to_string = "Adaptive Encryptors Capture")]
@@ -447,4 +449,115 @@ pub struct EncodedMaterial {
     #[serde(rename = "Name_Localised")]
     pub name_localised: Option<EDString>,
     pub count: u64,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum AllMaterialNames {
+    Raw(RawMaterialName),
+    Manufactured(ManufacturedMaterialName),
+    Encoded(EncodedMaterialName),
+}
+
+impl Serialize for AllMaterialNames {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        match self {
+            AllMaterialNames::Raw(mat) => RawMaterialName::serialize(mat, serializer),
+            AllMaterialNames::Manufactured(mat) => {
+                ManufacturedMaterialName::serialize(mat, serializer)
+            }
+            AllMaterialNames::Encoded(mat) => EncodedMaterialName::serialize(mat, serializer),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for AllMaterialNames {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let mat_str = String::deserialize(deserializer)?;
+
+        if let Ok(mat) =
+            RawMaterialName::deserialize(StringDeserializer::<D::Error>::new(mat_str.clone()))
+        {
+            return Ok(AllMaterialNames::Raw(mat));
+        }
+
+        if let Ok(mat) = ManufacturedMaterialName::deserialize(StringDeserializer::<D::Error>::new(
+            mat_str.clone(),
+        )) {
+            return Ok(AllMaterialNames::Manufactured(mat));
+        }
+
+        if let Ok(mat) =
+            EncodedMaterialName::deserialize(StringDeserializer::<D::Error>::new(mat_str.clone()))
+        {
+            return Ok(AllMaterialNames::Encoded(mat));
+        }
+
+        Err(D::Error::custom(format!(
+            "unknown material name: {mat_str}"
+        )))
+    }
+}
+
+impl std::fmt::Display for AllMaterialNames {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AllMaterialNames::Raw(raw_material_name) => write!(f, "{raw_material_name}"),
+            AllMaterialNames::Manufactured(manufactured_material_name) => {
+                write!(f, "{manufactured_material_name}")
+            }
+            AllMaterialNames::Encoded(encoded_material_name) => {
+                write!(f, "{encoded_material_name}")
+            }
+        }
+    }
+}
+
+#[test]
+fn test_materials_parsing() {
+    #[derive(Deserialize)]
+    struct Mat {
+        mat: AllMaterialNames,
+    }
+
+    let cases = [
+        (
+            "decodedemissiondata",
+            AllMaterialNames::Encoded(EncodedMaterialName::DecodedEmissionData),
+        ),
+        (
+            "scandatabanks",
+            AllMaterialNames::Encoded(EncodedMaterialName::ScanDatabanks),
+        ),
+        (
+            "unknownenergysource",
+            AllMaterialNames::Manufactured(ManufacturedMaterialName::UnknownEnergySource),
+        ),
+    ];
+    let parsed_cases = cases
+        .into_iter()
+        // make json with the material name in mat field
+        .map(|(s, t)| (format!("{{\"mat\":\"{s}\"}}"), t))
+        // parse json into AllMaterialNames
+        .map(|(s, t)| (serde_json::from_str(&s), t))
+        .collect::<Vec<(Result<Mat, _>, AllMaterialNames)>>();
+
+    let parsed_result = parsed_cases
+        .into_iter()
+        // filter the parsed AllMaterialName out of the Mat struct
+        .map(|(r, t)| r.map(|a| (a.mat, t)))
+        .collect::<Result<Vec<(AllMaterialNames, AllMaterialNames)>, serde_json::Error>>();
+
+    // check all parsing was succesfull
+    assert!(parsed_result.is_ok());
+
+    // check all parsed AllMaterialNames are equal to expected AllMaterialNames
+    for r in parsed_result.unwrap() {
+        assert_eq!(r.0, r.1);
+    }
 }

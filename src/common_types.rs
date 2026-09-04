@@ -1,7 +1,6 @@
 use crate::{
     EDString,
     log_line::{EDLogEvent, Extractable},
-    startup::CombatRank,
     utils::{parse_number_of_days, string_or_struct},
 };
 use chrono::Duration;
@@ -200,8 +199,45 @@ impl Credits {
     }
 }
 
+pub type CombatRank = u8;
+pub type TradeRank = u8;
+pub type ExploreRank = u8;
+pub type SoldierRank = u8;
+pub type ExobiologistRank = u8;
+pub type EmpireRank = u8;
+pub type FederationRank = u8;
+pub type CQCRank = u8;
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+// [x, y, z], in light years
+pub struct StarPos([f64; 3]);
+
+impl StarPos {
+    pub fn x(&self) -> f64 {
+        self.0[0]
+    }
+    pub fn y(&self) -> f64 {
+        self.0[1]
+    }
+    pub fn z(&self) -> f64 {
+        self.0[2]
+    }
+    pub fn distance_from_sol(&self) -> f64 {
+        (self.x().powi(2) + self.y().powi(2) + self.z().powi(2)).sqrt()
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Unknown {}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum CrewMemberRole {
+    Active,
+    Helm,
+    OnShoreLeave,
+    OnFoot,
+    Idle,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
@@ -1083,6 +1119,85 @@ pub enum Power {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "lowercase")]
+pub enum VoucherType {
+    #[serde(rename = "CombatBond")]
+    CombatBond,
+    Bounty,
+    Trade,
+    Settlement,
+    Codex,
+    Scannable,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct LandingPads {
+    pub small: u64,
+    pub medium: u64,
+    pub large: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum DockingDeniedReason {
+    NoSpace,
+    TooLarge,
+    Hostile,
+    Offences,
+    Distance,
+    ActiveFighter,
+    NoReason,
+    // following found in logs, but not in manual
+    DockOffline,
+    #[serde(rename = "DockingUnavliable")]
+    DockingUnavailable,
+    JumpImminent,
+    RestrictedAccess,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum StationState {
+    UnderRepairs,
+    Damaged,
+    Abandoned,
+    UnderAttack,
+    // following found in logs, but not in manual
+    DamagedHuman,
+    Construction,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Copy, PartialEq, Eq, Display)]
+pub enum VehicleType {
+    #[serde(rename = "testbuggy")]
+    #[strum(to_string = "SRV Scarab")]
+    Scarab,
+    #[serde(rename = "combat_multicrew_srv_01")]
+    #[strum(to_string = "SRV Scorpion")]
+    Scorpion,
+    #[serde(rename = "independent_fighter")]
+    #[strum(to_string = "Taipan")]
+    Taipan,
+    #[serde(rename = "gdn_hybrid_fighter_v1")]
+    #[strum(to_string = "Guardian Hybrid Fighter V1")]
+    GuardianHybridFighterV1,
+    #[serde(rename = "gdn_hybrid_fighter_v2")]
+    #[strum(to_string = "Javelin")]
+    Javelin,
+    #[serde(rename = "gdn_hybrid_fighter_v3")]
+    #[strum(to_string = "Lance")]
+    Lance,
+    #[serde(rename = "federation_fighter")]
+    #[strum(to_string = "F63 Condor")]
+    F63Condor,
+    #[serde(rename = "empire_fighter")]
+    #[strum(to_string = "Gu-97")]
+    Gu97,
+    #[serde(rename = "lander01")]
+    #[strum(to_string = "Nomad")]
+    Nomad,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct PowerplayConflictProgress {
     pub power: Power,
@@ -1133,6 +1248,17 @@ impl Extractable for BodyInformation {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct StationIdentification {
+    #[serde(rename = "MarketID")]
+    pub market_id: Option<u64>,
+    pub station_name: EDString,
+    #[serde(rename = "StationName_Localised")]
+    pub station_name_localised: Option<EDString>,
+    pub station_type: Option<StationType>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase_struct({"StationName":"Exogene Sciences", "StationType":"AsteroidBase", "MarketID":129038712, 
     "StationFaction":{ "Name":"October Consortium" }, "StationGovernment":"$government_Corporate;", 
     "StationGovernment_Localised":"Corporate", "StationServices":[ "dock", "autodock", "commodities", 
@@ -1142,6 +1268,7 @@ impl Extractable for BodyInformation {
     "StationEconomy":"$economy_Service;", "StationEconomy_Localised":"Service", "StationEconomies":[ 
     { "Name":"$economy_Service;", "Name_Localised":"Service", "Proportion":1.000000 } ] })]
 pub struct StationInformation {
+    // TODO: use StationIdentification
     pub station_name: EDString,
     #[serde(rename = "StationName_Localised")]
     pub station_name_localised: Option<EDString>,
@@ -1163,87 +1290,87 @@ pub struct StationInformation {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum StationService {
-    #[serde(alias = "Dock")]
-    Dock,
     #[serde(alias = "Autodock")]
     Autodock,
     #[serde(alias = "BlackMarket")]
     BlackMarket,
+    #[serde(alias = "CarrierFuel")]
+    CarrierFuel,
+    #[serde(alias = "CarrierManagement")]
+    CarrierManagement,
+    #[serde(alias = "CarrierVendor")]
+    CarrierVendor,
     #[serde(alias = "Commodities")]
     Commodities,
     #[serde(alias = "Contacts")]
     Contacts,
-    #[serde(alias = "Exploration")]
-    Exploration,
-    #[serde(alias = "Initiatives")]
-    Initiatives,
-    #[serde(alias = "Missions")]
-    Missions,
-    #[serde(alias = "Outfitting")]
-    Outfitting,
     #[serde(alias = "CrewLounge")]
     CrewLounge,
+    #[serde(alias = "Dock")]
+    Dock,
+    #[serde(alias = "Engineer")]
+    Engineer,
+    #[serde(alias = "Exploration")]
+    Exploration,
+    #[serde(alias = "Facilitator")]
+    Facilitator,
+    #[serde(alias = "FlightController")]
+    FlightController,
+    #[serde(alias = "Initiatives")]
+    Initiatives,
+    #[serde(alias = "Livery")]
+    Livery,
+    #[serde(alias = "Missions")]
+    Missions,
+    #[serde(alias = "MissionsGenerated")]
+    MissionsGenerated,
+    #[serde(alias = "ModulePacks")]
+    ModulePacks,
+    #[serde(alias = "OnDockMission")]
+    OnDockMission,
+    #[serde(alias = "Outfitting")]
+    Outfitting,
+    #[serde(alias = "Powerplay")]
+    Powerplay,
     #[serde(alias = "Rearm")]
     Rearm,
     #[serde(alias = "Refuel")]
     Refuel,
     #[serde(alias = "Repair")]
     Repair,
+    #[serde(alias = "Research")]
+    Research,
+    #[serde(alias = "SearchAndRescue")]
+    SearchRescue,
     #[serde(alias = "Shipyard")]
     Shipyard,
+    #[serde(alias = "Shop")]
+    Shop,
+    #[serde(alias = "StationOperations")]
+    StationOperations,
     #[serde(alias = "Tuning")]
     Tuning,
     #[serde(alias = "Workshop")]
     Workshop,
-    #[serde(alias = "MissionsGenerated")]
-    MissionsGenerated,
-    #[serde(alias = "Facilitator")]
-    Facilitator,
-    #[serde(alias = "Research")]
-    Research,
-    #[serde(alias = "FlightController")]
-    FlightController,
-    #[serde(alias = "StationOperations")]
-    StationOperations,
-    #[serde(alias = "OnDockMission")]
-    OnDockMission,
-    #[serde(alias = "Powerplay")]
-    Powerplay,
-    #[serde(alias = "SearchAndRescue")]
-    SearchRescue,
-    #[serde(alias = "Engineer")]
-    Engineer,
-    #[serde(alias = "Shop")]
-    Shop,
-    #[serde(alias = "CarrierManagement")]
-    CarrierManagement,
-    #[serde(alias = "CarrierFuel")]
-    CarrierFuel,
-    #[serde(alias = "CarrierVendor")]
-    CarrierVendor,
-    #[serde(alias = "Livery")]
-    Livery,
-    #[serde(alias = "ModulePacks")]
-    ModulePacks,
     #[serde(alias = "VoucherRedemption")]
     VoucherRedemption,
     // following found in logs, but not in manual
-    #[serde(rename = "stationMenu")]
-    StationMenu,
-    #[serde(rename = "techBroker")]
-    TechBroker,
-    #[serde(rename = "squadronBank")]
-    SquadronBank,
-    SocialSpace,
-    Bartender,
-    PioneerSupplies,
     ApexInterstellar,
-    VistaGenomics,
+    Bartender,
+    ColonisationContribution,
     FrontlineSolutions,
     MaterialTrader,
-    RegisteringColonisation,
-    ColonisationContribution,
+    PioneerSupplies,
     Refinery,
+    RegisteringColonisation,
+    SocialSpace,
+    #[serde(rename = "stationMenu")]
+    StationMenu,
+    #[serde(rename = "squadronBank")]
+    SquadronBank,
+    #[serde(rename = "techBroker")]
+    TechBroker,
+    VistaGenomics,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

@@ -4,13 +4,13 @@ use ed_parse_log_files::{
         COMBAT_RANK, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK,
         TRADE_RANK,
     },
-    common_types::{Credits, Merits},
+    common_types::{
+        CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank,
+        Merits, SoldierRank, TradeRank,
+    },
     log_line::{EDLogEvent, EDLogLine},
     powerplay::power_play_rank_range,
-    startup::{
-        CQCRank, CombatRank, EDLogPowerplay, EDLogRank, EDLogReputation, EmpireRank,
-        ExobiologistRank, ExploreRank, FederationRank, SoldierRank, TradeRank,
-    },
+    startup::{EDLogPowerplay, EDLogRank, EDLogReputation},
 };
 use prettytable::{Table, cell, row};
 use rayon::prelude::*;
