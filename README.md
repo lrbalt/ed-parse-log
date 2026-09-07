@@ -4,7 +4,7 @@ Parse the log files of the space flight simulator [Elite Dangerous](https://www.
 ### What can it do?
 * It uses `serde_json` to parse a line from a log file. 
 * It uses serde's `deny_unknown_fields` to be strict in parsing, i.e. it will fail on unexpected fields in a log line. 
-* It does not integrate with any online database like [Inara](inara.cz), so all information comes from the parsed log lines alone. 
+* It does not integrate with any online database like [Inara](inara.cz) or [Spansh](https://www.spansh.co.uk), so all information comes from the parsed log lines alone. 
 * It uses `Option` to handle new fields and other differences in the way log files are filled over time by different versions of Elite.
 * You can use a String interner to reduce memory footprint. Use the feature `interning` to enable. Enabled by default.
 * It can handle all seperate json files like `market.json`
@@ -14,12 +14,14 @@ After I worked on this crate I found [ed-journals](https://github.com/rster2002/
 
 ### Current status
 * This crate can parse my own logs going back to june 2022.
+* It uses the naming in the log files in the localisation field in the English language for the `Display` of all items. 
 * it parses all test files from the repo's below some of which go back to 2017
-** [ed-journals](https://github.com/rster2002/ed-journals)
-** [ed-scout](https://github.com/joncage/ed-scout)
-** [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
-* On my M2 Macbook it parses at ± 530 MB/s (without string interning) or ± 570 MB/s (with string interning) as measured by the `read_all_logs` example on my ED log directory containing ± 1.7 million log lines in ± 2.400 log files (± 1GB).
+    * [ed-journals](https://github.com/rster2002/ed-journals)
+    * [ed-scout](https://github.com/joncage/ed-scout)
+    * [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
+* On my M2 Macbook it parses at ± 580 MB/s (without string interning) or ± 590 MB/s (with string interning) as measured by the `read_all_logs` example on my ED log directory containing ± 1.8 million log lines in ± 2.450 log files (± 1.1GB).
 * it needs further refactoring to improve and dry the data model
+* it has a lot (±300) of simple tests for almost all of the structs
 
 ### How to run an example
 

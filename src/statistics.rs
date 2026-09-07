@@ -499,7 +499,7 @@ pub struct StatisticsSquadron {
     pub leaderboard_podiums: u64,
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 #[testcase_struct({ "TG_ENCOUNTER_KILLED":10032, "TG_ENCOUNTER_TOTAL":171, "TG_ENCOUNTER_TOTAL_LAST_SYSTEM":"Pleiades Sector SZ-O b6-0", 
     "TG_ENCOUNTER_TOTAL_LAST_TIMESTAMP":"3311-11-24 11:13", "TG_ENCOUNTER_TOTAL_LAST_SHIP":"Mandalay" })]

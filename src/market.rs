@@ -183,6 +183,7 @@ fn test_market_examples() {
     let json = [
         include_str!("../testdata/Market - rare goods.json"),
         include_str!("../testdata/Market - robardin-rock.json"),
+        include_str!("../testdata/Market - on surface mining.json"),
     ];
 
     let lines: Result<Vec<crate::log_line::EDLogLine>, _> =

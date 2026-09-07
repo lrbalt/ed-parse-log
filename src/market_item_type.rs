@@ -88,7 +88,44 @@ pub enum MarketItemType {
     Benitoite,
     #[serde(alias = "$musgravite_name;")]
     Musgravite,
-
+    #[serde(alias = "$iridium_name;")]
+    Iridium,
+    #[serde(alias = "$helium_name;")]
+    #[strum(to_string = "Helium")]
+    Helium,
+    #[serde(alias = "$helium3_name;")]
+    #[strum(to_string = "Helium-3")]
+    Helium3,
+    #[serde(alias = "$bastnasite_name;")]
+    #[strum(to_string = "Bastnasite")]
+    Bastnasite,
+    #[serde(alias = "$deuterium_name;")]
+    #[strum(to_string = "Deuterium")]
+    Deuterium,
+    #[serde(alias = "$thortveitite_name;")]
+    #[strum(to_string = "Thortveitite")]
+    Thortveitite,
+    #[serde(alias = "$quartzpyroxenite_name;")]
+    #[strum(to_string = "Quartz Pyroxenite")]
+    QuartzPyroxenite,
+    #[serde(alias = "$olivine_name;")]
+    #[strum(to_string = "Olivine")]
+    Olivine,
+    #[serde(alias = "$periclasedunite_name;")]
+    #[strum(to_string = "Periclase Dunite")]
+    PericlaseDunite,
+    #[serde(alias = "$sapphire_name;")]
+    #[strum(to_string = "Sapphire")]
+    Sapphire,
+    #[serde(alias = "$diamond_name;")]
+    #[strum(to_string = "Diamond")]
+    Diamond,
+    #[serde(alias = "$ruby_name;")]
+    #[strum(to_string = "Ruby")]
+    Ruby,
+    #[serde(alias = "$magnesite_name;")]
+    #[strum(to_string = "Magnesite")]
+    Magnesite,
     #[serde(
         alias = "$lowtemperaturediamond_name;",
         alias = "lowtemperaturediamond"

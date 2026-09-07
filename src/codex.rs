@@ -516,6 +516,10 @@ pub enum CodexNames {
     #[strum(to_string = "Aleoida Laminiae - Lime")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     AleoidaLaminiaeLime,
+    #[serde(rename = "$Codex_Ent_Aleoids_04_M_Name;")]
+    #[strum(to_string = "Aleoida Laminiae - Emerald")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    AleoidaLaminiaeEmerald,
     #[serde(rename = "$Codex_Ent_Aleoids_04_N_Name;")]
     #[strum(to_string = "Aleoida Laminiae - Ocher")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]

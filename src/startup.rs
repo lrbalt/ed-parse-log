@@ -220,7 +220,7 @@ pub struct EDLogReputation {
     pub alliance: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug, Extractable)]
+#[derive(Serialize, Deserialize, Clone,  Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStatistics {
     #[serde(rename = "Bank_Account")]
