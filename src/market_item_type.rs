@@ -1237,6 +1237,7 @@ pub enum MarketItemType {
     #[serde(alias = "$robotics_name;")]
     Robotics,
     #[serde(alias = "$restrictedintel_name;")]
+    #[strum(to_string = "Archer's Restricted Intel")]
     RestrictedIntel,
     #[serde(alias = "$militaryintelligence_name;")]
     #[strum(to_string = "Military Intelligence")]
@@ -1244,6 +1245,57 @@ pub enum MarketItemType {
     #[serde(alias = "$alliancetradeagreements_name;")]
     #[strum(to_string = "Alliance Trade Agreements")]
     AllianceTradeAgreements,
+    #[serde(alias = "poweremployeedata")]
+    #[strum(to_string = "Power Association Data")]
+    PowerEmployeeData,
+    #[serde(alias = "powerpropagandadata")]
+    #[strum(to_string = "Power Political Data")]
+    PowerPropagandaData,
+    #[serde(alias = "powerresearchdata")]
+    #[strum(to_string = "Power Research Data")]
+    PowerResearchData,
+    #[serde(alias = "powerequipment")]
+    #[strum(to_string = "Personal Protective Equipment")]
+    PowerEquipment,
+    #[serde(alias = "powerexperiment")]
+    #[strum(to_string = "Experiment Prototype")]
+    PowerExperiment,
+    #[serde(alias = "powerelectronics")]
+    #[strum(to_string = "Electronics Package")]
+    PowerElectronics,
+    #[serde(alias = "powerfinancialrecords")]
+    #[strum(to_string = "Power Industrial Data")]
+    PowerFinancialRecords,
+    #[serde(alias = "powerclassifieddata")]
+    #[strum(to_string = "Power Classified Data")]
+    PowerClassifiedData,
+    #[serde(alias = "poweragriculture")]
+    #[strum(to_string = "Agricultural Sample")]
+    PowerAgriculture,
+    #[serde(alias = "powerplaymilitary")]
+    #[strum(to_string = "Military Schematic")]
+    PowerplayMilitary,
+    #[serde(alias = "powermedical")]
+    #[strum(to_string = "Medical Sample")]
+    PowerMedical,
+    #[serde(alias = "powercomputer")]
+    #[strum(to_string = "Computer Parts")]
+    PowerComputer,
+    #[serde(alias = "powerpower")]
+    #[strum(to_string = "Energy Regulator")]
+    PowerPower,
+    #[serde(alias = "powersecurity")]
+    #[strum(to_string = "Security Logs")]
+    PowerSecurity,
+    #[serde(alias = "powermisccomputer")]
+    #[strum(to_string = "Data Storage Device")]
+    PowerMiscComputer,
+    #[serde(alias = "powerextraction")]
+    #[strum(to_string = "Extraction Sample")]
+    PowerExtraction,
+    #[serde(alias = "powerinventory")]
+    #[strum(to_string = "Inventory Record")]
+    PowerInventory,
 
     #[strum(to_string = "Limpet")]
     #[serde(alias = "Drones")]
@@ -1255,8 +1307,13 @@ pub enum MarketItemType {
     #[serde(alias = "WreckageComponents")]
     #[strum(to_string = "Wreckage Components")]
     WreckageComponents,
+    #[serde(alias = "$aislingmediamaterials_name;")]
+    #[strum(to_string = "Aisling Media Materials")]
     AislingMediaMaterials,
+    #[serde(alias = "$aislingpromotionalmaterials_name;")]
+    #[strum(to_string = "Aisling Programme Materials")]
     AislingPromotionalMaterials,
+    #[strum(to_string = "Archer's Field Supplies")]
     RepublicanFieldSupplies,
     RepublicanGarisonSupplies,
 

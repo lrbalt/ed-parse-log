@@ -1,9 +1,89 @@
 use crate::{
     EDString,
-    common_types::{Merits, Power},
+    common_types::{Merits, Power, Unknown},
+    market_item_type::MarketItemType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-03-23T14:29:05Z", "event":"PowerplayCollect", "Power":"Jerome Archer", 
+    "Type":"republicanfieldsupplies", "Type_Localised":"Archer's Field Supplies", "Count":16 })]
+pub struct EDLogPowerplayCollect {
+    pub power: Power,
+    #[serde(rename = "Type")]
+    pub power_type: MarketItemType,
+    #[serde(rename = "Type_Localised")]
+    pub power_type_localised: EDString,
+    pub count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayDefect {
+    pub from_power: Power,
+    pub to_power: Power,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-04-15T18:12:47Z", "event":"PowerplayDeliver", "Power":"Jerome Archer", 
+    "Type":"poweremployeedata", "Type_Localised":"Power Association Data", "Count":3 })]
+pub struct EDLogPowerplayDeliver {
+    pub power: Power,
+    #[serde(rename = "Type")]
+    pub power_type: MarketItemType,
+    #[serde(rename = "Type_Localised")]
+    pub power_type_localised: EDString,
+    pub count: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-02-09T17:53:18Z", "event":"PowerplayFastTrack", "Power":"Aisling Duval", "Cost":150000 })]
+pub struct EDLogPowerplayFastTrack {
+    power: Power,
+    cost: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-01-16T18:30:30Z", "event":"PowerplayJoin", "Power":"Jerome Archer" })]
+pub struct EDLogPowerplayJoin {
+    power: Power,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayLeave {
+    power: Power,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-10-17T17:53:31Z", "event":"PowerplaySalary", "Power":"Aisling Duval", "Amount":1000 })]
+pub struct EDLogPowerplaySalary {
+    power: Power,
+    amount: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayVote {
+    power: Power,
+    // TODO: needs example to determine datatype. Manual is not specific here
+    votes: Unknown,
+    system: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogPowerplayVoucher {
+    power: Power,
+    // TODO: needs example to determine datatype. Manual is not specific here
+    systems: Unknown,
+}
 
 pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
     match rank {
@@ -18,39 +98,6 @@ pub fn power_play_rank_range(rank: u64) -> (u64, u64) {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-01-16T18:30:30Z", "event":"PowerplayJoin", "Power":"Jerome Archer" })]
-pub struct EDLogPowerplayJoin {
-    power: Power,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-03-23T14:29:05Z", "event":"PowerplayCollect", "Power":"Jerome Archer", 
-    "Type":"republicanfieldsupplies", "Type_Localised":"Archer's Field Supplies", "Count":16 })]
-pub struct EDLogPowerplayCollect {
-    power: Power,
-    #[serde(rename = "Type")]
-    power_type: EDString,
-    #[serde(rename = "Type_Localised")]
-    power_type_localised: EDString,
-    count: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2026-04-15T18:12:47Z", "event":"PowerplayDeliver", "Power":"Jerome Archer", 
-    "Type":"poweremployeedata", "Type_Localised":"Power Association Data", "Count":3 })]
-pub struct EDLogPowerplayDeliver {
-    power: Power,
-    #[serde(rename = "Type")]
-    power_type: EDString,
-    #[serde(rename = "Type_Localised")]
-    power_type_localised: EDString,
-    count: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-08-09T13:16:28Z", "event":"PowerplayMerits", "Power":"Jerome Archer", "MeritsGained":345, "TotalMerits":1231231 })]
 pub struct EDLogPowerplayMerits {
     pub power: Power,
@@ -60,38 +107,9 @@ pub struct EDLogPowerplayMerits {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2024-02-09T17:53:18Z", "event":"PowerplayFastTrack", "Power":"Aisling Duval", "Cost":150000 })]
-pub struct EDLogPowerplayFastTrack {
-    power: Power,
-    cost: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogPowerplayDefect {
-    from_power: Power,
-    to_power: Power,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogPowerplayLeave {
-    power: Power,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogPowerplayRank {
     pub power: Power,
     pub rank: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2024-10-17T17:53:31Z", "event":"PowerplaySalary", "Power":"Aisling Duval", "Amount":1000 })]
-pub struct EDLogPowerplaySalary {
-    power: Power,
-    amount: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

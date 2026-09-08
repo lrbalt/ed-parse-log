@@ -1072,7 +1072,7 @@ pub struct ShipToStore {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct SoldShip {
+pub struct ShipToSell {
     pub sell_old_ship: ShipType,
     pub sell_ship_id: u64,
     pub sell_price: Credits,
@@ -1091,7 +1091,7 @@ pub struct EDLogShipyardBuy {
     #[serde(flatten)]
     pub store: Option<ShipToStore>,
     #[serde(flatten)]
-    pub sold: Option<SoldShip>,
+    pub sold: Option<ShipToSell>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -1155,7 +1155,7 @@ pub struct EDLogShipyardSwap {
     #[serde(flatten)]
     old_ship: Option<ShipToStore>,
     #[serde(flatten)]
-    sold_ship: Option<SoldShip>,
+    sold_ship: Option<ShipToSell>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -1304,7 +1304,7 @@ pub struct EDLogClearImpound {
     pub ship_type_localised: Option<EDString>,
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
-    // pub system: Option<EDString>,
+    pub system: Option<EDString>,
     #[serde(rename = "ShipMarketID")]
     pub ship_market_id: u64,
     #[serde(rename = "MarketID")]
