@@ -169,6 +169,7 @@ pub enum LegalState {
     IllegalCargo,
     Speeding,
     Wanted,
+    Allied,
     Hostile,
     PassengerWanted,
 }
@@ -320,6 +321,9 @@ pub enum GuiFocus {
     "Health":1.000000, "Temperature":127.730576, "SelectedWeapon":"$humanoid_fists_name;", 
     "SelectedWeapon_Localised":"Unarmed", "Gravity":0.219317, "LegalState":"Clean", "Latitude":-41.343941, 
     "Longitude":-60.463566, "Heading":-70, "BodyName":"16 Cygni B 6 a", "PlanetRadius":3507661.250000, "Balance":28340984858 })]
+#[testcase({ "timestamp":"2026-09-07T13:08:33Z", "event":"Status", "Flags":419430488, "Flags2":0, "Pips":[4,8,0], "FireGroup":2, 
+    "GuiFocus":0, "Fuel":{ "FuelMain":20.956671, "FuelReservoir":0.465250 }, "Cargo":0.000000, "LegalState":"Allied", 
+    "Balance":31603096519, "Destination":{ "System":5367098657608, "Body":0, "Name":"Teegarden's star" } })]
 pub struct EDLogStatus {
     pub flags: StatusFlags,
     pub flags2: Option<StatusFlags2>,
