@@ -1,8 +1,10 @@
 use crate::{
     EDString,
     common_types::{Credits, CrewMemberRole, CrimeType, StationType},
+    fleet_carrier::CarrierType,
     log_line::{EDLogEvent, Extractable},
     market::MicroResource,
+    market_item_type::MarketItemType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -252,20 +254,40 @@ pub struct EDLogFriends {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogAppliedToSquadron {
-    squadron_name: EDString,
+#[testcase({ "timestamp":"2025-08-21T15:02:57Z", "event":"CarrierLocation", "CarrierType":"FleetCarrier", 
+    "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
+pub struct EDLogCarrierLocation {
+    #[serde(rename = "CarrierID")]
+    pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
+    pub star_system: EDString,
+    pub system_address: u64,
+    #[serde(rename = "BodyID")]
+    pub body_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct FCMaterials {
+    #[serde(rename = "id")]
+    pub id: u64,
+    pub name: MarketItemType,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: Option<EDString>,
+    pub price: Credits,
+    pub stock: u64,
+    pub demand: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogInvitedToSquadron {
-    squadron_name: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSharedBookmarkToSquadron {
-    squadron_name: EDString,
+pub struct EDLogFCMaterials {
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+    pub carrier_name: EDString,
+    #[serde(rename = "CarrierID")]
+    pub carrier_id: EDString,
+    pub items: Option<Vec<FCMaterials>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

@@ -20,6 +20,7 @@ pub mod ship;
 pub mod ship_module;
 pub mod ship_type;
 pub mod shipyard;
+pub mod squadron;
 pub mod startup;
 pub mod station_services;
 pub mod statistics;

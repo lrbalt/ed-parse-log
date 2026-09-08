@@ -1296,6 +1296,12 @@ pub enum MarketItemType {
     #[serde(alias = "powerinventory")]
     #[strum(to_string = "Inventory Record")]
     PowerInventory,
+    #[serde(alias = "powerspyware")]
+    #[strum(to_string = "Power Tracker Malware")]
+    PowerSpyware,
+    #[serde(alias = "powerpreparationspyware")]
+    #[strum(to_string = "Power Injection Malware")]
+    PowerPreparationSpyware,
 
     #[strum(to_string = "Limpet")]
     #[serde(alias = "Drones")]
@@ -1313,8 +1319,15 @@ pub enum MarketItemType {
     #[serde(alias = "$aislingpromotionalmaterials_name;")]
     #[strum(to_string = "Aisling Programme Materials")]
     AislingPromotionalMaterials,
+    #[serde(alias = "$lavignygarisonsupplies_name;")]
+    #[strum(to_string = "Lavigny Garrison Supplies")]
+    LavignyGarisonSupplies,
+    #[serde(alias = "$siriusindustrialequipment_name;")]
+    #[strum(to_string = "Sirius Industrial Equipment")]
+    SiriusIndustrialEquipment,
     #[strum(to_string = "Archer's Field Supplies")]
     RepublicanFieldSupplies,
+    #[strum(to_string = "Archer's Garison Supplies")]
     RepublicanGarisonSupplies,
 
     #[serde(alias = "$pyrophyllite_name;")]

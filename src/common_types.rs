@@ -4,7 +4,7 @@ use crate::{
     utils::{parse_number_of_days, string_or_struct},
 };
 use chrono::Duration;
-use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
+use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
@@ -1719,25 +1719,6 @@ pub enum ModuleEngineeringModifiers {
     ThermicResistance(ModifierValue),
     WeaponsCapacity(ModifierValue),
     WeaponsRecharge(ModifierValue),
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogLeftSquadron {
-    squadron_name: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-11-13T16:13:26Z", "event":"SquadronStartup", "SquadronID":75645, "SquadronName":"ENDURANCE EXPLORATION", "CurrentRank":4, "CurrentRankName":"Agent" })]
-#[testcase({"timestamp":"2024-02-14T17:32:56Z","event":"SquadronStartup","SquadronName":"ENDURANCE EXPLORATION","CurrentRank":4})]
-#[testcase({ "timestamp":"2025-11-13T16:13:26Z", "event":"SquadronStartup", "SquadronID":75645, "SquadronName":"ENDURANCE EXPLORATION", "CurrentRank":4, "CurrentRankName":"Agent" })]
-pub struct EDLogSquadronStartup {
-    #[serde(rename = "SquadronID")]
-    squadrion_id: Option<u64>,
-    squadron_name: EDString,
-    current_rank: u64,
-    current_rank_name: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
