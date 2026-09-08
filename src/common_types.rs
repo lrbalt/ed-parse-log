@@ -1218,16 +1218,6 @@ pub struct Powers {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct StarSystemData {
-    star_system: EDString,
-    #[serde(rename = "ShipMarketID")]
-    ship_market_id: u64,
-    transfer_price: Credits,
-    transfer_time: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct BodyInformation {
     pub star_system: EDString,
     pub system_address: u64,

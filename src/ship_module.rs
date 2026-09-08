@@ -516,6 +516,7 @@ mod serde_ship_module {
             "string" if parts.len() > 1 => Ok(ShipModule::String(parts[1..].join("_").into())),
             "paint" => Ok(ShipModule::Paint),
             "wear" => Ok(ShipModule::Wear),
+            "hull" => Ok(ShipModule::Hull),
             unknown => {
                 // check on cockpit module that follows $shipname_cockpit_name; pattern
                 if let Some(index) = s.rfind("cockpit") {
@@ -1164,9 +1165,10 @@ pub enum ShipModule {
     String(EDString),              // string name
     VoicePack(EDString),           // voicepack name
     WeaponCustomisation(EDString), // customisation name
-    Paint,
-    Wear,
-    Null, // when module is removed, the log shows string "Null"
+    Paint,                         // for Repair and RepairAll. TODO: split off
+    Wear,                          // for Repair and RepairAll. TODO: split off
+    Hull,                          // for Repair and RepairAll. TODO: split off
+    Null,                          // when module is removed, the log shows string "Null"
 }
 
 impl Display for ShipModule {
@@ -1222,6 +1224,7 @@ impl Display for ShipModule {
             ShipModule::External(_, _, _) => write!(f, "Drive"),
             ShipModule::Paint => write!(f, "Paint"),
             ShipModule::Wear => write!(f, "Wear"),
+            ShipModule::Hull => write!(f, "Hull"),
             ShipModule::Null => write!(f, "Null"),
         }
     }
