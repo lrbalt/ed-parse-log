@@ -175,6 +175,9 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "FSD_Shielded")]
     #[strum(to_string = "Shielded")]
     FSDShielded,
+    #[serde(rename = "FuelScoop_Efficiency")]
+    #[strum(to_string = "FuelScoop Efficiency")]
+    FuelScoopEfficiency,
     #[serde(rename = "GuardianModule_Sturdy")]
     #[strum(to_string = "Sturdy")]
     GuardianModuleSturdy,

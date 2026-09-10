@@ -353,7 +353,7 @@ pub struct CollectedEncodedMaterial {
 pub struct CollectedManufacturedMaterial {
     pub name: ManufacturedMaterialName,
     #[serde(rename = "Name_Localised")]
-    pub name_localised: EDString,
+    pub name_localised: Option<EDString>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

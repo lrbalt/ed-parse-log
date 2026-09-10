@@ -19,9 +19,9 @@ After I worked on this crate I found [ed-journals](https://github.com/rster2002/
     * [ed-journals](https://github.com/rster2002/ed-journals)
     * [ed-scout](https://github.com/joncage/ed-scout)
     * [Elite Dangerous Journal Server](https://github.com/DVDAGames/elite-dangerous-journal-server)
-* On my M2 Macbook it parses at ± 580 MB/s (without string interning) or ± 590 MB/s (with string interning) as measured by the `read_all_logs` example on my ED log directory containing ± 1.8 million log lines in ± 2.450 log files (± 1.1GB).
+* On my M2 Macbook it parses at ± 625 MB/s (without string interning) or ± 630 MB/s (with string interning) as measured by the `read_all_logs` example on my ED log directory containing ± 1.8 million log lines in ± 2.450 log files (± 1.1GB).
 * it needs further refactoring to improve and dry the data model
-* it has a lot (±300) of simple tests for almost all of the structs
+* it has a lot (±330) of simple tests for almost all of the structs
 
 ### How to run an example
 

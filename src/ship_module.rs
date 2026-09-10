@@ -889,6 +889,10 @@ pub enum ShipModuleOptionalInternal {
     BiWeaveShieldGenerator,
     #[strum(to_string = "Planetary Vehicle Hangar")]
     BuggyBay,
+    #[strum(to_string = "Vessel Hangar")]
+    LargeBuggyBay,
+    #[strum(to_string = "Mk II Vessel Hangar")]
+    MkIILargeBuggyBay,
     #[strum(to_string = "Cargo Rack")]
     CargoRack,
     #[strum(to_string = "Anti-Corrosion Cargo Rack")]

@@ -3,6 +3,7 @@ use strum::Display;
 
 #[derive(Serialize, Deserialize, Clone, Debug, Display, Copy, PartialEq)]
 #[serde(rename_all = "lowercase")]
+// TODO: make better enum for Suit, Vessel, Ship
 pub enum ShipType {
     #[strum(to_string = "Adder")]
     #[serde(alias = "Adder")]
@@ -212,57 +213,52 @@ pub enum ShipType {
     Glaive,
 
     #[strum(to_string = "Flight Suit")]
-    #[serde(rename = "FlightSuit")]
+    #[serde(alias = "FlightSuit")]
     FlightSuit,
     #[strum(to_string = "Maverick Suit")]
-    #[serde(rename = "UtilitySuit_Class1")]
+    #[serde(rename = "UtilitySuit_Class1", alias = "utilitysuit_class1")]
     UtilitySuitClass1,
     #[strum(to_string = "$UtilitySuit_Class1_Name;")]
-    #[serde(rename = "UtilitySuit_Class2")]
+    #[serde(rename = "UtilitySuit_Class2", alias = "utilitysuit_class2")]
     UtilitySuitClass2,
     #[strum(to_string = "$UtilitySuit_Class1_Name;")]
-    #[serde(rename = "UtilitySuit_Class3")]
+    #[serde(rename = "UtilitySuit_Class3", alias = "utilitysuit_class3")]
     UtilitySuitClass3,
     #[strum(to_string = "$UtilitySuit_Class1_Name;")]
-    #[serde(rename = "UtilitySuit_Class4")]
+    #[serde(rename = "UtilitySuit_Class4", alias = "utilitysuit_class4")]
     UtilitySuitClass4,
     #[strum(to_string = "$UtilitySuit_Class1_Name;")]
-    #[serde(rename = "UtilitySuit_Class5")]
+    #[serde(rename = "UtilitySuit_Class5", alias = "utilitysuit_class5")]
     UtilitySuitClass5,
     #[strum(to_string = "Artemis Suit")]
-    #[serde(rename = "ExplorationSuit_Class1")]
+    #[serde(rename = "ExplorationSuit_Class1", alias = "explorationsuit_class1")]
     ExplorationSuitClass1,
     #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
-    #[serde(rename = "ExplorationSuit_Class2")]
+    #[serde(rename = "ExplorationSuit_Class2", alias = "explorationsuit_class2")]
     ExplorationSuitClass2,
     #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
-    #[serde(rename = "ExplorationSuit_Class3")]
+    #[serde(rename = "ExplorationSuit_Class3", alias = "explorationsuit_class3")]
     ExplorationSuitClass3,
     #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
-    #[serde(rename = "ExplorationSuit_Class4")]
+    #[serde(rename = "ExplorationSuit_Class4", alias = "explorationsuit_class4")]
     ExplorationSuitClass4,
     #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
-    #[serde(rename = "ExplorationSuit_Class5")]
+    #[serde(rename = "ExplorationSuit_Class5", alias = "explorationsuit_class5")]
     ExplorationSuitClass5,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
-    #[serde(rename = "TacticalSuit_Class1")]
-    #[serde(alias = "tacticalsuit_class1")]
+    #[serde(rename = "TacticalSuit_Class1", alias = "tacticalsuit_class1")]
     TacticalSuitClass1,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
-    #[serde(rename = "TacticalSuit_Class2")]
-    #[serde(alias = "tacticalsuit_class2")]
+    #[serde(rename = "TacticalSuit_Class2", alias = "tacticalsuit_class2")]
     TacticalSuitClass2,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
-    #[serde(rename = "TacticalSuit_Class3")]
-    #[serde(alias = "tacticalsuit_class3")]
+    #[serde(rename = "TacticalSuit_Class3", alias = "tacticalsuit_class3")]
     TacticalSuitClass3,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
-    #[serde(rename = "TacticalSuit_Class4")]
-    #[serde(alias = "tacticalsuit_class4")]
+    #[serde(rename = "TacticalSuit_Class4", alias = "tacticalsuit_class4")]
     TacticalSuitClass4,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]
-    #[serde(rename = "TacticalSuit_Class5")]
-    #[serde(alias = "tacticalsuit_class5")]
+    #[serde(rename = "TacticalSuit_Class5", alias = "tacticalsuit_class5")]
     TacticalSuitClass5,
 
     #[serde(rename = "assaultsuitai_class1")]

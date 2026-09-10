@@ -528,6 +528,10 @@ pub enum CodexNames {
     #[strum(to_string = "Aleoida Gravis - Green")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     AleoidaGravisGreen,
+    #[serde(rename = "$Codex_Ent_Aleoids_05_M_Name;")]
+    #[strum(to_string = "Aleoida Gravis - Emerald")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    AleoidaGravisEmerald,
     #[serde(rename = "$Codex_Ent_Aleoids_01_A_Name;")]
     #[strum(to_string = "Aleoida Arcus - Green")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
@@ -805,6 +809,11 @@ pub enum CodexNames {
     #[strum(to_string = "Bacterium Cerbrus - Sage")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     BacteriumCerbrusSage,
+    // Bark Mounds
+    #[serde(rename = "$Codex_Ent_Cone_Name;")]
+    #[strum(to_string = "Bark Mounds")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    BarkMound,
     // Brain Trees
     #[serde(rename = "$Codex_Ent_SeedEFGH_01_Name;")]
     #[strum(to_string = "Aureum Brain Tree")]
@@ -835,6 +844,10 @@ pub enum CodexNames {
     #[strum(to_string = "Cactoida Cortexum - Mauve")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     CactoidaCortexumMauve,
+    #[serde(rename = "$Codex_Ent_Cactoid_01_M_Name;")]
+    #[strum(to_string = "Cactoida Cortexum - Amethyst")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    CactoidaCortexumAmethyst,
     #[serde(rename = "$Codex_Ent_Cactoid_02_A_Name;")]
     #[strum(to_string = "Cactoida Lapis - Green")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
@@ -1279,6 +1292,10 @@ pub enum CodexNames {
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     FungoidaGelataRed,
     // Frutexa
+    #[serde(rename = "$Codex_Ent_Shrubs_02_M_Name;")]
+    #[strum(to_string = "Frutexa Acus - Grey")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    FrutexaAcusGrey,
     #[serde(rename = "$Codex_Ent_Shrubs_03_N_Name;")]
     #[strum(to_string = "Frutexa Metallicum - Red")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
@@ -1795,6 +1812,10 @@ pub enum CodexNames {
     #[strum(to_string = "Tussock Divisa - Lime")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
     TussockDivisaLime,
+    #[serde(rename = "$Codex_Ent_Tussocks_12_M_Name;")]
+    #[strum(to_string = "Tussock Triticum - Emerald")]
+    #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
+    TussockTriticumEmerald,
     #[serde(rename = "$Codex_Ent_Tussocks_13_F_Name;")]
     #[strum(to_string = "Tussock Stigmasis - Yellow")]
     #[CodexCategory(category =CodexCategory::Biology, sub_category = CodexSubCategory::OrganicStructures)]
@@ -2109,6 +2130,344 @@ pub enum CodexRegion {
     #[serde(rename = "$Codex_RegionName_42;")]
     #[strum(to_string = "The Void")]
     TheVoid,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+pub enum CodexGenus {
+    #[serde(alias = "$Codex_Ent_Aleoids_Genus_Name;")]
+    Aleoida,
+    #[serde(alias = "$Codex_Ent_Bacterial_Genus_Name;")]
+    Bacterium,
+    #[serde(alias = "$Codex_Ent_Cactoid_Genus_Name;")]
+    Cactoida,
+    #[serde(alias = "$Codex_Ent_Clypeus_Genus_Name;")]
+    Clypeus,
+    #[serde(alias = "$Codex_Ent_Conchas_Genus_Name;")]
+    Concha,
+    #[serde(alias = "$Codex_Ent_Electricae_Genus_Name;")]
+    Electricae,
+    #[serde(alias = "$Codex_Ent_Fonticulus_Genus_Name;")]
+    Fonticulua,
+    #[serde(alias = "$Codex_Ent_Fumerolas_Genus_Name;")]
+    Fumerola,
+    #[serde(alias = "$Codex_Ent_Fungoids_Genus_Name;")]
+    Fungoida,
+    #[serde(alias = "$Codex_Ent_Osseus_Genus_Name;")]
+    Osseus,
+    #[serde(alias = "$Codex_Ent_Ingensradices_Genus_Name;")]
+    Radicoida,
+    #[serde(alias = "$Codex_Ent_Recepta_Genus_Name;")]
+    Recepta,
+    #[serde(alias = "$Codex_Ent_Shrubs_Genus_Name;")]
+    Frutexa,
+    #[serde(alias = "$Codex_Ent_Stratum_Genus_Name;")]
+    Stratum,
+    #[serde(alias = "$Codex_Ent_Tubus_Genus_Name;")]
+    Tubus,
+    #[serde(alias = "$Codex_Ent_Tussocks_Genus_Name;")]
+    Tussock,
+
+    #[serde(alias = "$Codex_Ent_Cone_Name;")]
+    #[strum(to_string = "Bark Mounds")]
+    BarkMounds,
+    #[serde(alias = "$Codex_Ent_Brancae_Name;")]
+    #[strum(to_string = "Brain Trees")]
+    BrainTrees,
+    #[serde(alias = "$Codex_Ent_Sphere_Name;")]
+    #[strum(to_string = "Luteolum Anemone")]
+    LuteolumAnemone,
+    #[serde(alias = "$Codex_Ent_Ground_Struct_Ice_Name;")]
+    #[strum(to_string = "Crystalline Shards")]
+    CrystallineShards,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+pub enum CodexSpecies {
+    #[serde(alias = "$Codex_Ent_Aleoids_01_Name;")]
+    #[strum(to_string = "Aleoida Arcus")]
+    AleoidaArcus,
+    #[serde(alias = "$Codex_Ent_Aleoids_02_Name;")]
+    #[strum(to_string = "Aleoida Coronamus")]
+    AleoidaCoronamus,
+    #[serde(alias = "$Codex_Ent_Aleoids_03_Name;")]
+    #[strum(to_string = "Aleoida Spica")]
+    AleoidaSpica,
+    #[serde(alias = "$Codex_Ent_Aleoids_04_Name;")]
+    #[strum(to_string = "Aleoida Laminiae")]
+    AleoidaLaminiae,
+    #[serde(alias = "$Codex_Ent_Aleoids_05_Name;")]
+    #[strum(to_string = "Aleoida Gravis")]
+    AleoidaGravis,
+    #[serde(alias = "$Codex_Ent_Bacterial_01_Name;")]
+    #[strum(to_string = "Bacterium Aurasus")]
+    BacteriumAurasus,
+    #[serde(alias = "$Codex_Ent_Bacterial_03_Name;")]
+    #[strum(to_string = "Bacterium Scopulum")]
+    BacteriumScopulum,
+    #[serde(alias = "$Codex_Ent_Bacterial_04_Name;")]
+    #[strum(to_string = "Bacterium Acies")]
+    BacteriumAcies,
+    #[serde(alias = "$Codex_Ent_Bacterial_05_Name;")]
+    #[strum(to_string = "Bacterium Vesicula")]
+    BacteriumVesicula,
+    #[serde(alias = "$Codex_Ent_Bacterial_06_Name;")]
+    #[strum(to_string = "Bacterium Alcyoneum")]
+    BacteriumAlcyoneum,
+    #[serde(alias = "$Codex_Ent_Bacterial_07_Name;")]
+    #[strum(to_string = "Bacterium Tela")]
+    BacteriumTela,
+    #[serde(alias = "$Codex_Ent_Bacterial_08_Name;")]
+    #[strum(to_string = "Bacterium Informem")]
+    BacteriumInformem,
+    #[serde(alias = "$Codex_Ent_Bacterial_09_Name;")]
+    #[strum(to_string = "Bacterium Volu")]
+    BacteriumVolu,
+    #[serde(alias = "$Codex_Ent_Bacterial_10_Name;")]
+    #[strum(to_string = "Bacterium Bullaris")]
+    BacteriumBullaris,
+    #[serde(alias = "$Codex_Ent_Bacterial_11_Name;")]
+    #[strum(to_string = "Bacterium Omentum")]
+    BacteriumOmentum,
+    #[serde(alias = "$Codex_Ent_Bacterial_12_Name;")]
+    #[strum(to_string = "Bacterium Cerbrus")]
+    BacteriumCerbrus,
+    #[serde(alias = "$Codex_Ent_Bacterial_13_Name;")]
+    #[strum(to_string = "Bacterium Verrata")]
+    BacteriumVerrata,
+    #[serde(alias = "$Codex_Ent_Cone_Name;")]
+    #[strum(to_string = "Bark Mounds")]
+    BarkMounds,
+    #[serde(alias = "$Codex_Ent_SphereEFGH_Name;")]
+    #[strum(to_string = "Blatteum Bioluminescent Anemone")]
+    BioluminescentAnemoneBlatteum,
+    #[serde(alias = "$Codex_Ent_SphereEFGH_01_Name;")]
+    #[strum(to_string = "Rubeum Bioluminescent Anemone")]
+    BioluminescentAnemonRubeum,
+    #[serde(alias = "$Codex_Ent_SphereEFGH_02_Name;")]
+    #[strum(to_string = "Prasinum Bioluminescent Anemone")]
+    BioluminescentAnemonPrasinum,
+    #[serde(alias = "$Codex_Ent_Seed_Name;")]
+    #[strum(to_string = "Roseum Brain Tree")]
+    BrainTreeRoseum,
+    #[serde(alias = "$Codex_Ent_SeedABCD_01_Name;")]
+    #[strum(to_string = "Gypseeum Brain Tree")]
+    BrainTreeGypseeum,
+    #[serde(alias = "$Codex_Ent_SeedEFGH_Name;")]
+    #[strum(to_string = "Lividum Brain Tree")]
+    BrainTreeLividum,
+    #[serde(alias = "$Codex_Ent_Cactoid_01_Name;")]
+    #[strum(to_string = "Cactoida Cortexum")]
+    CactoidaCortexum,
+    #[serde(alias = "$Codex_Ent_Cactoid_02_Name;")]
+    #[strum(to_string = "Cactoida Lapis")]
+    CactoidaLapis,
+    #[serde(alias = "$Codex_Ent_Cactoid_03_Name;")]
+    #[strum(to_string = "Cactoida Vermis")]
+    CactoidaVermis,
+    #[serde(alias = "$Codex_Ent_Cactoid_04_Name;")]
+    #[strum(to_string = "Cactoida Pullulanta")]
+    CactoidaPullulanta,
+    #[serde(alias = "$Codex_Ent_Cactoid_05_Name;")]
+    #[strum(to_string = "Cactoida Peperatis")]
+    CactoidaPeperatis,
+    #[serde(alias = "$Codex_Ent_Clypeus_01_Name;")]
+    #[strum(to_string = "Clypeus Lacrimam")]
+    ClypeusLacrimam,
+    #[serde(alias = "$Codex_Ent_Clypeus_02_Name;")]
+    #[strum(to_string = "Clypeus Margaritus")]
+    ClypeusMargaritus,
+    #[serde(alias = "$Codex_Ent_Clypeus_03_Name;")]
+    #[strum(to_string = "Clypeus Speculumi")]
+    ClypeusSpeculumi,
+    #[serde(alias = "$Codex_Ent_Conchas_01_Name;")]
+    #[strum(to_string = "Concha Renibus")]
+    ConchaRenibus,
+    #[serde(alias = "$Codex_Ent_Conchas_02_Name;")]
+    #[strum(to_string = "Concha Aureolas")]
+    ConchaAureolas,
+    #[serde(alias = "$Codex_Ent_Conchas_03_Name;")]
+    #[strum(to_string = "Concha Labiata")]
+    ConchaLabiata,
+    #[serde(alias = "$Codex_Ent_Ground_Struct_Ice_Name;")]
+    #[strum(to_string = "Crystalline Shards")]
+    CrystallineShards,
+    #[serde(alias = "$Codex_Ent_Electricae_01_Name;")]
+    #[strum(to_string = "Electricae Pluma")]
+    ElectricaePluma,
+    #[serde(alias = "$Codex_Ent_Electricae_02_Name;")]
+    #[strum(to_string = "Electricae Radialem")]
+    ElectricaeRadialem,
+    #[serde(alias = "$Codex_Ent_Fonticulus_01_Name;")]
+    #[strum(to_string = "Fonticulua Segmentatus")]
+    FonticuluaSegmentatus,
+    #[serde(alias = "$Codex_Ent_Fonticulus_02_Name;")]
+    #[strum(to_string = "Fonticulua Campestris")]
+    FonticuluaCampestris,
+    #[serde(alias = "$Codex_Ent_Fonticulus_03_Name;")]
+    #[strum(to_string = "Fonticulua Upupam")]
+    FonticuluaUpupam,
+    #[serde(alias = "$Codex_Ent_Fonticulus_04_Name;")]
+    #[strum(to_string = "Fonticulua Lapida")]
+    FonticuluaLapida,
+    #[serde(alias = "$Codex_Ent_Fonticulus_06_Name;")]
+    #[strum(to_string = "Fonticulua Digitos")]
+    FonticuluaDigitos,
+    #[serde(alias = "$Codex_Ent_Shrubs_01_Name;")]
+    #[strum(to_string = "Frutexa Flabellum")]
+    FrutexaFlabellum,
+    #[serde(alias = "$Codex_Ent_Shrubs_02_Name;")]
+    #[strum(to_string = "Frutexa Acus")]
+    FrutexaAcus,
+    #[serde(alias = "$Codex_Ent_Shrubs_03_Name;")]
+    #[strum(to_string = "Frutexa Metallicum")]
+    FrutexaMetallicum,
+    #[serde(alias = "$Codex_Ent_Shrubs_04_Name;")]
+    #[strum(to_string = "Frutexa Flammasis")]
+    FrutexaFlammasis,
+    #[serde(alias = "$Codex_Ent_Shrubs_05_Name;")]
+    #[strum(to_string = "Frutexa Fera")]
+    FrutexaUnknown,
+    #[serde(alias = "$Codex_Ent_Shrubs_06_Name;")]
+    #[strum(to_string = "Frutexa Sponsae")]
+    FrutexaSponsae,
+    #[serde(alias = "$Codex_Ent_Fumerolas_01_Name;")]
+    #[strum(to_string = "Fumerola Carbosis")]
+    FumerolaCarbosis,
+    #[serde(alias = "$Codex_Ent_Fumerolas_02_Name;")]
+    #[strum(to_string = "Fumerola Extremus")]
+    FumerolaExtremus,
+    #[serde(alias = "$Codex_Ent_Fumerolas_03_Name;")]
+    #[strum(to_string = "Fumerola Nitris")]
+    FumerolaNitris,
+    #[serde(alias = "$Codex_Ent_Fumerolas_04_Name;")]
+    #[strum(to_string = "Fumerola Aquatis")]
+    FumerolaAquatis,
+    #[serde(alias = "$Codex_Ent_Fungoids_01_Name;")]
+    #[strum(to_string = "Fungoida Setisis")]
+    FungoidaSetisis,
+    #[serde(alias = "$Codex_Ent_Fungoids_02_Name;")]
+    #[strum(to_string = "Fungoida Stabitis")]
+    FungoidaStabitis,
+    #[serde(alias = "$Codex_Ent_Fungoids_03_Name;")]
+    #[strum(to_string = "Fungoida Bullarum")]
+    FungoidaBullarum,
+    #[serde(alias = "$Codex_Ent_Fungoids_04_Name;")]
+    #[strum(to_string = "Fungoida Gelata")]
+    FungoidaGelata,
+    #[serde(alias = "$Codex_Ent_Osseus_01_Name;")]
+    #[strum(to_string = "Osseus Fractus")]
+    OsseusFractus,
+    #[serde(alias = "$Codex_Ent_Osseus_02_Name;")]
+    #[strum(to_string = "Osseus Discus")]
+    OsseusDiscus,
+    #[serde(alias = "$Codex_Ent_Osseus_03_Name;")]
+    #[strum(to_string = "Osseus Spiralis")]
+    OsseusSpiralis,
+    #[serde(alias = "$Codex_Ent_Osseus_04_Name;")]
+    #[strum(to_string = "Osseus Pumice")]
+    OsseusPumice,
+    #[serde(alias = "$Codex_Ent_Osseus_05_Name;")]
+    #[strum(to_string = "Osseus Cornibus")]
+    OsseusCornibus,
+    #[serde(alias = "$Codex_Ent_Osseus_06_Name;")]
+    #[strum(to_string = "Osseus Pellebantus")]
+    OsseusPellebantus,
+    #[serde(alias = "$Codex_Ent_Ingensradices_Unicus_Name;")]
+    #[strum(to_string = "Radicoida Unica")]
+    RadicoidaUnica,
+    #[serde(alias = "$Codex_Ent_Recepta_01_Name;")]
+    #[strum(to_string = "Recepta Umbrux")]
+    ReceptaUmbrux,
+    #[serde(alias = "$Codex_Ent_Recepta_02_Name;")]
+    #[strum(to_string = "Recepta Deltahedronix")]
+    ReceptaDeltahedronix,
+    #[serde(alias = "$Codex_Ent_Recepta_03_Name;")]
+    #[strum(to_string = "Recepta Conditivus")]
+    ReceptaConditivus,
+    #[serde(alias = "$Codex_Ent_Stratum_01_Name;")]
+    #[strum(to_string = "Stratum Excutitus")]
+    StratumExcutitus,
+    #[serde(alias = "$Codex_Ent_Stratum_02_Name;")]
+    #[strum(to_string = "Stratum Paleas")]
+    StratumPaleas,
+    #[serde(alias = "$Codex_Ent_Stratum_03_Name;")]
+    #[strum(to_string = "Stratum Laminamus")]
+    StratumLaminamus,
+    #[serde(alias = "$Codex_Ent_Stratum_04_Name;")]
+    #[strum(to_string = "Stratum Araneamus")]
+    StratumAraneamus,
+    #[serde(alias = "$Codex_Ent_Stratum_05_Name;")]
+    #[strum(to_string = "Stratum Limaxus")]
+    StratumLimaxus,
+    #[serde(alias = "$Codex_Ent_Stratum_06_Name;")]
+    #[strum(to_string = "Stratum Cucumisis")]
+    StratumCucumisis,
+    #[serde(alias = "$Codex_Ent_Stratum_07_Name;")]
+    #[strum(to_string = "Stratum Tectonicas")]
+    StratumTectonicas,
+    #[serde(alias = "$Codex_Ent_Stratum_08_Name;")]
+    #[strum(to_string = "Stratum Frigus")]
+    StratumFrigus,
+    #[serde(alias = "$Codex_Ent_Tubus_01_Name;")]
+    #[strum(to_string = "Tubus Conifer")]
+    TubusConifer,
+    #[serde(alias = "$Codex_Ent_Tubus_02_Name;")]
+    #[strum(to_string = "Tubus Sororibus")]
+    TubusSororibus,
+    #[serde(alias = "$Codex_Ent_Tubus_03_Name;")]
+    #[strum(to_string = "Tubus Cavas")]
+    TubusCavas,
+    #[serde(alias = "$Codex_Ent_Tubus_04_Name;")]
+    #[strum(to_string = "Tubus Rosarium")]
+    TubusRosarium,
+    #[serde(alias = "$Codex_Ent_Tubus_05_Name;")]
+    #[strum(to_string = "Tubus Compagibus")]
+    TubusCompagibus,
+    #[serde(alias = "$Codex_Ent_Tussocks_01_Name;")]
+    #[strum(to_string = "Tussock Pennata")]
+    TussockPennata,
+    #[serde(alias = "$Codex_Ent_Tussocks_02_Name;")]
+    #[strum(to_string = "Tussock Ventusa")]
+    TussockVentusa,
+    #[serde(alias = "$Codex_Ent_Tussocks_03_Name;")]
+    #[strum(to_string = "Tussock Ignis")]
+    TussockIgnis,
+    #[serde(alias = "$Codex_Ent_Tussocks_04_Name;")]
+    #[strum(to_string = "Tussock Cultro")]
+    TussockCultro,
+    #[serde(alias = "$Codex_Ent_Tussocks_05_Name;")]
+    #[strum(to_string = "Tussock Catena")]
+    TussockCatena,
+    #[serde(alias = "$Codex_Ent_Tussocks_06_Name;")]
+    #[strum(to_string = "Tussock Pennatis")]
+    TussockPennatis,
+    #[serde(alias = "$Codex_Ent_Tussocks_07_Name;")]
+    #[strum(to_string = "Tussock Serrati")]
+    TussockSerrati,
+    #[serde(alias = "$Codex_Ent_Tussocks_08_Name;")]
+    #[strum(to_string = "Tussock Albata")]
+    TussockAlbata,
+    #[serde(alias = "$Codex_Ent_Tussocks_09_Name;")]
+    #[strum(to_string = "Tussock Propagito")]
+    TussockPropagito,
+    #[serde(alias = "$Codex_Ent_Tussocks_10_Name;")]
+    #[strum(to_string = "Tussock Divisa")]
+    TussockDivisa,
+    #[serde(alias = "$Codex_Ent_Tussocks_11_Name;")]
+    #[strum(to_string = "Tussock Caputus")]
+    TussockCaputus,
+    #[serde(alias = "$Codex_Ent_Tussocks_12_Name;")]
+    #[strum(to_string = "Tussock Triticum")]
+    TussockTriticum,
+    #[serde(alias = "$Codex_Ent_Tussocks_13_Name;")]
+    #[strum(to_string = "Tussock Stigmasis")]
+    TussockStigmasis,
+    #[serde(alias = "$Codex_Ent_Tussocks_14_Name;")]
+    #[strum(to_string = "Tussock Virgam")]
+    TussockVirgam,
+    #[serde(alias = "$Codex_Ent_Tussocks_15_Name;")]
+    #[strum(to_string = "Tussock Capillum")]
+    TussockCapillum,
 }
 
 #[test]

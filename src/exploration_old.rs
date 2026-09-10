@@ -1,8 +1,8 @@
 use crate::{
     EDString,
-    common_types::{ScanType, ShipScanType, SignalType},
+    common_types::{ShipScanType, SignalType},
 };
-use ed_parse_log_files_macros::{Extractable, testcase};
+use ed_parse_log_files_macros::Extractable;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -17,25 +17,6 @@ pub struct EDLogDatalinkScan {
     message: EDString,
     #[serde(rename = "Message_Localised")]
     message_localised: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2025-11-13T20:22:43Z", "event":"ScanOrganic", "ScanType":"Sample", "Genus":"$Codex_Ent_Ingensradices_Genus_Name;", "Genus_Localised":"Radicoida", "Species":"$Codex_Ent_Ingensradices_Unicus_Name;", "Species_Localised":"Radicoida Unica", "Variant":"$Codex_Ent_Ingensradices_Unicus_Name;", "Variant_Localised":"Radicoida Unica", "WasLogged":false, "SystemAddress":147882789259, "Body":3 })]
-pub struct EDLogScanOrganic {
-    pub scan_type: ScanType,
-    pub genus: EDString,
-    #[serde(rename = "Genus_Localised")]
-    pub genus_localised: EDString,
-    pub species: EDString,
-    #[serde(rename = "Species_Localised")]
-    pub species_localised: EDString,
-    pub variant: Option<EDString>,
-    #[serde(rename = "Variant_Localised")]
-    pub variant_localised: Option<EDString>,
-    pub system_address: u64,
-    pub body: u64,
-    pub was_logged: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

@@ -1,10 +1,8 @@
 use crate::{
     EDString,
-    common_types::{Credits, CrewMemberRole, CrimeType, StationType},
+    common_types::{Credits, CrewMemberRole, CrimeType},
     fleet_carrier::CarrierType,
-    log_line::{EDLogEvent, Extractable},
-    market::MicroResource,
-    market_item_type::MarketItemType,
+    odyssey::MicroResource,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -189,53 +187,6 @@ pub struct EDLogCrimeVictim {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct CrewMember {
-    name: EDString,
-    role: CrewMemberRole,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct StationEmbarkOrDisembark {
-    pub station_name: EDString,
-    pub station_type: StationType,
-    #[serde(rename = "MarketID")]
-    pub market_id: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogEmbarkOrDisembark {
-    #[serde(rename = "SRV")]
-    pub srv: bool,
-    pub taxi: bool,
-    pub multicrew: bool,
-    pub crew: Option<Vec<CrewMember>>,
-    #[serde(rename = "ID")]
-    pub id: Option<u64>,
-    pub star_system: EDString,
-    pub system_address: u64,
-    pub body: EDString,
-    #[serde(rename = "BodyID")]
-    pub body_id: u64,
-    pub on_station: bool,
-    pub on_planet: bool,
-    #[serde(flatten)]
-    pub station: Option<StationEmbarkOrDisembark>,
-}
-
-impl Extractable for EDLogEmbarkOrDisembark {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        match event {
-            EDLogEvent::Embark(info) => Some(info),
-            EDLogEvent::Disembark(info) => Some(info),
-            _ => None,
-        }
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FriendStatus {
     Online,
     Offline,
@@ -264,30 +215,6 @@ pub struct EDLogCarrierLocation {
     pub system_address: u64,
     #[serde(rename = "BodyID")]
     pub body_id: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct FCMaterials {
-    #[serde(rename = "id")]
-    pub id: u64,
-    pub name: MarketItemType,
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<EDString>,
-    pub price: Credits,
-    pub stock: u64,
-    pub demand: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogFCMaterials {
-    #[serde(rename = "MarketID")]
-    pub market_id: u64,
-    pub carrier_name: EDString,
-    #[serde(rename = "CarrierID")]
-    pub carrier_id: EDString,
-    pub items: Option<Vec<FCMaterials>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -350,27 +277,4 @@ pub struct EDLogCrewMemberJoins {
 pub struct EDLogEndCrewSession {
     on_crime: bool,
     telepresence: Option<bool>,
-}
-
-#[test]
-fn test_embark_or_disembark() {
-    use crate::log_line::{EDLogEvent, EDLogLine};
-
-    let json = r#"{ "timestamp":"2025-09-18T19:05:29Z", "event":"Disembark", 
-        "SRV":false, "Taxi":false, "Multicrew":false, 
-        "ID":35, "StarSystem":"Hill Pa Hsi", "SystemAddress":9467315955121, 
-        "Body":"Curie Gateway", "BodyID":37, 
-        "OnStation":true, "OnPlanet":false, 
-        "StationName":"Curie Gateway", "StationType":"Coriolis", "MarketID":3228628736 }"#;
-    let line: EDLogLine = serde_json::from_str(json).expect("should parse");
-
-    assert!(matches!(line.event(), EDLogEvent::Disembark(_)));
-
-    if let EDLogEvent::Disembark(details) = line.event() {
-        assert!(details.station.is_some());
-        assert_eq!(
-            "Curie Gateway",
-            details.station.as_ref().unwrap().station_name.as_str()
-        );
-    }
 }

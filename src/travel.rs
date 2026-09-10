@@ -32,6 +32,7 @@ pub struct EDLogDocked {
     pub faction_state: Option<EDString>,
     pub station_state: Option<StationState>,
     pub star_system: EDString,
+    // old logs (±2017) omitted system_address. We do not support it here
     pub system_address: u64,
     #[serde(deserialize_with = "string_or_struct")]
     pub station_faction: FactionName,

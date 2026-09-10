@@ -164,7 +164,7 @@ pub enum MarketItemType {
     #[serde(alias = "$superconductors_name;")]
     #[strum(to_string = "Superconductors")]
     Superconductors,
-    #[serde(alias = "$hydrogenfuel_name;")]
+    #[serde(alias = "$hydrogenfuel_name;", alias = "HydrogenFuel")]
     #[strum(to_string = "Hydrogen Fuel")]
     HydrogenFuel,
     #[serde(alias = "$mineraloil_name;")]

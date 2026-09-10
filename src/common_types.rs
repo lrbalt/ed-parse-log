@@ -239,236 +239,442 @@ pub enum CrewMemberRole {
     Idle,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 #[serde(rename_all = "lowercase")]
 pub enum OnFootItem {
     AeroGel,
+    #[strum(to_string = "Agricultural Sample")]
     AgriculturalProcessSample,
+    #[strum(to_string = "Biochemical Agent")]
     BiochemicalAgent,
+    #[serde(alias = "$californium_name;")]
     Californium,
+    #[strum(to_string = "Cast Fossil")]
     CastFossil,
+    #[strum(to_string = "Chemical Catalyst")]
     ChemicalCatalyst,
+    #[strum(to_string = "Chemical Superbase")]
     ChemicalSuperbase,
+    #[strum(to_string = "Chemical Sample")]
     ChemicalSample,
+    #[strum(to_string = "Chemical Formulae")]
     ChemicalFormulae,
+    #[strum(to_string = "Deep Mantle Sample")]
     DeepMantleSample,
+    #[strum(to_string = "Genetic Repair Meds")]
     GeneticRepairMeds,
+    #[strum(to_string = "Biological Sample")]
     GeneticSample,
+    #[strum(to_string = "G-Meds")]
     GMeds,
     Graphene,
     Hush,
     Infinity,
+    #[strum(to_string = "Inorganic Contaminant")]
     InorganicContaminant,
     Kompromat,
     Lazarus,
+    #[strum(to_string = "Mutagenic Catalyst")]
     MutagenicCatalyst,
+    #[strum(to_string = "Nutritional Concentrate")]
     NutritionalConcentrate,
+    #[strum(to_string = "Oxygenic Bacteria")]
     OxygenicBacteria,
+    #[strum(to_string = "Petrified Fossil")]
     PetrifiedFossil,
+    #[strum(to_string = "pH Neutraliser")]
     PHNeutraliser,
     Push,
     RDX,
+    #[strum(to_string = "Synthetic Genome")]
     SyntheticGenome,
+    #[strum(to_string = "True Form Fossil")]
     TrueFormFossil,
+    #[strum(to_string = "Tactical Plans")]
     TacticalPlans,
+    #[strum(to_string = "Troop Deployment Records")]
     TroopDeploymentRecords,
 
+    #[strum(to_string = "Medkit")]
     HealthPack,
+    #[strum(to_string = "Energy Cell")]
     EnergyCell,
     #[serde(rename = "amm_grenade_emp")]
+    #[strum(to_string = "Shield Disruptor")]
     AmmGrenadeEmp,
     #[serde(rename = "amm_grenade_frag")]
+    #[strum(to_string = "Frag Grenade")]
     AmmGrenadeFrag,
     #[serde(rename = "amm_grenade_shield")]
+    #[strum(to_string = "Shield Projector")]
     AmmGrenadeShield,
 
     Epinephrine,
+    #[strum(to_string = "Microbial Inhibitor")]
     MicrobialInhibitor,
+    #[strum(to_string = "Inertia Canister")]
     InertiaCanister,
 
+    #[strum(to_string = "E-Breach")]
     Bypass,
+    #[strum(to_string = "Carbon Fibre Plating")]
     CarbonfibrePlating,
+    #[strum(to_string = "Circuit Switch")]
     CircuitSwitch,
+    #[strum(to_string = "Circuit Board")]
     CircuitBoard,
+    #[strum(to_string = "Compact Library")]
     CompactLibrary,
+    #[strum(to_string = "Compression-Liquefied Gas")]
     CompressionLiquefiedGas,
+    #[strum(to_string = "Degraded Power Regulator")]
     DegradedPowerRegulator,
+    #[strum(to_string = "Electrical Wiring")]
     ElectricalWiring,
+    #[strum(to_string = "Electrical Fuse")]
     ElectricalFuse,
+    #[strum(to_string = "Electro Magnet")]
     ElectroMagnet,
+    #[strum(to_string = "Encrypted Memory Chip")]
     EncryptedMemoryChip,
+    #[strum(to_string = "Epoxy Adhesive")]
     EpoxyAdhesive,
+    #[strum(to_string = "Health Monitor")]
     HealthMonitor,
+    #[strum(to_string = "Ion Battery")]
     IonBattery,
+    #[strum(to_string = "Ionised Gas")]
     IonisedGas,
+    #[strum(to_string = "Power Regulator")]
     LargeCapacityPowerRegulator,
+    #[strum(to_string = "Memory Chip")]
     MemoryChip,
+    #[strum(to_string = "Metal Coil")]
     MetalCoil,
+    #[strum(to_string = "Micro Electrode")]
     MicroElectrode,
+    #[strum(to_string = "Micro Hydraulics")]
     MicroHydraulics,
+    #[strum(to_string = "Micro Supercapacitor")]
     MicroSupercapacitor,
+    #[strum(to_string = "Micro Thrusters")]
     MicroThrusters,
+    #[strum(to_string = "Micro Transformer")]
     MicroTransformer,
     Motor,
+    #[strum(to_string = "Optical Fibre")]
     OpticalFibre,
+    #[strum(to_string = "Optical Lens")]
     OpticalLens,
+    #[strum(to_string = "Personal Computer")]
     PersonalComputer,
+    #[strum(to_string = "Personal Documents")]
     PersonalDocuments,
+    #[strum(to_string = "Agricultural Sample")]
     PowerAgriculture,
+    #[strum(to_string = "Power Classified Data")]
     PowerClassifiedData,
+    #[strum(to_string = "Computer Parts")]
     PowerComputer,
+    #[strum(to_string = "Electronics Package")]
     PowerElectronics,
+    #[strum(to_string = "Personal Protective Equipment")]
     PowerEquipment,
     PowerEmployeeData,
+    #[strum(to_string = "Experiment Prototype")]
     PowerExperiment,
+    #[strum(to_string = "Extraction Sample")]
     PowerExtraction,
+    #[strum(to_string = "Power Industrial Data")]
     PowerFinancialRecords,
+    #[strum(to_string = "Industrial Component")]
     PowerIndustrial,
+    #[strum(to_string = "Power Injection Malware")]
+    PowerPreparationSpyware,
+    #[strum(to_string = "Inventory Record")]
     PowerInventory,
+    #[strum(to_string = "Medical Sample")]
     PowerMedical,
+    #[strum(to_string = "Data Storage Device")]
     PowerMiscComputer,
+    #[strum(to_string = "Industrial Machinery")]
     PowerMiscIndust,
+    #[strum(to_string = "Energy Regulator")]
     PowerPower,
+    #[strum(to_string = "Power Political Data")]
     PowerPropagandaData,
     PowerRegulator,
+    #[strum(to_string = "Security Logs")]
     PowerSecurity,
+    #[strum(to_string = "Power Tracker Malware")]
+    PowerSpyware,
+    #[strum(to_string = "Research Notes")]
     PowerResearch,
+    #[strum(to_string = "Power Research Data")]
     PowerResearchData,
+    #[strum(to_string = "Military Schematic")]
     PowerplayMilitary,
+    #[strum(to_string = "Pyrolytic Catalyst")]
     PyrolyticCatalyst,
 
     Scrambler,
+    #[strum(to_string = "Surveillance Equipment")]
     SurveillanceEquipment,
+    #[strum(to_string = "Synthetic Pathogen")]
     SyntheticPathogen,
     Transmitter,
+    #[strum(to_string = "Titanium Plating")]
     TitaniumPlating,
+    #[strum(to_string = "Tungsten Carbide")]
     TungstenCarbide,
+    #[strum(to_string = "Universal Translator")]
     UniversalTranslator,
+    #[strum(to_string = "Viscoelastic Polymer")]
     ViscoElasticPolymer,
+    #[strum(to_string = "Weapon Component")]
     WeaponComponent,
 
+    #[strum(to_string = "Building Schematic")]
     BuildingSchematic,
+    #[strum(to_string = "Ship Schematic")]
     ShipSchematic,
+    #[strum(to_string = "Suit Schematic")]
     SuitSchematic,
+    #[strum(to_string = "Vehicle Schematic")]
     VehicleSchematic,
+    #[strum(to_string = "Weapon Schematic")]
     WeaponSchematic,
 
+    #[strum(to_string = "Accident Logs")]
     AccidentLogs,
+    #[strum(to_string = "Air Quality Reports")]
     AirQualityReports,
+    #[strum(to_string = "Atmospheric Data")]
     AtmosphericData,
+    #[strum(to_string = "AX Combat Logs")]
     AXcombatLogs,
+    #[strum(to_string = "Audio Logs")]
     AudioLogs,
+    #[strum(to_string = "Ballistics Data")]
     BallisticsData,
+    #[strum(to_string = "Biological Weapon Data")]
     BiologicalWeaponData,
+    #[strum(to_string = "Biomechanical Component")]
     BiomechanicalComponent,
+    #[strum(to_string = "Biometric Data")]
     BiometricData,
+    #[strum(to_string = "Blacklist Data")]
     BlacklistData,
+    #[strum(to_string = "Blood Test Results")]
     BloodTestResults,
+    #[strum(to_string = "Campaign Plans")]
     CampaignPlans,
+    #[strum(to_string = "Cat Media")]
     CatMedia,
+    #[strum(to_string = "Census Data")]
     CensusData,
+    #[strum(to_string = "Chemical Experiment Date")]
     ChemicalExperimentData,
+    #[strum(to_string = "Chemical Inventory")]
     ChemicalInventory,
+    #[strum(to_string = "Chemical Patents")]
     ChemicalPatents,
+    #[strum(to_string = "Chemical Process Sample")]
     ChemicalProcessSample,
+    #[strum(to_string = "Chemical Weapon Data")]
     ChemicalWeaponData,
+    #[strum(to_string = "Classic Entertainment")]
     ClassicEntertainment,
+    #[strum(to_string = "Cocktail Recipes")]
     CocktailRecipes,
+    #[strum(to_string = "Combatant Performance")]
     CombatantPerformance,
+    #[strum(to_string = "Combat Training Material")]
     CombatTrainingMaterial,
+    #[strum(to_string = "Conflict History")]
     ConflictHistory,
+    #[strum(to_string = "Criminal Records")]
     CriminalRecords,
+    #[strum(to_string = "Crop Yield Analysis")]
     CropYieldAnalysis,
+    #[strum(to_string = "Culinary Recipes")]
     CulinaryRecipes,
+    #[strum(to_string = "Digital Designs")]
     DigitalDesigns,
+    #[strum(to_string = "Duty Rota")]
     DutyRota,
+    #[strum(to_string = "Employee Directory")]
     EmployeeDirectory,
+    #[strum(to_string = "Employee Expenses")]
     EmployeeExpenses,
+    #[strum(to_string = "Employee Genetic Data")]
     EmployeeGeneticData,
+    #[strum(to_string = "Employment History")]
     EmploymentHistory,
+    #[strum(to_string = "Enhanced Interrogation Recordings")]
     EnhancedInterrogationRecordings,
+    #[strum(to_string = "Exploration Journals")]
     ExplorationJournals,
+    #[strum(to_string = "Extraction Yield Data")]
     ExtractionYieldData,
+    #[strum(to_string = "Evacuation Protocols")]
     EvacuationProtocols,
+    #[strum(to_string = "Faction Associates")]
     FactionAssociates,
+    #[strum(to_string = "Faction Donator List")]
     FactionDonatorList,
+    #[strum(to_string = "Faction News")]
     FactionNews,
+    #[strum(to_string = "Financial Projections")]
     FinancialProjections,
+    #[strum(to_string = "Fleet Registry")]
     FleetRegistry,
+    #[strum(to_string = "Gene Sequencing Data")]
     GeneSequencingData,
+    #[strum(to_string = "Genetic Research")]
     GeneticResearch,
+    #[strum(to_string = "Geological Data")]
     GeologicalData,
+    #[strum(to_string = "Hydroponic Data")]
     HydroponicData,
+    #[strum(to_string = "Incident Logs")]
     IncidentLogs,
+    #[strum(to_string = "Influence Projections")]
     InfluenceProjections,
+    #[strum(to_string = "Insight Entertainment Suite")]
     InsightEntertainmentSuite,
+    #[strum(to_string = "Insight Data Bank")]
     InsightDatabank,
     Insight,
+    #[strum(to_string = "Internal Correspondence")]
     InternalCorrespondence,
+    #[strum(to_string = "Interrogation Recordings")]
     InterrogationRecordings,
+    #[strum(to_string = "Interview Recordings")]
     InterviewRecordings,
+    #[strum(to_string = "Job Applications")]
     JobApplications,
+    #[strum(to_string = "Literary Fiction")]
     LiteraryFiction,
+    #[strum(to_string = "Manufacturing Instructions")]
     ManufacturingInstructions,
+    #[strum(to_string = "Maintenance Logs")]
     MaintenanceLogs,
+    #[strum(to_string = "Mineral Survey")]
     MineralSurvey,
+    #[strum(to_string = "Mining Analytics")]
     MiningAnalytics,
+    #[strum(to_string = "Meeting Minutes")]
     MeetingMinutes,
+    #[strum(to_string = "Medical Records")]
     MedicalRecords,
+    #[strum(to_string = "Medical Trial Records")]
     MedicalTrialRecords,
-    MultiMediaEntertainment,
+    #[strum(to_string = "Multimedia Entertainment")]
+    MultimediaEntertainment,
+    #[strum(to_string = "Network Access History")]
     NetworkAccessHistory,
+    #[strum(to_string = "Network Security Protocols")]
     NetworkSecurityProtocols,
+    #[strum(to_string = "Next Of Kin Records")]
     NextOfKinRecords,
+    #[strum(to_string = "NOC Data")]
     NOCData,
+    #[strum(to_string = "Operational Manual")]
     OperationalManual,
+    #[strum(to_string = "Opinion Polls")]
     OpinionPolls,
+    #[strum(to_string = "Patient History")]
     PatientHistory,
+    #[strum(to_string = "Patrol Routes")]
     PatrolRoutes,
+    #[strum(to_string = "Payroll Information")]
     PayrollInformation,
+    #[strum(to_string = "Personal Logs")]
     PersonalLogs,
+    #[strum(to_string = "Pharmaceutical Patents")]
     PharmaceuticalPatents,
+    #[strum(to_string = "Photo Albums")]
     PhotoAlbums,
+    #[strum(to_string = "Political Affiliations")]
     PoliticalAffiliations,
+    #[strum(to_string = "Prisoner Logs")]
     PrisonerLogs,
+    #[strum(to_string = "Production Reports")]
     ProductionReports,
+    #[strum(to_string = "Production Schedule")]
     ProductionSchedule,
+    #[strum(to_string = "Propaganda")]
     Propaganda,
+    #[strum(to_string = "Purchase Records")]
     PurchaseRecords,
+    #[strum(to_string = "Purchase Requests")]
     PurchaseRequests,
+    #[strum(to_string = "Radioactivity Data")]
     RadioactivityData,
+    #[strum(to_string = "Residential Directory")]
     ResidentialDirectory,
+    #[strum(to_string = "Reactor Output Review")]
     ReactorOutputReview,
+    #[strum(to_string = "Recycling Logs")]
     RecyclingLogs,
+    #[strum(to_string = "Refinement Process Sample")]
     RefinementProcessSample,
+    #[strum(to_string = "Risk Assessments")]
     RiskAssessments,
+    #[strum(to_string = "Sales Records")]
     SalesRecords,
+    #[strum(to_string = "Seed Geneaology")]
     SeedGeneaology,
+    #[strum(to_string = "Security Expenses")]
     SecurityExpenses,
+    #[strum(to_string = "Settlement Assault Plans")]
     SettlementAssaultPlans,
+    #[strum(to_string = "Settlement Defence Plans")]
     SettlementDefencePlans,
+    #[strum(to_string = "Shareholder Information")]
     ShareholderInformation,
+    #[strum(to_string = "Slush Fund Logs")]
     SlushFundLogs,
+    #[strum(to_string = "Smear Campaign Plans")]
     SmearCampaignPlans,
+    #[strum(to_string = "Spectral Analysis Data")]
     SpectralAnalysisData,
+    #[strum(to_string = "Stellar Activity Logs")]
     StellarActivityLogs,
+    #[strum(to_string = "Surveillance Logs")]
     SurveilleanceLogs,
+    #[strum(to_string = "Tax Records")]
     TaxRecords,
+    #[strum(to_string = "Travel Permits")]
     TravelPermits,
+    #[strum(to_string = "Topographical Surveys")]
     TopographicalSurveys,
+    #[strum(to_string = "Union Membership")]
     UnionMembership,
+    #[strum(to_string = "Vaccination Records")]
     VaccinationRecords,
+    #[strum(to_string = "Vaccine Research")]
     VaccineResearch,
+    #[strum(to_string = "VIP Security Detail")]
     VIPSecurityDetail,
+    #[strum(to_string = "Virology Data")]
     VirologyData,
+    #[strum(to_string = "Visitor Register")]
     VisitorRegister,
+    #[strum(to_string = "Weapon Inventory")]
     WeaponInventory,
+    #[strum(to_string = "Weapon Test Data")]
     WeaponTestData,
+    #[strum(to_string = "Xeno Defence Protocols")]
     XenoDefenceProtocols,
+    #[strum(to_string = "Operations Strike Data")]
     OperationsStrikeData,
+    #[strum(to_string = "Operations Counter Attack Data")]
     OperationsCounterAttackData,
 
     #[serde(rename = "nm_seed")]
+    #[strum(to_string = "Unica Seed")]
     NMSeed,
 }
 
@@ -1372,6 +1578,62 @@ pub enum WarType {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum SuitMod {
+    #[serde(rename = "suit_backpackcapacity")]
+    Backpackcapacity,
+    #[serde(rename = "suit_increasedammoreserves")]
+    IncreasedAmmoReserves,
+    #[serde(rename = "suit_reducedtoolbatteryconsumption")]
+    ReducedToolBatteryConsumption,
+    #[serde(rename = "suit_increasedbatterycapacity")]
+    IncreasedBatteryCapacity,
+    #[serde(rename = "suit_nightvision")]
+    NightVision,
+    #[serde(rename = "suit_increasedshieldregen")]
+    IncreasedShieldRegen,
+    #[serde(rename = "suit_improvedjumpassist")]
+    ImprovedJumpAssist,
+    #[serde(rename = "suit_increasedsprintduration")]
+    IncreasedSprintDuration,
+    #[serde(rename = "suit_increasedmeleedamage")]
+    IncreasedMeleeDamage,
+    #[serde(rename = "suit_quieterfootsteps")]
+    QuieterFootsteps,
+    #[serde(rename = "suit_increasedo2capacity")]
+    IncreasedO2Capacity,
+    #[serde(rename = "suit_improvedradar")]
+    ImprovedRadar,
+    #[serde(rename = "suit_adsmovementspeed")]
+    AdsMovementSpeed,
+    #[serde(rename = "suit_improvedarmourrating")]
+    ImprovedArmourRating,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub enum WeaponMod {
+    #[serde(rename = "weapon_clipsize")]
+    Clipsize,
+    #[serde(rename = "weapon_range")]
+    Range,
+    #[serde(rename = "weapon_suppression_pressurised")]
+    SuppressionPressurised,
+    #[serde(rename = "weapon_backpackreloading")]
+    BackpackReloading,
+    #[serde(rename = "weapon_suppression_unpressurised")]
+    SuppressionUnpressurised,
+    #[serde(rename = "weapon_stability")]
+    Stability,
+    #[serde(rename = "weapon_scope")]
+    Scope,
+    #[serde(rename = "weapon_reloadspeed")]
+    ReloadSpeed,
+    #[serde(rename = "weapon_accuracy")]
+    Accuracy,
+    #[serde(rename = "weapon_handling")]
+    Handling,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "lowercase")]
 pub enum ConflictStatus {
     #[serde(rename = "")]
@@ -1684,6 +1946,7 @@ pub enum ModuleEngineeringModifiers {
     FSDInterdictorRange(ModifierValue),
     FSDInterdictorFacingLimit(ModifierValue),
     FSDOptimalMass(ModifierValue),
+    FuelScoopRate(ModifierValue),
     GuardianModuleResistance(ModifierDescription),
     HeatEfficiency(ModifierValue),
     Integrity(ModifierValue),
