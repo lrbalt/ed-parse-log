@@ -6,14 +6,8 @@ use crate::{
         EDLogInterdiction, EDLogPVPKill, EDLogSRVDestroyed, EDLogShieldState, EDLogShipTargeted,
         EDLogUnderAttack,
     },
-    commander::{
-        EDLogCarrierLocation, EDLogChangeCrewRole, EDLogCommitCrime, EDLogCrewMemberJoins,
-        EDLogCrewMemberQuits, EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogEndCrewSession,
-        EDLogFriends, EDLogJoinACrew, EDLogPromotion, EDLogQuitACrew,
-        EDLogRequestPowerMicroResources, EDLogResurrect, EDLogVehicleSwitch,
-    },
-    common_types::{BodyInformation, Credits, EDLogName, EDLogNpcCrewPaidWage, EDLogNpcCrewRank},
-    drone::{EDLogLaunchDrone, EDLogRepairDrone},
+    commander::{EDLogCarrierLocation, EDLogRequestPowerMicroResources},
+    common_types::{BodyInformation, EDLogName},
     exploration::{
         EDLogBuyExplorationData, EDLogCodexEntry, EDLogDiscoveryScan, EDLogFSSAllBodiesFound,
         EDLogFSSBodySignals, EDLogFSSDiscoveryScan, EDLogFSSSignalDiscovered,
@@ -22,10 +16,7 @@ use crate::{
         EDLogSAASignalsFound, EDLogScan, EDLogScanBaryCentre, EDLogScreenshot,
         EDLogSellExplorationData,
     },
-    exploration_old::{
-        EDLogDataScanned, EDLogDatalinkScan, EDLogProspectedAsteroid, EDLogScanned,
-        EDLogStationBernalSphere,
-    },
+    exploration_old::EDLogStationBernalSphere,
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCancelDecommission,
         EDLogCarrierCrewServices, EDLogCarrierDecommission, EDLogCarrierDepositFuel,
@@ -37,13 +28,8 @@ use crate::{
         EDLogColonisationConstructionDepot, EDLogColonisationContribution,
         EDLogDeliverPowerMicroResources, EDLogMarketID,
     },
-    market_item_type::MarketItemType,
-    mission::EDLogDatalinkVoucher,
-    modules::{EDLogModuleBuyAndStore, EDLogModuleInfo},
-    navigation::{
-        EDLogApproachSettlement, EDLogDockSRV, EDLogFuelScoop, EDLogJetConeBoost,
-        EDLogJetConeDamage, EDLogLaunchSRV, EDLogLaunchVessel,
-    },
+    modules::EDLogModuleBuyAndStore,
+    navigation::EDLogLaunchVessel,
     odyssey::{
         EDLogBackpack, EDLogBackpackChange, EDLogBookDropship, EDLogBookTaxi,
         EDLogBuyMicroResources, EDLogBuySuit, EDLogBuyWeapon, EDLogCancelDropship, EDLogCancelTaxi,
@@ -54,14 +40,23 @@ use crate::{
         EDLogShipLocker, EDLogSuitLoadout, EDLogTradeMicroResources, EDLogUpgradeSuit,
         EDLogUpgradeWeapon, EDLogUseConsumable,
     },
+    other::{
+        EDLogAfmuRepairs, EDLogApproachSettlement, EDLogCargoTransfer, EDLogChangeCrewRole,
+        EDLogCommitCrime, EDLogContinued, EDLogCrewLaunchFighter, EDLogCrewMemberJoins,
+        EDLogCrewMemberQuits, EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDataScanned,
+        EDLogDatalinkScan, EDLogDatalinkVoucher, EDLogDockFighter, EDLogDockSRV,
+        EDLogEndCrewSession, EDLogFighterRebuilt, EDLogFriends, EDLogFuelScoop, EDLogJetConeBoost,
+        EDLogJetConeDamage, EDLogJoinACrew, EDLogKickCrewMember, EDLogLaunchDrone,
+        EDLogLaunchFighter, EDLogLaunchSRV, EDLogModuleInfo, EDLogMusic, EDLogNpcCrewPaidWage,
+        EDLogNpcCrewRank, EDLogPromotion, EDLogProspectedAsteroid, EDLogQuitACrew,
+        EDLogRebootRepair, EDLogReceiveText, EDLogRepairDrone, EDLogReservoirReplenished,
+        EDLogResurrect, EDLogScanned, EDLogSendText, EDLogSupercruiseDestinationDrop,
+        EDLogSynthesis, EDLogUSSDrop, EDLogVehicleSwitch, EDLogWingJoin,
+    },
     powerplay::{
         EDLogHoloscreenHacked, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver,
         EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave, EDLogPowerplayMerits,
         EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPowerplayVote, EDLogPowerplayVoucher,
-    },
-    ship::{
-        EDLogAfmuRepairs, EDLogDockFighter, EDLogFighterRebuilt, EDLogLaunchFighter,
-        EDLogRebootRepair, EDLogReservoirReplenished, EDLogSynthesis,
     },
     ship_type::ShipType,
     shipyard::{EDLogShipRedeemed, EDLogShipyardRedeem},
@@ -91,8 +86,8 @@ use crate::{
         EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredModules, EDLogStoredShips,
         EDLogTechnologyBroker,
     },
+    status::EDLogStatus,
     suits::EDLogDeleteSuitLoadout,
-    supercruise::EDLogSupercruiseDestinationDrop,
     trade::{
         EDLogAsteroidCracked, EDLogBuyTradeData, EDLogCollectCargo, EDLogEjectCargo,
         EDLogMarketBuy, EDLogMarketSell, EDLogMiningRefined,
@@ -103,12 +98,10 @@ use crate::{
         EDLogLocation, EDLogNavRoute, EDLogStartJump, EDLogSupercruiseEntry, EDLogSupercruiseExit,
         EDLogTouchdown, EDLogUndocked,
     },
-    wing::EDLogWingJoin,
 };
 use chrono::{DateTime, Utc};
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use serde_repr::{Deserialize_repr, Serialize_repr};
+use serde::{Deserialize, Serialize};
 use strum::{Display, EnumDiscriminants, EnumIter};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
@@ -138,243 +131,9 @@ pub struct LoadGameShip {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogMusic {
-    music_track: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-09-02T18:51:13Z", "event":"GameModeChange", "GameMode":"MainGame" })]
 pub struct EDLogGameModeChange {
     game_mode: GameMode,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct FuelStatus {
-    fuel_main: f64,
-    fuel_reservoir: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct Destination {
-    system: u64,
-    body: u64,
-    name: EDString,
-    #[serde(rename = "Name_Localised")]
-    name_localised: Option<EDString>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub enum LegalState {
-    Clean,
-    IllegalCargo,
-    Speeding,
-    Wanted,
-    Allied,
-    Hostile,
-    PassengerWanted,
-}
-
-bitflags::bitflags! {
-    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-    pub struct StatusFlags: u64 {
-        const DOCKED = 1 << 0;
-        const LANDED = 1 << 1;
-        const LANDING_GEAR_DOWN = 1 << 2;
-        const SHIELDS_UP = 1 << 3;
-        const SUPERCRUISE = 1 << 4;
-        const FLIGHT_ASSIST_OFF = 1 << 5;
-        const HARDPOINTS_DEPLOYED = 1 << 6;
-        const IN_WING = 1 << 7;
-        const LIGHTS_ON = 1 << 8;
-        const CARGO_SCOOP_DEPLOYED = 1 << 9;
-        const SILENT_RUNNING = 1 << 10;
-        const SCOOPING_FUEL = 1 << 11;
-        const SRV_HANDBRAKE = 1 << 12;
-        const SRV_USING_TURRET_VIEW = 1 << 13;
-        const SRV_TURRET_RETRACTED = 1 << 14;
-        const SRV_DRIVE_ASSIST = 1 << 15;
-        const FSD_MASS_LOCKED = 1 << 16;
-        const FSD_CHARGING = 1 << 17;
-        const FSD_COOLDOWN = 1 << 18;
-        const LOW_FUEL = 1 << 19;
-        const OVER_HEATING = 1 << 20;
-        const HAS_LAT_LONG = 1 << 21;
-        const IS_IN_DANGER = 1 << 22;
-        const BEING_INTERDICTED = 1 << 23;
-        const IN_MAIN_SHIP = 1 << 24;
-        const IN_FIGHTER = 1 << 25;
-        const IN_SRV = 1 << 26;
-        const HUD_IN_ANALYSIS_MODE = 1 << 27;
-        const NIGHT_VISION = 1 << 28;
-        const ALTITUDE_FROM_AVERAGE_RADIUS = 1 << 29;
-        const FSD_JUMP = 1 << 30;
-        const SRV_HIGH_BEAM = 1 << 31;
-    }
-
-    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-    pub struct StatusFlags2: u64 {
-        const ON_FOOT = 1 << 0;
-        const IN_TAXI = 1 << 1;
-        const IN_MULTICREW = 1 << 2;
-        const ON_FOOT_IN_STATION = 1 << 3;
-        const ON_FOOT_ON_PLANET = 1 << 4;
-        const AIM_DOWN_SIGHT = 1 << 5;
-        const LOW_OXYGEN = 1 << 6;
-        const LOW_HEALTH = 1 << 7;
-        const COLD = 1 << 8;
-        const HOT = 1 << 9;
-        const VERY_COLD = 1 << 10;
-        const VERY_HOT = 1 << 11;
-        const GLIDE_MODE = 1 << 12;
-        const ON_FOOT_IN_HANGAR = 1 << 13;
-        const ON_FOOT_SOCIAL_SPACE = 1 << 14;
-        const ON_FOOT_EXTERIOR = 1 << 15;
-        const BREATHABLE_ATMOSPHERE = 1 << 16;
-        const TELEPRESENCE_MULTICREW = 1 << 17;
-        const PHYSICAL_MULTICREW = 1 << 18;
-        const FSD_HYPERDRIVE_CHARGING = 1 << 19;
-        const SUPERCRUISE_OVERCHARGE = 1 << 20;
-        const SUPERCRUISE_ASSIST = 1 << 21;
-        const NPC_CREW_ACTIVE = 1 << 22;
-    }
-}
-
-impl Serialize for StatusFlags {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        serializer.serialize_u64(self.bits())
-    }
-}
-
-impl<'de> Deserialize<'de> for StatusFlags {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        Ok(Self::from_bits_retain(u64::deserialize(deserializer)?))
-    }
-}
-
-impl Serialize for StatusFlags2 {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        serializer.serialize_u64(self.bits())
-    }
-}
-
-impl<'de> Deserialize<'de> for StatusFlags2 {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        Ok(Self::from_bits_retain(u64::deserialize(deserializer)?))
-    }
-}
-
-#[derive(Serialize_repr, Deserialize_repr, Clone, Debug, Display)]
-#[repr(u8)]
-pub enum GuiFocus {
-    #[strum(to_string = "No Focus")]
-    NoFocus = 0,
-    #[strum(to_string = "Internal Panel")]
-    InternalPanel = 1,
-    #[strum(to_string = "External Panel")]
-    ExternalPanel = 2,
-    #[strum(to_string = "Communication Panel")]
-    CommsPanel = 3,
-    #[strum(to_string = "Role Panel")]
-    RolePanel = 4,
-    #[strum(to_string = "Station Services")]
-    StationServices = 5,
-    #[strum(to_string = "Galaxy Map")]
-    GalaxyMap = 6,
-    #[strum(to_string = "System Map")]
-    SystemMap = 7,
-    Orrery = 8,
-    #[strum(to_string = "FSS Mode")]
-    FSSMode = 9,
-    #[strum(to_string = "SAA Mode")]
-    SAAMode = 10,
-    Codex = 11,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2017-12-07T10:31:37Z", "event":"Status", "Flags":16842765, "Pips":[2,8,2], "FireGroup":0, 
-    "Fuel":{ "FuelMain":15.146626, "FuelReservoir":0.382796 }, "GuiFocus":5 })]
-#[testcase({ "timestamp":"2017-12-07T12:03:14Z", "event":"Status", "Flags":18874376, "Pips":[4,8,0], "FireGroup":0,
-    "Fuel":{ "FuelMain":15.146626, "FuelReservoir":0.382796 }, "GuiFocus":0, "Latitude":-28.584963,
-    "Longitude":6.826313, "Heading":109, "Altitude": 404 })]
-#[testcase({ "timestamp":"2026-05-15T12:51:43Z", "event":"Status", "Flags":0 })]
-#[testcase({ "timestamp":"2026-06-06T13:01:47Z", "event":"Status", "Flags":151060485, "Flags2":0, "Pips":[2,8,2], 
-    "FireGroup":0, "GuiFocus":0, "Fuel":{ "FuelMain":128.000000, "FuelReservoir":1.110000 }, "Cargo":1324.000000, 
-    "LegalState":"Hostile", "Balance":28304956592, "Destination":{ "System":2869441275273, "Body":33, 
-    "Name":"Val-rasha Starport" } })]
-#[testcase({ "timestamp":"2026-06-17T17:36:28Z", "event":"Status", "Flags":5, "Flags2":90121, "Oxygen":1.000000, 
-    "Health":1.000000, "Temperature":293.000000, "SelectedWeapon":"", "LegalState":"Clean", "BodyName":"Borisenko Dock", 
-    "Balance":28340984858 })]
-#[testcase({ "timestamp":"2026-06-17T17:45:24Z", "event":"Status", "Flags":6291456, "Flags2":33041, "Oxygen":1.000000, 
-    "Health":1.000000, "Temperature":127.730576, "SelectedWeapon":"$humanoid_fists_name;", 
-    "SelectedWeapon_Localised":"Unarmed", "Gravity":0.219317, "LegalState":"Clean", "Latitude":-41.343941, 
-    "Longitude":-60.463566, "Heading":-70, "BodyName":"16 Cygni B 6 a", "PlanetRadius":3507661.250000, "Balance":28340984858 })]
-#[testcase({ "timestamp":"2026-09-07T13:08:33Z", "event":"Status", "Flags":419430488, "Flags2":0, "Pips":[4,8,0], "FireGroup":2, 
-    "GuiFocus":0, "Fuel":{ "FuelMain":20.956671, "FuelReservoir":0.465250 }, "Cargo":0.000000, "LegalState":"Allied", 
-    "Balance":31603096519, "Destination":{ "System":5367098657608, "Body":0, "Name":"Teegarden's star" } })]
-pub struct EDLogStatus {
-    pub flags: StatusFlags,
-    pub flags2: Option<StatusFlags2>,
-    pub pips: Option<[u8; 3]>,
-    pub fire_group: Option<u64>,
-    pub fuel: Option<FuelStatus>,
-    pub gui_focus: Option<GuiFocus>,
-    pub latitude: Option<f64>,
-    pub longitude: Option<f64>,
-    pub heading: Option<i64>,
-    pub altitude: Option<f64>,
-    pub cargo: Option<f64>,
-    pub legal_state: Option<LegalState>,
-    pub balance: Option<Credits>,
-    pub oxygen: Option<f64>,
-    pub health: Option<f64>,
-    pub temperature: Option<f64>,
-    pub selected_weapon: Option<EDString>,
-    #[serde(rename = "SelectedWeapon_Localised")]
-    pub selected_weapon_localised: Option<EDString>,
-    pub body_name: Option<EDString>,
-    pub destination: Option<Destination>,
-    pub planet_radius: Option<f64>,
-    pub gravity: Option<f64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2023-07-30T14:40:36Z", "event":"ReceiveText", "From":"$ShipName_PassengerLiner_Cruise;", 
-             "From_Localised":"Cruise Ship", "Message":"$CruiseLiner_SCPatrol05;", 
-             "Message_Localised":"This is your captain. Due to some unforeseen delays, we will be arriving at our next destination later than scheduled.", 
-             "Channel":"npc" })]
-pub struct EDLogReceiveText {
-    from: EDString,
-    #[serde(rename = "From_Localised")]
-    from_localised: Option<EDString>,
-    message: EDString,
-    #[serde(rename = "Message_Localised")]
-    message_localised: Option<EDString>,
-    channel: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogSendText {
-    to: String,
-    message: EDString,
-    sent: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -386,74 +145,6 @@ pub struct EDLogFileHeader {
     odyssey: Option<bool>,
     gameversion: EDString,
     build: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub enum USSType {
-    #[serde(rename = "$USS_Type_VeryValuableSalvage;")]
-    VeryValueableSalvage,
-    #[serde(rename = "$USS_Type_ValuableSalvage;")]
-    ValueableSalvage,
-    #[serde(rename = "$USS_Type_Salvage;")]
-    Salvage,
-    #[serde(rename = "$USS_Type_MissionTarget;")]
-    MissionTarget,
-    #[serde(rename = "$USS_Type_TradingBeacon;")]
-    TradingBaecon,
-    #[serde(rename = "$USS_Type_Ceremonial;")]
-    Ceremonial,
-    #[serde(rename = "$USS_Type_WeaponsFire;")]
-    WeaponsFire,
-    #[serde(rename = "$USS_Type_Aftermath;")]
-    Aftermath,
-    #[serde(rename = "$USS_Type_Refugee;")]
-    Refugee,
-    #[serde(rename = "$USS_Type_DistressSignal;")]
-    DistressSignal,
-    #[serde(rename = "$USS_Type_Convoy;")]
-    Convoy,
-    #[serde(rename = "$USS_Type_PowerConvoy;")]
-    PowerplayConvoy,
-    #[serde(rename = "$USS_Type_PowerplayConvoyDistressSignal;")]
-    PowerplayConvoyDistressSignal,
-    #[serde(rename = "$USS_Type_PowerEmissions;")]
-    PowerEmissions,
-    #[serde(rename = "$USS_Type_PowerWeaponsFire;")]
-    PowerWeaponsFire,
-    #[serde(rename = "$USS_Type_NonHuman;")]
-    NonHuman,
-    #[serde(rename = "$USS_Type_AXShips;")]
-    AXShips,
-    #[serde(rename = "$USS_Type_AXWeaponsFire;")]
-    AXWaeponsFire,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(deny_unknown_fields)]
-pub struct EDLogUSSDrop {
-    #[serde(rename = "USSType")]
-    uss_type: USSType,
-    #[serde(rename = "USSType_Localised")]
-    uss_type_localised: EDString,
-    #[serde(rename = "USSThreat")]
-    uss_threat: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct CargoTransfer {
-    #[serde(rename = "Type")]
-    cargo_type: MarketItemType,
-    #[serde(rename = "Type_Localised")]
-    cargo_type_localised: Option<EDString>,
-    count: u32,
-    direction: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogCargoTransfer {
-    transfers: Vec<CargoTransfer>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Display, EnumDiscriminants)]
@@ -682,51 +373,78 @@ pub enum EDLogEvent {
     UpgradeWeapon(EDLogUpgradeWeapon),
     UseConsumable(EDLogUseConsumable),
 
-    SystemsShutdown,
-    Shutdown,
+    // Other
+    AfmuRepairs(EDLogAfmuRepairs),
+    ApproachSettlement(Box<EDLogApproachSettlement>),
+    CockpitBreached,
+    ChangeCrewRole(EDLogChangeCrewRole),
+    CommitCrime(EDLogCommitCrime),
+    Continued(EDLogContinued),
+    CrewLaunchFighter(EDLogCrewLaunchFighter),
+    CrimeVictim(EDLogCrimeVictim),
+    DatalinkScan(EDLogDatalinkScan),
+    CrewMemberRoleChange(EDLogCrewMemberRoleChange),
+    CrewMemberJoins(EDLogCrewMemberJoins),
+    CrewMemberQuits(EDLogCrewMemberQuits),
+    DataScanned(EDLogDataScanned),
+    DatalinkVoucher(EDLogDatalinkVoucher),
+    DockFighter(EDLogDockFighter),
+    DockSRV(EDLogDockSRV),
+    EndCrewSession(EDLogEndCrewSession),
+    Friends(EDLogFriends),
+    FuelScoop(EDLogFuelScoop),
+    JetConeBoost(EDLogJetConeBoost),
+    JetConeDamage(EDLogJetConeDamage),
+    FighterRebuilt(EDLogFighterRebuilt),
+    JoinACrew(EDLogJoinACrew),
+    KickCrewMember(EDLogKickCrewMember),
+    LaunchDrone(EDLogLaunchDrone),
+    LaunchSRV(EDLogLaunchSRV),
+    LaunchFighter(EDLogLaunchFighter),
+    ModuleInfo(EDLogModuleInfo),
     Music(EDLogMusic),
+    NpcCrewPaidWage(EDLogNpcCrewPaidWage),
+    NpcCrewRank(EDLogNpcCrewRank),
+    Promotion(EDLogPromotion),
+    ProspectedAsteroid(EDLogProspectedAsteroid),
+    QuitACrew(EDLogQuitACrew),
+    RebootRepair(EDLogRebootRepair),
+    ReceiveText(EDLogReceiveText),
+    RepairDrone(EDLogRepairDrone),
+    ReservoirReplenished(EDLogReservoirReplenished),
+    SelfDestruct,
+    Shutdown,
+    Resurrect(EDLogResurrect),
+    Scanned(EDLogScanned),
+    Synthesis(EDLogSynthesis),
+    SendText(EDLogSendText),
+    SystemsShutdown,
+    USSDrop(EDLogUSSDrop),
+    WingAdd(EDLogName),
+    VehicleSwitch(EDLogVehicleSwitch),
+    WingJoin(EDLogWingJoin),
+    WingLeave,
+    WingInvite(EDLogName),
+    CargoTransfer(EDLogCargoTransfer),
+    SupercruiseDestinationDrop(EDLogSupercruiseDestinationDrop),
+
+    // Status
     Status(Box<EDLogStatus>),
+
     GameModeChange(EDLogGameModeChange),
 
     // Commander
-    Promotion(EDLogPromotion),
     RequestPowerMicroResources(EDLogRequestPowerMicroResources),
-    Resurrect(EDLogResurrect),
-    CommitCrime(EDLogCommitCrime),
-    CrimeVictim(EDLogCrimeVictim),
-    VehicleSwitch(EDLogVehicleSwitch),
-    Friends(EDLogFriends),
     CarrierLocation(EDLogCarrierLocation),
 
     // Modules
     ModuleBuyAndStore(EDLogModuleBuyAndStore),
-    ModuleInfo(EDLogModuleInfo),
 
     // Navigation
-    FuelScoop(EDLogFuelScoop),
-    ApproachSettlement(Box<EDLogApproachSettlement>),
-    LaunchSRV(EDLogLaunchSRV),
     LaunchVessel(EDLogLaunchVessel),
-    DockSRV(EDLogDockSRV),
-    JetConeBoost(EDLogJetConeBoost),
-    JetConeDamage(EDLogJetConeDamage),
-
-    // Supercruise
-    SupercruiseDestinationDrop(EDLogSupercruiseDestinationDrop),
 
     // Exploration (old)
     StationBernalSphere(EDLogStationBernalSphere),
-    Scanned(EDLogScanned),
-    DatalinkScan(EDLogDatalinkScan),
-    ProspectedAsteroid(EDLogProspectedAsteroid),
-    DataScanned(EDLogDataScanned),
-
-    // Drone
-    LaunchDrone(EDLogLaunchDrone),
-    RepairDrone(EDLogRepairDrone),
-
-    // Missions
-    DatalinkVoucher(EDLogDatalinkVoucher),
 
     // Market
     MarketID(EDLogMarketID),
@@ -742,39 +460,8 @@ pub enum EDLogEvent {
     SuitLoadout(EDLogSuitLoadout),
     DeleteSuitLoadout(EDLogDeleteSuitLoadout),
 
-    // Transport
-
-    // Wing
-    WingAdd(EDLogName),
-    WingJoin(EDLogWingJoin),
-    WingLeave,
-    WingInvite(EDLogName),
-    NpcCrewPaidWage(EDLogNpcCrewPaidWage),
-    NpcCrewRank(EDLogNpcCrewRank),
-    ChangeCrewRole(EDLogChangeCrewRole),
-    CrewMemberRoleChange(EDLogCrewMemberRoleChange),
-    CrewMemberJoins(EDLogCrewMemberJoins),
-    EndCrewSession(EDLogEndCrewSession),
-    JoinACrew(EDLogJoinACrew),
-    QuitACrew(EDLogQuitACrew),
-    CrewMemberQuits(EDLogCrewMemberQuits),
-
     // Ship
-    ReservoirReplenished(EDLogReservoirReplenished),
-    RebootRepair(EDLogRebootRepair),
-    SelfDestruct,
-    CockpitBreached,
     Resupply,
-    Synthesis(EDLogSynthesis),
-    AfmuRepairs(EDLogAfmuRepairs),
-    LaunchFighter(EDLogLaunchFighter),
-    DockFighter(EDLogDockFighter),
-    FighterRebuilt(EDLogFighterRebuilt),
-
-    ReceiveText(EDLogReceiveText),
-    SendText(EDLogSendText),
-    USSDrop(EDLogUSSDrop),
-    CargoTransfer(EDLogCargoTransfer),
 }
 
 pub trait Extractable {

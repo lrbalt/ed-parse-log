@@ -1,72 +1,10 @@
 use crate::{
     EDString,
-    common_types::{StarClass, StarPos, StationInformation},
+    common_types::{StarClass, StarPos},
     ship_type::ShipType,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogFuelScoop {
-    scooped: f64,
-    total: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-// todo: refactor with BodyInformation in common types
-pub struct BodyInformationOfSettlement {
-    pub system_address: u64,
-    #[serde(rename = "BodyID")]
-    pub body_id: u64,
-    pub body_name: EDString,
-    pub latitude: Option<f64>,
-    pub longitude: Option<f64>,
-}
-
-#[testcase({ "timestamp":"2023-03-01T15:10:23Z", "event":"ApproachSettlement", "Name":"Nahavandi Penal colony", 
-            "MarketID":3790770944, "SystemAddress":7266413782417, "BodyID":9, "BodyName":"Luggerates A 3", 
-            "Latitude":62.048309, "Longitude":80.228821 })]
-#[testcase({ "timestamp":"2024-05-30T16:20:52Z", "event":"ApproachSettlement", 
-        "Name":"$Ancient_Small_002:#index=1;", "Name_Localised":"Guardian Structure", "SystemAddress":2833906537146, 
-        "BodyID":7, "BodyName":"Synuefe EU-Q c21-10 A 3", "Latitude":19.823612, "Longitude":-82.460922 })]
-#[testcase({ "timestamp":"2017-10-17T01:41:51Z", "event":"ApproachSettlement", "Name":"Verrazzano's Inheritance" })]
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogApproachSettlement {
-    pub name: EDString,
-    #[serde(rename = "Name_Localised")]
-    pub name_localised: Option<EDString>,
-    #[serde(flatten)]
-    pub station_information: Option<StationInformation>,
-    #[serde(flatten)]
-    pub body_information: Option<BodyInformationOfSettlement>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDockSRV {
-    #[serde(rename = "SRVType")]
-    srvtype: Option<EDString>,
-    #[serde(rename = "SRVType_Localised")]
-    srvtype_localised: Option<EDString>,
-    #[serde(rename = "ID")]
-    id: u64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogLaunchSRV {
-    #[serde(rename = "SRVType")]
-    srvtype: Option<EDString>,
-    #[serde(rename = "SRVType_Localised")]
-    srvtype_localised: Option<EDString>,
-    loadout: EDString,
-    #[serde(rename = "ID")]
-    id: u64,
-    player_controlled: bool,
-}
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
@@ -95,21 +33,6 @@ pub struct JumpToStarSystem {
     system_address: u64,
     star_class: StarClass,
     star_pos: Option<StarPos>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogJetConeBoost {
-    boost_value: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2026-04-07T17:14:53Z", "event":"JetConeDamage", "Module":"$modularcargobaydoor_name;", "Module_Localised":"Cargo Hatch" })]
-pub struct EDLogJetConeDamage {
-    module: EDString,
-    #[serde(rename = "Module_Localised")]
-    module_localised: Option<EDString>,
 }
 
 #[test]

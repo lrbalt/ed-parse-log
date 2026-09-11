@@ -8,20 +8,6 @@ use crate::{
 use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct InstalledModule {
-    pub slot: ShipModuleSlot,
-    pub item: ShipModule,
-    pub power: Option<f64>,
-    pub priority: Option<u64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogModuleInfo {
-    pub modules: Option<Vec<InstalledModule>>,
-}
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogModuleBuyAndStore {

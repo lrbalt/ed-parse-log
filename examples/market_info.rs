@@ -2,8 +2,8 @@ use ed_parse_log_files::{
     common_types::StationType,
     log_line::{EDLogEvent, EDLogLine},
     market::EDLogColonisationConstructionDepot,
-    navigation::EDLogApproachSettlement,
     odyssey::EDLogFCMaterials,
+    other::EDLogApproachSettlement,
     station_services::{EDLogMarket, EDLogStoredModules, EDLogStoredShips, EDLogTechnologyBroker},
     travel::{EDLogDocked, EDLogLocation},
 };

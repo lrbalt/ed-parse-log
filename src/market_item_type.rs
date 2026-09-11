@@ -4,21 +4,21 @@ use strum::Display;
 #[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum MarketItemType {
-    #[serde(alias = "$alexandrite_name;")]
+    #[serde(alias = "$alexandrite_name;", alias = "Alexandrite")]
     Alexandrite,
-    #[serde(alias = "$aluminium_name;")]
+    #[serde(alias = "$aluminium_name;", alias = "Aluminium")]
     Aluminium,
     #[serde(alias = "$silver_name;", alias = "Silver")]
     Silver,
-    #[serde(alias = "$tritium_name;")]
+    #[serde(alias = "$tritium_name;", alias = "Tritium")]
     Tritium,
-    #[serde(alias = "$platinum_name;")]
+    #[serde(alias = "$platinum_name;", alias = "Platinum")]
     Platinum,
-    #[serde(alias = "$titanium_name;")]
+    #[serde(alias = "$titanium_name;", alias = "Titanium")]
     Titanium,
-    #[serde(alias = "$thallium_name;")]
+    #[serde(alias = "$thallium_name;", alias = "Thallium")]
     Thallium,
-    #[serde(alias = "$tantalum_name;")]
+    #[serde(alias = "$tantalum_name;", alias = "Tantalum")]
     Tantalum,
     #[serde(alias = "Cobalt", alias = "$cobalt_name;")]
     Cobalt,
@@ -26,7 +26,7 @@ pub enum MarketItemType {
     Steel,
     #[serde(alias = "$lanthanum_name;", alias = "Lanthanum")]
     Lanthanum,
-    #[serde(alias = "$palladium_name;")]
+    #[serde(alias = "$palladium_name;", alias = "Palladium")]
     Palladium,
     #[serde(alias = "$osmium_name;", alias = "Osmium")]
     Osmium,
@@ -38,17 +38,17 @@ pub enum MarketItemType {
     Beryllium,
     #[serde(alias = "$bauxite_name;", alias = "Bauxite")]
     Bauxite,
-    #[serde(alias = "$gallite_name;")]
+    #[serde(alias = "$gallite_name;", alias = "Gallite")]
     Gallite,
-    #[serde(alias = "$samarium_name;")]
+    #[serde(alias = "$samarium_name;", alias = "Samarium")]
     Samarium,
-    #[serde(alias = "$lepidolite_name;")]
+    #[serde(alias = "$lepidolite_name;", alias = "Lepidolite")]
     Lepidolite,
-    #[serde(alias = "$rutile_name;")]
+    #[serde(alias = "$rutile_name;", alias = "Rutile")]
     Rutile,
     #[serde(alias = "Uraninite", alias = "$uraninite_name;")]
     Uraninite,
-    #[serde(alias = "$moissanite_name;")]
+    #[serde(alias = "$moissanite_name;", alias = "Moissanite")]
     Moissanite,
     #[serde(alias = "$taaffeite_name;")]
     Taaffeite,
@@ -60,29 +60,29 @@ pub enum MarketItemType {
     Uranium,
     #[serde(alias = "$indite_name;", alias = "Indite")]
     Indite,
-    #[serde(alias = "$coltan_name;")]
+    #[serde(alias = "$coltan_name;", alias = "Coltan")]
     Coltan,
     #[serde(alias = "$praseodymium_name;", alias = "Praseodymium")]
     Praseodymium,
     #[serde(alias = "$copper_name;")]
     Copper,
-    #[serde(alias = "$water_name;")]
+    #[serde(alias = "$water_name;", alias = "Water")]
     Water,
     #[serde(alias = "$indium_name;")]
     Indium,
-    #[serde(alias = "$bromellite_name;")]
+    #[serde(alias = "$bromellite_name;", alias = "Bromellite")]
     Bromellite,
     #[serde(alias = "$bertrandite_name;", alias = "Bertrandite")]
     Bertrandite,
-    #[serde(alias = "$serendibite_name;")]
+    #[serde(alias = "$serendibite_name;", alias = "Serendibite")]
     Serendibite,
     #[serde(alias = "$haematite_name;")]
     Haematite,
-    #[serde(alias = "$monazite_name;")]
+    #[serde(alias = "$monazite_name;", alias = "Monazite")]
     Monazite,
     #[serde(alias = "$thorium_name;", alias = "Thorium")]
     Thorium,
-    #[serde(alias = "$lithium_name;")]
+    #[serde(alias = "$lithium_name;", alias = "Lithium")]
     Lithium,
     #[serde(alias = "$benitoite_name;")]
     Benitoite,
@@ -128,11 +128,15 @@ pub enum MarketItemType {
     Magnesite,
     #[serde(
         alias = "$lowtemperaturediamond_name;",
-        alias = "lowtemperaturediamond"
+        alias = "lowtemperaturediamond",
+        alias = "LowTemperatureDiamond"
     )]
     #[strum(to_string = "Low Temp. Diamonds")]
     LowTempDiamonds,
-    #[serde(alias = "$opal_name;", alias = "opal")]
+    #[serde(alias = "$grandidierite_name;", alias = "Grandidierite")]
+    #[strum(to_string = "Grandidierite")]
+    Grandidierite,
+    #[serde(alias = "$opal_name;", alias = "opal", alias = "Opal")]
     #[strum(to_string = "Void Opal")]
     VoidOpal,
     #[serde(
@@ -751,19 +755,22 @@ pub enum MarketItemType {
     #[serde(alias = "$onionheadb_name;")]
     #[strum(to_string = "Onionhead Beta Strain")]
     OnionheadBetaStrain,
-    #[serde(alias = "$hydrogenperoxide_name;")]
+    #[serde(alias = "$hydrogenperoxide_name;", alias = "HydrogenPeroxide")]
     #[strum(to_string = "Hydrogen Peroxide")]
     HydrogenPeroxide,
-    #[serde(alias = "$liquidoxygen_name;")]
+    #[serde(alias = "$liquidoxygen_name;", alias = "LiquidOxygen")]
     #[strum(to_string = "Liquid oxygen")]
-    Liquidoxygen,
-    #[serde(alias = "$methanolmonohydratecrystals_name;")]
+    LiquidOxygen,
+    #[serde(
+        alias = "$methanolmonohydratecrystals_name;",
+        alias = "MethanolMonohydrateCrystals"
+    )]
     #[strum(to_string = "Methanol Monohydrate Crystals")]
     MethanolMonohydrateCrystals,
-    #[serde(alias = "$lithiumhydroxide_name;")]
+    #[serde(alias = "$lithiumhydroxide_name;", alias = "LithiumHydroxide")]
     #[strum(to_string = "Lithium Hydroxide")]
     LithiumHydroxide,
-    #[serde(alias = "$methaneclathrate_name;")]
+    #[serde(alias = "$methaneclathrate_name;", alias = "MethaneClathrate")]
     #[strum(to_string = "Methane Clathrate")]
     MethaneClathrate,
     #[serde(alias = "$insulatingmembrane_name;")]
@@ -998,9 +1005,6 @@ pub enum MarketItemType {
     #[serde(alias = "$s6_tissuesample_coenosarc_name;")]
     #[strum(to_string = "Pod Shell Tissue")]
     PodShellTissue,
-    #[serde(alias = "$grandidierite_name;")]
-    #[strum(to_string = "Grandidierite")]
-    Grandidierite,
     #[serde(alias = "$rockforthfertiliser_name;")]
     #[strum(to_string = "Rockforth Fertiliser")]
     RockforthFertiliser,
@@ -1342,7 +1346,7 @@ pub enum MarketItemType {
     Nanobreakers,
     #[serde(alias = "$nanomedicines_name;")]
     Nanomedicines,
-    #[serde(alias = "$rhodplumsite_name;")]
+    #[serde(alias = "$rhodplumsite_name;", alias = "Rhodplumsite")]
     Rhodplumsite,
     #[serde(alias = "$slaves_name;")]
     Slaves,

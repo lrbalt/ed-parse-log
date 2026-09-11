@@ -1,5 +1,5 @@
 use crate::{EDString, common_types::Credits};
-use ed_parse_log_files_macros::{Extractable, testcase_struct};
+use ed_parse_log_files_macros::testcase_struct;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -17,12 +17,4 @@ pub struct BountyPilot {
     pilot_name: EDString,
     #[serde(rename = "PilotName_Localised")]
     pilot_name_localised: EDString,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogDatalinkVoucher {
-    pub reward: Credits,
-    pub victim_faction: EDString,
-    pub payee_faction: EDString,
 }

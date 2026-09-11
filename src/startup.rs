@@ -1,11 +1,23 @@
 use crate::{
-    EDString, common_types::{CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank, FuelCapacity, Merits, Power, SoldierRank, TradeRank,}, log_line::{GameMode, LoadGameShip}, material::{EncodedMaterial, ManufacturedMaterial, RawMaterial}, modules::Module, ship::Inventory, ship_type::ShipType, station_services::Mission, statistics::{
+    EDString,
+    common_types::{
+        CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank,
+        FuelCapacity, Merits, Power, SoldierRank, TradeRank,
+    },
+    log_line::{GameMode, LoadGameShip},
+    material::{EncodedMaterial, ManufacturedMaterial, RawMaterial},
+    modules::Module,
+    ship::Inventory,
+    ship_type::ShipType,
+    station_services::Mission,
+    statistics::{
         StatisticSearchAndRescue, StatisticsBankAccount, StatisticsCQCStats, StatisticsCombat,
         StatisticsCrafting, StatisticsCrew, StatisticsCrime, StatisticsExobiology,
         StatisticsExploration, StatisticsFleetcarrier, StatisticsMaterialTraderStats,
         StatisticsMining, StatisticsMulticrew, StatisticsPassengers, StatisticsSmuggling,
         StatisticsSquadron, StatisticsTgEncounters, StatisticsTrading,
-    }, utils::duration_as_secs,
+    },
+    utils::duration_as_secs,
 };
 use chrono::Duration;
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
@@ -86,7 +98,7 @@ pub struct EDLogLoadout {
     "Manufactured":[ 
         { "Name":"wornshieldemitters", "Name_Localised":"Worn Shield Emitters", "Count":284 }, 
         { "Name":"mechanicalscrap", "Name_Localised":"Mechanical Scrap", "Count":270 }
-    ], 
+    ],
     "Encoded":[ 
         { "Name":"shieldsoakanalysis", "Name_Localised":"Inconsistent Shield Soak Analysis", "Count":244 }, 
         { "Name":"consumerfirmware", "Name_Localised":"Modified Consumer Firmware", "Count":241 }
@@ -168,7 +180,7 @@ pub struct Passenger {
     #[serde(rename = "MissionID")]
     pub mission_id: u64,
     #[serde(rename = "Type")]
-    pub mission_type: PassengerMissionType, 
+    pub mission_type: PassengerMissionType,
     #[serde(rename = "VIP")]
     pub vip: bool,
     pub wanted: bool,
@@ -220,7 +232,7 @@ pub struct EDLogReputation {
     pub alliance: Option<f64>,
 }
 
-#[derive(Serialize, Deserialize, Clone,  Debug, Extractable)]
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 pub struct EDLogStatistics {
     #[serde(rename = "Bank_Account")]

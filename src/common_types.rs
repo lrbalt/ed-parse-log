@@ -4,7 +4,7 @@ use crate::{
     utils::{parse_number_of_days, string_or_struct},
 };
 use chrono::Duration;
-use ed_parse_log_files_macros::{Extractable, testcase_struct};
+use ed_parse_log_files_macros::testcase_struct;
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::Display,
@@ -1267,6 +1267,7 @@ pub enum DroneType {
     Recon,
     Research,
     FuelTransfer,
+    Hatchbreaker,
 }
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, Display)]
@@ -2012,22 +2013,6 @@ pub enum TechBrokerType {
     Guardian,
     Human,
     Salvation,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogNpcCrewRank {
-    npc_crew_name: EDString,
-    npc_crew_id: u64,
-    rank_combat: CombatRank,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogNpcCrewPaidWage {
-    npc_crew_name: EDString,
-    npc_crew_id: u64,
-    amount: Credits,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
