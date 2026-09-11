@@ -1,12 +1,55 @@
 use serde::{Deserialize, Serialize};
 use strum::Display;
 
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub enum MarketItemCategory {
+    #[serde(alias = "$MARKET_category_chemicals;")]
+    Chemicals,
+    #[serde(alias = "$MARKET_category_consumer_items;")]
+    #[strum(to_string = "Consumer items")]
+    Consumeritems,
+    #[serde(alias = "$MARKET_category_drugs;")]
+    #[strum(to_string = "Legal drugs")]
+    Legaldrugs,
+    #[serde(alias = "$MARKET_category_foods;")]
+    Foods,
+    #[serde(alias = "$MARKET_category_industrial_materials;")]
+    #[strum(to_string = "Industrial materials")]
+    Industrialmaterials,
+    #[serde(alias = "$MARKET_category_machinery;")]
+    Machinery,
+    #[serde(alias = "$MARKET_category_metals;")]
+    Metals,
+    #[serde(alias = "$MARKET_category_medicines;")]
+    Medicines,
+    #[serde(alias = "$MARKET_category_minerals;")]
+    Minerals,
+    #[serde(alias = "$MARKET_category_salvage;")]
+    Salvage,
+    #[serde(alias = "$MARKET_category_slaves;")]
+    #[strum(to_string = "Slavery")]
+    Slavery,
+    #[serde(alias = "$MARKET_category_technology;")]
+    Technology,
+    #[serde(alias = "$MARKET_category_textiles;")]
+    Textiles,
+    #[serde(alias = "$MARKET_category_waste;")]
+    Waste,
+    #[serde(alias = "$MARKET_category_weapons;")]
+    Weapons,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, Display, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum MarketItemType {
     #[serde(alias = "$alexandrite_name;", alias = "Alexandrite")]
     Alexandrite,
-    #[serde(alias = "$aluminium_name;", alias = "Aluminium")]
+    #[serde(
+        alias = "$aluminium_name;",
+        alias = "Aluminium",
+        alias = "$Aluminium_name;"
+    )]
     Aluminium,
     #[serde(alias = "$silver_name;", alias = "Silver")]
     Silver,
@@ -14,7 +57,11 @@ pub enum MarketItemType {
     Tritium,
     #[serde(alias = "$platinum_name;", alias = "Platinum")]
     Platinum,
-    #[serde(alias = "$titanium_name;", alias = "Titanium")]
+    #[serde(
+        alias = "$titanium_name;",
+        alias = "Titanium",
+        alias = "$Titanium_name;"
+    )]
     Titanium,
     #[serde(alias = "$thallium_name;", alias = "Thallium")]
     Thallium,
@@ -22,7 +69,7 @@ pub enum MarketItemType {
     Tantalum,
     #[serde(alias = "Cobalt", alias = "$cobalt_name;")]
     Cobalt,
-    #[serde(alias = "$steel_name;")]
+    #[serde(alias = "$steel_name;", alias = "$Steel_name;")]
     Steel,
     #[serde(alias = "$lanthanum_name;", alias = "Lanthanum")]
     Lanthanum,
@@ -64,9 +111,9 @@ pub enum MarketItemType {
     Coltan,
     #[serde(alias = "$praseodymium_name;", alias = "Praseodymium")]
     Praseodymium,
-    #[serde(alias = "$copper_name;")]
+    #[serde(alias = "$copper_name;", alias = "$Copper_name;")]
     Copper,
-    #[serde(alias = "$water_name;", alias = "Water")]
+    #[serde(alias = "$water_name;", alias = "Water", alias = "$Water_name;")]
     Water,
     #[serde(alias = "$indium_name;")]
     Indium,
@@ -149,10 +196,18 @@ pub enum MarketItemType {
     #[serde(alias = "$personalweapons_name;", alias = "$PersonalWeapons_Name;")]
     #[strum(to_string = "Personal Weapons")]
     PersonalWeapons,
-    #[serde(alias = "$battleweapons_name;", alias = "$BattleWeapons_Name;")]
+    #[serde(
+        alias = "$battleweapons_name;",
+        alias = "$BattleWeapons_Name;",
+        alias = "$BattleWeapons_name;"
+    )]
     #[strum(to_string = "Battle Weapons")]
     BattleWeapons,
-    #[serde(alias = "$combatstabilisers_name;", alias = "$CombatStabilisers_Name;")]
+    #[serde(
+        alias = "$combatstabilisers_name;",
+        alias = "$CombatStabilisers_Name;",
+        alias = "$CombatStabilisers_name;"
+    )]
     #[strum(to_string = "Combat Stabilisers")]
     CombatStabilisers,
     #[serde(alias = "$borasetanipathogenetics_name;")]
@@ -162,10 +217,10 @@ pub enum MarketItemType {
     #[strum(to_string = "HIP 118311 Swarm")]
     HIP118311Swarm,
 
-    #[serde(alias = "$semiconductors_name;")]
+    #[serde(alias = "$semiconductors_name;", alias = "$Semiconductors_name;")]
     #[strum(to_string = "Semiconductors")]
     Semiconductors,
-    #[serde(alias = "$superconductors_name;")]
+    #[serde(alias = "$superconductors_name;", alias = "$Superconductors_name;")]
     #[strum(to_string = "Superconductors")]
     Superconductors,
     #[serde(alias = "$hydrogenfuel_name;", alias = "HydrogenFuel")]
@@ -183,10 +238,10 @@ pub enum MarketItemType {
     #[serde(alias = "$basicmedicines_name;")]
     #[strum(to_string = "Basic Medicines")]
     BasicMedicines,
-    #[serde(alias = "$powergenerators_name;")]
+    #[serde(alias = "$powergenerators_name;", alias = "$PowerGenerators_name;")]
     #[strum(to_string = "Power Generators")]
     PowerGenerators,
-    #[serde(alias = "$waterpurifiers_name;")]
+    #[serde(alias = "$waterpurifiers_name;", alias = "$WaterPurifiers_name;")]
     #[strum(to_string = "Water Purifiers")]
     WaterPurifiers,
     #[serde(alias = "$heliostaticfurnaces_name;", alias = "heliostaticfurnaces")]
@@ -201,7 +256,10 @@ pub enum MarketItemType {
     #[serde(alias = "$marinesupplies_name;", alias = "marinesupplies")]
     #[strum(to_string = "Marine Equipment")]
     MarineEquipment,
-    #[serde(alias = "$computercomponents_name;")]
+    #[serde(
+        alias = "$computercomponents_name;",
+        alias = "$ComputerComponents_name;"
+    )]
     #[strum(to_string = "Computer Components")]
     ComputerComponents,
     #[serde(alias = "$hazardousenvironmentsuits_name;")]
@@ -228,7 +286,11 @@ pub enum MarketItemType {
     #[serde(alias = "$reactivearmour_name;", alias = "ReactiveArmour")]
     #[strum(to_string = "Reactive Armour")]
     ReactiveArmour,
-    #[serde(alias = "$nonlethalweapons_name;", alias = "NonLethalWeapons")]
+    #[serde(
+        alias = "$nonlethalweapons_name;",
+        alias = "NonLethalWeapons",
+        alias = "$NonLethalWeapons_name;"
+    )]
     #[strum(to_string = "Non-Lethal Weapons")]
     NonLethalWeapons,
     #[serde(
@@ -695,7 +757,7 @@ pub enum MarketItemType {
     #[serde(alias = "$timecapsule_name;")]
     #[strum(to_string = "Time Capsule")]
     TimeCapsule,
-    #[serde(alias = "$ceramiccomposites_name;")]
+    #[serde(alias = "$ceramiccomposites_name;", alias = "$CeramicComposites_name;")]
     #[strum(to_string = "Ceramic Composites")]
     CeramicComposites,
     #[serde(alias = "$syntheticreagents_name;")]
@@ -758,7 +820,11 @@ pub enum MarketItemType {
     #[serde(alias = "$hydrogenperoxide_name;", alias = "HydrogenPeroxide")]
     #[strum(to_string = "Hydrogen Peroxide")]
     HydrogenPeroxide,
-    #[serde(alias = "$liquidoxygen_name;", alias = "LiquidOxygen")]
+    #[serde(
+        alias = "$liquidoxygen_name;",
+        alias = "LiquidOxygen",
+        alias = "$LiquidOxygen_name;"
+    )]
     #[strum(to_string = "Liquid oxygen")]
     LiquidOxygen,
     #[serde(
@@ -773,10 +839,13 @@ pub enum MarketItemType {
     #[serde(alias = "$methaneclathrate_name;", alias = "MethaneClathrate")]
     #[strum(to_string = "Methane Clathrate")]
     MethaneClathrate,
-    #[serde(alias = "$insulatingmembrane_name;")]
+    #[serde(
+        alias = "$insulatingmembrane_name;",
+        alias = "$InsulatingMembrane_name;"
+    )]
     #[strum(to_string = "Insulating Membrane")]
     InsulatingMembrane,
-    #[serde(alias = "$cmmcomposite_name;")]
+    #[serde(alias = "$cmmcomposite_name;", alias = "$CMMComposite_name;")]
     #[strum(to_string = "CMM Composite")]
     CMMComposite,
     #[serde(alias = "$coolinghoses_name;", alias = "coolinghoses")]
@@ -827,7 +896,7 @@ pub enum MarketItemType {
     #[serde(alias = "$telemetrysuite_name;")]
     #[strum(to_string = "Telemetry Suite")]
     TelemetrySuite,
-    #[serde(alias = "$microcontrollers_name;")]
+    #[serde(alias = "$microcontrollers_name;", alias = "$MicroControllers_name;")]
     #[strum(to_string = "Micro Controllers")]
     MicroControllers,
     #[serde(alias = "$iondistributor_name;")]
@@ -842,13 +911,19 @@ pub enum MarketItemType {
     #[serde(alias = "$conductivefabrics_name;", alias = "ConductiveFabrics")]
     #[strum(to_string = "Conductive Fabrics")]
     ConductiveFabrics,
-    #[serde(alias = "$militarygradefabrics_name;")]
+    #[serde(
+        alias = "$militarygradefabrics_name;",
+        alias = "$MilitaryGradeFabrics_name;"
+    )]
     #[strum(to_string = "Military Grade Fabrics")]
     MilitaryGradeFabrics,
     #[serde(alias = "$advancedmedicines_name;", alias = "AdvancedMedicines")]
     #[strum(to_string = "Advanced Medicines")]
     AdvancedMedicines,
-    #[serde(alias = "$medicaldiagnosticequipment_name;")]
+    #[serde(
+        alias = "$medicaldiagnosticequipment_name;",
+        alias = "$MedicalDiagnosticEquipment_name;"
+    )]
     #[strum(to_string = "Medical Diagnostic Equipment")]
     MedicalDiagnosticEquipment,
     #[serde(alias = "$survivalequipment_name;", alias = "SurvivalEquipment")]
@@ -1160,14 +1235,19 @@ pub enum MarketItemType {
     OnionheadGammaStrain,
     #[serde(
         alias = "$fruitandvegetables_name;",
-        alias = "$FruitAndVegetables_Name;"
+        alias = "$FruitAndVegetables_Name;",
+        alias = "$FruitAndVegetables_name;"
     )]
     #[strum(to_string = "Fruit and Vegetables")]
     FruitandVegetables,
     #[serde(alias = "$animalmeat_name;", alias = "Animalmeat")]
     #[strum(to_string = "Animal Meat")]
     AnimalMeat,
-    #[serde(alias = "$foodcartridges_name;", alias = "FoodCartridges")]
+    #[serde(
+        alias = "$foodcartridges_name;",
+        alias = "FoodCartridges",
+        alias = "$FoodCartridges_name;"
+    )]
     #[strum(to_string = "Food Cartridges")]
     FoodCartridges,
     #[serde(alias = "$syntheticmeat_name;")]
@@ -1229,7 +1309,11 @@ pub enum MarketItemType {
     PersonalEffects,
     #[serde(alias = "Pesticides", alias = "$pesticides_name;")]
     Pesticides,
-    #[serde(alias = "Polymers", alias = "$polymers_name;")]
+    #[serde(
+        alias = "Polymers",
+        alias = "$polymers_name;",
+        alias = "$Polymers_name;"
+    )]
     Polymers,
     #[serde(alias = "$hostage_name;")]
     #[strum(to_string = "Hostages")]

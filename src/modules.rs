@@ -1,27 +1,13 @@
 use crate::{
     EDString,
-    common_types::{Credits, MercCoins, ModuleEngineeringModifiers},
-    engineers::{Engineer, EngineeringBlueprint, EngineeringExperimentalEffect},
+    common_types::{
+        Credits, Engineer, EngineeringBlueprint, EngineeringExperimentalEffect,
+        ModuleEngineeringModifiers,
+    },
     ship_module::{ShipModule, ShipModuleSlot},
-    ship_type::ShipType,
 };
-use ed_parse_log_files_macros::{Extractable, testcase_struct};
+use ed_parse_log_files_macros::testcase_struct;
 use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-pub struct EDLogModuleBuyAndStore {
-    pub buy_item: ShipModule,
-    #[serde(rename = "BuyItem_Localised")]
-    pub buy_item_localised: EDString,
-    #[serde(rename = "MarketID")]
-    pub market_id: u64,
-    pub buy_price: Credits,
-    pub buy_merc_coins_price: Option<MercCoins>,
-    pub ship: ShipType,
-    #[serde(rename = "ShipID")]
-    pub ship_id: u64,
-}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]

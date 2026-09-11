@@ -403,6 +403,20 @@ pub struct EDLogCarrierJumpCancelled {
     carrier_type: Option<CarrierType>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-08-21T15:02:57Z", "event":"CarrierLocation", "CarrierType":"FleetCarrier", 
+    "CarrierID":123456789, "StarSystem":"BD-11 192", "SystemAddress":908486218450, "BodyID":3 })]
+pub struct EDLogCarrierLocation {
+    #[serde(rename = "CarrierID")]
+    pub carrier_id: u64,
+    pub carrier_type: Option<CarrierType>,
+    pub star_system: EDString,
+    pub system_address: u64,
+    #[serde(rename = "BodyID")]
+    pub body_id: u64,
+}
+
 #[test]
 fn test_exploration() {
     let json2 = r#"{

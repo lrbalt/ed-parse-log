@@ -1,4 +1,4 @@
-use crate::{EDString, common_types::Credits, market_item_type::MarketItemType};
+use crate::{EDString, common_types::Credits, market_item::MarketItemType};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
 

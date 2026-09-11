@@ -1,7 +1,8 @@
 use crate::{
     EDString,
     common_types::{Merits, Power, Unknown},
-    market_item_type::MarketItemType,
+    market_item::MarketItemType,
+    odyssey::MicroResource,
 };
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
@@ -118,6 +119,28 @@ pub struct EDLogPowerplayRank {
 pub struct EDLogHoloscreenHacked {
     power_before: Option<EDString>,
     power_after: EDString,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+// Not in manual, pre powerplay 2.0?
+#[testcase({ "timestamp":"2025-06-07T21:01:31Z", "event":"RequestPowerMicroResources", "TotalCount":10, "MicroResources":[ 
+        { "Name":"powerpreparationspyware", "Name_Localised":"Power Injection Malware", "Category":"Data", "Count":10 } 
+    ], "MarketID":3225778432 })]
+pub struct EDLogRequestPowerMicroResources {
+    pub total_count: u64,
+    pub micro_resources: Vec<MicroResource>,
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogDeliverPowerMicroResources {
+    total_count: u64,
+    micro_resources: Vec<MicroResource>,
+    #[serde(rename = "MarketID")]
+    market_id: u64,
 }
 
 #[test]

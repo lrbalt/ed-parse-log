@@ -2,8 +2,7 @@ use chrono::{DateTime, Utc};
 use ed_parse_log_files::{
     common_types::{CarrierDockingAccess, Credits, StationType},
     log_line::{EDLogEvent, EDLogLine},
-    market::MarketItemCategory,
-    market_item_type::MarketItemType,
+    market_item::{MarketItemCategory, MarketItemType},
 };
 use serde::Deserialize;
 

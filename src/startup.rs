@@ -2,12 +2,12 @@ use crate::{
     EDString,
     common_types::{
         CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank,
-        FuelCapacity, Merits, Power, SoldierRank, TradeRank,
+        FuelCapacity, GameMode, Merits, Power, SoldierRank, TradeRank,
     },
-    log_line::{GameMode, LoadGameShip},
+    log_line::LoadGameShip,
+    market_item::MarketItemType,
     material::{EncodedMaterial, ManufacturedMaterial, RawMaterial},
     modules::Module,
-    ship::Inventory,
     ship_type::ShipType,
     station_services::Mission,
     statistics::{
@@ -22,6 +22,19 @@ use crate::{
 use chrono::Duration;
 use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
 use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "Name":"algae", "Count":1 })]
+pub struct Inventory {
+    name: MarketItemType,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<EDString>,
+    count: u64,
+    stolen: Option<u64>,
+    #[serde(rename = "MissionID")]
+    mission_id: Option<u64>,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]

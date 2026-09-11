@@ -3,7 +3,7 @@ use crate::{
     codex::{CodexCategory, CodexNames, CodexRegion, CodexSubCategory},
     common_types::{
         AtmosphereType, BodySignalType, Credits, FSSSignalType, GenusType, LuminosityType,
-        MaterialCategory, PlanetClass, ReserveLevel, RingClass, ScanType, StarClass,
+        MaterialCategory, PlanetClass, ReserveLevel, RingClass, ScanType, SignalType, StarClass,
         TerraformState, VulcanismType,
     },
     material::{EncodedMaterialName, ManufacturedMaterialName, RawMaterialName},
@@ -541,6 +541,15 @@ pub struct EDLogScreenshot {
     body: Option<EDString>,
     #[serde(flatten)]
     location_on_body: Option<LocationOnBody>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogStationBernalSphere {
+    system_address: u64,
+    signal_name: EDString,
+    signal_type: SignalType,
+    is_station: bool,
 }
 
 #[test]

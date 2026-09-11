@@ -1,12 +1,9 @@
 use chrono::{DateTime, Duration, Utc};
 use ed_parse_log_files::{
-    commander::{
-        COMBAT_RANK, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK, FEDERATION_RANK, SOLDIER_RANK,
-        TRADE_RANK,
-    },
     common_types::{
-        CQCRank, CombatRank, Credits, EmpireRank, ExobiologistRank, ExploreRank, FederationRank,
-        Merits, SoldierRank, TradeRank,
+        COMBAT_RANK, CQCRank, CombatRank, Credits, EMPIRE_RANK, EXOBIOLOGIST_RANK, EXPLORE_RANK,
+        EmpireRank, ExobiologistRank, ExploreRank, FEDERATION_RANK, FederationRank, Merits,
+        SOLDIER_RANK, SoldierRank, TRADE_RANK, TradeRank,
     },
     log_line::{EDLogEvent, EDLogLine},
     powerplay::power_play_rank_range,

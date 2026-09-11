@@ -1,13 +1,12 @@
 use crate::{
     EDString,
     common_types::{
-        CarrierDockingAccess, CombatRank, Credits, CrewMemberRole, DroneType, EngineerModification,
+        CarrierDockingAccess, CombatRank, Credits, CrewMemberRole, DroneType, Engineer,
+        EngineerModification, EngineeringBlueprint, EngineeringExperimentalEffect,
         MaterialCategory, MercCoins, ModuleEngineeringModifiers, StationIdentification,
         StationType, TechBrokerType, TraderType, VehicleType, VoucherType,
     },
-    engineers::{Engineer, EngineeringBlueprint, EngineeringExperimentalEffect},
-    market::MarketItemCategory,
-    market_item_type::MarketItemType,
+    market_item::{MarketItemCategory, MarketItemType},
     material::AllMaterialNames,
     ship_module::{ShipModule, ShipModuleSlot},
     ship_type::ShipType,
@@ -730,6 +729,24 @@ pub struct EDLogModuleBuy {
     #[serde(rename = "ShipID")]
     pub ship_id: u64,
 }
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({"timestamp":"2024-02-28T16:20:45Z","event":"ModuleBuyAndStore","BuyItem":"$hpt_xenoscanner_advanced_tiny_name;","BuyItem_Localised":"P. Wave Xeno Scanner",
+    "MarketID":129020031,"BuyPrice":828750,"Ship":"krait_light","ShipID":15})]
+pub struct EDLogModuleBuyAndStore {
+    pub buy_item: ShipModule,
+    #[serde(rename = "BuyItem_Localised")]
+    pub buy_item_localised: EDString,
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+    pub buy_price: Credits,
+    pub buy_merc_coins_price: Option<MercCoins>,
+    pub ship: ShipType,
+    #[serde(rename = "ShipID")]
+    pub ship_id: u64,
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase_struct({"SwapOutItem":"$int_repairer_size1_class5_name;", "SwapOutItem_Localised":"AFM Unit"})]
@@ -1156,6 +1173,28 @@ pub struct EDLogShipyardSwap {
     old_ship: Option<ShipToStore>,
     #[serde(flatten)]
     sold_ship: Option<ShipToSell>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogShipyardRedeem {
+    pub ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    pub ship_type_localised: Option<EDString>,
+    #[serde(rename = "BundleID")]
+    pub bundle_id: u64,
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogShipRedeemed {
+    pub ship_type: ShipType,
+    #[serde(rename = "ShipType_Localised")]
+    pub ship_type_localised: Option<EDString>,
+    #[serde(rename = "NewShipID")]
+    pub new_ship_id: u64,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

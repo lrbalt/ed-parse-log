@@ -6,7 +6,6 @@ use crate::{
         EDLogInterdiction, EDLogPVPKill, EDLogSRVDestroyed, EDLogShieldState, EDLogShipTargeted,
         EDLogUnderAttack,
     },
-    commander::{EDLogCarrierLocation, EDLogRequestPowerMicroResources},
     common_types::{BodyInformation, EDLogName},
     exploration::{
         EDLogBuyExplorationData, EDLogCodexEntry, EDLogDiscoveryScan, EDLogFSSAllBodiesFound,
@@ -14,27 +13,21 @@ use crate::{
         EDLogMaterialCollected, EDLogMaterialDiscarded, EDLogMaterialDiscovered,
         EDLogMultiSellExplorationData, EDLogNavBeaconScan, EDLogSAAScanComplete,
         EDLogSAASignalsFound, EDLogScan, EDLogScanBaryCentre, EDLogScreenshot,
-        EDLogSellExplorationData,
+        EDLogSellExplorationData, EDLogStationBernalSphere,
     },
-    exploration_old::EDLogStationBernalSphere,
     fleet_carrier::{
         EDLogCarrierBankTransfer, EDLogCarrierBuy, EDLogCarrierCancelDecommission,
         EDLogCarrierCrewServices, EDLogCarrierDecommission, EDLogCarrierDepositFuel,
         EDLogCarrierDockingPermission, EDLogCarrierFinance, EDLogCarrierJump,
-        EDLogCarrierJumpCancelled, EDLogCarrierJumpRequest, EDLogCarrierModulePack,
-        EDLogCarrierNameChange, EDLogCarrierShipPack, EDLogCarrierStats, EDLogCarrierTradeOrder,
+        EDLogCarrierJumpCancelled, EDLogCarrierJumpRequest, EDLogCarrierLocation,
+        EDLogCarrierModulePack, EDLogCarrierNameChange, EDLogCarrierShipPack, EDLogCarrierStats,
+        EDLogCarrierTradeOrder,
     },
-    market::{
-        EDLogColonisationConstructionDepot, EDLogColonisationContribution,
-        EDLogDeliverPowerMicroResources, EDLogMarketID,
-    },
-    modules::EDLogModuleBuyAndStore,
-    navigation::EDLogLaunchVessel,
     odyssey::{
         EDLogBackpack, EDLogBackpackChange, EDLogBookDropship, EDLogBookTaxi,
         EDLogBuyMicroResources, EDLogBuySuit, EDLogBuyWeapon, EDLogCancelDropship, EDLogCancelTaxi,
-        EDLogCollectItems, EDLogCreateSuitLoadout, EDLogDropItems, EDLogDropshipDeploy,
-        EDLogEmbarkOrDisembark, EDLogFCMaterials, EDLogLoadoutEquipModule,
+        EDLogCollectItems, EDLogCreateSuitLoadout, EDLogDeleteSuitLoadout, EDLogDropItems,
+        EDLogDropshipDeploy, EDLogEmbarkOrDisembark, EDLogFCMaterials, EDLogLoadoutEquipModule,
         EDLogLoadoutRemoveModule, EDLogRenameSuitLoadout, EDLogScanOrganic,
         EDLogSellMicroResources, EDLogSellOrganicData, EDLogSellSuit, EDLogSellWeapon,
         EDLogShipLocker, EDLogSuitLoadout, EDLogTradeMicroResources, EDLogUpgradeSuit,
@@ -42,24 +35,26 @@ use crate::{
     },
     other::{
         EDLogAfmuRepairs, EDLogApproachSettlement, EDLogCargoTransfer, EDLogChangeCrewRole,
-        EDLogCommitCrime, EDLogContinued, EDLogCrewLaunchFighter, EDLogCrewMemberJoins,
-        EDLogCrewMemberQuits, EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDataScanned,
-        EDLogDatalinkScan, EDLogDatalinkVoucher, EDLogDockFighter, EDLogDockSRV,
-        EDLogEndCrewSession, EDLogFighterRebuilt, EDLogFriends, EDLogFuelScoop, EDLogJetConeBoost,
+        EDLogColonisationConstructionDepot, EDLogColonisationContribution, EDLogCommitCrime,
+        EDLogContinued, EDLogCrewLaunchFighter, EDLogCrewMemberJoins, EDLogCrewMemberQuits,
+        EDLogCrewMemberRoleChange, EDLogCrimeVictim, EDLogDataScanned, EDLogDatalinkScan,
+        EDLogDatalinkVoucher, EDLogDockFighter, EDLogDockSRV, EDLogEndCrewSession,
+        EDLogFighterRebuilt, EDLogFriends, EDLogFuelScoop, EDLogGameModeChange, EDLogJetConeBoost,
         EDLogJetConeDamage, EDLogJoinACrew, EDLogKickCrewMember, EDLogLaunchDrone,
-        EDLogLaunchFighter, EDLogLaunchSRV, EDLogModuleInfo, EDLogMusic, EDLogNpcCrewPaidWage,
-        EDLogNpcCrewRank, EDLogPromotion, EDLogProspectedAsteroid, EDLogQuitACrew,
-        EDLogRebootRepair, EDLogReceiveText, EDLogRepairDrone, EDLogReservoirReplenished,
-        EDLogResurrect, EDLogScanned, EDLogSendText, EDLogSupercruiseDestinationDrop,
-        EDLogSynthesis, EDLogUSSDrop, EDLogVehicleSwitch, EDLogWingJoin,
+        EDLogLaunchFighter, EDLogLaunchSRV, EDLogLaunchVessel, EDLogMarketID, EDLogModuleInfo,
+        EDLogMusic, EDLogNpcCrewPaidWage, EDLogNpcCrewRank, EDLogPromotion,
+        EDLogProspectedAsteroid, EDLogQuitACrew, EDLogRebootRepair, EDLogReceiveText,
+        EDLogRepairDrone, EDLogReservoirReplenished, EDLogResurrect, EDLogScanned, EDLogSendText,
+        EDLogSupercruiseDestinationDrop, EDLogSynthesis, EDLogUSSDrop, EDLogVehicleSwitch,
+        EDLogWingJoin,
     },
     powerplay::{
-        EDLogHoloscreenHacked, EDLogPowerplayCollect, EDLogPowerplayDefect, EDLogPowerplayDeliver,
-        EDLogPowerplayFastTrack, EDLogPowerplayJoin, EDLogPowerplayLeave, EDLogPowerplayMerits,
-        EDLogPowerplayRank, EDLogPowerplaySalary, EDLogPowerplayVote, EDLogPowerplayVoucher,
+        EDLogDeliverPowerMicroResources, EDLogHoloscreenHacked, EDLogPowerplayCollect,
+        EDLogPowerplayDefect, EDLogPowerplayDeliver, EDLogPowerplayFastTrack, EDLogPowerplayJoin,
+        EDLogPowerplayLeave, EDLogPowerplayMerits, EDLogPowerplayRank, EDLogPowerplaySalary,
+        EDLogPowerplayVote, EDLogPowerplayVoucher, EDLogRequestPowerMicroResources,
     },
     ship_type::ShipType,
-    shipyard::{EDLogShipRedeemed, EDLogShipyardRedeem},
     squadron::{
         EDLogAppliedToSquadron, EDLogDisbandedSquadron, EDLogInvitedToSquadron,
         EDLogJoinedSquadron, EDLogKickedFromSquadron, EDLogLeftSquadron,
@@ -78,16 +73,16 @@ use crate::{
         EDLogEngineerCraft, EDLogEngineerProgress, EDLogFetchRemoteModule, EDLogMarket,
         EDLogMassModuleStore, EDLogMaterialTrade, EDLogMissionAbandoned, EDLogMissionAccepted,
         EDLogMissionCompleted, EDLogMissionFailed, EDLogMissionRedirected, EDLogModuleBuy,
-        EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote, EDLogModuleStore,
-        EDLogModuleSwap, EDLogOutfitting, EDLogPayBounties, EDLogPayFines, EDLogRedeemVoucher,
-        EDLogRefuelAll, EDLogRefuelPartial, EDLogRepair, EDLogRepairAll, EDLogRestockVehicle,
-        EDLogScientificResearch, EDLogSearchAndRescue, EDLogSellDrones, EDLogSellShipOnRebuy,
-        EDLogSetUserShipName, EDLogShipyard, EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardSell,
+        EDLogModuleBuyAndStore, EDLogModuleRetrieve, EDLogModuleSell, EDLogModuleSellRemote,
+        EDLogModuleStore, EDLogModuleSwap, EDLogOutfitting, EDLogPayBounties, EDLogPayFines,
+        EDLogRedeemVoucher, EDLogRefuelAll, EDLogRefuelPartial, EDLogRepair, EDLogRepairAll,
+        EDLogRestockVehicle, EDLogScientificResearch, EDLogSearchAndRescue, EDLogSellDrones,
+        EDLogSellShipOnRebuy, EDLogSetUserShipName, EDLogShipRedeemed, EDLogShipyard,
+        EDLogShipyardBuy, EDLogShipyardNew, EDLogShipyardRedeem, EDLogShipyardSell,
         EDLogShipyardSwap, EDLogShipyardTransfer, EDLogStoredModules, EDLogStoredShips,
         EDLogTechnologyBroker,
     },
     status::EDLogStatus,
-    suits::EDLogDeleteSuitLoadout,
     trade::{
         EDLogAsteroidCracked, EDLogBuyTradeData, EDLogCollectCargo, EDLogEjectCargo,
         EDLogMarketBuy, EDLogMarketSell, EDLogMiningRefined,
@@ -100,18 +95,9 @@ use crate::{
     },
 };
 use chrono::{DateTime, Utc};
-use ed_parse_log_files_macros::{Extractable, testcase, testcase_struct};
+use ed_parse_log_files_macros::{Extractable, testcase_struct};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumDiscriminants, EnumIter};
-
-#[derive(Serialize, Deserialize, Clone, Debug, Copy, Display)]
-pub enum GameMode {
-    Group,
-    Solo,
-    Open,
-    MainGame,
-    Operation,
-}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
@@ -127,13 +113,6 @@ pub struct LoadGameShip {
     pub ship_ident: EDString,
     pub fuel_level: Option<f64>,
     pub fuel_capacity: Option<f64>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
-#[serde(rename_all = "PascalCase", deny_unknown_fields)]
-#[testcase({ "timestamp":"2026-09-02T18:51:13Z", "event":"GameModeChange", "GameMode":"MainGame" })]
-pub struct EDLogGameModeChange {
-    game_mode: GameMode,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
@@ -230,6 +209,8 @@ pub enum EDLogEvent {
     ScanBaryCentre(Box<EDLogScanBaryCentre>),
     SellExplorationData(Box<EDLogSellExplorationData>),
     Screenshot(Box<EDLogScreenshot>),
+    // Not found in manual
+    StationBernalSphere(EDLogStationBernalSphere),
 
     // Trade
     AsteroidCracked(EDLogAsteroidCracked),
@@ -293,6 +274,10 @@ pub enum EDLogEvent {
     StoredShips(Box<EDLogStoredShips>),
     TechnologyBroker(Box<EDLogTechnologyBroker>),
     ClearImpound(EDLogClearImpound),
+    // Not found in Manual
+    ModuleBuyAndStore(EDLogModuleBuyAndStore),
+    ShipyardRedeem(EDLogShipyardRedeem),
+    ShipRedeemed(EDLogShipRedeemed),
 
     // Powerplay
     PowerplayCollect(EDLogPowerplayCollect),
@@ -308,6 +293,8 @@ pub enum EDLogEvent {
     PowerplayMerits(EDLogPowerplayMerits),
     PowerplayRank(EDLogPowerplayRank),
     HoloscreenHacked(EDLogHoloscreenHacked),
+    RequestPowerMicroResources(EDLogRequestPowerMicroResources),
+    DeliverPowerMicroResources(EDLogDeliverPowerMicroResources),
 
     // Squadrons
     AppliedToSquadron(EDLogAppliedToSquadron),
@@ -340,6 +327,8 @@ pub enum EDLogEvent {
     CarrierDockingPermission(EDLogCarrierDockingPermission),
     CarrierNameChange(EDLogCarrierNameChange),
     CarrierJumpCancelled(EDLogCarrierJumpCancelled),
+    // Not Found in Manual
+    CarrierLocation(EDLogCarrierLocation),
 
     // Odyssey
     Backpack(Box<EDLogBackpack>),
@@ -372,6 +361,9 @@ pub enum EDLogEvent {
     UpgradeSuit(EDLogUpgradeSuit),
     UpgradeWeapon(EDLogUpgradeWeapon),
     UseConsumable(EDLogUseConsumable),
+    // Not found in Manual
+    SuitLoadout(EDLogSuitLoadout),
+    DeleteSuitLoadout(EDLogDeleteSuitLoadout),
 
     // Other
     AfmuRepairs(EDLogAfmuRepairs),
@@ -427,41 +419,16 @@ pub enum EDLogEvent {
     WingInvite(EDLogName),
     CargoTransfer(EDLogCargoTransfer),
     SupercruiseDestinationDrop(EDLogSupercruiseDestinationDrop),
-
-    // Status
-    Status(Box<EDLogStatus>),
-
+    // Not Found in Manual
     GameModeChange(EDLogGameModeChange),
-
-    // Commander
-    RequestPowerMicroResources(EDLogRequestPowerMicroResources),
-    CarrierLocation(EDLogCarrierLocation),
-
-    // Modules
-    ModuleBuyAndStore(EDLogModuleBuyAndStore),
-
-    // Navigation
     LaunchVessel(EDLogLaunchVessel),
-
-    // Exploration (old)
-    StationBernalSphere(EDLogStationBernalSphere),
-
-    // Market
     MarketID(EDLogMarketID),
-    DeliverPowerMicroResources(EDLogDeliverPowerMicroResources),
+    Resupply,
     ColonisationConstructionDepot(EDLogColonisationConstructionDepot),
     ColonisationContribution(EDLogColonisationContribution),
 
-    // Shipyard
-    ShipyardRedeem(EDLogShipyardRedeem),
-    ShipRedeemed(EDLogShipRedeemed),
-
-    // Suits and backpack
-    SuitLoadout(EDLogSuitLoadout),
-    DeleteSuitLoadout(EDLogDeleteSuitLoadout),
-
-    // Ship
-    Resupply,
+    // Status
+    Status(Box<EDLogStatus>),
 }
 
 pub trait Extractable {

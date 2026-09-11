@@ -1,9 +1,10 @@
 use crate::{
     EDString,
     common_types::{
-        CombatRank, Credits, CrewMemberRole, CrimeType, DroneType, ShipScanType, StationInformation,
+        CombatRank, Credits, CrewMemberRole, CrimeType, DroneType, GameMode, ShipScanType,
+        StationInformation,
     },
-    market_item_type::MarketItemType,
+    market_item::MarketItemType,
     material::AllMaterialNames,
     ship_module::{ShipModule, ShipModuleSlot},
     ship_type::ShipType,
@@ -320,6 +321,20 @@ pub struct EDLogLaunchSRV {
     #[serde(rename = "ID")]
     pub id: u64,
     pub player_controlled: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-09-02T19:26:27Z", "event":"LaunchVessel", "VesselType":"lander01", 
+    "VesselType_Localised":"Nomad", "Loadout":"base", "ID":55, "PlayerControlled":true })]
+pub struct EDLogLaunchVessel {
+    vessel_type: ShipType,
+    #[serde(rename = "VesselType_Localised")]
+    srvtype_localised: Option<EDString>,
+    loadout: EDString,
+    #[serde(rename = "ID")]
+    id: u64,
+    player_controlled: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -658,12 +673,14 @@ pub enum VehicleType {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({"timestamp":"2024-03-20T00:04:00Z","event":"VehicleSwitch","To":"Fighter"})]
 pub struct EDLogVehicleSwitch {
     pub to: VehicleType,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({"timestamp":"2025-04-19T00:28:26Z","event":"WingJoin","Others":["AnOtherPerson"]})]
 pub struct EDLogWingJoin {
     pub others: Vec<EDString>,
 }
@@ -698,4 +715,58 @@ pub struct EDLogSupercruiseDestinationDrop {
     pub threat: u64,
     #[serde(rename = "MarketID")]
     pub market_id: Option<u64>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-09-02T18:51:13Z", "event":"GameModeChange", "GameMode":"MainGame" })]
+pub struct EDLogGameModeChange {
+    game_mode: GameMode,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogMarketID {}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct RequiredResource {
+    pub name: EDString,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: Option<EDString>,
+    pub required_amount: u64,
+    pub provided_amount: u64,
+    pub payment: Credits,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct ContributedResource {
+    name: MarketItemType,
+    #[serde(rename = "Name_Localised")]
+    name_localised: Option<EDString>,
+    amount: u64,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-04-07T17:15:29Z", "event":"ColonisationConstructionDepot", "MarketID":3964275458, "ConstructionProgress":0.000000, 
+    "ConstructionComplete":false, "ConstructionFailed":false, "ResourcesRequired":[ 
+        { "Name":"$aluminium_name;", "Name_Localised":"Aluminium", "RequiredAmount":1351, "ProvidedAmount":0, "Payment":3239 }
+    ] })]
+pub struct EDLogColonisationConstructionDepot {
+    #[serde(rename = "MarketID")]
+    pub market_id: u64,
+    pub construction_progress: f64,
+    pub construction_complete: bool,
+    pub construction_failed: bool,
+    pub resources_required: Vec<RequiredResource>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogColonisationContribution {
+    #[serde(rename = "MarketID")]
+    market_id: u64,
+    contributions: Vec<ContributedResource>,
 }

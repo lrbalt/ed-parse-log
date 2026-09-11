@@ -617,6 +617,19 @@ pub struct EDLogSuitLoadout {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+pub struct EDLogDeleteSuitLoadout {
+    #[serde(rename = "SuitID")]
+    suit_id: u64,
+    suit_name: EDString,
+    #[serde(rename = "SuitName_Localised")]
+    suit_name_localised: EDString,
+    #[serde(rename = "LoadoutID")]
+    loadout_id: u64,
+    loadout_name: EDString,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-01-20T14:06:36Z", "event":"TradeMicroResources", 
     "Offered":[ { "Name":"encryptedmemorychip", "Name_Localised":"Encrypted Memory Chip", "Category":"Component", "Count":18 }, 
                 { "Name":"memorychip", "Name_Localised":"Memory Chip", "Category":"Component", "Count":18 } ], 
