@@ -2470,6 +2470,49 @@ pub enum CodexSpecies {
     TussockCapillum,
 }
 
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
+pub enum GenusType {
+    #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
+    Aleoida,
+    #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
+    Bacterium,
+    #[serde(rename = "$Codex_Ent_Brancae_Name;")]
+    #[strum(to_string = "Brain Trees")]
+    BrainTrees,
+    #[serde(rename = "$Codex_Ent_Cactoid_Genus_Name;")]
+    Cactoida,
+    #[serde(rename = "$Codex_Ent_Clypeus_Genus_Name;")]
+    Clypeus,
+    #[serde(rename = "$Codex_Ent_Conchas_Genus_Name;")]
+    Concha,
+    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
+    #[strum(to_string = "Crystalline Shards")]
+    CrystallineShards,
+    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
+    Electricae,
+    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
+    Fonticulua,
+    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
+    Fumerola,
+    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
+    #[strum(to_string = "Luteolum Anemone")]
+    LuteolumAnemone,
+    #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
+    Frutexa,
+    #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]
+    Fungoida,
+    #[serde(rename = "$Codex_Ent_Osseus_Genus_Name;")]
+    Osseus,
+    #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
+    Recepta,
+    #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
+    Stratum,
+    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
+    Tubus,
+    #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
+    Tussock,
+}
+
 #[test]
 fn test_codex_categorize_derive() {
     #[derive(CodexCategorize)]

@@ -1,6 +1,5 @@
 use crate::{
     EDString,
-    log_line::{EDLogEvent, Extractable},
     utils::{parse_number_of_days, string_or_struct},
 };
 use chrono::Duration;
@@ -324,6 +323,16 @@ pub const FEDERATION_RANK: [&str; 15] = [
     "Vice Admiral",
     "Admiral",
 ];
+
+// TODO: enumify
+pub type CombatRank = u8;
+pub type TradeRank = u8;
+pub type ExploreRank = u8;
+pub type SoldierRank = u8;
+pub type ExobiologistRank = u8;
+pub type EmpireRank = u8;
+pub type FederationRank = u8;
+pub type CQCRank = u8;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum LegalStatus {
@@ -797,15 +806,6 @@ pub enum GameMode {
     MainGame,
     Operation,
 }
-
-pub type CombatRank = u8;
-pub type TradeRank = u8;
-pub type ExploreRank = u8;
-pub type SoldierRank = u8;
-pub type ExobiologistRank = u8;
-pub type EmpireRank = u8;
-pub type FederationRank = u8;
-pub type CQCRank = u8;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 // [x, y, z], in light years
@@ -1435,49 +1435,6 @@ pub enum RingClass {
     Metalic,
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Display)]
-pub enum GenusType {
-    #[serde(rename = "$Codex_Ent_Aleoids_Genus_Name;")]
-    Aleoida,
-    #[serde(rename = "$Codex_Ent_Bacterial_Genus_Name;")]
-    Bacterium,
-    #[serde(rename = "$Codex_Ent_Brancae_Name;")]
-    #[strum(to_string = "Brain Trees")]
-    BrainTrees,
-    #[serde(rename = "$Codex_Ent_Cactoid_Genus_Name;")]
-    Cactoida,
-    #[serde(rename = "$Codex_Ent_Clypeus_Genus_Name;")]
-    Clypeus,
-    #[serde(rename = "$Codex_Ent_Conchas_Genus_Name;")]
-    Concha,
-    #[serde(rename = "$Codex_Ent_Ground_Struct_Ice_Name;")]
-    #[strum(to_string = "Crystalline Shards")]
-    CrystallineShards,
-    #[serde(rename = "$Codex_Ent_Electricae_Genus_Name;")]
-    Electricae,
-    #[serde(rename = "$Codex_Ent_Fonticulus_Genus_Name;")]
-    Fonticulua,
-    #[serde(rename = "$Codex_Ent_Fumerolas_Genus_Name;")]
-    Fumerola,
-    #[serde(rename = "$Codex_Ent_Sphere_Name;")]
-    #[strum(to_string = "Luteolum Anemone")]
-    LuteolumAnemone,
-    #[serde(rename = "$Codex_Ent_Shrubs_Genus_Name;")]
-    Frutexa,
-    #[serde(rename = "$Codex_Ent_Fungoids_Genus_Name;")]
-    Fungoida,
-    #[serde(rename = "$Codex_Ent_Osseus_Genus_Name;")]
-    Osseus,
-    #[serde(rename = "$Codex_Ent_Recepta_Genus_Name;")]
-    Recepta,
-    #[serde(rename = "$Codex_Ent_Stratum_Genus_Name;")]
-    Stratum,
-    #[serde(rename = "$Codex_Ent_Tubus_Genus_Name;")]
-    Tubus,
-    #[serde(rename = "$Codex_Ent_Tussocks_Genus_Name;")]
-    Tussock,
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum FactionState {
     None,
@@ -2030,16 +1987,6 @@ pub struct BodyInformation {
     pub body: EDString,
     #[serde(rename = "BodyID")]
     pub body_id: u64,
-}
-
-impl Extractable for BodyInformation {
-    fn extract(event: &EDLogEvent) -> Option<&Self> {
-        match event {
-            EDLogEvent::ApproachBody(info) => Some(info),
-            EDLogEvent::LeaveBody(info) => Some(info),
-            _ => None,
-        }
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]

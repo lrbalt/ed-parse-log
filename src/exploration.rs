@@ -1,10 +1,10 @@
 use crate::{
     EDString,
-    codex::{CodexCategory, CodexNames, CodexRegion, CodexSubCategory},
+    codex::{CodexCategory, CodexNames, CodexRegion, CodexSubCategory, GenusType},
     common_types::{
-        AtmosphereType, BodySignalType, Credits, FSSSignalType, GenusType, LuminosityType,
-        MaterialCategory, PlanetClass, ReserveLevel, RingClass, ScanType, SignalType, StarClass,
-        TerraformState, VulcanismType,
+        AtmosphereType, BodySignalType, Credits, FSSSignalType, LuminosityType, MaterialCategory,
+        PlanetClass, ReserveLevel, RingClass, ScanType, SignalType, StarClass, TerraformState,
+        VulcanismType,
     },
     material::{EncodedMaterialName, ManufacturedMaterialName, RawMaterialName},
 };
