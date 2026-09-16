@@ -842,7 +842,7 @@ pub enum CrewMemberRole {
 #[serde(rename_all = "lowercase")]
 pub enum OnFootItem {
     AeroGel,
-    #[strum(to_string = "Agricultural Sample")]
+    #[strum(to_string = "Agricultural Process Sample")]
     AgriculturalProcessSample,
     #[strum(to_string = "Biochemical Agent")]
     BiochemicalAgent,
@@ -979,6 +979,7 @@ pub enum OnFootItem {
     PowerElectronics,
     #[strum(to_string = "Personal Protective Equipment")]
     PowerEquipment,
+    #[strum(to_string = "Power Association Data")]
     PowerEmployeeData,
     #[strum(to_string = "Experiment Prototype")]
     PowerExperiment,
@@ -1058,7 +1059,7 @@ pub enum OnFootItem {
     BallisticsData,
     #[strum(to_string = "Biological Weapon Data")]
     BiologicalWeaponData,
-    #[strum(to_string = "Biomechanical Component")]
+    #[strum(to_string = "Spire Refinery Compound")]
     BiomechanicalComponent,
     #[strum(to_string = "Biometric Data")]
     BiometricData,
@@ -1072,7 +1073,7 @@ pub enum OnFootItem {
     CatMedia,
     #[strum(to_string = "Census Data")]
     CensusData,
-    #[strum(to_string = "Chemical Experiment Date")]
+    #[strum(to_string = "Chemical Experiment Data")]
     ChemicalExperimentData,
     #[strum(to_string = "Chemical Inventory")]
     ChemicalInventory,
@@ -1167,7 +1168,7 @@ pub enum OnFootItem {
     MeetingMinutes,
     #[strum(to_string = "Medical Records")]
     MedicalRecords,
-    #[strum(to_string = "Medical Trial Records")]
+    #[strum(to_string = "Clinical Trial Records")]
     MedicalTrialRecords,
     #[strum(to_string = "Multimedia Entertainment")]
     MultimediaEntertainment,
@@ -1175,7 +1176,7 @@ pub enum OnFootItem {
     NetworkAccessHistory,
     #[strum(to_string = "Network Security Protocols")]
     NetworkSecurityProtocols,
-    #[strum(to_string = "Next Of Kin Records")]
+    #[strum(to_string = "Next of Kin Records")]
     NextOfKinRecords,
     #[strum(to_string = "NOC Data")]
     NOCData,
@@ -1265,11 +1266,11 @@ pub enum OnFootItem {
     WeaponInventory,
     #[strum(to_string = "Weapon Test Data")]
     WeaponTestData,
-    #[strum(to_string = "Xeno Defence Protocols")]
+    #[strum(to_string = "Xeno-Defence Protocols")]
     XenoDefenceProtocols,
-    #[strum(to_string = "Operations Strike Data")]
+    #[strum(to_string = "Researcher Location Data")]
     OperationsStrikeData,
-    #[strum(to_string = "Operations Counter Attack Data")]
+    #[strum(to_string = "Installation Intelligence Report")]
     OperationsCounterAttackData,
 
     #[serde(rename = "nm_seed")]
