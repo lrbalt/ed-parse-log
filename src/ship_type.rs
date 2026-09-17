@@ -190,6 +190,9 @@ pub enum ShipType {
     #[serde(rename = "TestBuggy")]
     #[serde(alias = "testbuggy")]
     SRVScarab,
+    #[strum(to_string = "Rhino")]
+    #[serde(rename = "mev_rhino")]
+    MEVRhino,
 
     #[serde(alias = "unknownsaucer")]
     UnknownSaucer,

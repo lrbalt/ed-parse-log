@@ -39,6 +39,7 @@ pub struct Inventory {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2017-10-14T18:41:37Z", "event":"Cargo", "Inventory":[  ] })]
+#[testcase({"timestamp": "2026-08-27T20:37:05Z","event": "Cargo","Vessel": "SRV","Count": 1})]
 pub struct EDLogCargo {
     pub vessel: Option<EDString>,
     pub count: Option<u64>,

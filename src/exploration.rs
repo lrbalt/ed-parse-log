@@ -477,6 +477,12 @@ pub struct SAAGenus {
         { "Type":"$PlanetaryMiningLocation_Name;", "Type_Localised":"Planetary Mining Location", "Count":10 } ], 
     "Genuses":[ { "Genus":"$Codex_Ent_Bacterial_Genus_Name;", "Genus_Localised":"Bacterium" }, 
     { "Genus":"$Codex_Ent_Stratum_Genus_Name;", "Genus_Localised":"Stratum" } ] })]
+#[testcase({"timestamp": "2026-08-30T01:56:01Z","event": "SAASignalsFound","BodyName": "Shinrarta Dezhra AB 3 c",
+    "SystemAddress": 3932277478106,"BodyID": 61,"Signals": [
+        {"Type": "$SAA_SignalType_Geological;","Type_Localised": "Geological","Count": 2},
+        {"Type": "$PlanetaryMiningLocation_Name;","Type_Localised": "Planetary Mining Location","Count": 18},
+        {"Type": "$SAA_SignalType_Human;","Type_Localised": "Human","Count": 1}
+    ],"Genuses": []})]
 pub struct EDLogSAASignalsFound {
     pub body_name: EDString,
     pub system_address: u64,

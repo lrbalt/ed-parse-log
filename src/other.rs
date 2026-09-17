@@ -204,6 +204,7 @@ pub struct EDLogDockFighter {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({"timestamp":"2026-07-01T18:47:22Z","event":"DockSRV","SRVType":"lander01","SRVType_Localised":"Nomad","ID":31})]
+#[testcase({"timestamp": "2026-08-27T20:58:53Z","event": "DockSRV","SRVType": "mev_rhino","SRVType_Localised": "SRV Rhino","ID": 86})]
 pub struct EDLogDockSRV {
     #[serde(rename = "SRVType")]
     pub srv_type: Option<ShipType>,
@@ -312,6 +313,9 @@ pub struct EDLogLaunchFighter {
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-11-13T16:30:47Z", "event":"LaunchSRV", "SRVType":"testbuggy", "SRVType_Localised":"SRV Scarab", 
     "Loadout":"starter", "ID":25, "PlayerControlled":true })]
+#[testcase({"timestamp": "2026-08-27T20:13:14Z","event": "LaunchSRV","SRVType": "mev_rhino","SRVType_Localised": "SRV Rhino",
+    "Loadout": "advanced","ID": 86,"PlayerControlled": true
+})]
 pub struct EDLogLaunchSRV {
     #[serde(rename = "SRVType")]
     pub srv_type: Option<ShipType>,

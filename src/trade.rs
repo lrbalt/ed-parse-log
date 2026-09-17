@@ -86,6 +86,7 @@ pub struct EDLogMarketSell {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-04-20T18:01:40Z", "event":"MiningRefined", "Type":"$tritium_name;", "Type_Localised":"Tritium" })]
+#[testcase({"timestamp": "2026-08-27T20:37:02Z","event": "MiningRefined","Type": "$tantalum_name;","Type_Localised": "Tantalum"})]
 pub struct EDLogMiningRefined {
     #[serde(rename = "Type")]
     pub material_type: MarketItemType,
