@@ -22,6 +22,8 @@ pub struct EDLogBuyTradeData {
 #[serde(deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-12-25T11:30:48Z", "event":"CollectCargo", "Type":"USSCargoBlackBox", 
     "Type_Localised":"Black Box", "Stolen":true, "MissionID":1040003416 })]
+#[testcase({ "timestamp":"2026-09-21T20:57:11Z", "event":"CollectCargo", "Type":"USSCargoRareArtwork", 
+    "Type_Localised":"Rare Artwork", "Stolen":false, "MissionID":1066613618 })]
 pub struct EDLogCollectCargo {
     #[serde(rename = "Type")]
     pub cargo_type: MarketItemType,

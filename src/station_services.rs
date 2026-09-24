@@ -671,6 +671,7 @@ pub struct EDLogMissionFailed {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-04-13T08:45:18Z", "event":"MissionRedirected", "MissionID":1051316259, "Name":"Mission_Assassinate", "LocalisedName":"Assassinate Known Pirate: Yohan", "NewDestinationStation":"Shaw Station", "NewDestinationSystem":"Metzili", "OldDestinationStation":"", "OldDestinationSystem":"Tascheter Sector WZ-P a5-0" })]
+#[testcase({ "timestamp":"2026-09-21T20:57:12Z", "event":"MissionRedirected", "MissionID":1066613618, "Name":"MISSION_Salvage_Refinery", "LocalisedName":"Rare Artwork Salvage Contract for Refinery", "NewDestinationStation":"Sarich Reach", "NewDestinationSystem":"Hyades Sector SI-S b4-4", "OldDestinationStation":"", "OldDestinationSystem":"27 p Orionis" })]
 pub struct EDLogMissionRedirected {
     #[serde(rename = "MissionID")]
     mission_id: u64,

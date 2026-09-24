@@ -248,7 +248,7 @@ pub enum ShipType {
     #[strum(to_string = "$ExplorationSuit_Class1_Name;")]
     #[serde(rename = "ExplorationSuit_Class5", alias = "explorationsuit_class5")]
     ExplorationSuitClass5,
-    #[strum(to_string = "$TacticalSuit_Class1_Name;")]
+    #[strum(to_string = "Dominator Suit")]
     #[serde(rename = "TacticalSuit_Class1", alias = "tacticalsuit_class1")]
     TacticalSuitClass1,
     #[strum(to_string = "$TacticalSuit_Class1_Name;")]

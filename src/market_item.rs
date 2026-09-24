@@ -327,7 +327,7 @@ pub enum MarketItemType {
     #[serde(alias = "$lavianbrandy_name;")]
     #[strum(to_string = "Lavian Brandy")]
     LavianBrandy,
-    #[serde(alias = "$usscargorareartwork_name;")]
+    #[serde(alias = "$usscargorareartwork_name;", alias = "USSCargoRareArtwork")]
     #[strum(to_string = "Rare Artwork")]
     RareArtwork,
     #[serde(alias = "$hip10175bushmeat_name;")]

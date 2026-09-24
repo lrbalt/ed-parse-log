@@ -4,3 +4,4 @@
 /collect.json
 .DS_Store
 *.exe
+Cross.toml

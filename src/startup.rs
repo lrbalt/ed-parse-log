@@ -129,6 +129,11 @@ pub struct EDLogMaterials {
     "Active":[ { "MissionID":65380900, "Name":"Mission_Courier_name", "PassengerMission":false, "Expires":82751 } ], 
     "Failed":[ ],
     "Complete":[ ] })]
+#[testcase({ "timestamp":"2026-09-20T15:40:52Z", "event":"Missions", "Active":[ 
+    { "MissionID":1066495634, "Name":"Mission_Rescue_Planet_name", "PassengerMission":false, "Expires":380570 }, 
+    { "MissionID":1066495694, "Name":"MISSION_Salvage_Refinery_name", "PassengerMission":false, "Expires":0 },
+    { "MissionID":1066495757, "Name":"Mission_Collect_Industrial_name", "PassengerMission":false, "Expires":76382 } ], "Failed":[ ], "Complete":[ ] }
+)]
 pub struct EDLogMissions {
     pub active: Vec<Mission>,
     pub failed: Vec<Mission>,
