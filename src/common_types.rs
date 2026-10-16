@@ -491,6 +491,12 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "CargoRack_IncreasedCapacity")]
     #[strum(to_string = "Increased Capacity")]
     CargoRackIncreasedCapacity,
+    #[serde(rename = "BeamLaser_Overloaded")]
+    #[strum(to_string = "Overloaded")]
+    BeamLaserOverloaded,
+    #[serde(rename = "BeamLaser_ThermalPlasmaConversion")]
+    #[strum(to_string = "Thermal Plasma Conversion")]
+    BeamLaserThermalPlasmaConversion,
     #[serde(rename = "CargoRackS6C1_Extended")]
     #[strum(to_string = "Increased Capacity")]
     CargoRackS6c1Extended,
@@ -572,6 +578,9 @@ pub enum EngineeringBlueprint {
     #[serde(rename = "PowerDistributor_HighCapacity")]
     #[strum(to_string = "High Charge Capacity")]
     PowerDistributorHighCapacity,
+    #[serde(rename = "MultiCannon_Rapid")]
+    #[strum(to_string = "Rapid Fire")]
+    MultiCannonRapid,
     #[serde(rename = "PowerDistributor_HighFrequency")]
     #[strum(to_string = "Charge Enhanced")]
     PowerDistributorHighFrequency,
@@ -713,6 +722,9 @@ pub enum EngineeringExperimentalEffect {
     SpecialEngineToughened,
     #[strum[to_string = "Force Shell"]]
     SpecialForceShell,
+    #[serde(rename = "special_feedback_cascade_cooled")]
+    #[strum[to_string = "$special_feedback_cascade_name;"]]
+    SpecialFeedbackCascadeCooled,
     #[serde(rename = "special_fsd_fuelcapacity")]
     #[strum[to_string = "Deep Charge"]]
     SpecialFSDFuelcapacity,
@@ -821,14 +833,29 @@ impl StarPos {
     pub fn x(&self) -> f64 {
         self.0[0]
     }
+
     pub fn y(&self) -> f64 {
         self.0[1]
     }
+
     pub fn z(&self) -> f64 {
         self.0[2]
     }
+
+    fn vector_len(x: f64, y: f64, z: f64) -> f64 {
+        (x.powi(2) + y.powi(2) + z.powi(2)).sqrt()
+    }
+
     pub fn distance_from_sol(&self) -> f64 {
-        (self.x().powi(2) + self.y().powi(2) + self.z().powi(2)).sqrt()
+        Self::vector_len(self.x(), self.y(), self.z())
+    }
+
+    pub fn distance_from(&self, other: StarPos) -> f64 {
+        Self::vector_len(
+            other.x() - self.x(),
+            other.y() - self.y(),
+            other.z() - self.z(),
+        )
     }
 }
 
@@ -2514,10 +2541,13 @@ pub enum ModuleEngineeringModifiers {
     MaximumRange(ModifierValue),
     PowerCapacity(ModifierValue),
     PowerDraw(ModifierValue),
+    #[serde(rename = "$Plasma;")]
+    Plasma(ModifierValue),
     Range(ModifierValue),
     RateOfFire(ModifierValue),
     RegenRate(ModifierValue),
     ReloadTime(ModifierValue),
+    RoundsPerShot(ModifierValue),
     ScannerRange(ModifierValue),
     ScannerTimeToScan(ModifierValue),
     SensorTargetScanAngle(ModifierValue),

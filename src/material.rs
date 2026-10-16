@@ -257,7 +257,7 @@ pub enum ManufacturedMaterialName {
     #[serde(alias = "tg_wreckagecomponents")]
     #[strum(to_string = "Wreckage Components")]
     TgWreckageComponents,
-    #[serde(alias = "thermicalloys")]
+    #[serde(alias = "thermicalloys", alias = "ThermicAlloys")]
     #[strum(to_string = "Thermic Alloys")]
     ThermalAlloys,
     #[serde(alias = "uncutfocuscrystals")]

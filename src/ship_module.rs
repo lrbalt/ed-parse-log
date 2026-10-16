@@ -437,9 +437,17 @@ mod serde_ship_module {
                         ShipModuleHardpoint::ATMultiCannon if parts[4] == "v2" => {
                             module = ShipModuleHardpoint::ATMultiCannonV2;
                         }
+                        // check for v2 in $hpt_cannon_gimbal_medium_burst_name;
+                        ShipModuleHardpoint::Cannon if parts[4] == "burst" => {
+                            module = ShipModuleHardpoint::ConcordCannon;
+                        }
                         // check for heat in hpt_beamlaser_fixed_small_heat
                         ShipModuleHardpoint::BeamLaser if parts[4] == "heat" => {
                             module = ShipModuleHardpoint::Retributor;
+                        }
+                        // check for strong in hpt_multicannon_fixed_small_strong_name
+                        ShipModuleHardpoint::MultiCannon if parts[4] == "strong" => {
+                            module = ShipModuleHardpoint::Enforcer;
                         }
                         // check for lasso in hpt_dumbfiremissilerack_fixed_medium_lasso_name
                         ShipModuleHardpoint::DumbFireMissileRack if parts[4] == "lasso" => {
@@ -538,6 +546,7 @@ mod serde_ship_module {
                     .iter()
                     .position(|p| p.starts_with("shipkit"))
                     .or_else(|| parts.iter().position(|p| p.starts_with("thargoidreward")))
+                    .or_else(|| parts.iter().position(|p| p.starts_with("talon")))
                 {
                     let ship_name = parts[0..i].join("_");
                     let shipkit_name = parts[i..].join("_");
@@ -1059,6 +1068,8 @@ pub enum ShipModuleHardpoint {
     BeamLaser,
     #[strum(to_string = "Cannon")]
     Cannon,
+    #[strum(to_string = "Concord Cannon")]
+    ConcordCannon,
     #[strum(to_string = "Containment Missile")]
     ContainmentMissile,
     #[strum(to_string = "Cytoscrambler")]
@@ -1069,6 +1080,8 @@ pub enum ShipModuleHardpoint {
     DumbFireMissileRack,
     #[strum(to_string = "Enhanced AX Multi-Cannon")]
     EnhancedAXMultiCannon,
+    #[strum(to_string = "The Enforcer")]
+    Enforcer,
     #[strum(to_string = "Remote Flak")]
     FlakMortar,
     #[strum(to_string = "Remote Flechette")]
@@ -1096,6 +1109,8 @@ pub enum ShipModuleHardpoint {
     MultiCannon,
     #[strum(to_string = "Plasma Acc")]
     PlasmaAccelerator,
+    #[strum(to_string = "Shock Cannon")]
+    PlasmaShockCannon,
     #[strum(to_string = "Pulse Laser")]
     PulseLaser,
     #[strum(to_string = "Burst Laser")]
@@ -1185,7 +1200,7 @@ impl Display for ShipModule {
                 ShipArmourGrade::Grade4 => write!(f, "Armour Grade 4"),
                 ShipArmourGrade::Grade5 => write!(f, "Armour Grade 5"),
                 ShipArmourGrade::Reactive => write!(f, "Reactive Surface Composite"),
-                ShipArmourGrade::Mirrored => write!(f, "Mirrored"),
+                ShipArmourGrade::Mirrored => write!(f, "Mirrored Surface Composite"),
             },
             ShipModule::OptionalInternal(module, _size, class) => match module {
                 ShipModuleOptionalInternal::PassengerCabin => {

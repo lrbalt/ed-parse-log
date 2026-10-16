@@ -340,12 +340,18 @@ pub struct PassengerMissionsDetails {
     pub tourists_vip_ejected: u64,
     #[serde(rename = "Passengers_Missions_Tourist_bulk_delivered")]
     pub tourists_bulk_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Tourist_bulk_ejected")]
+    pub tourists_bulk_ejected: u64,
     #[serde(rename = "Passengers_Missions_Criminal_vip_delivered")]
     pub criminals_vip_delivered: u64,
     #[serde(rename = "Passengers_Missions_Criminal_vip_ejected")]
     pub criminals_vip_ejected: u64,
     #[serde(rename = "Passengers_Missions_Businessmen_vip_delivered")]
     pub businessmen_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Businessmen_bulk_delivered")]
+    pub businessmen_bulk_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Businessmen_bulk_ejected")]
+    pub businessmen_bulk_ejected: u64,
     #[serde(rename = "Passengers_Missions_FreedomFighters_vip_delivered")]
     pub freedomfighters_vip_delivered: u64,
     #[serde(rename = "Passengers_Missions_FreedomFighters_vip_ejected")]
@@ -356,8 +362,12 @@ pub struct PassengerMissionsDetails {
     pub soldiers_vip_delivered: u64,
     #[serde(rename = "Passengers_Missions_Medical_vip_delivered")]
     pub medical_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Medical_vip_ejected")]
+    pub medical_vip_ejected: u64,
     #[serde(rename = "Passengers_Missions_Explorers_vip_delivered")]
     pub explorers_vip_delivered: u64,
+    #[serde(rename = "Passengers_Missions_Explorers_vip_ejected")]
+    pub explorers_vip_ejected: u64,
     #[serde(rename = "Passengers_Missions_Celebrities_vip_delivered")]
     pub celebrities_vip_delivered: u64,
     #[serde(rename = "Passengers_Missions_HeadOfState_vip_delivered")]

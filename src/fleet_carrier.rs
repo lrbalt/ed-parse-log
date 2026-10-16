@@ -8,10 +8,13 @@ use crate::{
 use chrono::{DateTime, Utc};
 use ed_parse_log_files_macros::{Extractable, testcase};
 use serde::{Deserialize, Serialize};
+use strum::Display;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Display)]
 pub enum CarrierType {
+    #[strum(to_string = "Fleet Carrier")]
     FleetCarrier,
+    #[strum(to_string = "Squadron Carrier")]
     SquadronCarrier,
 }
 
