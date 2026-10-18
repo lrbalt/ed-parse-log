@@ -769,8 +769,20 @@ pub struct EDLogColonisationConstructionDepot {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2025-11-05T18:39:51Z", "event":"ColonisationContribution", "MarketID":3971445250, "Contributions":[ 
+    { "Name":"$Steel_name;", "Name_Localised":"Steel", "Amount":1121 }, 
+    { "Name":"$Titanium_name;", "Name_Localised":"Titanium", "Amount":181 } ] })]
 pub struct EDLogColonisationContribution {
     #[serde(rename = "MarketID")]
     market_id: u64,
     contributions: Vec<ContributedResource>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
+#[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2026-10-17T12:53:42Z", "event":"ColonisationSystemClaim", 
+    "StarSystem":"Mel 22 Sector UW-Z b14-2", "SystemAddress":5066316129585 })]
+pub struct EDLogColonisationSystemClaim {
+    star_system: EDString,
+    system_address: u64,
 }
