@@ -312,7 +312,10 @@ pub enum MarketItemType {
     #[serde(alias = "$progenitorcells_name;")]
     #[strum(to_string = "Progenitor Cells")]
     ProgenitorCells,
-    #[serde(alias = "$resonatingseparators_name;")]
+    #[serde(
+        alias = "$resonatingseparators_name;",
+        alias = "$ResonatingSeparators_name;"
+    )]
     #[strum(to_string = "Resonating Separators")]
     ResonatingSeparators,
     #[serde(alias = "$bioreducinglichen_name;")]
@@ -784,7 +787,10 @@ pub enum MarketItemType {
     #[serde(alias = "$mutomimager_name;")]
     #[strum(to_string = "Muon Imager")]
     MuonImager,
-    #[serde(alias = "$structuralregulators_name;")]
+    #[serde(
+        alias = "$structuralregulators_name;",
+        alias = "$StructuralRegulators_name;"
+    )]
     #[strum(to_string = "Structural Regulators")]
     StructuralRegulators,
     #[serde(alias = "$skimercomponents_name;", alias = "skimercomponents")]
