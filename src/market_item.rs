@@ -860,7 +860,10 @@ pub enum MarketItemType {
     #[serde(alias = "$hnshockmount_name;")]
     #[strum(to_string = "HN Shock Mount")]
     HNShockMount,
-    #[serde(alias = "$emergencypowercells_name;")]
+    #[serde(
+        alias = "$emergencypowercells_name;",
+        alias = "$EmergencyPowerCells_name;"
+    )]
     #[strum(to_string = "Emergency Power Cells")]
     EmergencyPowerCells,
     #[serde(alias = "$powerconverter_name;")]
