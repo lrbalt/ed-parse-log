@@ -865,6 +865,8 @@ pub enum Unknown {}
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum CrewMemberRole {
     Active,
+    FireCon,
+    FighterCon,
     Helm,
     OnShoreLeave,
     OnFoot,
@@ -1811,6 +1813,7 @@ pub enum StationType {
     DockablePlanetStation,
     #[strum(to_string = "Fleet Carrier")]
     FleetCarrier,
+    GameplayPOI,
     #[strum(to_string = "Mega Ship")]
     MegaShip,
     Ocellus,

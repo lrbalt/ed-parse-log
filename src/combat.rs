@@ -132,11 +132,14 @@ pub struct EDLogHullDamage {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2025-02-13T18:56:58Z", "event":"Interdiction", "Success":true, "IsPlayer":false, "Faction":"Li Yong-Rui", "Power":"Independent" })]
+#[testcase({ "timestamp":"2024-11-28T18:25:09Z", "event":"Interdiction", "Success":true, "IsPlayer":true, "Interdicted":"PRCR", "CombatRank":4 })]
 pub struct EDLogInterdiction {
     pub success: bool,
     pub is_player: bool,
-    pub faction: EDString,
+    pub faction: Option<EDString>,
     pub power: Option<EDString>,
+    pub interdicted: Option<EDString>,
+    pub combat_rank: Option<CombatRank>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]

@@ -61,7 +61,11 @@ pub enum ShipType {
     #[serde(rename = "empire_fighter")]
     Empirefighter,
     #[strum(to_string = "Imperial Clipper")]
-    #[serde(rename = "empire_trader", alias = "Empire_Trader")]
+    #[serde(
+        rename = "empire_trader",
+        alias = "Empire_Trader",
+        alias = "empiretrader"
+    )]
     EmpireTrader,
     #[strum(to_string = "Caspian Explorer")]
     #[serde(rename = "explorer_nx", alias = "Explorer_NX")]
@@ -93,6 +97,7 @@ pub enum ShipType {
     #[strum(to_string = "Lance")]
     #[serde(rename = "gdn_hybrid_fighter_v3")]
     GuardianHybridFighterV3,
+    #[serde(alias = "Hauler")]
     Hauler,
     #[serde(rename = "independent_fighter")]
     #[strum(to_string = "Taipan")]
@@ -115,6 +120,7 @@ pub enum ShipType {
     Mamba,
     #[serde(alias = "Mandalay")]
     Mandalay,
+    #[serde(alias = "Orca")]
     Orca,
     #[serde(alias = "PantherMkII")]
     #[strum(to_string = "Panther Clipper Mk II")]
@@ -171,7 +177,7 @@ pub enum ShipType {
     #[serde(alias = "Viper")]
     Viper,
     #[strum(to_string = "Viper Mk IV")]
-    #[serde(rename = "viper_mkiv")]
+    #[serde(rename = "viper_mkiv", alias = "Viper_MkIV")]
     ViperMkIV,
     #[strum(to_string = "$VIPER_NAME;")]
     #[serde(rename = "viper_taxi")]

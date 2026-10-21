@@ -262,7 +262,10 @@ pub enum MarketItemType {
     )]
     #[strum(to_string = "Computer Components")]
     ComputerComponents,
-    #[serde(alias = "$hazardousenvironmentsuits_name;")]
+    #[serde(
+        alias = "$hazardousenvironmentsuits_name;",
+        alias = "$HazardousEnvironmentSuits_name;"
+    )]
     #[strum(to_string = "H.E. Suits")]
     HazardousEnvironmentSuits,
     #[serde(alias = "$autofabricators_name;")]
@@ -274,7 +277,10 @@ pub enum MarketItemType {
     #[serde(alias = "$aquaponicsystems_name;")]
     #[strum(to_string = "Aquaponic Systems")]
     AquaponicSystems,
-    #[serde(alias = "$advancedcatalysers_name;")]
+    #[serde(
+        alias = "$advancedcatalysers_name;",
+        alias = "$AdvancedCatalysers_name;"
+    )]
     #[strum(to_string = "Advanced Catalysers")]
     AdvancedCatalysers,
     #[serde(
@@ -769,7 +775,10 @@ pub enum MarketItemType {
     #[serde(alias = "$nerveagents_name;")]
     #[strum(to_string = "Nerve Agents")]
     NerveAgents,
-    #[serde(alias = "$surfacestabilisers_name;")]
+    #[serde(
+        alias = "$surfacestabilisers_name;",
+        alias = "$SurfaceStabilisers_name;"
+    )]
     #[strum(to_string = "Surface Stabilisers")]
     SurfaceStabilisers,
     #[serde(alias = "$bootlegliquor_name;", alias = "$Liquor_Name;")]
@@ -778,15 +787,21 @@ pub enum MarketItemType {
     #[serde(alias = "$geologicalequipment_name;")]
     #[strum(to_string = "Geological Equipment")]
     GeologicalEquipment,
-    #[serde(alias = "$thermalcoolingunits_name;")]
+    #[serde(
+        alias = "$thermalcoolingunits_name;",
+        alias = "$ThermalCoolingUnits_name;"
+    )]
     #[strum(to_string = "Thermal Cooling Units")]
     ThermalCoolingUnits,
-    #[serde(alias = "$buildingfabricators_name;")]
+    #[serde(
+        alias = "$buildingfabricators_name;",
+        alias = "$BuildingFabricators_name;"
+    )]
     #[strum(to_string = "Building Fabricators")]
     BuildingFabricators,
     #[serde(alias = "$mutomimager_name;")]
     #[strum(to_string = "Muon Imager")]
-    MuonImager,
+    MutomImager,
     #[serde(
         alias = "$structuralregulators_name;",
         alias = "$StructuralRegulators_name;"
@@ -796,7 +811,11 @@ pub enum MarketItemType {
     #[serde(alias = "$skimercomponents_name;", alias = "skimercomponents")]
     #[strum(to_string = "Skimmer Components")]
     SkimmerComponents,
-    #[serde(alias = "$evacuationshelter_name;", alias = "EvacuationShelter")]
+    #[serde(
+        alias = "$evacuationshelter_name;",
+        alias = "EvacuationShelter",
+        alias = "$EvacuationShelter_name;"
+    )]
     #[strum(to_string = "Evacuation Shelter")]
     EvacuationShelter,
     #[serde(alias = "$geologicalsamples_name;")]
@@ -935,7 +954,11 @@ pub enum MarketItemType {
     )]
     #[strum(to_string = "Medical Diagnostic Equipment")]
     MedicalDiagnosticEquipment,
-    #[serde(alias = "$survivalequipment_name;", alias = "SurvivalEquipment")]
+    #[serde(
+        alias = "$survivalequipment_name;",
+        alias = "SurvivalEquipment",
+        alias = "$SurvivalEquipment_name;"
+    )]
     #[strum(to_string = "Survival Equipment")]
     SurvivalEquipment,
     #[serde(alias = "$datacore_name;")]
@@ -1331,7 +1354,7 @@ pub enum MarketItemType {
     Scrap,
     #[serde(alias = "$leather_name;")]
     Leather,
-    #[serde(alias = "$robotics_name;")]
+    #[serde(alias = "$robotics_name;", alias = "$Robotics_name;")]
     Robotics,
     #[serde(alias = "$restrictedintel_name;")]
     #[strum(to_string = "Archer's Restricted Intel")]

@@ -1082,6 +1082,7 @@ pub struct EDLogShipyard {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase_struct({ "StoreOldShip":"Viper_MkIV", "StoreShipID":10 })]
 pub struct ShipToStore {
     pub store_old_ship: ShipType,
     #[serde(rename = "StoreShipID")]
@@ -1162,6 +1163,7 @@ pub struct EDLogShipyardTransfer {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2026-05-14T11:35:27Z", "event":"ShipyardSwap", "ShipType":"panthermkii", "ShipType_Localised":"Panther Clipper Mk II", "ShipID":43, "StoreOldShip":"MediumTransport01", "StoreShipID":53, "MarketID":3706278912 })]
+#[testcase({ "timestamp":"2024-11-28T16:34:28Z", "event":"ShipyardSwap", "ShipType":"hauler", "ShipID":8, "StoreOldShip":"Viper_MkIV", "StoreShipID":10, "MarketID":3706561024 })]
 pub struct EDLogShipyardSwap {
     #[serde(rename = "MarketID")]
     pub market_id: u64,

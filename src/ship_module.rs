@@ -500,6 +500,7 @@ mod serde_ship_module {
                 }
                 // paintjob_asp_halloween01_01
                 // paintjob_smallcombat01_nx_03_01
+                // paintjob_empiretrader_blackfriday_01
                 let (i, ship_type) =
                     ship_type::<D>(parts[1])
                         .map(|s| (2, s))

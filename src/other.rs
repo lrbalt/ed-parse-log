@@ -62,6 +62,7 @@ pub struct EDLogApproachSettlement {
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
 #[testcase({ "timestamp":"2023-03-29T16:41:02Z", "event":"ChangeCrewRole", "Role":"Helm", "Telepresence":true })]
+#[testcase({ "timestamp":"2024-11-28T23:50:42Z", "event":"ChangeCrewRole", "Role":"FireCon", "Telepresence":true })]
 pub struct EDLogChangeCrewRole {
     pub role: CrewMemberRole,
     pub telepresence: bool,
@@ -88,10 +89,11 @@ pub struct EDLogContinued {
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
 #[serde(rename_all = "PascalCase", deny_unknown_fields)]
+#[testcase({ "timestamp":"2024-11-28T23:53:23Z", "event":"CrewLaunchFighter", "Telepresence":true, "Crew":"ST4R F0X" })]
 pub struct EDLogCrewLaunchFighter {
     pub crew: EDString,
     #[serde(rename = "ID")]
-    pub id: u64,
+    pub id: Option<u64>,
     pub telepresence: bool,
 }
 
@@ -528,6 +530,7 @@ pub enum TextChannel {
              "From_Localised":"Cruise Ship", "Message":"$CruiseLiner_SCPatrol05;", 
              "Message_Localised":"This is your captain. Due to some unforeseen delays, we will be arriving at our next destination later than scheduled.", 
              "Channel":"npc" })]
+#[testcase({ "timestamp":"2024-11-28T23:50:50Z", "event":"ReceiveText", "From":"Mr.Abc", "Message":"no turrets" })]
 pub struct EDLogReceiveText {
     pub from: EDString,
     #[serde(rename = "From_Localised")]
@@ -535,7 +538,7 @@ pub struct EDLogReceiveText {
     pub message: EDString,
     #[serde(rename = "Message_Localised")]
     pub message_localised: Option<EDString>,
-    pub channel: TextChannel,
+    pub channel: Option<TextChannel>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, Extractable)]
