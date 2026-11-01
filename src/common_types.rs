@@ -1307,6 +1307,10 @@ pub enum OnFootItem {
     OperationsStrikeData,
     #[strum(to_string = "Installation Intelligence Report")]
     OperationsCounterAttackData,
+    #[strum(to_string = "Vault Code")]
+    VaultCodes,
+    #[strum(to_string = "Classified Material")]
+    AlienArtefact,
 
     #[serde(rename = "nm_seed")]
     #[strum(to_string = "Unica Seed")]
