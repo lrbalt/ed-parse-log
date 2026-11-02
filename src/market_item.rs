@@ -244,10 +244,14 @@ pub enum MarketItemType {
     #[serde(alias = "$waterpurifiers_name;", alias = "$WaterPurifiers_name;")]
     #[strum(to_string = "Water Purifiers")]
     WaterPurifiers,
-    #[serde(alias = "$heliostaticfurnaces_name;", alias = "heliostaticfurnaces")]
+    #[serde(
+        alias = "$heliostaticfurnaces_name;",
+        alias = "heliostaticfurnaces",
+        alias = "$HeliostaticFurnaces_name;"
+    )]
     #[strum(to_string = "Microbial Furnaces")]
     MicrobialFurnaces,
-    #[serde(alias = "$mineralextractors_name;")]
+    #[serde(alias = "$mineralextractors_name;", alias = "$MineralExtractors_name;")]
     #[strum(to_string = "Mineral Extractors")]
     MineralExtractors,
     #[serde(alias = "$cropharvesters_name;")]
